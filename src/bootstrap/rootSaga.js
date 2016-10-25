@@ -1,8 +1,8 @@
-// import {fork} from 'redux-saga/effects';
+import {fork} from 'redux-saga/effects';
+import unitSaga from '../modules/unit/saga';
 
-/**
- * Root saga.
- */
 export default function* rootSaga() {
-
+  yield [
+    fork(unitSaga)
+  ]
 }

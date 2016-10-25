@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {setHelloMessage} from '../actions';
-import {getHelloMessage} from '../selectors';
+import {fetchUnits} from '../../unit/actions';
+import {getAllUnits} from '../../unit/selectors';
+import {UnitServices} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapContainer} from '../../map/components/MapContainer.js';
 
@@ -12,16 +13,16 @@ const ListContainer = ({children}) => <div className="list-container">{children}
 
 export class HomeContainer extends Component {
   static propTypes = {
-    setHelloMessage: PropTypes.func.isRequired,
-    helloMessage: PropTypes.string
+    fetchUnits: PropTypes.func.isRequired,
+    unitData: PropTypes.array
   };
 
   static defaultProps = {
-    helloMessage: 'Hello from React!'
+    unitData: []
   };
 
   componentWillMount() {
-    this.props.setHelloMessage('Hello from React and Redux!');
+    this.props.fetchUnits({service: UnitServices.ICE_SKATING_FIELD});
   }
 
   render() {
@@ -37,11 +38,11 @@ export class HomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  helloMessage: getHelloMessage(state)
+  unitData: getAllUnits(state)
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({setHelloMessage}, dispatch);
+  bindActionCreators({fetchUnits}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer
