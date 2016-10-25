@@ -3,6 +3,12 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {setHelloMessage} from '../actions';
 import {getHelloMessage} from '../selectors';
+//import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import {MapContainer} from '../../map/components/MapContainer.js';
+
+const Header = ({children}) => <div>{children}</div>;
+const Footer = ({children}) => <div>{children}</div>;
+const ListContainer = ({children}) => <div className="list-container">{children}</div>;
 
 export class HomeContainer extends Component {
   static propTypes = {
@@ -19,11 +25,12 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {helloMessage} = this.props;
-
     return (
       <div>
-        {helloMessage}
+        <Header/>
+        <ListContainer/>
+        <MapContainer/>
+        <Footer/>
       </div>
     );
   }

@@ -1,1 +1,4 @@
 @import "../node_modules/normalize.css/normalize.css";
+// FIXME: Webpack fails importing leaflet.css -> used temporarily from CDN in index.html
+//@import "../node_modules/leaflet/dist/leaflet.css";
+@import "modules/map/components/Map";
