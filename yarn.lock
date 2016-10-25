@@ -1988,6 +1988,13 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
+exports-loader@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/exports-loader/-/exports-loader-0.6.3.tgz#57dc78917f709b96f247fa91e69b554c855013c8"
+  dependencies:
+    loader-utils "0.2.x"
+    source-map "0.1.x"
+
 express@^4.13.3:
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/express/-/express-4.14.0.tgz#c1ee3f42cdc891fb3dc650a8922d51ec847d0d66"
@@ -3661,6 +3668,12 @@ normalize-url@^1.4.0:
 normalize.css@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/normalize.css/-/normalize.css-5.0.0.tgz#7cec875ce8178a5333c4de80b68ea9c18b9d7c37"
+
+normalizr@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/normalizr/-/normalizr-2.2.1.tgz#d4e5217b30d2a1a5b918bf3466ff0f8914507be5"
+  dependencies:
+    lodash "^4.11.2"
 
 npmlog@^4.0.0:
   version "4.0.0"

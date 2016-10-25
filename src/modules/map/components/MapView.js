@@ -8,14 +8,15 @@ const position = {
   vantaa: [60.309045, 25.004675]
 };
 
-const Unit = ({position}) =>
+const Unit = ({position, name, address}) =>
   <Marker position={position}>
     <Popup>
-      <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
+      <span>{name}<br/>{address}</span>
     </Popup>
   </Marker>;
 
-export class MapContainer extends Component {
+
+export class MapView extends Component {
   static propTypes = {
     position: PropTypes.array,
     units: PropTypes.array
@@ -35,7 +36,7 @@ export class MapContainer extends Component {
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-          {units && units.map( (unit, index) => <Unit position={unit} key={index}/>)}
+          {units && units.map( (unit, index) => <Unit position={unit.location.coordinates.reverse()} name={unit.name.fi} key={index} />)}
         </Map>
       </div>
     );

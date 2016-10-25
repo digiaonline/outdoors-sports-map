@@ -14,11 +14,11 @@ function* fetchUnits({payload: {params}}: FetchAction) {
 }
 
 function* watchFetchUnits() {
-  yield takeLatest(UnitActions.FETCH, fetchUnits)
+  yield takeLatest(UnitActions.FETCH, fetchUnits);
 }
 
 export default function* saga() {
   return [
     yield fork(watchFetchUnits)
-  ]
+  ];
 }
