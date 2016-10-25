@@ -6,6 +6,7 @@ import {getAllUnits} from '../../unit/selectors';
 import {UnitServices} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../map/components/MapView.js';
+import {locations} from '../constants.js';
 
 const Header = ({children}) => <div>{children}</div>;
 const Footer = ({children}) => <div>{children}</div>;
@@ -14,24 +15,33 @@ const ListContainer = ({children}) => <div className="list-container">{children}
 export class HomeContainer extends Component {
   static propTypes = {
     fetchUnits: PropTypes.func.isRequired,
+    position: PropTypes.array.isRequired,
     unitData: PropTypes.array
   };
 
   static defaultProps = {
-    unitData: []
+    unitData: [],
+    position: locations.HELSINKI
   };
 
   componentWillMount() {
-    this.props.fetchUnits({service: `${UnitServices.ICE_SKATING_FIELD},${UnitServices.MECHANICALLY_FROZEN_ICE}`, page_size: 1000});
+    // Fetch ice rinks in 10km radius from the passed position
+    this.props.fetchUnits({
+      service: `${UnitServices.ICE_SKATING_FIELD},${UnitServices.MECHANICALLY_FROZEN_ICE}`,
+      lat: this.props.position[0],
+      lon: this.props.position[1],
+      distance: 10000,
+      page_size: 1000
+    });
   }
 
   render() {
-    const {unitData} = this.props;
+    const {unitData, position} = this.props;
     return (
       <div>
         <Header/>
         <ListContainer/>
-        <MapView units={unitData}/>
+        <MapView position={position} units={unitData}/>
         <Footer/>
       </div>
     );
