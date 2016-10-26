@@ -2514,7 +2514,7 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.2.0:
+hoist-non-react-statics@^1.0.3, hoist-non-react-statics@^1.2.0, hoist-non-react-statics@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
@@ -2621,6 +2621,10 @@ http-signature@~1.1.0:
 https-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.0.tgz#b3ffdfe734b2a3d4a9efd58e8654c91fce86eafd"
+
+i18next:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-3.4.4.tgz#873cb94e6ca2a7f76b8bf8dd1b644f1e54901b37"
 
 iconv-lite@~0.4.13:
   version "0.4.13"
@@ -4402,6 +4406,12 @@ react-hot-loader@^3.0.0-beta.6:
     react-proxy "^3.0.0-alpha.0"
     redbox-react "^1.2.5"
     source-map "^0.4.4"
+
+react-i18next:
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-1.10.1.tgz#0a6169a986c1bcac7352788f955c60ad39562cfa"
+  dependencies:
+    hoist-non-react-statics "1.2.0"
 
 react-leaflet@^1.0.0-rc.2:
   version "1.0.0-rc.2"
