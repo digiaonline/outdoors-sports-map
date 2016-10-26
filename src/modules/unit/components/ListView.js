@@ -1,15 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 import {View} from './View.js';
 import {getAttr} from '../helpers.js';
+import {translate} from 'react-i18next';
 
-const UnitListItem = ({name, address, details}) =>
+const UnitListItem = translate()(({name, address, details, t}) => (
   <div className="list-view-item">
     <div className="list-view-item__unit-name">{name}</div>
     <div className="list-view-item__unit-address">{address}</div>
     {/* TODO/FIXME: Translate label and get actual status data */}
-    <div className="list-view-item__unit-status">Kunto: tuntematon</div>
+    <div className="list-view-item__unit-status">{t('LIST.STATE')}: {t('LIST.UNKNOWN')}</div>
     <div className="list-view-item__unit-details">{details}</div>
-  </div>;
+  </div>));
 
 
 export class ListView extends Component {
