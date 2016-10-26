@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {View} from './View.js';
+import {getAttr} from '../helpers.js';
 
 const UnitListItem = ({name, address, details}) =>
   <div className="list-view-item">
@@ -18,7 +19,12 @@ export class ListView extends Component {
     const {units} = this.props;
     return (
       <View id="list-view" className="list-view">
-          {units && units.map( (unit, index) => <UnitListItem name={unit.name.fi} key={index} />)}
+          {units && units.map( (unit, index) =>
+            <UnitListItem
+            name={getAttr(unit.name)}
+            address={getAttr(unit.street_address)}
+            details={getAttr(unit.description)}
+            key={index} />)}
       </View>
     );
   }

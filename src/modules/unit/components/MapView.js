@@ -1,6 +1,8 @@
+//@flow
 import React, {Component, PropTypes} from 'react';
 import {View} from './View.js';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import {getAttr} from '../helpers.js';
 
 const UnitMarker = ({position, name, address}) =>
   <Marker position={position}>
@@ -25,7 +27,14 @@ export class MapView extends Component {
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-          {units && units.map( (unit, index) => <UnitMarker position={unit.location.coordinates.reverse()} name={unit.name.fi} key={index} />)}
+          {
+            units && units.map(
+              (unit, index) =>
+                <UnitMarker
+                  position={unit.location.coordinates.reverse()}
+                  name={getAttr(unit.name)}
+                  address={getAttr(unit.street_address)}
+                  key={index} />)}
         </Map>
       </View>
     );
