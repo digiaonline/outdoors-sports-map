@@ -12,12 +12,27 @@ html, body {
   position: fixed;
   z-index: 1000;
   width: 100%;
+  background: transparent;
 }
 
 .header {
   top: 0;
+  height: $header-height;
+  display: flex;
+
+  div {
+    flex: 1;
+  }
+
+  #search {
+    flex: 2 0 auto;
+  }
 }
 
 .footer {
   bottom: 0;
+}
+
+.leaflet-top {
+  top: $header-height;
 }

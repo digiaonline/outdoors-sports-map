@@ -19,6 +19,11 @@
    */
   &.list-view {
     overflow-y: scroll;
+
+    &#list-view {
+      margin-top: $header-height;
+    }
+
     .list-view-item {
       border-bottom: 1px solid #999;
       padding: 10px 0;
@@ -29,6 +34,14 @@
 @media only screen and (min-width : 768px) {
     .view {
       display: block;
+    }
+
+    .header {
+      width: 30vw;
+
+      #toggle-view-button {
+        display: none;
+      }
     }
 
     .list-view {

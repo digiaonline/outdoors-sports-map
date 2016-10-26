@@ -9,3 +9,8 @@ export const locations = {
   ESPOO: [60.19792, 24.708885],
   VANTAA: [60.309045, 25.004675]
 };
+
+export const views = {
+  LIST: 'list',
+  MAP: 'map'
+};

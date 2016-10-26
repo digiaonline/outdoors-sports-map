@@ -7,22 +7,43 @@ import {UnitServices} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
 import {ListView} from '../../unit/components/ListView.js';
-import {locations} from '../constants.js';
+import {locations, views} from '../constants.js';
 
-const Header = ({children}) => <div>{children}</div>;
+const Header = ({toggleView}) =>
+  <div id="header" className="header">
+    {/* TODO/FIXME: Translate placeholder */}
+    <input id="search" type="text" placeholder="Etsi..." />
+    <button id="toggle-view-button" onClick={toggleView}>M/L</button>
+  </div>;
 const Footer = ({children}) => <div>{children}</div>;
 
 export class HomeContainer extends Component {
   static propTypes = {
     fetchUnits: PropTypes.func.isRequired,
     position: PropTypes.array.isRequired,
+    selectedView: PropTypes.string.isRequired,
     unitData: PropTypes.array
   };
 
   static defaultProps = {
     unitData: [],
-    position: locations.HELSINKI
+    position: locations.HELSINKI,
+    selectedView: views.MAP
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedView: props.selectedView
+    };
+
+    this.toggleView = this.toggleView.bind(this);
+  }
+
+  toggleView() {
+    console.log('wgfasdf');
+    this.setState({selectedView: this.state['selectedView'] === views.MAP ? views.LIST : views.MAP});
+  }
 
   componentWillMount() {
     // Fetch ice rinks in 10km radius from the passed position
@@ -37,11 +58,12 @@ export class HomeContainer extends Component {
 
   render() {
     const {unitData, position} = this.props;
+    const {selectedView} = this.state;
     return (
       <div>
-        <Header/>
-        <ListView units={unitData}/>
-        <MapView selected={true} position={position} units={unitData}/>
+        <Header toggleView={this.toggleView} units={unitData}/>
+        <ListView selected={selectedView === views.LIST} units={unitData}/>
+        <MapView selected={selectedView === views.MAP} position={position} units={unitData}/>
         <Footer/>
       </div>
     );
@@ -49,7 +71,8 @@ export class HomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  unitData: getAllUnits(state)
+  unitData: getAllUnits(state),
+  selectedView: state.selectedView
 });
 
 const mapDispatchToProps = (dispatch) =>
