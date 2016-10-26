@@ -5,12 +5,12 @@ import {fetchUnits} from '../../unit/actions';
 import {getAllUnits} from '../../unit/selectors';
 import {UnitServices} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
-import {MapView} from '../../map/components/MapView.js';
+import {MapView} from '../../unit/components/MapView.js';
+import {ListView} from '../../unit/components/ListView.js';
 import {locations} from '../constants.js';
 
 const Header = ({children}) => <div>{children}</div>;
 const Footer = ({children}) => <div>{children}</div>;
-const ListContainer = ({children}) => <div className="list-container">{children}</div>;
 
 export class HomeContainer extends Component {
   static propTypes = {
@@ -40,8 +40,8 @@ export class HomeContainer extends Component {
     return (
       <div>
         <Header/>
-        <ListContainer/>
-        <MapView position={position} units={unitData}/>
+        <ListView units={unitData}/>
+        <MapView selected={true} position={position} units={unitData}/>
         <Footer/>
       </div>
     );

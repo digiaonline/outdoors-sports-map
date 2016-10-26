@@ -1,0 +1,40 @@
+.view {
+  display: none;
+
+  &.view--selected {
+    display: block;
+  }
+
+  /**
+   * MAP VIEW
+   */
+  &.map-view {
+    .leaflet-container {
+      height: 100vh;
+    }
+  }
+
+  /**
+   * LIST VIEW
+   */
+  &.list-view {
+
+  }
+}
+
+@media only screen and (min-width : 768px) {
+    .view {
+      display: block;
+    }
+
+    .list-view {
+      width: 30vw;
+      height: 100vh;
+      float: left;
+    }
+
+    .map-view, .leaflet-container {
+      width: 70vw;
+      float: right;
+    }
+}

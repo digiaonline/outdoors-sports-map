@@ -1,0 +1,23 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  height: 100vh;
+  width: 100vw;
+}
+
+.header, .footer {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+}
+
+.header {
+  top: 0;
+}
+
+.footer {
+  bottom: 0;
+}
