@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import sortBy from 'lodash/sortBy';
 import {View} from './View.js';
 import {getAttr} from '../helpers.js';
 import {translate} from 'react-i18next';
@@ -22,7 +23,7 @@ export class ListView extends Component {
     const {units, selected} = this.props;
     return (
       <View id="list-view" className="list-view" isSelected={selected}>
-          {units && units.map( (unit, index) =>
+          {units && sortBy(units, ['distance']).map( (unit, index) =>
             <UnitListItem
             name={getAttr(unit.name)}
             address={getAttr(unit.street_address)}

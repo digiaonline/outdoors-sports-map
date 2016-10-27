@@ -37,6 +37,7 @@ export class HomeContainer extends Component {
       selectedView: props.selectedView
     };
 
+    this.handleMapMove = this.handleMapMove.bind(this);
     this.toggleView = this.toggleView.bind(this);
   }
 
@@ -51,7 +52,15 @@ export class HomeContainer extends Component {
       service: `${UnitServices.ICE_SKATING_FIELD},${UnitServices.MECHANICALLY_FROZEN_ICE}`,
       lat: this.props.position[0],
       lon: this.props.position[1],
-      distance: 10000,
+      page_size: 1000
+    });
+  }
+
+  handleMapMove(center: Array): void {
+    this.props.fetchUnits({
+      service: `${UnitServices.ICE_SKATING_FIELD},${UnitServices.MECHANICALLY_FROZEN_ICE}`,
+      lat: center[0],
+      lon: center[1],
       page_size: 1000
     });
   }
@@ -63,7 +72,7 @@ export class HomeContainer extends Component {
       <div>
         <Header toggleView={this.toggleView} units={unitData}/>
         <ListView selected={selectedView === views.LIST} units={unitData}/>
-        <MapView selected={selectedView === views.MAP} position={position} units={unitData}/>
+        <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData}/>
         <Footer/>
       </div>
     );

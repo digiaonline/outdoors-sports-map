@@ -27,16 +27,22 @@ export class MapView extends Component {
     units: PropTypes.array
   };
 
-  constructor(props) {
+  constructor(props: Object) {
     super(props);
 
+    this.onMoveend = this.onMoveend.bind(this);
+  }
+
+  onMoveend(e: Object): void{
+    const center = [e.target.getCenter().lat, e.target.getCenter().lng];
+    this.props.handleMoveend(center);
   }
 
   render() {
     const {position, units, selected} = this.props;
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
-        <Map zoomControl={false} center={position} zoom={12} >
+        <Map ref="map"zoomControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
           <TileLayer
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
