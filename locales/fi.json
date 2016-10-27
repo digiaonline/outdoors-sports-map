@@ -2,5 +2,10 @@
   "LIST": {
     "STATE": "Kunto",
     "UNKNOWN": "Tuntematon"
+  },
+  "VIEW": {
+    "POPUP": {
+      "OPENING_HOURS": "Aukioloajat"
+    }
   }
 }
