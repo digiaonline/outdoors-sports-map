@@ -1,5 +1,6 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
+import {Button, Glyphicon} from 'react-bootstrap';
 import {View} from './View.js';
 import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {getAttr} from '../helpers.js';
@@ -63,7 +64,14 @@ export class MapView extends Component {
                   description={getAttr(unit.description)}
                   key={index} />)}
         </Map>
-        <button style={{position:'fixed',  zIndex:10000, bottom: 0, right: 0}} onClick={this.locateUser}>Locate</button>
+        <div className="overlay-control">
+          <Button bsSize="large" className="overlay-control__locate" onClick={this.locateUser}>
+            <Glyphicon glyph="screenshot"/>
+          </Button>
+          <Button bsSize="large" className="overlay-control__info">
+            <Glyphicon glyph="info-sign"/>
+          </Button>
+        </div>
       </View>
     );
   }

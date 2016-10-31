@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {translate} from 'react-i18next';
+import {Glyphicon} from 'react-bootstrap';
 import {fetchUnits} from '../../unit/actions';
 import {getAllUnits} from '../../unit/selectors';
 import {UnitServices} from '../../unit/constants';
@@ -9,12 +11,14 @@ import {MapView} from '../../unit/components/MapView.js';
 import {ListView} from '../../unit/components/ListView.js';
 import {locations, views} from '../constants.js';
 
-const Header = ({toggleView}) =>
+const Header = translate()(({toggleView, t}) =>
   <div id="header" className="header">
-    {/* TODO/FIXME: Translate placeholder */}
-    <input id="search" type="text" placeholder="Etsi..." />
+    <div className="search-container">
+      <label htmlFor="search"><Glyphicon glyph="search"/></label>
+      <input name="search" id="search" type="text" placeholder={`${t('SEARCH.SEARCH')}...`} />
+    </div>
     <button id="toggle-view-button" onClick={toggleView}>M/L</button>
-  </div>;
+  </div>);
 const Footer = ({children}) => <div>{children}</div>;
 
 export class HomeContainer extends Component {

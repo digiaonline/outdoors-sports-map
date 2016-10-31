@@ -12,6 +12,30 @@
     .leaflet-container {
       height: 100vh;
     }
+
+    .overlay-control {
+
+      .btn {
+        position: fixed;
+        z-index: 1000;
+        border-radius: 50%;
+        border: 1px solid #B7B7B7;
+        line-height: 18px;
+        font-size: 18px;
+        padding: 5px 6px;
+        color: #666666;
+
+        &.overlay-control__locate {
+          bottom: $gap;
+          right: $gap;
+        }
+
+        &.overlay-control__info {
+          bottom: $gap;
+          left: $gap;
+        }
+      }
+    }
   }
 
   /**
