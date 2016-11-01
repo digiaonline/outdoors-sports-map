@@ -13,6 +13,14 @@ const UnitMarker = translate()(({position, name, address, www, description, t}) 
     </Popup>
   </Marker>));
 
+const UnitMarker2 = ({position, name, address, www, description}) => (
+  <Marker position={position}>
+    <Popup>
+      <PopupContent name={name} address={address} www={www} description={description} t={() => 'foobar'}/>
+    </Popup>
+  </Marker>
+);
+
 const PopupContent = ({name, address, www, description, t}) => (
   <div className="view-popup__content">
     <h3>{name}</h3>
@@ -46,6 +54,18 @@ export class MapView extends Component {
 
   render() {
     const {position, units, selected} = this.props;
+    const createMarker = (unit, {...rest}) =>
+      <UnitMarker
+        position={unit.location.coordinates.reverse()}
+        www={getAttr(unit.www_url)}
+        name={getAttr(unit.name)}
+        address={getAttr(unit.street_address)}
+        description={getAttr(unit.description)}
+        {...rest} />;
+      // <Marker position={unit.location.coordinates.reverse()} key={key}>
+      //   <Popup><div>{getAttr(unit.name)}</div></Popup>
+      // </Marker>;
+
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
         <Map ref="map" zoomControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
@@ -55,14 +75,11 @@ export class MapView extends Component {
           />
           {
             units && units.map(
-              (unit, index) =>
-                <UnitMarker
-                  position={unit.location.coordinates.reverse()}
-                  www={getAttr(unit.www_url)}
-                  name={getAttr(unit.name)}
-                  address={getAttr(unit.street_address)}
-                  description={getAttr(unit.description)}
-                  key={index} />)}
+              (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
+                createMarker(unit, {key: index})
+                // getAttr(unit.name)
+            )
+          }
         </Map>
         <div className="overlay-control">
           <Button bsSize="large" className="overlay-control__locate" onClick={this.locateUser}>

@@ -23,12 +23,19 @@ export class ListView extends Component {
     const {units, selected} = this.props;
     return (
       <View id="list-view" className="list-view" isSelected={selected}>
-          {units && sortBy(units, ['distance']).map( (unit, index) =>
-            <UnitListItem
-            name={getAttr(unit.name)}
-            address={getAttr(unit.street_address)}
-            details={getAttr(unit.description)}
-            key={index} />)}
+        <div className="list-view__container">
+          <div className="list-view__block">
+            Here will be filters
+          </div>
+          <div className="list-view__block">
+            {units && sortBy(units, ['distance']).map( (unit, index) =>
+              <UnitListItem
+              name={getAttr(unit.name)}
+              address={getAttr(unit.street_address)}
+              details={getAttr(unit.description)}
+              key={index} />)}
+          </div>
+        </div>
       </View>
     );
   }

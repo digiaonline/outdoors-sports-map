@@ -42,7 +42,21 @@
    * LIST VIEW
    */
   &.list-view {
+    position: fixed;
+    top: 0;
     overflow-y: scroll;
+    background: $ui-background;
+    padding-top: $header-height + 2 * $gap;
+    max-height: 90vh;
+
+    .list-view__container {
+      margin: 0 $gap;
+
+      .list-view__block {
+        border-top: 1px solid $ui-enabled;
+        padding: $gap 0;
+      }
+    }
 
     .list-view-item {
       border-bottom: 1px solid #999;

@@ -4,8 +4,7 @@ import {connect} from 'react-redux';
 import {translate} from 'react-i18next';
 import {Glyphicon} from 'react-bootstrap';
 import {fetchUnits} from '../../unit/actions';
-import {getAllUnits} from '../../unit/selectors';
-import {UnitServices} from '../../unit/constants';
+import {getVisibleUnits} from '../../unit/selectors';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
 import {ListView} from '../../unit/components/ListView.js';
@@ -52,21 +51,11 @@ export class HomeContainer extends Component {
 
   componentWillMount() {
     // Fetch ice rinks in 10km radius from the passed position
-    this.props.fetchUnits({
-      service: `${UnitServices.ICE_SKATING_FIELD},${UnitServices.MECHANICALLY_FROZEN_ICE}`,
-      lat: this.props.position[0],
-      lon: this.props.position[1],
-      page_size: 1000
-    });
+    this.props.fetchUnits();
   }
 
-  handleMapMove(center: Array): void {
-    this.props.fetchUnits({
-      service: `${UnitServices.ICE_SKATING_FIELD},${UnitServices.MECHANICALLY_FROZEN_ICE}`,
-      lat: center[0],
-      lon: center[1],
-      page_size: 1000
-    });
+  handleMapMove(): void {
+    //
   }
 
   render() {
@@ -84,7 +73,7 @@ export class HomeContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  unitData: getAllUnits(state),
+  unitData: getVisibleUnits(state),
   selectedView: state.selectedView
 });
 
