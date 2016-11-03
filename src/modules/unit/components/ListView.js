@@ -1,16 +1,22 @@
 import React, {Component, PropTypes} from 'react';
+import {Glyphicon} from 'react-bootstrap';
 import sortBy from 'lodash/sortBy';
 import {View} from './View.js';
 import {getAttr} from '../helpers.js';
 import {translate} from 'react-i18next';
 
-const UnitListItem = translate()(({name, address, details, t}) => (
+const UnitListItem = translate()(({name, status, t}) => (
   <div className="list-view-item">
-    <div className="list-view-item__unit-name">{name}</div>
-    <div className="list-view-item__unit-address">{address}</div>
-    {/* TODO/FIXME: Translate label and get actual status data */}
-    <div className="list-view-item__unit-status">{t('LIST.STATE')}: {t('LIST.UNKNOWN')}</div>
-    <div className="list-view-item__unit-details">{details}</div>
+    <div>
+      <div className="list-view-item__unit-marker" style={{color: '#666'}}><Glyphicon glyph="map-marker"/></div>
+    </div>
+    <div className="list-view-item__unit-details">
+      <div className="list-view-item__unit-name">{name}</div>
+      <div className="list-view-item__unit-status">{t('LIST.STATE')}: {status || t('LIST.UNKNOWN')}</div>
+    </div>
+    <div>
+      <div className="list-view-item__unit-open"><Glyphicon glyph="chevron-right"/></div>
+    </div>
   </div>));
 
 

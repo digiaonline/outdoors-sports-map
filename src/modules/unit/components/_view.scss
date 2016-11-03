@@ -44,7 +44,7 @@
     //max-height: 90vh;
 
     .list-view__container {
-      margin: 0 $gap;
+      margin: 0;
 
       .list-view__block {
         border-top: 1px solid $ui-enabled;
@@ -53,8 +53,33 @@
     }
 
     .list-view-item {
-      border-bottom: 1px solid #999;
       padding: 10px 0;
+      display: flex;
+      background: $content-background;
+      margin-bottom: $gap;
+
+      &__unit-details {
+        flex: 2 0 auto;
+
+        .list-view-item__unit-name {
+          font-weight: bold;
+        }
+
+        .list-view-item__unit-status {
+          background: $status-unknown;
+          width: 100%;
+        }
+      }
+
+      &__unit-marker,
+      &__unit-open {
+        width: 50px;
+        text-align: center;
+        line-height: 30px;
+        font-size: 30px;
+      }
+
+
     }
   }
 
