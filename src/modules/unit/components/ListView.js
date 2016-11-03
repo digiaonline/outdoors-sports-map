@@ -20,9 +20,9 @@ export class ListView extends Component {
   };
 
   render() {
-    const {units, show} = this.props;
+    const {units} = this.props;
     return (
-      <View id="list-view" className="list-view" isSelected={show}>
+      <View id="list-view" className="list-view">
         <div className="list-view__container">
           <div className="list-view__block">
             Here will be filters

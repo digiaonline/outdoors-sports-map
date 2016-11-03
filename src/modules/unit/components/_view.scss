@@ -1,7 +1,4 @@
 .view {
-
-  display: none;
-
   &.view--selected {
     display: block;
   }
@@ -43,10 +40,8 @@
    * LIST VIEW
    */
   &.list-view {
-    overflow-y: scroll;
-    background: $ui-background;
-    padding-top: $header-height + 2 * $gap;
-    max-height: 90vh;
+    //overflow-y: scroll;
+    //max-height: 90vh;
 
     .list-view__container {
       margin: 0 $gap;
@@ -70,29 +65,4 @@
     }
 
   }
-}
-
-@media only screen and (min-width : 768px) {
-    .view {
-      display: block;
-    }
-
-    .header {
-      width: 30vw;
-
-      #toggle-view-button {
-        display: none;
-      }
-    }
-
-    .list-view {
-      width: 30vw;
-      height: 100vh;
-      float: left;
-    }
-
-    .map-view, .leaflet-container {
-      width: 70vw;
-      float: right;
-    }
 }

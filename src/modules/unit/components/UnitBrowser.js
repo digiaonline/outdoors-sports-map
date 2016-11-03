@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {ListView} from './ListView.js';
 import {Glyphicon} from 'react-bootstrap';
+import {HEADER_HEIGHT} from '../../common/constants.js';
 // import {getAttr} from '../helpers.js';
 import {translate} from 'react-i18next';
 //
@@ -45,13 +46,19 @@ export class UnitBrowser extends Component {
   render() {
     const {units} = this.props;
     const {isExpanded} = this.state;
+    // Hackish way to make scrolling work
+    const isMobile = window.innerWidth < 768;
+    const bottomSpace = isMobile ? 200 : 0;
+    const contentMaxHeight = window.innerHeight - HEADER_HEIGHT - bottomSpace;
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
         <Header
           toggle={() => this.setState({isExpanded: !isExpanded})}
           toggleGlyph={isExpanded ? 'globe' : 'list'}
         />
-        <ListView units={units} show={isExpanded}/>
+        <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
+          <ListView units={units} show={isExpanded}/>
+        </div>
       </div>
     );
   }
