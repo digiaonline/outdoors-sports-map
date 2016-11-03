@@ -13,14 +13,6 @@ const UnitMarker = translate()(({position, name, address, www, description, t}) 
     </Popup>
   </Marker>));
 
-const UnitMarker2 = ({position, name, address, www, description}) => (
-  <Marker position={position}>
-    <Popup>
-      <PopupContent name={name} address={address} www={www} description={description} t={() => 'foobar'}/>
-    </Popup>
-  </Marker>
-);
-
 const PopupContent = ({name, address, www, description, t}) => (
   <div className="view-popup__content">
     <h3>{name}</h3>
