@@ -29,7 +29,7 @@ export class MapView extends Component {
   }
 
   render() {
-    const {position, units, selected} = this.props;
+    const {position, units, selected, handleClick} = this.props;
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
@@ -41,7 +41,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitMarker position={getUnitPosition(unit)} status={unit.status} key={index} />
+                <UnitMarker position={getUnitPosition(unit)} id={unit.id} status={unit.status} key={index} handleClick={handleClick} />
                 // getAttr(unit.name)
             )
           }

@@ -53,7 +53,6 @@ export class SingleUnitModalContainer extends Component {
     const currentUnitName = currentUnit ? getAttr(currentUnit.name) : 'Name was not found :(';
     const currentUnitAddress = currentUnit ? getAttr(currentUnit.street_address) : 'Address was not found :(';
     const currentUnitZip = currentUnit ? currentUnit.address_zip : 'Zip was not found :(';
-    console.log(currentUnit);
 
     return (
       <div>

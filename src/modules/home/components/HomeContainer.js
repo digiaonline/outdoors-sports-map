@@ -73,7 +73,7 @@ export class HomeContainer extends Component {
         {/*<Header toggleView={this.toggleView} toggleViewGlyph={selectedView === views.LIST ? 'globe' : 'list'} units={unitData}/>
         {/*<ListView selected={selectedView === views.LIST} units={unitData}/>*/}
         <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.toggleModal} />
-        <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData}/>
+        <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData} handleClick={this.toggleModal}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.toggleModal} />
         <Footer/>
       </div>

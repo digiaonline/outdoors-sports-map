@@ -1,6 +1,7 @@
 import React from 'react';
 import {Marker} from 'react-leaflet';
 import {Icon} from 'leaflet';
+import {withRouter} from 'react-router';
 
 const createIcon = (status = 'unknown') =>
   new Icon({
@@ -10,7 +11,13 @@ const createIcon = (status = 'unknown') =>
     iconAnchor: [12, 41]
   });
 
-const UnitMarker = ({status, ...rest}) =>
-  <Marker icon={createIcon(status)} {...rest} />;
+const UnitMarker = ({status, id, handleClick, router, ...rest}) =>
+  <Marker
+    icon={createIcon(status)}
+    onClick={() => {
+      router.push(`/unit/${id}`);
+      handleClick();
+    }}
+    {...rest}/>;
 
-export default UnitMarker;
+export default withRouter(UnitMarker);
