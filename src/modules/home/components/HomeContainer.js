@@ -51,7 +51,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, position} = this.props;
+    const {unitData, position, params} = this.props;
     const {selectedView} = this.state;
     return (
       <div>
@@ -59,7 +59,7 @@ export class HomeContainer extends Component {
         {/*<ListView selected={selectedView === views.LIST} units={unitData}/>*/}
         <UnitBrowser units={unitData} />
         <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData}/>
-        <SingleUnitModalContainer units={unitData} />
+        <SingleUnitModalContainer units={unitData} params={params} />
         <Footer/>
       </div>
     );

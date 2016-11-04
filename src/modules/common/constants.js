@@ -28,3 +28,9 @@ export type EntityAction = {
 export type AppState = {
   unit: UnitState
 };
+
+export const routerPaths = {
+  singleUnit: 'unit/:unitId'
+};
+
+export const mobileBreakpoint = 768;
