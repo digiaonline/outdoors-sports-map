@@ -1,16 +1,22 @@
 import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {Glyphicon} from 'react-bootstrap';
 import sortBy from 'lodash/sortBy';
 import {View} from './View.js';
-import {getAttr} from '../helpers.js';
+import {getAttr, getUnitIconURL} from '../helpers.js';
 import {translate} from 'react-i18next';
 
-const UnitListItem = translate()(({name, address, details, t}) => (
+const UnitListItem = translate()(({id, name, status, updated, handleClick, t}) => (
   <div className="list-view-item">
-    <div className="list-view-item__unit-name">{name}</div>
-    <div className="list-view-item__unit-address">{address}</div>
-    {/* TODO/FIXME: Translate label and get actual status data */}
-    <div className="list-view-item__unit-status">{t('LIST.STATE')}: {t('LIST.UNKNOWN')}</div>
-    <div className="list-view-item__unit-details">{details}</div>
+    <div className="list-view-item__unit-marker"><img src={getUnitIconURL(status)} alt=""/></div>
+    <div className="list-view-item__unit-details">
+      <div className="list-view-item__unit-name">{name}</div>
+      <div className="list-view-item__unit-status">{status || t('UNIT.UNKNOWN')}</div>
+      <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} {updated || t('UNIT.UNKNOWN')}</div>
+    </div>
+    <Link to={`/unit/${id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
+        <Glyphicon glyph="chevron-right"/>
+    </Link>
   </div>));
 
 
@@ -20,15 +26,20 @@ export class ListView extends Component {
   };
 
   render() {
-    const {units, selected} = this.props;
+    const {units, handleClick} = this.props;
     return (
-      <View id="list-view" className="list-view" isSelected={selected}>
-          {units && sortBy(units, ['distance']).map( (unit, index) =>
-            <UnitListItem
-            name={getAttr(unit.name)}
-            address={getAttr(unit.street_address)}
-            details={getAttr(unit.description)}
-            key={index} />)}
+      <View id="list-view" className="list-view">
+        <div className="list-view__container">
+          <div className="list-view__block">
+            {units && sortBy(units, ['distance']).map( (unit, index) =>
+              <UnitListItem
+              name={getAttr(unit.name)}
+              address={getAttr(unit.street_address)}
+              id={unit.id}
+              key={index}
+              handleClick={handleClick}/>)}
+          </div>
+        </div>
       </View>
     );
   }
