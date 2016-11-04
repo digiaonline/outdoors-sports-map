@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import {Button, Glyphicon} from 'react-bootstrap';
 import {View} from './View.js';
 import {Map, TileLayer} from 'react-leaflet';
-import {getAttr} from '../helpers.js';
+import {getAttr, getUnitPosition} from '../helpers.js';
 import UnitMarker from './UnitMarker.js';
 
 export class MapView extends Component {
@@ -30,17 +30,6 @@ export class MapView extends Component {
 
   render() {
     const {position, units, selected} = this.props;
-    const createMarker = (unit, {...rest}) =>
-      <UnitMarker
-        position={unit.location.coordinates.reverse()}
-        www={getAttr(unit.www_url)}
-        name={getAttr(unit.name)}
-        address={getAttr(unit.street_address)}
-        description={getAttr(unit.description)}
-        {...rest} />;
-      // <Marker position={unit.location.coordinates.reverse()} key={key}>
-      //   <Popup><div>{getAttr(unit.name)}</div></Popup>
-      // </Marker>;
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
@@ -52,7 +41,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitMarker position={unit.location.coordinates.reverse()} status={unit.status} key={index} />
+                <UnitMarker position={getUnitPosition(unit)} status={unit.status} key={index} />
                 // getAttr(unit.name)
             )
           }
