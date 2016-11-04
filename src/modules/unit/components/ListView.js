@@ -31,9 +31,6 @@ export class ListView extends Component {
       <View id="list-view" className="list-view">
         <div className="list-view__container">
           <div className="list-view__block">
-            Here will be filters
-          </div>
-          <div className="list-view__block">
             {units && sortBy(units, ['distance']).map( (unit, index) =>
               <UnitListItem
               name={getAttr(unit.name)}

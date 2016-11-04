@@ -3,7 +3,13 @@
     "FURTHER_INFO": "Lisää tietoa",
     "STATUS": "Kunto",
     "UNKNOWN": "Tuntematon",
-    "UPDATED": "Päivitetty"
+    "UPDATED": "Päivitetty",
+    "FILTER": {
+      "ALL": "All",
+      "SKATING": "Skating",
+      "SKIING": "Skiing",
+      "OPEN_NOW": "Open now"
+    }
   },
   "VIEW": {
     "POPUP": {

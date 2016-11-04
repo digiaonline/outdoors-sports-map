@@ -16,8 +16,13 @@ export const SkiingServices = [];
 export const UnitFilters = {
   SKATING: 'skating',
   SKIING: 'skiing',
-  OPEN_NOW: 'openNow'
+  OPEN_NOW: 'open_now'
 };
+
+export const DefaultFilters = [
+  UnitFilters.SKATING,
+  UnitFilters.SKIING
+];
 
 export const UnitActions = {
   FETCH: normalizeActionName('unit/FETCH'),

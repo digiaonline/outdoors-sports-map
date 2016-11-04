@@ -1,0 +1,35 @@
+.unit-filter {
+  width: 100%;
+  color: $ui-text;
+
+  .col-xs-6 {
+    padding: 0 0 $gap;
+
+    &:nth-child(even) {
+      padding-left: $gap/2;
+    }
+
+    &:nth-child(odd) {
+      padding-right: $gap/2;
+    }
+  }
+
+  & &__filter {
+    background: $ui-disabled;
+    padding: $gap;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &-icon {
+      padding-right: $gap;
+      font-size: 24px;
+      font-height: 24px;
+    }
+
+
+    &.active {
+      background: $ui-enabled;
+    }
+  }
+}

@@ -1,9 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import {ListView} from './ListView.js';
 import {Glyphicon} from 'react-bootstrap';
+import values from 'lodash/values';
 import {HEADER_HEIGHT} from '../../common/constants.js';
-// import {getAttr} from '../helpers.js';
+import {UnitFilters, DefaultFilters} from '../constants.js';
 import {translate} from 'react-i18next';
+import UnitFilter from './UnitFilter.js';
 //
 
 // const Filters = () => <div className="unit-browser__box filters"></div>;
@@ -39,17 +41,39 @@ export class UnitBrowser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isExpanded: false
+      isExpanded: false,
+      contentMaxHeight: null
     };
+
+    this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
+    this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateContentMaxHeight);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateContentMaxHeight);
+  }
+
+  updateContentMaxHeight() {
+    this.setState({contentMaxHeight: this.calculateMaxHeight()});
+  }
+
+  calculateMaxHeight() {
+    const isMobile = window.innerWidth < 768;
+    const bottomSpace = isMobile ? 200 : 0;
+    return window.innerHeight - HEADER_HEIGHT - bottomSpace;
   }
 
   render() {
+    console.log('Hello!');
     const {units} = this.props;
     const {isExpanded} = this.state;
-    // Hackish way to make scrolling work
-    const isMobile = window.innerWidth < 768;
-    const bottomSpace = isMobile ? 200 : 0;
-    const contentMaxHeight = window.innerHeight - HEADER_HEIGHT - bottomSpace;
+    const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
+    const filter = location.query && location.query.filter || DefaultFilters;
+
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
         <Header
@@ -57,6 +81,7 @@ export class UnitBrowser extends Component {
           toggleGlyph={isExpanded ? 'globe' : 'list'}
         />
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
+          <UnitFilter active={filter} all={values(UnitFilters)} />
           <ListView units={units} show={isExpanded}/>
         </div>
       </div>
