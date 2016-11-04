@@ -66,20 +66,13 @@ export class HomeContainer extends Component {
   render() {
     const {unitData, position, params, location: {query: {filter}}} = this.props;
     const {selectedView} = this.state;
-<<<<<<< HEAD
-=======
     const activeFilter = arrayifyQueryValue(filter);
->>>>>>> bdec91571c78d5e3fbeeea65f2ba27bf5d9ede9a
 
     return (
       <div>
         {/*<Header toggleView={this.toggleView} toggleViewGlyph={selectedView === views.LIST ? 'globe' : 'list'} units={unitData}/>
         {/*<ListView selected={selectedView === views.LIST} units={unitData}/>*/}
-<<<<<<< HEAD
-        <UnitBrowser units={unitData} handleClick={this.toggleModal} />
-=======
-        <UnitBrowser units={unitData} activeFilter={activeFilter} />
->>>>>>> bdec91571c78d5e3fbeeea65f2ba27bf5d9ede9a
+        <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.toggleModal} />
         <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.toggleModal} />
         <Footer/>
