@@ -1,22 +1,22 @@
 import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
 import sortBy from 'lodash/sortBy';
 import {View} from './View.js';
-import {getAttr} from '../helpers.js';
+import {getAttr, getUnitIconURL} from '../helpers.js';
 import {translate} from 'react-i18next';
 
-const UnitListItem = translate()(({name, status, t}) => (
+const UnitListItem = translate()(({id, name, status, updated, t}) => (
   <div className="list-view-item">
-    <div>
-      <div className="list-view-item__unit-marker" style={{color: '#666'}}><Glyphicon glyph="map-marker"/></div>
-    </div>
+    <div className="list-view-item__unit-marker"><img src={getUnitIconURL(status)} alt=""/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{name}</div>
-      <div className="list-view-item__unit-status">{t('LIST.STATE')}: {status || t('LIST.UNKNOWN')}</div>
+      <div className="list-view-item__unit-status">{status || t('UNIT.UNKNOWN')}</div>
+      <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} {updated || t('UNIT.UNKNOWN')}</div>
     </div>
-    <div>
-      <div className="list-view-item__unit-open"><Glyphicon glyph="chevron-right"/></div>
-    </div>
+    <Link to={`unit/${id}`} className="list-view-item__unit-open">
+        <Glyphicon glyph="chevron-right"/>
+    </Link>
   </div>));
 
 
@@ -38,7 +38,7 @@ export class ListView extends Component {
               <UnitListItem
               name={getAttr(unit.name)}
               address={getAttr(unit.street_address)}
-              details={getAttr(unit.description)}
+              id={unit.id}
               key={index} />)}
           </div>
         </div>

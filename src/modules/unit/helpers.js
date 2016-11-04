@@ -15,3 +15,7 @@ export const getAttr = (attr: Object, lang: ?string = 'en') => {
   }
   return translated || null;
 };
+
+export const getUnitIconURL = (status = 'unknown'/*, service*/) => {
+  return require(`@assets/markers/marker-icon-2x-${status}.png`);
+};

@@ -1,7 +1,9 @@
 {
-  "LIST": {
-    "STATE": "State",
-    "UNKNOWN": "Unknown"
+  "UNIT": {
+    "STATUS": "Status",
+    "UNKNOWN": "Unknown",
+    "UPDATED": "Updated",
+    "FURTHER INFO": "Furhter info"
   },
   "VIEW": {
     "POPUP": {

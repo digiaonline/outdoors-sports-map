@@ -1,7 +1,9 @@
 {
-  "LIST": {
-    "STATE": "Kunto",
-    "UNKNOWN": "Tuntematon"
+  "UNIT": {
+    "FURTHER_INFO": "Lisää tietoa",
+    "STATUS": "Kunto",
+    "UNKNOWN": "Tuntematon",
+    "UPDATED": "Päivitetty"
   },
   "VIEW": {
     "POPUP": {
