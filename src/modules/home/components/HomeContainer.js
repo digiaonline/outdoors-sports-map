@@ -6,6 +6,8 @@ import {getVisibleUnits} from '../../unit/selectors';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
 import {UnitBrowser} from '../../unit/components/UnitBrowser.js';
+import {ListView} from '../../unit/components/ListView.js';
+import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
 import {locations, views} from '../constants.js';
 
 const Footer = ({children}) => <div>{children}</div>;
@@ -57,6 +59,7 @@ export class HomeContainer extends Component {
         {/*<ListView selected={selectedView === views.LIST} units={unitData}/>*/}
         <UnitBrowser units={unitData} />
         <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData}/>
+        <SingleUnitModalContainer units={unitData} />
         <Footer/>
       </div>
     );
