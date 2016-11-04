@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Modal, Button, Glyphicon} from 'react-bootstrap';
-import {connect} from 'react-redux';
-import withRouter from 'react-router';
+import {Modal, Glyphicon} from 'react-bootstrap';
+import {Link} from 'react-router';
 import {getAttr} from '../helpers.js';
 
 const ModalHeader = ({handleClick, name, address, zip}) =>
@@ -9,7 +8,9 @@ const ModalHeader = ({handleClick, name, address, zip}) =>
     <div>
       <h3>
         {name}
-        <Glyphicon onClick={handleClick} style={{ position: 'relative', float: 'right' }} glyph="remove"/>
+        <Link to="/">
+          <Glyphicon onClick={handleClick} style={{ position: 'relative', float: 'right' }} glyph="remove"/>
+        </Link>
       </h3>
       <p>{address}, {zip}</p>
     </div>
@@ -39,17 +40,7 @@ export class SingleUnitModalContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state ={modalOpen: false};
-    this.toggleOpen = this.toggleOpen.bind(this);
     this.getCurrentUnit = this.getCurrentUnit.bind(this);
-  }
-
-  toggleOpen() {
-    if (this.state.modalOpen === false) {
-      this.setState({modalOpen: true});
-    } else {
-      this.setState({modalOpen: false});
-    }
   }
 
   getCurrentUnit(units, currentUnitId) {
@@ -57,9 +48,8 @@ export class SingleUnitModalContainer extends Component {
   }
 
   render(){
-    const {units, params} = this.props;
-    const currentUnitId = params.unitId;
-    const currentUnit = this.getCurrentUnit(units, currentUnitId);
+    const {units, handleClick, params} = this.props;
+    const currentUnit = this.getCurrentUnit(units, params.unitId);
     const currentUnitName = currentUnit ? getAttr(currentUnit.name) : 'Name was not found :(';
     const currentUnitAddress = currentUnit ? getAttr(currentUnit.street_address) : 'Address was not found :(';
     const currentUnitZip = currentUnit ? currentUnit.address_zip : 'Zip was not found :(';
@@ -67,9 +57,8 @@ export class SingleUnitModalContainer extends Component {
 
     return (
       <div>
-        <Button onClick={this.toggleOpen} style={{ position: 'fixed', bottom: 30, right: 0, zIndex: 10000 }}>Wryy</Button>
-        <Modal className="single-unit-modal" show={this.state.modalOpen}>
-          <ModalHeader name={currentUnitName} address={currentUnitAddress} zip={currentUnitZip} handleClick={this.toggleOpen}/>
+        <Modal className="single-unit-modal" show={this.props.isOpen}>
+          <ModalHeader name={currentUnitName} address={currentUnitAddress} zip={currentUnitZip} handleClick={handleClick}/>
           <Modal.Body>
             <LocationState/>
             <LocationInfo/>
@@ -82,8 +71,4 @@ export class SingleUnitModalContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, routerProps) => ({
-  unitId: routerProps
-});
-
-export default connect(mapStateToProps)(SingleUnitModalContainer);
+export default SingleUnitModalContainer;

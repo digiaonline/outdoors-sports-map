@@ -6,7 +6,7 @@ import {View} from './View.js';
 import {getAttr, getUnitIconURL} from '../helpers.js';
 import {translate} from 'react-i18next';
 
-const UnitListItem = translate()(({id, name, status, updated, t}) => (
+const UnitListItem = translate()(({id, name, status, updated, handleClick, t}) => (
   <div className="list-view-item">
     <div className="list-view-item__unit-marker"><img src={getUnitIconURL(status)} alt=""/></div>
     <div className="list-view-item__unit-details">
@@ -14,7 +14,7 @@ const UnitListItem = translate()(({id, name, status, updated, t}) => (
       <div className="list-view-item__unit-status">{status || t('UNIT.UNKNOWN')}</div>
       <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} {updated || t('UNIT.UNKNOWN')}</div>
     </div>
-    <Link to={`unit/${id}`} className="list-view-item__unit-open">
+    <Link to={`/unit/${id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
         <Glyphicon glyph="chevron-right"/>
     </Link>
   </div>));
@@ -26,7 +26,7 @@ export class ListView extends Component {
   };
 
   render() {
-    const {units} = this.props;
+    const {units, handleClick} = this.props;
     return (
       <View id="list-view" className="list-view">
         <div className="list-view__container">
@@ -36,7 +36,8 @@ export class ListView extends Component {
               name={getAttr(unit.name)}
               address={getAttr(unit.street_address)}
               id={unit.id}
-              key={index} />)}
+              key={index}
+              handleClick={handleClick}/>)}
           </div>
         </div>
       </View>
