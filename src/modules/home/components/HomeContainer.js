@@ -87,7 +87,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({fetchUnits, singleUnitSelect}, dispatch);
+  bindActionCreators({fetchUnits}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer

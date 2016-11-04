@@ -107,7 +107,7 @@ class UnitBrowser extends Component {
         />
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
           <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} handleClick={handleClick} />
-          <ListView units={units} show={isExpanded}/>
+          <ListView units={units} show={isExpanded} handleClick={handleClick}/>
         </div>
       </div>
     );
