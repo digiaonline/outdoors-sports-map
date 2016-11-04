@@ -7,17 +7,6 @@ import {HEADER_HEIGHT} from '../../common/constants.js';
 import {UnitFilters, DefaultFilters} from '../constants.js';
 import {translate} from 'react-i18next';
 import UnitFilter from './UnitFilter.js';
-//
-
-// const Filters = () => <div className="unit-browser__box filters"></div>;
-// const Header = translate()(({toggleViewGlyph, toggleView, t}) =>
-//   <div id="header" className="header">
-//     <div className="search-container">
-//       <label htmlFor="search"><Glyphicon glyph="search"/></label>
-//       <input name="search" id="search" type="text" placeholder={`${t('SEARCH.SEARCH')}...`} />
-//     </div>
-//     <button className="toggle-view-button" onClick={toggleView}><Glyphicon glyph={toggleViewGlyph}/></button>
-//   </div>);
 
 const SearchBar = translate()(({t}) =>
   <div className="search-container">
@@ -97,8 +86,6 @@ class UnitBrowser extends Component {
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
 
-    console.log(activeFilter);
-
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
         <Header
@@ -106,8 +93,8 @@ class UnitBrowser extends Component {
           toggleGlyph={isExpanded ? 'globe' : 'list'}
         />
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
-          <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} handleClick={handleClick} />
-          <ListView units={units} show={isExpanded} handleClick={handleClick}/>
+          <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
+          <ListView units={units} show={isExpanded} handleClick={handleClick} />
         </div>
       </div>
     );

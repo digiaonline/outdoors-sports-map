@@ -51,8 +51,6 @@ export class MapView extends Component {
     const {position, units, selected, handleClick} = this.props;
     const {isMobile} = this.state;
 
-    console.log(isMobile);
-
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
         <Map ref="map" zoomControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
@@ -69,12 +67,12 @@ export class MapView extends Component {
           }
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control className="leaflet-bar leaflet-control-locate" position="bottomright">
-            <a bsSize="large" className="overlay-control__locate" onClick={this.locateUser}>
+            <a onClick={this.locateUser}>
               <Glyphicon glyph="screenshot"/>
             </a>
           </Control>
           <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
-            <a bsSize="large" className="overlay-control__info">
+            <a>
               <Glyphicon glyph="info-sign"/>
             </a>
           </Control>

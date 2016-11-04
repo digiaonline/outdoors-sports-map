@@ -9,7 +9,6 @@ export const getAllUnits = (state: AppState/*, props: Object*/) =>
   state.unit.all.map((id) => getUnitById(state, {id}));
 
 export const getVisibleUnits = (state: AppState, filters = DefaultFilters) => {
-  console.log(filters);
   let visibleUnits = [];
 
   filters.forEach((filter) => {
