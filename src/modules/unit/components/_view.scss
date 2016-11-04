@@ -9,28 +9,25 @@
   &.map-view {
     .leaflet-container {
       height: 100vh;
-    }
 
-    .overlay-control {
+      .leaflet-control-container {
+        .leaflet-control {
+          a {
+            color: $content-text-secondary;
+          }
 
-      .btn {
-        position: fixed;
-        z-index: 1000;
-        border-radius: 50%;
-        border: 1px solid #B7B7B7;
-        line-height: 18px;
-        font-size: 18px;
-        padding: 5px 6px;
-        color: #666666;
+          &.leaflet-control-locate,
+          &.leaflet-control-info {
+            &, a {
+              background: $content-background;
+              border-radius: 50%;
 
-        &.overlay-control__locate {
-          bottom: $gap;
-          right: $gap;
-        }
-
-        &.overlay-control__info {
-          bottom: $gap;
-          left: $gap;
+              .glyphicon {
+                font-size: 16px;
+                line-height: 26px;
+              }
+            }
+          }
         }
       }
     }

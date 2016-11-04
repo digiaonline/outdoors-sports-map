@@ -4443,6 +4443,10 @@ react-i18next:
   dependencies:
     hoist-non-react-statics "1.2.0"
 
+react-leaflet-control:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-leaflet-control/-/react-leaflet-control-1.1.2.tgz#0973735620d0df12e83435d44f698b866c034edb"
+
 react-leaflet@^1.0.0-rc.2:
   version "1.0.0-rc.2"
   resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-1.0.0-rc.2.tgz#2cf384a596da972f4640ee2de4bdda25638418d8"

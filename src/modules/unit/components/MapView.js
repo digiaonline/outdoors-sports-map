@@ -1,10 +1,12 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
 import {Button, Glyphicon} from 'react-bootstrap';
-import {View} from './View.js';
-import {Map, TileLayer} from 'react-leaflet';
-import {getAttr, getUnitPosition} from '../helpers.js';
-import UnitMarker from './UnitMarker.js';
+import {View} from './View';
+import {Map, TileLayer, ZoomControl} from 'react-leaflet';
+import Control from 'react-leaflet-control';
+import {getUnitPosition} from '../helpers';
+import {mobileBreakpoint} from '../../common/constants';
+import UnitMarker from './UnitMarker';
 
 export class MapView extends Component {
   static propTypes = {
@@ -15,8 +17,25 @@ export class MapView extends Component {
   constructor(props: Object) {
     super(props);
 
+    this.state = {
+      isMobile: window.innerWidth < mobileBreakpoint
+    };
+
     this.onMoveend = this.onMoveend.bind(this);
     this.locateUser = this.locateUser.bind(this);
+    this.updateIsMobile = this.updateIsMobile.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateIsMobile);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateIsMobile);
+  }
+
+  updateIsMobile() {
+    this.setState({isMobile: window.innerWidth < mobileBreakpoint});
   }
 
   onMoveend(e: Object): void{
@@ -30,6 +49,9 @@ export class MapView extends Component {
 
   render() {
     const {position, units, selected, handleClick} = this.props;
+    const {isMobile} = this.state;
+
+    console.log(isMobile);
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
@@ -45,15 +67,18 @@ export class MapView extends Component {
                 // getAttr(unit.name)
             )
           }
+          {!isMobile && <ZoomControl position="bottomright" />}
+          <Control className="leaflet-bar leaflet-control-locate" position="bottomright">
+            <a bsSize="large" className="overlay-control__locate" onClick={this.locateUser}>
+              <Glyphicon glyph="screenshot"/>
+            </a>
+          </Control>
+          <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
+            <a bsSize="large" className="overlay-control__info">
+              <Glyphicon glyph="info-sign"/>
+            </a>
+          </Control>
         </Map>
-        <div className="overlay-control">
-          <Button bsSize="large" className="overlay-control__locate" onClick={this.locateUser}>
-            <Glyphicon glyph="screenshot"/>
-          </Button>
-          <Button bsSize="large" className="overlay-control__info">
-            <Glyphicon glyph="info-sign"/>
-          </Button>
-        </div>
       </View>
     );
   }
