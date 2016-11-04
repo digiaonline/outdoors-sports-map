@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {withRouter} from 'react-router';
 import {ListView} from './ListView.js';
 import {Glyphicon} from 'react-bootstrap';
 import values from 'lodash/values';
@@ -33,10 +34,15 @@ const Header = ({toggle, toggleGlyph}) =>
   <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
 </div>;
 
-export class UnitBrowser extends Component {
+class UnitBrowser extends Component {
   static propTypes = {
-    units: PropTypes.array
+    units: PropTypes.array,
+    activeFilter: PropTypes.array
   };
+
+  static defaultProps = {
+    activeFilter: DefaultFilters
+  }
 
   constructor(props) {
     super(props);
@@ -46,6 +52,7 @@ export class UnitBrowser extends Component {
     };
 
     this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
     this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
   }
 
@@ -67,12 +74,30 @@ export class UnitBrowser extends Component {
     return window.innerHeight - HEADER_HEIGHT - bottomSpace;
   }
 
+  toggleFilter(filter) {
+    const {activeFilter, router} = this.props;
+    let newFilter = Array.isArray(activeFilter) ? activeFilter.slice() : [activeFilter];
+    const index = newFilter.indexOf(filter);
+    if (index === -1) {
+      newFilter = [...newFilter, filter];
+    } else {
+      newFilter = [
+        ...newFilter.slice(0, index),
+        ...newFilter.slice(index + 1)
+      ];
+    }
+
+    router.push({
+      query: {filter: newFilter}
+    });
+  }
+
   render() {
-    console.log('Hello!');
-    const {units} = this.props;
+    const {units, activeFilter} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
-    const filter = location.query && location.query.filter || DefaultFilters;
+
+    console.log(activeFilter);
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
@@ -81,10 +106,12 @@ export class UnitBrowser extends Component {
           toggleGlyph={isExpanded ? 'globe' : 'list'}
         />
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
-          <UnitFilter active={filter} all={values(UnitFilters)} />
+          <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
           <ListView units={units} show={isExpanded}/>
         </div>
       </div>
     );
   }
 }
+
+export default withRouter(UnitBrowser);

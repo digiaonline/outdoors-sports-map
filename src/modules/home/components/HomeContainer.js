@@ -3,12 +3,13 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {fetchUnits} from '../../unit/actions';
 import {getVisibleUnits} from '../../unit/selectors';
+import {DefaultFilters} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
-import {UnitBrowser} from '../../unit/components/UnitBrowser.js';
-import {ListView} from '../../unit/components/ListView.js';
+import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
 import {locations, views} from '../constants.js';
+import {arrayifyQueryValue} from '../../common/helpers';
 
 const Footer = ({children}) => <div>{children}</div>;
 
@@ -17,13 +18,15 @@ export class HomeContainer extends Component {
     fetchUnits: PropTypes.func.isRequired,
     position: PropTypes.array.isRequired,
     selectedView: PropTypes.string.isRequired,
-    unitData: PropTypes.array
+    unitData: PropTypes.array,
+    filter: PropTypes.any.isRequired
   };
 
   static defaultProps = {
     unitData: [],
     position: locations.HELSINKI,
-    selectedView: views.MAP
+    selectedView: views.MAP,
+    filter: DefaultFilters
   };
 
   constructor(props) {
@@ -37,7 +40,6 @@ export class HomeContainer extends Component {
   }
 
   toggleView() {
-    console.log('wgfasdf');
     this.setState({selectedView: this.state['selectedView'] === views.MAP ? views.LIST : views.MAP});
   }
 
@@ -51,13 +53,15 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, position, params} = this.props;
+    const {unitData, position, params, location: {query: {filter}}} = this.props;
     const {selectedView} = this.state;
+    const activeFilter = arrayifyQueryValue(filter);
+
     return (
       <div>
         {/*<Header toggleView={this.toggleView} toggleViewGlyph={selectedView === views.LIST ? 'globe' : 'list'} units={unitData}/>
         {/*<ListView selected={selectedView === views.LIST} units={unitData}/>*/}
-        <UnitBrowser units={unitData} />
+        <UnitBrowser units={unitData} activeFilter={activeFilter} />
         <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData}/>
         <SingleUnitModalContainer units={unitData} params={params} />
         <Footer/>
@@ -66,8 +70,8 @@ export class HomeContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  unitData: getVisibleUnits(state),
+const mapStateToProps = (state, props) => ({
+  unitData: getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
   selectedView: state.selectedView
 });
 

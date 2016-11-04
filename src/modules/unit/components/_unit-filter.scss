@@ -21,6 +21,10 @@
     align-items: center;
     cursor: pointer;
 
+    &:active {
+      background: darken($ui-disabled, 10%);
+    }
+
     &-icon {
       padding-right: $gap;
       font-size: 24px;
@@ -30,6 +34,10 @@
 
     &.active {
       background: $ui-enabled;
+
+      &:active {
+        background: darken($ui-enabled, 10%);
+      }
     }
   }
 }
