@@ -1,11 +1,22 @@
 {
-  "LIST": {
-    "STATE": "State",
-    "UNKNOWN": "Unknown"
+  "UNIT": {
+    "STATUS": "Status",
+    "UNKNOWN": "Unknown",
+    "UPDATED": "Updated",
+    "FURTHER INFO": "Furhter info",
+    "FILTER": {
+      "ALL": "All",
+      "SKATING": "Skating",
+      "SKIING": "Skiing",
+      "OPEN_NOW": "Open now"
+    }
   },
   "VIEW": {
     "POPUP": {
       "OPENING_HOURS": "Opening hours and further information"
     }
+  },
+  "SEARCH": {
+    "SEARCH": "Search"
   }
 }

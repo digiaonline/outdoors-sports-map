@@ -1,25 +1,12 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
-import {View} from './View.js';
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
-import {getAttr} from '../helpers.js';
-import {translate} from 'react-i18next';
-
-const UnitMarker = translate()(({position, name, address, www, description, t}) => (
-  <Marker position={position}>
-    <Popup>
-      <PopupContent name={name} address={address} www={www} description={description} t={t}/>
-    </Popup>
-  </Marker>));
-
-const PopupContent = ({name, address, www, description, t}) => (
-  <div className="view-popup__content">
-    <h3>{name}</h3>
-    <h4>{address}</h4>
-    <p><strong>{t('LIST.STATE')}:</strong> {t('LIST.UNKNOWN')}</p> {/*TODO: replace hard coding with real condition*/}
-    <p>{description}</p>
-    <p><a href={www} target="_blank">{t('VIEW.POPUP.OPENING_HOURS')}</a></p>
-  </div>);
+import {Button, Glyphicon} from 'react-bootstrap';
+import {View} from './View';
+import {Map, TileLayer, ZoomControl} from 'react-leaflet';
+import Control from 'react-leaflet-control';
+import {getUnitPosition} from '../helpers';
+import {mobileBreakpoint} from '../../common/constants';
+import UnitMarker from './UnitMarker';
 
 export class MapView extends Component {
   static propTypes = {
@@ -30,8 +17,25 @@ export class MapView extends Component {
   constructor(props: Object) {
     super(props);
 
+    this.state = {
+      isMobile: window.innerWidth < mobileBreakpoint
+    };
+
     this.onMoveend = this.onMoveend.bind(this);
     this.locateUser = this.locateUser.bind(this);
+    this.updateIsMobile = this.updateIsMobile.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateIsMobile);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateIsMobile);
+  }
+
+  updateIsMobile() {
+    this.setState({isMobile: window.innerWidth < mobileBreakpoint});
   }
 
   onMoveend(e: Object): void{
@@ -44,7 +48,9 @@ export class MapView extends Component {
   }
 
   render() {
-    const {position, units, selected} = this.props;
+    const {position, units, selected, handleClick} = this.props;
+    const {isMobile} = this.state;
+
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
         <Map ref="map" zoomControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
@@ -54,16 +60,23 @@ export class MapView extends Component {
           />
           {
             units && units.map(
-              (unit, index) =>
-                <UnitMarker
-                  position={unit.location.coordinates.reverse()}
-                  www={getAttr(unit.www_url)}
-                  name={getAttr(unit.name)}
-                  address={getAttr(unit.street_address)}
-                  description={getAttr(unit.description)}
-                  key={index} />)}
+              (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
+                <UnitMarker position={getUnitPosition(unit)} id={unit.id} status={unit.status} key={index} handleClick={handleClick} />
+                // getAttr(unit.name)
+            )
+          }
+          {!isMobile && <ZoomControl position="bottomright" />}
+          <Control className="leaflet-bar leaflet-control-locate" position="bottomright">
+            <a onClick={this.locateUser}>
+              <Glyphicon glyph="screenshot"/>
+            </a>
+          </Control>
+          <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
+            <a>
+              <Glyphicon glyph="info-sign"/>
+            </a>
+          </Control>
         </Map>
-        <button style={{position:'fixed',  zIndex:10000, bottom: 0, right: 0}} onClick={this.locateUser}>Locate</button>
       </View>
     );
   }

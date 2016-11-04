@@ -1,7 +1,7 @@
-import keys from 'lodash/keys';
+import {keys, values} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
-import {UnitActions} from './constants';
+import {UnitActions, SkatingServices, SkiingServices, UnitFilters} from './constants';
 import {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
@@ -14,15 +14,40 @@ const byIdReducer = handleActions({
     ({...entities.unit})
 }, {});
 
-const idsReducer = handleActions({
+const all = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
     [...keys(entities.unit)]
 }, []);
 
+const skating = handleActions({
+  [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
+    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkatingServices.indexOf(unitService) !== -1))]
+}, []);
+
+const skiing = handleActions({
+  [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
+    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkiingServices.indexOf(unitService) !== -1))]
+}, []);
+
+// TODO
+const openNow = handleActions({
+  [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
+    [...keys(entities.unit)]
+}, []);
+
+const filters = handleActions({
+  [UnitActions.SET_FILTERS] : (state: Object, {payload: {filters}}) =>
+    filters
+}, values(UnitFilters));
+
 const reducer = combineReducers({
   isFetching: isFetchingReducer,
   byId: byIdReducer,
-  ids: idsReducer
+  all,
+  skating,
+  skiing,
+  openNow,
+  filters
 });
 
 export default reducer;

@@ -1,11 +1,22 @@
 {
-  "LIST": {
-    "STATE": "Kunto",
-    "UNKNOWN": "Tuntematon"
+  "UNIT": {
+    "FURTHER_INFO": "Lisää tietoa",
+    "STATUS": "Kunto",
+    "UNKNOWN": "Tuntematon",
+    "UPDATED": "Päivitetty",
+    "FILTER": {
+      "ALL": "All",
+      "SKATING": "Skating",
+      "SKIING": "Skiing",
+      "OPEN_NOW": "Open now"
+    }
   },
   "VIEW": {
     "POPUP": {
       "OPENING_HOURS": "Aukioloajat ja lisätietoja"
     }
+  },
+  "SEARCH": {
+    "SEARCH": "Etsi"
   }
 }
