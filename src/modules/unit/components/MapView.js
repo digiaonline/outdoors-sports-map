@@ -2,25 +2,9 @@
 import React, {Component, PropTypes} from 'react';
 import {Button, Glyphicon} from 'react-bootstrap';
 import {View} from './View.js';
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
+import {Map, TileLayer} from 'react-leaflet';
 import {getAttr} from '../helpers.js';
-import {translate} from 'react-i18next';
-
-const UnitMarker = translate()(({position, name, address, www, description, t}) => (
-  <Marker position={position}>
-    <Popup>
-      <PopupContent name={name} address={address} www={www} description={description} t={t}/>
-    </Popup>
-  </Marker>));
-
-const PopupContent = ({name, address, www, description, t}) => (
-  <div className="view-popup__content">
-    <h3>{name}</h3>
-    <h4>{address}</h4>
-    <p><strong>{t('LIST.STATE')}:</strong> {t('LIST.UNKNOWN')}</p> {/*TODO: replace hard coding with real condition*/}
-    <p>{description}</p>
-    <p><a href={www} target="_blank">{t('VIEW.POPUP.OPENING_HOURS')}</a></p>
-  </div>);
+import UnitMarker from './UnitMarker.js';
 
 export class MapView extends Component {
   static propTypes = {
@@ -68,7 +52,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                createMarker(unit, {key: index})
+                <UnitMarker position={unit.location.coordinates.reverse()} status={unit.status} key={index} />
                 // getAttr(unit.name)
             )
           }

@@ -37,6 +37,7 @@
     "redux-actions": "^0.12.0",
     "redux-persist": "^4.0.0-alpha6",
     "redux-saga": "^0.12.0",
+    "url-loader": "^0.5.7",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
