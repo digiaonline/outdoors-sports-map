@@ -39,7 +39,8 @@ export class HomeContainer extends Component {
 
     this.handleMapMove = this.handleMapMove.bind(this);
     this.toggleView = this.toggleView.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   toggleView() {
@@ -51,17 +52,27 @@ export class HomeContainer extends Component {
     this.props.fetchUnits();
   }
 
+  componentDidMount() {
+    const {params} = this.props;
+
+    if (params.unitId) {
+      this.openModal();
+    }
+  }
+
+
   handleMapMove(): void {
     //
   }
 
-  toggleModal() {
-    if (this.state.modalOpen === false) {
-      this.setState({modalOpen: true});
-    } else {
-      this.setState({modalOpen: false});
-    }
+  openModal() {
+    this.setState({modalOpen: true});
   }
+
+  closeModal() {
+    this.setState({modalOpen: false});
+  }
+
 
   render() {
     const {unitData, position, params, location: {query: {filter}}} = this.props;
@@ -72,9 +83,9 @@ export class HomeContainer extends Component {
       <div>
         {/*<Header toggleView={this.toggleView} toggleViewGlyph={selectedView === views.LIST ? 'globe' : 'list'} units={unitData}/>
         {/*<ListView selected={selectedView === views.LIST} units={unitData}/>*/}
-        <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.toggleModal} />
-        <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData} handleClick={this.toggleModal}/>
-        <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.toggleModal} />
+        <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} />
+        <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData} handleClick={this.openModal}/>
+        <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
         <Footer/>
       </div>
     );
