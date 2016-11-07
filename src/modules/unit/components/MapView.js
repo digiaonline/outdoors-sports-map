@@ -1,7 +1,9 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
-import {Button, Glyphicon} from 'react-bootstrap';
+import {Glyphicon} from 'react-bootstrap';
 import {View} from './View';
+import Logo from '../../home/components/Logo';
+import Disclaimer from '../../home/components/Disclaimer';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import {getUnitPosition} from '../helpers';
@@ -12,6 +14,10 @@ export class MapView extends Component {
   static propTypes = {
     position: PropTypes.array.isRequired,
     units: PropTypes.array
+  };
+
+  state: {
+    isMobile: boolean
   };
 
   constructor(props: Object) {
@@ -53,7 +59,7 @@ export class MapView extends Component {
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
-        <Map ref="map" zoomControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
+        <Map ref="map" zoomControl={false} attributionControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
           <TileLayer
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -77,6 +83,8 @@ export class MapView extends Component {
             </a>
           </Control>
         </Map>
+        <Logo/>
+        <Disclaimer attributionLink="http://osm.org/copyright" />
       </View>
     );
   }

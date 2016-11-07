@@ -11,8 +11,6 @@ import SingleUnitModalContainer from '../../unit/components/SingleUnitModalConta
 import {locations, views} from '../constants.js';
 import {arrayifyQueryValue} from '../../common/helpers';
 
-const Footer = ({children}) => <div>{children}</div>;
-
 export class HomeContainer extends Component {
   static propTypes = {
     fetchUnits: PropTypes.func.isRequired,
@@ -81,12 +79,9 @@ export class HomeContainer extends Component {
 
     return (
       <div>
-        {/*<Header toggleView={this.toggleView} toggleViewGlyph={selectedView === views.LIST ? 'globe' : 'list'} units={unitData}/>
-        {/*<ListView selected={selectedView === views.LIST} units={unitData}/>*/}
         <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} />
         <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData} handleClick={this.openModal}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
-        <Footer/>
       </div>
     );
   }

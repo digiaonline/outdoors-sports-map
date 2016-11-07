@@ -1,0 +1,27 @@
+.logo {
+  position: fixed;
+  z-index: 1001;
+  bottom: $disclaimer-height;// + $gap;
+  width: 100%;
+  h2 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+
+    a {
+      color: $content-text;
+
+      &:hover, &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width : $breakpoint) {
+  .logo {
+    width: initial;
+    right: 36px + $gap;
+    bottom: $disclaimer-height + $gap;
+  }
+}
