@@ -1,7 +1,7 @@
 import {keys, values} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
-import {UnitActions, SkatingServices, SkiingServices, UnitFilters} from './constants';
+import {UnitActions, SearchActions, SkatingServices, SkiingServices, UnitFilters} from './constants';
 import {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
@@ -40,6 +40,10 @@ const filters = handleActions({
     filters
 }, values(UnitFilters));
 
+const searchResult = handleActions({
+  [SearchActions.RECEIVE_SEARCH_RESULT] : (state, {payload}) => payload
+}, {entities: [], result: []});
+
 const reducer = combineReducers({
   isFetching: isFetchingReducer,
   byId: byIdReducer,
@@ -47,7 +51,8 @@ const reducer = combineReducers({
   skating,
   skiing,
   openNow,
-  filters
+  filters,
+  searchResult
 });
 
 export default reducer;

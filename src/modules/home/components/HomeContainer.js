@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {fetchUnits} from '../../unit/actions';
+import {fetchUnits, searchTarget} from '../../unit/actions';
 import {getVisibleUnits} from '../../unit/selectors';
 import {DefaultFilters} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';

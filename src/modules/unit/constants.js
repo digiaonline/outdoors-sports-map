@@ -30,6 +30,11 @@ export const UnitActions = {
   SET_FILTERS: normalizeActionName('unit/SET_FILTERS')
 };
 
+export const SearchActions = {
+  SEARCH: 'search/SEARCH',
+  RECEIVE_SEARCH_RESULT: 'search/RECEIVE_SEARCH_RESULT'
+};
+
 export type UnitState = {
   isFetching: boolean,
   byId: Object,
