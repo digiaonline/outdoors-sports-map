@@ -4,36 +4,6 @@
   }
 
   /**
-   * MAP VIEW
-   */
-  &.map-view {
-    .leaflet-container {
-      height: 100vh;
-
-      .leaflet-control-container {
-        .leaflet-control {
-          a {
-            color: $content-text-secondary;
-          }
-
-          &.leaflet-control-locate,
-          &.leaflet-control-info {
-            &, a {
-              background: $content-background;
-              border-radius: 50%;
-
-              .glyphicon {
-                font-size: 16px;
-                line-height: 26px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
    * LIST VIEW
    */
   &.list-view {

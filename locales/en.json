@@ -1,4 +1,11 @@
 {
+  "APP": {
+    "NAME": "Kuntokartta",
+    "ABOUT": "About the service"
+  },
+  "MAP": {
+    "ATTRIBUTION": "OpenStreetMap contributors"
+  },
   "UNIT": {
     "STATUS": "Status",
     "UNKNOWN": "Unknown",
