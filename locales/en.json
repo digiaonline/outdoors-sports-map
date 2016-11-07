@@ -11,6 +11,9 @@
       "OPEN_NOW": "Open now"
     }
   },
+  "MODAL": {
+    "LOADING": "Loading location..."
+  },
   "VIEW": {
     "POPUP": {
       "OPENING_HOURS": "Opening hours and further information"

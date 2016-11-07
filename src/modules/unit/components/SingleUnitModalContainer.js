@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Modal, Glyphicon} from 'react-bootstrap';
 import {Link} from 'react-router';
 import {getAttr} from '../helpers.js';
+import {translate} from 'react-i18next';
 
 const ModalHeader = ({handleClick, name, address, zip}) =>
   <Modal.Header>
@@ -12,27 +13,27 @@ const ModalHeader = ({handleClick, name, address, zip}) =>
           <Glyphicon onClick={handleClick} style={{ position: 'relative', float: 'right' }} glyph="remove"/>
         </Link>
       </h3>
-      <p>{address}, {zip}</p>
+      <p>{address}</p>
     </div>
   </Modal.Header>;
 
 const LocationState = () =>
-  <div>
-    Kunnossa on
+  <div className="single-unit-modal__box">
+    Kunnossa o
   </div>;
 
 const LocationInfo = () =>
-  <div>
+  <div className="single-unit-modal__box">
     Such info
   </div>;
 
 const LocationWeather = () =>
-  <div>
+  <div className="single-unit-modal__box">
     Wow such weather.
   </div>;
 
 const LocationHeightProfile = () =>
-  <div>
+  <div className="single-unit-modal__box">
     Wow such profile.
   </div>;
 
@@ -48,26 +49,29 @@ export class SingleUnitModalContainer extends Component {
   }
 
   render(){
-    const {units, handleClick, params} = this.props;
+    const {units, handleClick, params, t} = this.props;
     const currentUnit = this.getCurrentUnit(units, params.unitId);
-    const currentUnitName = currentUnit ? getAttr(currentUnit.name) : 'Name was not found :(';
-    const currentUnitAddress = currentUnit ? getAttr(currentUnit.street_address) : 'Address was not found :(';
-    const currentUnitZip = currentUnit ? currentUnit.address_zip : 'Zip was not found :(';
+    const currentUnitName = currentUnit ? getAttr(currentUnit.name) : t('MODAL.LOADING');
+    const currentUnitAddress = currentUnit ? getAttr(currentUnit.street_address)+', '+currentUnit.address_zip : null;
+    console.log(currentUnit);
 
     return (
       <div>
         <Modal className="single-unit-modal" show={this.props.isOpen}>
-          <ModalHeader name={currentUnitName} address={currentUnitAddress} zip={currentUnitZip} handleClick={handleClick}/>
-          <Modal.Body>
-            <LocationState/>
-            <LocationInfo/>
-            <LocationWeather/>
-            <LocationHeightProfile/>
-          </Modal.Body>
+          <ModalHeader name={currentUnitName} address={currentUnitAddress} handleClick={handleClick}/>
+            {currentUnit ?
+              <Modal.Body>
+                <LocationState/>
+                <LocationInfo/>
+                <LocationWeather/>
+                <LocationHeightProfile/>
+              </Modal.Body>
+              : null
+            }
         </Modal>
       </div>
     );
   }
 }
 
-export default SingleUnitModalContainer;
+export default translate()(SingleUnitModalContainer);
