@@ -6,16 +6,18 @@ export const UnitServices = {
   ICE_SKATING_FIELD: 33418
 };
 
-export const SkatingServices = [
+export const IceSkatingServices = [
   UnitServices.MECHANICALLY_FROZEN_ICE,
   UnitServices.ICE_SKATING_FIELD
 ];
 
 export const SkiingServices = [];
 
+export const SwimmingServices = [];
+
 export const UnitFilters = {
-  SKATING: 'skating',
-  SKIING: 'skiing',
+  SKATING: 'iceskate',
+  SKIING: 'ski',
   OPEN_NOW: 'open_now'
 };
 

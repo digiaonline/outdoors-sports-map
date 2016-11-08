@@ -67,7 +67,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitMarker position={getUnitPosition(unit)} id={unit.id} status={getUnitQuality(unit)} key={index} handleClick={handleClick} />
+                <UnitMarker unit={unit} position={getUnitPosition(unit)} id={unit.id} status={getUnitQuality(unit)} key={index} handleClick={handleClick} />
                 // getAttr(unit.name)
             )
           }

@@ -10,9 +10,9 @@ import SortSelectorDropdown from './SortSelectorDropdown';
 import {getAttr, getUnitIconURL, getUnitQuality} from '../helpers.js';
 import {translate} from 'react-i18next';
 
-const UnitListItem = translate()(({id, name, status, updated, handleClick, t}) => (
+const UnitListItem = translate()(({id, unit, name, status, updated, handleClick, t}) => (
   <div className="list-view-item">
-    <div className="list-view-item__unit-marker"><img src={getUnitIconURL(status)} alt=""/></div>
+    <div className="list-view-item__unit-marker"><img src={getUnitIconURL(unit)} alt=""/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{name}</div>
       {/* TODO: use observation value, not status as text! */}
@@ -86,6 +86,7 @@ export class ListView extends Component {
           <div className="list-view__block">
             {units && units.map( (unit, index) =>
               <UnitListItem
+              unit={unit}
               name={getAttr(unit.name)}
               address={getAttr(unit.street_address)}
               id={unit.id}

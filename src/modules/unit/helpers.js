@@ -1,7 +1,7 @@
 //@flow
 import {has, keys, sortBy, reverse} from 'lodash';
 import {LatLng} from 'leaflet';
-import {QualityEnum} from './constants';
+import {QualityEnum, IceSkatingServices, SwimmingServices, SkiingServices} from './constants';
 
 // FIXME: get the lang parameter actually from somewhere
 export const getAttr = (attr: Object, lang: ?string = 'en') => {
@@ -21,9 +21,29 @@ export const getUnitPosition = (unit: Object) => {
   return unit.location.coordinates.slice().reverse();
 };
 
+export const getUnitSport = (unit: Object) => {
+  if(unit.services && unit.services.length) {
+    const service = unit.services[0];
+
+    if (IceSkatingServices.includes(service)) {
+      return 'iceskate';
+    }
+
+    if (SkiingServices.includes(service)) {
+      return 'ski';
+    }
+
+    if (SwimmingServices.includes(service)) {
+      return 'swim';
+    }
+  }
+
+  return 'unknown';
+};
+
 export const getObservation = (unit: Object) => {
   const {observations} = unit;
-  return observations.length ? observations[0] : null;
+  return observations && observations.length ? observations[0] : null;
 };
 
 export const getUnitQuality = (unit: Object): string => {
@@ -35,8 +55,13 @@ export const enumerableQuality = (quality: string): number => {
   return QualityEnum[quality] ? QualityEnum[quality] : Number.MAX_VALUE;
 };
 
-export const getUnitIconURL = (quality = 'unknown'/*, service*/) => {
-  return require(`@assets/markers/marker-icon-2x-${quality}.png`);
+export const getUnitIconURL = (unit: Object, selected = false, retina = true) => {
+  const quality = getUnitQuality(unit);
+  const sport = getUnitSport(unit);
+  const onOff = selected ? 'on' : 'off';
+  const resolution = retina ? '@2x' : '';
+
+  return require(`@assets/markers/${sport}-${quality}-${onOff}${resolution}.png`);
 };
 
 export const sortByDistance = (units: Array, position: Array) =>
