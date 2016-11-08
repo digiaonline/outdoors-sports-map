@@ -18,7 +18,8 @@ function* search({payload}) {
   const request = createRequest(createUrl('search/', params));
   if (payload) {
     const {bodyAsJson} = yield call(callApi, request);
-    const data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)): [];
+    console.log(bodyAsJson);
+    const data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
     yield put(receiveSearchResults(data));
   } else {
     yield put(receiveSearchResults([]));

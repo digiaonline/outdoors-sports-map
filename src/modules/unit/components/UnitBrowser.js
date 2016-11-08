@@ -13,11 +13,16 @@ import UnitFilter from './UnitFilter.js';
 import {getAttr} from '../helpers.js';
 import * as unitSelectors from '../selectors';
 
-const SearchBar = translate()(({handleChange, searchResults, t}) =>
+const SearchBar = translate()(({handleChange, searchResults, enabled, t}) =>
   <div>
     <div className="search-container">
       <label htmlFor="search"><Glyphicon glyph="search"/></label>
-      <input name="search" id="search" type="text" onChange={(e) => handleChange(e.target.value)} placeholder={`${t('SEARCH.SEARCH')}...`} />
+      <input name="search"
+             id="search"
+             type="text"
+             onChange={(e) => handleChange(e.target.value)}
+             placeholder={`${t('SEARCH.SEARCH')}...`}
+             disabled={!enabled}/>
     </div>
     <SearchResults searchResults={searchResults}/>
   </div>
@@ -61,9 +66,9 @@ const ToggleButton = ({toggle, glyph}) =>
     <Glyphicon glyph={glyph}/>
   </button>;
 
-const Header = ({toggle, toggleGlyph, searchResults, handleChange}) =>
+const Header = ({toggle, toggleGlyph, searchResults, handleChange, searchEnabled}) =>
 <div className="header">
-  <SearchBar handleChange={handleChange} searchResults={searchResults}/>
+  <SearchBar handleChange={handleChange} searchResults={searchResults} enabled={searchEnabled}/>
   <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
 </div>;
 
@@ -128,13 +133,16 @@ class UnitBrowser extends Component {
 
   onSearch(value) {
     console.log(value);
-    this.props.searchTarget(value);
+    if (Object.keys(this.props.units).length > 0) {
+      this.props.searchTarget(value);
+    }
   }
 
   render() {
     const {units, position, activeFilter, searchResults, handleClick} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
+    const searchEnabled = Object.keys(units).length > 0;
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
@@ -143,6 +151,7 @@ class UnitBrowser extends Component {
           toggleGlyph={isExpanded ? 'globe' : 'list'}
           handleChange={this.onSearch}
           searchResults={searchResults}
+          searchEnabled={searchEnabled}
         />
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
           <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />

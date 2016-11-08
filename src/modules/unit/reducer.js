@@ -42,7 +42,7 @@ const filters = handleActions({
 
 const searchResults = handleActions({
   [SearchActions.RECEIVE_SEARCH_RESULTS]: (state: Object, {payload: {entities}}: EntityAction) =>
-    [...keys(entities.unit)]
+    entities ? [...keys(entities.unit)] : []
 }, []);
 
 const reducer = combineReducers({
