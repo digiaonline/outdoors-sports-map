@@ -10,16 +10,16 @@ import SortSelectorDropdown from './SortSelectorDropdown';
 import {getAttr, getUnitIconURL, getUnitQuality} from '../helpers.js';
 import {translate} from 'react-i18next';
 
-const UnitListItem = translate()(({id, unit, name, status, updated, handleClick, t}) => (
+const UnitListItem = translate()(({unit, handleClick, t}) => (
   <div className="list-view-item">
     <div className="list-view-item__unit-marker"><img src={getUnitIconURL(unit)} alt=""/></div>
     <div className="list-view-item__unit-details">
-      <div className="list-view-item__unit-name">{name}</div>
+      <div className="list-view-item__unit-name">{getAttr(unit.name)}</div>
       {/* TODO: use observation value, not status as text! */}
-      <div className={`list-view-item__unit-status${status ? '--'+status : ''}`}>{status || t('UNIT.UNKNOWN')}</div>
-      <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} <Time time={new Date(updated)} /></div>
+      <div className={`list-view-item__unit-status${getUnitQuality(unit) ? '--'+getUnitQuality(unit) : ''}`}>{getUnitQuality(unit) || t('UNIT.UNKNOWN')}</div>
+      <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} <Time time={new Date(getObservation(unit) ? getObservation(unit).time : null)} /></div>
     </div>
-    <Link to={`/unit/${id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
+    <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
         <Glyphicon glyph="chevron-right"/>
     </Link>
   </div>));
@@ -87,12 +87,7 @@ export class ListView extends Component {
             {units && units.map( (unit, index) =>
               <UnitListItem
               unit={unit}
-              name={getAttr(unit.name)}
-              address={getAttr(unit.street_address)}
-              id={unit.id}
               key={index}
-              status={getUnitQuality(unit)}
-              updated={getObservation(unit) ? getObservation(unit).time : null}
               handleClick={handleClick}/>)}
           </div>
         </div>
