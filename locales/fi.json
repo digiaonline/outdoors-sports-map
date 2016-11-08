@@ -16,6 +16,11 @@
       "SKATING": "Skating",
       "SKIING": "Skiing",
       "OPEN_NOW": "Open now"
+    },
+    "SORT": {
+      "DEFAULT": "Oletus",
+      "ALPHABETICAL": "Aakkosellinen",
+      "DISTANCE": "Lähimmät ensin"
     }
   },
   "VIEW": {

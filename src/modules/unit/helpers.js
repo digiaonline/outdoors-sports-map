@@ -1,6 +1,6 @@
 //@flow
-import keys from 'lodash/keys';
-import has from 'lodash/has';
+import {has, keys, sortBy, reverse} from 'lodash';
+import {LatLng} from 'leaflet';
 
 // FIXME: get the lang parameter actually from somewhere
 export const getAttr = (attr: Object, lang: ?string = 'en') => {
@@ -23,3 +23,13 @@ export const getUnitPosition = (unit: Object) => {
 export const getUnitIconURL = (status = 'unknown'/*, service*/) => {
   return require(`@assets/markers/marker-icon-2x-${status}.png`);
 };
+
+export const sortByDistance = (units: Array, position: Array) =>
+  sortBy(units, (unit) => {
+    const unitLatLng = new LatLng(...getUnitPosition(unit));
+    const mapLatLng = new LatLng(...position);
+    return unitLatLng.distanceTo(mapLatLng);
+  });
+
+export const sortByName = (units: Array) =>
+  sortBy(units, (unit) => getAttr(unit.name));

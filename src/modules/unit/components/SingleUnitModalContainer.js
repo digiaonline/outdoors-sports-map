@@ -53,7 +53,6 @@ export class SingleUnitModalContainer extends Component {
     const currentUnit = this.getCurrentUnit(units, params.unitId);
     const currentUnitName = currentUnit ? getAttr(currentUnit.name) : t('MODAL.LOADING');
     const currentUnitAddress = currentUnit ? getAttr(currentUnit.street_address)+', '+currentUnit.address_zip : null;
-    console.log(currentUnit);
 
     return (
       <div>
