@@ -35,11 +35,6 @@ const openNow = handleActions({
     [...keys(entities.unit)]
 }, []);
 
-const filters = handleActions({
-  [UnitActions.SET_FILTERS] : (state: Object, {payload: {filters}}) =>
-    filters
-}, values(UnitFilters));
-
 const searchResults = handleActions({
   [SearchActions.RECEIVE_SEARCH_RESULTS]: (state: Object, {payload: {entities}}: EntityAction) =>
     entities ? [...keys(entities.unit)] : []
@@ -52,7 +47,6 @@ const reducer = combineReducers({
   skating,
   skiing,
   openNow,
-  filters,
   searchResults
 });
 

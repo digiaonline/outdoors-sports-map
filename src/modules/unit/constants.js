@@ -20,7 +20,6 @@ export const UnitFilters = {
 };
 
 export const SortKeys = {
-  DEFAULT: 'default',
   ALPHABETICAL: 'alphabetical',
   DISTANCE: 'distance',
   CONDITION: 'condition'

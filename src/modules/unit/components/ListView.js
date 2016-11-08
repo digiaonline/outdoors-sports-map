@@ -37,7 +37,7 @@ export class ListView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortKey: SortKeys.DEFAULT
+      sortKey: SortKeys.DISTANCE
     };
 
     this.selectSortKey = this.selectSortKey.bind(this);
