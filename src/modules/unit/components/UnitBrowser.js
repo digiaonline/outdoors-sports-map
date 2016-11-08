@@ -5,21 +5,49 @@ import {Glyphicon} from 'react-bootstrap';
 import values from 'lodash/values';
 import {HEADER_HEIGHT} from '../../common/constants.js';
 import {UnitFilters, DefaultFilters} from '../constants.js';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {searchTarget} from '../actions';
 import {translate} from 'react-i18next';
 import UnitFilter from './UnitFilter.js';
+import * as unitSelectors from '../selectors';
 
-const SearchBar = translate()(({t}) =>
-  <div className="search-container">
-    <label htmlFor="search"><Glyphicon glyph="search"/></label>
-    <input name="search" id="search" type="text" placeholder={`${t('SEARCH.SEARCH')}...`} />
-  </div>);
+const SearchBar = translate()(({handleChange, searchResults, t}) =>
+  <div>
+    <div className="search-container">
+      <label htmlFor="search"><Glyphicon glyph="search"/></label>
+      <input name="search" id="search" type="text" onChange={(e) => handleChange(e.target.value)} placeholder={`${t('SEARCH.SEARCH')}...`} />
+    </div>
+    <SearchResults searchResults={searchResults}/>
+  </div>
+);
+
+const SearchResults = ({searchResults}) => (
+  <div className="search-results">
+    {searchResults.length > 0
+      ? searchResults.map((result, index) =>
+      <SearchResult key={index}>
+        {result.id}
+      </SearchResult>
+    )
+    : null
+    }
+  </div>
+);
+
+const SearchResult = ({children}) =>
+  <div className="search-results__result">
+    {children}
+  </div>;
+
 const ToggleButton = ({toggle, glyph}) =>
   <button className="toggle-view-button" onClick={toggle}>
     <Glyphicon glyph={glyph}/>
   </button>;
-const Header = ({toggle, toggleGlyph}) =>
+
+const Header = ({toggle, toggleGlyph, searchResults, handleChange}) =>
 <div className="header">
-  <SearchBar/>
+  <SearchBar handleChange={handleChange} searchResults={searchResults}/>
   <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
 </div>;
 
@@ -31,7 +59,7 @@ class UnitBrowser extends Component {
 
   static defaultProps = {
     activeFilter: DefaultFilters
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -43,6 +71,7 @@ class UnitBrowser extends Component {
     this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
+    this.onSearch = this.onSearch.bind(this);
   }
 
   componentDidMount() {
@@ -81,8 +110,13 @@ class UnitBrowser extends Component {
     });
   }
 
+  onSearch(value) {
+    console.log(value);
+    this.props.searchTarget(value);
+  }
+
   render() {
-    const {units, activeFilter, handleClick} = this.props;
+    const {units, activeFilter, searchResults, handleClick} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
 
@@ -91,6 +125,8 @@ class UnitBrowser extends Component {
         <Header
           toggle={() => this.setState({isExpanded: !isExpanded})}
           toggleGlyph={isExpanded ? 'globe' : 'list'}
+          handleChange={this.onSearch}
+          searchResults={searchResults}
         />
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
           <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
@@ -101,4 +137,11 @@ class UnitBrowser extends Component {
   }
 }
 
-export default withRouter(UnitBrowser);
+const mapStateToProps = (state) => ({
+  searchResults: unitSelectors.getSearchResults(state)
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({searchTarget}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UnitBrowser));

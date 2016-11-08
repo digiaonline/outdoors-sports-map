@@ -66,6 +66,15 @@
       }
     }
 
+    .search-results {
+      background: #fff;
+      text-align: center;
+
+      &__result {
+        padding: 10px 0 10px 0;
+      }
+    }
+
     .toggle-view-button {
       margin-left: $gap;
       height: 50px;
