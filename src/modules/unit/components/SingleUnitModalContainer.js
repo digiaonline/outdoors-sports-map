@@ -57,7 +57,7 @@ export class SingleUnitModalContainer extends Component {
 
     return (
       <div>
-        <Modal className="single-unit-modal" show={this.props.isOpen}>
+        <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false} style={{width: 400}}>
           <ModalHeader name={currentUnitName} address={currentUnitAddress} handleClick={handleClick}/>
             {currentUnit ?
               <Modal.Body>
