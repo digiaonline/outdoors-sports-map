@@ -2,13 +2,15 @@ import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {fetchUnits} from '../../unit/actions';
+import {updateMapCenter} from '../../map/actions';
+import {getMapCenter} from '../../map/selectors';
 import {getVisibleUnits} from '../../unit/selectors';
 import {DefaultFilters} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
-import {locations, views} from '../constants.js';
+import {locations, views, POLL_INTERVAL} from '../constants.js';
 import {arrayifyQueryValue} from '../../common/helpers';
 
 export class HomeContainer extends Component {
@@ -36,18 +38,15 @@ export class HomeContainer extends Component {
     this.state = {modalOpen: false};
 
     this.handleMapMove = this.handleMapMove.bind(this);
-    this.toggleView = this.toggleView.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
-  toggleView() {
-    this.setState({selectedView: this.state['selectedView'] === views.MAP ? views.LIST : views.MAP});
-  }
-
   componentWillMount() {
-    // Fetch ice rinks in 10km radius from the passed position
     this.props.fetchUnits();
+    this.props.updateMapCenter(locations.HELSINKI);
+
+    this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
   }
 
   componentDidMount() {
@@ -58,9 +57,13 @@ export class HomeContainer extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.pollUnitsInterval);
+  }
 
-  handleMapMove(): void {
-    //
+
+  handleMapMove(center: Array): void {
+    this.props.updateMapCenter(center);
   }
 
   openModal() {
@@ -73,14 +76,13 @@ export class HomeContainer extends Component {
 
 
   render() {
-    const {unitData, position, params, location: {query: {filter}}} = this.props;
-    const {selectedView} = this.state;
+    const {unitData, position, mapCenter, params, location: {query: {filter}}} = this.props;
     const activeFilter = arrayifyQueryValue(filter);
 
     return (
       <div>
-        <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} />
-        <MapView handleMoveend={this.handleMapMove} selected={selectedView === views.MAP} position={position} units={unitData} handleClick={this.openModal}/>
+        <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
+        <MapView handleMoveend={this.handleMapMove} position={position} units={unitData} handleClick={this.openModal} mapCenter={mapCenter}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
       </div>
     );
@@ -89,11 +91,11 @@ export class HomeContainer extends Component {
 
 const mapStateToProps = (state, props) => ({
   unitData: getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
-  selectedView: state.selectedView
+  mapCenter: getMapCenter(state)
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({fetchUnits}, dispatch);
+  bindActionCreators({fetchUnits, updateMapCenter}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer

@@ -7,6 +7,7 @@ import {ApiResponse, UnitServices} from './constants';
 export const fetchUnits = (/*params: Object*/): Action =>
   createAction(UnitActions.FETCH)({params: {
     service: `${values(UnitServices).join(',')}`,
+    include: 'observations',
     page_size: 1000
   }});
 

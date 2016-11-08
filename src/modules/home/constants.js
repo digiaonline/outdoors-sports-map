@@ -10,6 +10,8 @@ export const locations = {
   VANTAA: [60.309045, 25.004675]
 };
 
+export const POLL_INTERVAL = 2 * 60 * 1000;
+
 export const views = {
   LIST: 'list',
   MAP: 'map'
