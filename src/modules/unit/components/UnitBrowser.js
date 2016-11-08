@@ -25,23 +25,28 @@ const SearchBar = translate()(({handleChange, searchResults, t}) =>
 
 const SearchResults = ({searchResults}) => (
   <div className="search-results">
-    <a>näytä kaikki tulokset</a>
     {searchResults.length > 0
-      ? searchResults.map((result, index) =>
-      <SearchResult key={index}>
-        {index < 3
-          ? <div>
-              {getAttr(result.name)}
-              <p style={{background: 'yellow'}}>Kunto</p>
-              <p>Päivitetty eilen</p>
-            </div>
-          : <div>
-              {getAttr(result.name)}
-            </div>
-        }
-      </SearchResult>
-    )
-    : null
+      ? <div>
+          <a>näytä kaikki tulokset</a>
+          {searchResults.map((result, index) =>
+            <SearchResult key={index}>
+              {index < 3
+                ? <div>
+                    <p>{getAttr(result.name)}</p>
+                    {result.observations
+                      ? <p style={{ background: '#72bc3d' }}>HYVÄ</p>
+                      : <p style={{ background: '#a8b5c2' }}>UNKNOWN</p>
+                    }
+                    <p>Päivitetty eilen</p>
+                  </div>
+                : <div>
+                    {getAttr(result.name)}
+                  </div>
+              }
+            </SearchResult>
+      )}
+        </div>
+      : null
     }
   </div>
 );

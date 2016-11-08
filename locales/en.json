@@ -19,7 +19,8 @@
     }
   },
   "MODAL": {
-    "LOADING": "Loading location..."
+    "LOADING": "Loading location...",
+    "STATE": "State"
   },
   "VIEW": {
     "POPUP": {

@@ -17,9 +17,17 @@ const ModalHeader = ({handleClick, name, address, zip}) =>
     </div>
   </Modal.Header>;
 
-const LocationState = () =>
+const LocationState = ({state, t}) =>
   <div className="single-unit-modal__box">
-    Kunnossa o
+    <p><strong>{t('MODAL.STATE')}</strong></p>
+    {state
+      ? state === 'Gut'
+        ? <p style={{ background: '#72bc3d' }}>HYVÄ</p>
+        : <p style={{ background: '#a8b5c2' }}>UNKNOWN</p>
+      : null
+    }
+    <p>Tieto päivitetty x päivää sitten</p>
+    <p>Kunnostettu y päivää sitten</p>
   </div>;
 
 const LocationInfo = () =>
@@ -61,7 +69,7 @@ export class SingleUnitModalContainer extends Component {
           <ModalHeader name={currentUnitName} address={currentUnitAddress} handleClick={handleClick}/>
             {currentUnit ?
               <Modal.Body>
-                <LocationState/>
+                <LocationState state='Gut' t={t}/>
                 <LocationInfo/>
                 <LocationWeather/>
                 <LocationHeightProfile/>
