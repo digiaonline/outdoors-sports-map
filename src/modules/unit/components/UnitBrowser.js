@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux';
 import {searchTarget} from '../actions';
 import {translate} from 'react-i18next';
 import UnitFilter from './UnitFilter.js';
+import {getAttr} from '../helpers.js';
 import * as unitSelectors from '../selectors';
 
 const SearchBar = translate()(({handleChange, searchResults, t}) =>
@@ -27,7 +28,16 @@ const SearchResults = ({searchResults}) => (
     {searchResults.length > 0
       ? searchResults.map((result, index) =>
       <SearchResult key={index}>
-        {result.id}
+        {index < 3
+          ? <div>
+              {getAttr(result.name)}
+              <p style={{background: 'yellow'}}>Kunto</p>
+              <p>Päivitetty eilen</p>
+            </div>
+          : <div>
+              {getAttr(result.name)}
+            </div>
+        }
       </SearchResult>
     )
     : null
