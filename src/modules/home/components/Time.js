@@ -2,23 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import {translate} from 'react-i18next';
 
-const getDayDiff = (time) => {
-  const mTime = moment(time);
-  const mNow = moment();
-
-  return mNow.diff(mTime, 'days');
-};
-
-const formatDayDiff = (days: Number, t: Function) => {
-  let lookup = 'TIME.DAYS_AGO';
-  if (days === 0 ) {
-    lookup = 'TIME.TODAY';
-  } else if (days === 1) {
-    lookup = 'TIME.YESTERDAY'
-  }
-  return t(lookup, {days});
-};
-
 const formatTime = (time: Date, t: Function) => {
   const now = moment();
   let lookup = 'TIME.';
@@ -45,7 +28,7 @@ const formatTime = (time: Date, t: Function) => {
 };
 
 const Time = translate()(({time, t}) =>
-  <time dateTime={time.toUTCString()}>
+  <time dateTime={time.toISOString()}>
     {
       formatTime(time, t)
     }
