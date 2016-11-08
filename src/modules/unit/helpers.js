@@ -20,8 +20,18 @@ export const getUnitPosition = (unit: Object) => {
   return unit.location.coordinates.slice().reverse();
 };
 
-export const getUnitIconURL = (status = 'unknown'/*, service*/) => {
-  return require(`@assets/markers/marker-icon-2x-${status}.png`);
+export const getObservation = (unit: Object) => {
+  const {observations} = unit;
+  return observations.length ? observations[0] : null;
+};
+
+export const getUnitQuality = (unit: Object) => {
+  const observation = getObservation(unit);
+  return observation ? observation.quality : undefined;
+};
+
+export const getUnitIconURL = (quality = 'unknown'/*, service*/) => {
+  return require(`@assets/markers/marker-icon-2x-${quality}.png`);
 };
 
 export const sortByDistance = (units: Array, position: Array) =>
