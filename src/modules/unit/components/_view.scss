@@ -4,36 +4,6 @@
   }
 
   /**
-   * MAP VIEW
-   */
-  &.map-view {
-    .leaflet-container {
-      height: 100vh;
-
-      .leaflet-control-container {
-        .leaflet-control {
-          a {
-            color: $content-text-secondary;
-          }
-
-          &.leaflet-control-locate,
-          &.leaflet-control-info {
-            &, a {
-              background: $content-background;
-              border-radius: 50%;
-
-              .glyphicon {
-                font-size: 16px;
-                line-height: 26px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
    * LIST VIEW
    */
   &.list-view {
@@ -70,6 +40,27 @@
           text-transform: uppercase;
           font-size: 0.8em;
           color: $ui-text;
+
+          &--good {
+            @extend .list-view-item__unit-status;
+            background: $status-ok;
+          }
+
+          &--satisfactory {
+            @extend .list-view-item__unit-status;
+            background: $status-average;
+          }
+
+          &--unusable {
+            @extend .list-view-item__unit-status;
+            background: $status-bad;
+          }
+
+          &--unknown {
+            @extend .list-view-item__unit-status;
+            background: $status-unknown;
+          }
+
         }
       }
 
@@ -102,21 +93,23 @@
 }
 
 .modal {
+  width: 100%;
+  height: 70%;
+  display: block;
 
   &-dialog {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 10000;
+    z-index: 1000;
     margin: 0;
     width: 100%;
-    height: 60%;
+    height: 100%;
+    background: #77d5ed;
+    overflow-y: initial;
   }
 
   &-content {
+    height: 100%;
     border-radius: 0;
     border: 0;
-    height: 100%;
     background: #77d5ed;
     color: #333333;
   }
@@ -125,6 +118,8 @@
 @media only screen and (min-width : 768px) {
 
   .modal {
+    width: 400px;
+    height: 100%;
 
     &-dialog {
       position: fixed;
@@ -143,5 +138,16 @@
       background: #77d5ed;
       color: #333333;
     }
+
+
+  }
+}
+
+.single-unit-modal {
+
+  &__box {
+    background: #fff;
+    margin: 10px 0 10px 0;
+    padding: 10px;
   }
 }

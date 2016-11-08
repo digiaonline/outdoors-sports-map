@@ -1,7 +1,7 @@
 import {keys, values} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
-import {UnitActions, SkatingServices, SkiingServices, UnitFilters} from './constants';
+import {UnitActions, SearchActions, IceSkatingServices, SkiingServices, UnitFilters} from './constants';
 import {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
@@ -19,12 +19,12 @@ const all = handleActions({
     [...keys(entities.unit)]
 }, []);
 
-const skating = handleActions({
+const iceskate = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
-    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkatingServices.indexOf(unitService) !== -1))]
+    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => IceSkatingServices.indexOf(unitService) !== -1))]
 }, []);
 
-const skiing = handleActions({
+const ski = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
     [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkiingServices.indexOf(unitService) !== -1))]
 }, []);
@@ -35,19 +35,19 @@ const openNow = handleActions({
     [...keys(entities.unit)]
 }, []);
 
-const filters = handleActions({
-  [UnitActions.SET_FILTERS] : (state: Object, {payload: {filters}}) =>
-    filters
-}, values(UnitFilters));
+const searchResults = handleActions({
+  [SearchActions.RECEIVE_SEARCH_RESULTS]: (state: Object, {payload: {entities}}: EntityAction) =>
+    entities ? [...keys(entities.unit)] : []
+}, []);
 
 const reducer = combineReducers({
   isFetching: isFetchingReducer,
   byId: byIdReducer,
   all,
-  skating,
-  skiing,
+  iceskate,
+  ski,
   openNow,
-  filters
+  searchResults
 });
 
 export default reducer;

@@ -1,6 +1,6 @@
 import {UnitState} from '../unit/constants';
 
-export const API_URL = 'http://api.hel.fi/servicemap/v1';
+export const API_URL = 'http://209.50.48.39/servicemap/v1/';//'http://api.hel.fi/servicemap/v1';
 export const APP_NAME = 'outdoors-sports-map';
 
 export const HEADER_HEIGHT = 66;

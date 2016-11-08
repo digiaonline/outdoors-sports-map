@@ -6,17 +6,25 @@ export const UnitServices = {
   ICE_SKATING_FIELD: 33418
 };
 
-export const SkatingServices = [
+export const IceSkatingServices = [
   UnitServices.MECHANICALLY_FROZEN_ICE,
   UnitServices.ICE_SKATING_FIELD
 ];
 
 export const SkiingServices = [];
 
+export const SwimmingServices = [];
+
 export const UnitFilters = {
-  SKATING: 'skating',
-  SKIING: 'skiing',
+  SKATING: 'iceskate',
+  SKIING: 'ski',
   OPEN_NOW: 'open_now'
+};
+
+export const SortKeys = {
+  ALPHABETICAL: 'alphabetical',
+  DISTANCE: 'distance',
+  CONDITION: 'condition'
 };
 
 export const DefaultFilters = [
@@ -24,10 +32,21 @@ export const DefaultFilters = [
   UnitFilters.SKIING
 ];
 
+export const QualityEnum = {
+  'good': 1,
+  'satisfactory': 2,
+  'unusable': 3
+};
+
 export const UnitActions = {
   FETCH: normalizeActionName('unit/FETCH'),
   RECEIVE: normalizeActionName('unit/RECEIVE'),
   SET_FILTERS: normalizeActionName('unit/SET_FILTERS')
+};
+
+export const SearchActions = {
+  SEARCH: 'search/SEARCH',
+  RECEIVE_SEARCH_RESULTS: 'search/RECEIVE_SEARCH_RESULTS'
 };
 
 export type UnitState = {

@@ -1,4 +1,11 @@
 {
+  "APP": {
+    "NAME": "Kuntokartta",
+    "ABOUT": "Tietoa palvelusta"
+  },
+  "MAP": {
+    "ATTRIBUTION": "OpenStreetMap tekijät"
+  },
   "UNIT": {
     "FURTHER_INFO": "Lisää tietoa",
     "STATUS": "Kunto",
@@ -9,6 +16,11 @@
       "SKATING": "Skating",
       "SKIING": "Skiing",
       "OPEN_NOW": "Open now"
+    },
+    "SORT": {
+      "DEFAULT": "Oletus",
+      "ALPHABETICAL": "Aakkosellinen",
+      "DISTANCE": "Lähimmät ensin"
     }
   },
   "VIEW": {

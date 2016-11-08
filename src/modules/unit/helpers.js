@@ -1,6 +1,7 @@
 //@flow
-import keys from 'lodash/keys';
-import has from 'lodash/has';
+import {has, keys, sortBy, reverse} from 'lodash';
+import {LatLng} from 'leaflet';
+import {QualityEnum, IceSkatingServices, SwimmingServices, SkiingServices} from './constants';
 
 // FIXME: get the lang parameter actually from somewhere
 export const getAttr = (attr: Object, lang: ?string = 'en') => {
@@ -20,6 +21,69 @@ export const getUnitPosition = (unit: Object) => {
   return unit.location.coordinates.slice().reverse();
 };
 
-export const getUnitIconURL = (status = 'unknown'/*, service*/) => {
-  return require(`@assets/markers/marker-icon-2x-${status}.png`);
+export const getUnitSport = (unit: Object) => {
+  if(unit.services && unit.services.length) {
+    const service = unit.services[0];
+
+    if (IceSkatingServices.includes(service)) {
+      return 'iceskate';
+    }
+
+    if (SkiingServices.includes(service)) {
+      return 'ski';
+    }
+
+    if (SwimmingServices.includes(service)) {
+      return 'swim';
+    }
+  }
+
+  return 'unknown';
 };
+
+export const getObservation = (unit: Object) => {
+  const {observations} = unit;
+  return observations && observations.length ? observations[0] : null;
+};
+
+export const getUnitQuality = (unit: Object): string => {
+  const observation = getObservation(unit);
+  return observation ? observation.quality : 'unknown';
+};
+
+export const enumerableQuality = (quality: string): number => {
+  return QualityEnum[quality] ? QualityEnum[quality] : Number.MAX_VALUE;
+};
+
+export const getUnitIconURL = (unit: Object, selected = false, retina = true) => {
+  const quality = getUnitQuality(unit);
+  const sport = getUnitSport(unit);
+  const onOff = selected ? 'on' : 'off';
+  const resolution = retina ? '@2x' : '';
+
+  return require(`@assets/markers/${sport}-${quality}-${onOff}${resolution}.png`);
+};
+
+export const sortByDistance = (units: Array, position: Array) =>
+  sortBy(units, (unit) => {
+    const unitLatLng = new LatLng(...getUnitPosition(unit));
+    const mapLatLng = new LatLng(...position);
+    return unitLatLng.distanceTo(mapLatLng);
+  });
+
+export const sortByName = (units: Array) =>
+  sortBy(units, (unit) => getAttr(unit.name));
+
+export const sortByCondition = (units: Array) =>
+  sortBy(units, [
+    (unit) => {
+      return enumerableQuality(getUnitQuality(unit));
+    },
+    (unit) => {
+      const observation = getObservation(unit);
+      const observationTime =
+        observation && observation.time && (new Date(observation.time)).getTime() || 0;
+
+      return (new Date()).getTime() - observationTime;
+    }
+  ]);

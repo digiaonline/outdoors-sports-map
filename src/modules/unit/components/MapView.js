@@ -1,10 +1,12 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
-import {Button, Glyphicon} from 'react-bootstrap';
+import {Glyphicon} from 'react-bootstrap';
 import {View} from './View';
+import Logo from '../../home/components/Logo';
+import Disclaimer from '../../home/components/Disclaimer';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
-import {getUnitPosition} from '../helpers';
+import {getUnitPosition, getUnitQuality} from '../helpers';
 import {mobileBreakpoint} from '../../common/constants';
 import UnitMarker from './UnitMarker';
 
@@ -12,6 +14,10 @@ export class MapView extends Component {
   static propTypes = {
     position: PropTypes.array.isRequired,
     units: PropTypes.array
+  };
+
+  state: {
+    isMobile: boolean
   };
 
   constructor(props: Object) {
@@ -53,7 +59,7 @@ export class MapView extends Component {
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
-        <Map ref="map" zoomControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
+        <Map ref="map" zoomControl={false} attributionControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
           <TileLayer
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -61,8 +67,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitMarker position={getUnitPosition(unit)} id={unit.id} status={unit.status} key={index} handleClick={handleClick} />
-                // getAttr(unit.name)
+                <UnitMarker unit={unit} position={getUnitPosition(unit)} id={unit.id} key={index} handleClick={handleClick} />
             )
           }
           {!isMobile && <ZoomControl position="bottomright" />}
@@ -77,6 +82,8 @@ export class MapView extends Component {
             </a>
           </Control>
         </Map>
+        <Logo/>
+        <Disclaimer attributionLink="http://osm.org/copyright" />
       </View>
     );
   }
