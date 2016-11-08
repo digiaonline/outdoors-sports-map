@@ -56,6 +56,11 @@
             background: $status-bad;
           }
 
+          &--unknown {
+            @extend .list-view-item__unit-status;
+            background: $status-unknown;
+          }
+
         }
       }
 

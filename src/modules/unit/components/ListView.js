@@ -2,9 +2,10 @@ import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
 import {isEqual, values} from 'lodash';
-import {sortByDistance, sortByName} from '../helpers';
+import {getObservation, sortByDistance, sortByName, sortByCondition} from '../helpers';
 import {SortKeys} from '../constants';
 import {View} from './View.js';
+import Time from '../../home/components/Time';
 import SortSelectorDropdown from './SortSelectorDropdown';
 import {getAttr, getUnitIconURL, getUnitQuality} from '../helpers.js';
 import {translate} from 'react-i18next';
@@ -16,7 +17,7 @@ const UnitListItem = translate()(({id, name, status, updated, handleClick, t}) =
       <div className="list-view-item__unit-name">{name}</div>
       {/* TODO: use observation value, not status as text! */}
       <div className={`list-view-item__unit-status${status ? '--'+status : ''}`}>{status || t('UNIT.UNKNOWN')}</div>
-      <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} {updated || t('UNIT.UNKNOWN')}</div>
+      <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} <Time time={new Date(updated)} /></div>
     </div>
     <Link to={`/unit/${id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
         <Glyphicon glyph="chevron-right"/>
@@ -54,9 +55,13 @@ export class ListView extends Component {
       case SortKeys.ALPHABETICAL:
         sortedUnits = sortByName(props.units);
         break;
+      case SortKeys.CONDITION:
+        sortedUnits = sortByCondition(props.units);
+        break;
       case SortKeys.DISTANCE:
         sortedUnits = sortByDistance(props.units, props.position);
         break;
+
       default:
         sortedUnits = props.units;
     }
@@ -86,6 +91,7 @@ export class ListView extends Component {
               id={unit.id}
               key={index}
               status={getUnitQuality(unit)}
+              updated={getObservation(unit) ? getObservation(unit).time : null}
               handleClick={handleClick}/>)}
           </div>
         </div>

@@ -22,13 +22,20 @@ export const UnitFilters = {
 export const SortKeys = {
   DEFAULT: 'default',
   ALPHABETICAL: 'alphabetical',
-  DISTANCE: 'distance'
+  DISTANCE: 'distance',
+  CONDITION: 'condition'
 };
 
 export const DefaultFilters = [
   UnitFilters.SKATING,
   UnitFilters.SKIING
 ];
+
+export const QualityEnum = {
+  'good': 1,
+  'satisfactory': 2,
+  'unusable': 3
+};
 
 export const UnitActions = {
   FETCH: normalizeActionName('unit/FETCH'),
