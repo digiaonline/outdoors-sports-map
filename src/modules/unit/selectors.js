@@ -26,7 +26,7 @@ export const getVisibleUnits = (state: AppState, filters = DefaultFilters) => {
 };
 
 export const getSearchResultById = (state, id) =>
-  state.unit.searchResult.entities.unit[id];
+  state.unit.searchResults.entities.unit[id];
 
-export const getSearchResult = (state: AppState/*, props: Object*/) =>
-  state.unit.searchResult.result.map((id) => getSearchResultById(state, id));
+export const getSearchResults = (state: AppState/*, props: Object*/) =>
+  state.unit.searchResults.result.map((id) => getSearchResultById(state, id));

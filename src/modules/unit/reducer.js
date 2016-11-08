@@ -40,8 +40,8 @@ const filters = handleActions({
     filters
 }, values(UnitFilters));
 
-const searchResult = handleActions({
-  [SearchActions.RECEIVE_SEARCH_RESULT] : (state, {payload}) => payload
+const searchResults = handleActions({
+  [SearchActions.RECEIVE_SEARCH_RESULTS] : (state, {payload}) => payload
 }, {entities: [], result: []});
 
 const reducer = combineReducers({
@@ -52,7 +52,7 @@ const reducer = combineReducers({
   skiing,
   openNow,
   filters,
-  searchResult
+  searchResults
 });
 
 export default reducer;

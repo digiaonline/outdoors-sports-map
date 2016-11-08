@@ -16,5 +16,5 @@ export const receiveUnits = (data: ApiResponse): Action =>
 export const searchTarget = (data) =>
   createAction(SearchActions.SEARCH)(data);
 
-export const receiveSearchResult = (result) =>
-  createAction(SearchActions.RECEIVE_SEARCH_RESULT)(result);
+export const receiveSearchResults = (results) =>
+  createAction(SearchActions.RECEIVE_SEARCH_RESULTS)(results);

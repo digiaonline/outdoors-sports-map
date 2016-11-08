@@ -32,7 +32,7 @@ export const UnitActions = {
 
 export const SearchActions = {
   SEARCH: 'search/SEARCH',
-  RECEIVE_SEARCH_RESULT: 'search/RECEIVE_SEARCH_RESULT'
+  RECEIVE_SEARCH_RESULTS: 'search/RECEIVE_SEARCH_RESULTS'
 };
 
 export type UnitState = {

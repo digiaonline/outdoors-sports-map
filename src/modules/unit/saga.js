@@ -1,7 +1,7 @@
 import {takeLatest} from 'redux-saga';
 import {call, fork, put} from 'redux-saga/effects';
 import {arrayOf} from 'normalizr';
-import {receiveUnits, receiveSearchResult} from './actions';
+import {receiveUnits, receiveSearchResults} from './actions';
 import {UnitActions, unitSchema, SearchActions} from './constants';
 import {FetchAction} from '../common/constants';
 import {createUrl, createRequest, callApi, normalizeEntityResults} from '../api/helpers';
@@ -20,7 +20,7 @@ function* search({payload}) {
   const {bodyAsJson} = yield call(callApi, request);
   console.log(bodyAsJson);
   const data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)): [];
-  yield put(receiveSearchResult(data));
+  yield put(receiveSearchResults(data));
 }
 
 function* watchFetchUnits() {
