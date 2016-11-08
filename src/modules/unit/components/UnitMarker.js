@@ -2,18 +2,19 @@ import React from 'react';
 import {Marker} from 'react-leaflet';
 import {Icon} from 'leaflet';
 import {withRouter} from 'react-router';
+import {getUnitIconURL} from '../helpers';
 
-const createIcon = (status = 'unknown') =>
+const createIcon = (unit: Object) =>
   new Icon({
-    iconUrl: require(`@assets/markers/marker-icon-${status}.png`),
-    iconRetinaUrl: require(`@assets/markers/marker-icon-2x-${status}.png`),
-    iconSize: [25, 41],
-    iconAnchor: [12, 41]
+    iconUrl: getUnitIconURL(unit, false, false),
+    iconRetinaUrl: getUnitIconURL(unit),
+    iconSize: [32, 40],
+    iconAnchor: [16, 40]
   });
 
-const UnitMarker = ({status, id, handleClick, router, ...rest}) =>
+const UnitMarker = ({unit, router, ...rest}) =>
   <Marker
-    icon={createIcon(status)}
+    icon={createIcon(unit)}
     onClick={() => {
       router.push(`/unit/${id}`);
       handleClick();
