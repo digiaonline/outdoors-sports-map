@@ -41,8 +41,9 @@ const filters = handleActions({
 }, values(UnitFilters));
 
 const searchResults = handleActions({
-  [SearchActions.RECEIVE_SEARCH_RESULTS] : (state, {payload}) => payload
-}, {entities: [], result: []});
+  [SearchActions.RECEIVE_SEARCH_RESULTS]: (state: Object, {payload: {entities}}: EntityAction) =>
+    [...keys(entities.unit)]
+}, []);
 
 const reducer = combineReducers({
   isFetching: isFetchingReducer,

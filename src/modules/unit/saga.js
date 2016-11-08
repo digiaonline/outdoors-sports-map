@@ -14,15 +14,14 @@ function* fetchUnits({payload: {params}}: FetchAction) {
 }
 
 function* search({payload}) {
-  console.log(payload);
   const params = {input: payload, service: '33418,33417', page_size: 1000}; //Service key contains filters for target types
   const request = createRequest(createUrl('search/', params));
   if (payload) {
     const {bodyAsJson} = yield call(callApi, request);
-    const data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)): {entities: [], result: []};
+    const data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)): [];
     yield put(receiveSearchResults(data));
   } else {
-    yield put(receiveSearchResults({entities: [], result: []}));
+    yield put(receiveSearchResults([]));
   }
 }
 
