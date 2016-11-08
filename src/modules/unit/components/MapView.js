@@ -6,7 +6,7 @@ import Logo from '../../home/components/Logo';
 import Disclaimer from '../../home/components/Disclaimer';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
-import {getUnitPosition} from '../helpers';
+import {getUnitPosition, getUnitQuality} from '../helpers';
 import {mobileBreakpoint} from '../../common/constants';
 import UnitMarker from './UnitMarker';
 
@@ -67,7 +67,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitMarker position={getUnitPosition(unit)} id={unit.id} status={unit.status} key={index} handleClick={handleClick} />
+                <UnitMarker position={getUnitPosition(unit)} id={unit.id} status={getUnitQuality(unit)} key={index} handleClick={handleClick} />
                 // getAttr(unit.name)
             )
           }

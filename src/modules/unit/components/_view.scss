@@ -40,6 +40,27 @@
           text-transform: uppercase;
           font-size: 0.8em;
           color: $ui-text;
+
+          &--good {
+            @extend .list-view-item__unit-status;
+            background: $status-ok;
+          }
+
+          &--satisfactory {
+            @extend .list-view-item__unit-status;
+            background: $status-average;
+          }
+
+          &--unusable {
+            @extend .list-view-item__unit-status;
+            background: $status-bad;
+          }
+
+          &--unknown {
+            @extend .list-view-item__unit-status;
+            background: $status-unknown;
+          }
+
         }
       }
 

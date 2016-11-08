@@ -34,5 +34,13 @@
   },
   "SEARCH": {
     "SEARCH": "Search"
+  },
+  "TIME": {
+    "DAYS_AGO": "{{days}} days ago",
+    "NOT_AVAILABLE": "-",
+    "MONTHS_AGO": "{{months}} months ago",
+    "TODAY": "today",
+    "WEEKS_AGO": "{{weeks}} weeks ago",
+    "YESTERDAY": "yesterday"
   }
 }
