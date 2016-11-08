@@ -72,6 +72,8 @@
 }
 
 .modal {
+  width: 100%;
+  height: 60%;
 
   &-dialog {
     position: fixed;
@@ -95,6 +97,8 @@
 @media only screen and (min-width : 768px) {
 
   .modal {
+    width: 400px;
+    height: 100%;
 
     &-dialog {
       position: fixed;

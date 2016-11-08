@@ -25,6 +25,7 @@ const SearchBar = translate()(({handleChange, searchResults, t}) =>
 
 const SearchResults = ({searchResults}) => (
   <div className="search-results">
+    <a>näytä kaikki tulokset</a>
     {searchResults.length > 0
       ? searchResults.map((result, index) =>
       <SearchResult key={index}>
