@@ -16,6 +16,11 @@
       "SKATING": "Skating",
       "SKIING": "Skiing",
       "OPEN_NOW": "Open now"
+    },
+    "SORT": {
+      "DEFAULT": "Default",
+      "ALPHABETICAL": "Alphabetical order",
+      "DISTANCE": "Nearest"
     }
   },
   "MODAL": {

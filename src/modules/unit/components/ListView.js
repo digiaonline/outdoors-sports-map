@@ -1,8 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
-import sortBy from 'lodash/sortBy';
+import {isEqual, values} from 'lodash';
+import {sortByDistance, sortByName} from '../helpers';
+import {SortKeys} from '../constants';
 import {View} from './View.js';
+import SortSelectorDropdown from './SortSelectorDropdown';
 import {getAttr, getUnitIconURL} from '../helpers.js';
 import {translate} from 'react-i18next';
 
@@ -19,19 +22,63 @@ const UnitListItem = translate()(({id, name, status, updated, handleClick, t}) =
     </Link>
   </div>));
 
-
 export class ListView extends Component {
   static propTypes = {
-    units: PropTypes.array
+    units: PropTypes.array,
+    sortKey: PropTypes.string
   };
 
+  state: {
+    sortKey: string
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      sortKey: SortKeys.DEFAULT
+    };
+
+    this.selectSortKey = this.selectSortKey.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(nextProps.units, this.props.units) || !isEqual(nextProps.position, this.props.position)) {
+      this.sortUnits(nextProps);
+    }
+  }
+
+  sortUnits(props, sortKey) {
+    let sortedUnits = [];
+    switch(sortKey) {
+      case SortKeys.ALPHABETICAL:
+        sortedUnits = sortByName(props.units);
+        break;
+      case SortKeys.DISTANCE:
+        sortedUnits = sortByDistance(props.units, props.position);
+        break;
+      default:
+        sortedUnits = props.units;
+    }
+
+    return sortedUnits;
+  }
+
+  selectSortKey(sortKey: string) {
+    this.setState({sortKey: sortKey});
+  }
+
   render() {
-    const {units, handleClick} = this.props;
+    const {handleClick} = this.props;
+    const {sortKey} = this.state;
+    const units = this.sortUnits(this.props, sortKey);
     return (
       <View id="list-view" className="list-view">
         <div className="list-view__container">
           <div className="list-view__block">
-            {units && sortBy(units, ['distance']).map( (unit, index) =>
+            <SortSelectorDropdown values={values(SortKeys)} active={sortKey} onSelect={this.selectSortKey}/>
+          </div>
+          <div className="list-view__block">
+            {units && units.map( (unit, index) =>
               <UnitListItem
               name={getAttr(unit.name)}
               address={getAttr(unit.street_address)}
