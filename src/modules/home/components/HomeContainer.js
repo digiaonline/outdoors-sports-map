@@ -10,7 +10,7 @@ import {DefaultFilters} from '../../unit/constants';
 import {MapView} from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
-import {locations, views} from '../constants.js';
+import {locations, views, POLL_INTERVAL} from '../constants.js';
 import {arrayifyQueryValue} from '../../common/helpers';
 
 export class HomeContainer extends Component {
@@ -45,6 +45,8 @@ export class HomeContainer extends Component {
   componentWillMount() {
     this.props.fetchUnits();
     this.props.updateMapCenter(locations.HELSINKI);
+
+    this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
   }
 
   componentDidMount() {
@@ -53,6 +55,10 @@ export class HomeContainer extends Component {
     if (params.unitId) {
       this.openModal();
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.pollUnitsInterval);
   }
 
 
