@@ -6,9 +6,12 @@ import Logo from '../../home/components/Logo';
 import Disclaimer from '../../home/components/Disclaimer';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
-import {getUnitPosition, getUnitQuality} from '../helpers';
+import {getUnitPosition} from '../helpers';
 import {mobileBreakpoint} from '../../common/constants';
+import {MAP_URL} from '../../map/constants';
+import {latLngToArray} from '../../map/helpers';
 import UnitMarker from './UnitMarker';
+import UserLocationMarker from '../../map/components/UserLocationMarker';
 
 export class MapView extends Component {
   static propTypes = {
@@ -27,9 +30,9 @@ export class MapView extends Component {
       isMobile: window.innerWidth < mobileBreakpoint
     };
 
-    this.onMoveend = this.onMoveend.bind(this);
     this.locateUser = this.locateUser.bind(this);
     this.updateIsMobile = this.updateIsMobile.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -44,30 +47,35 @@ export class MapView extends Component {
     this.setState({isMobile: window.innerWidth < mobileBreakpoint});
   }
 
-  onMoveend(e: Object): void{
-    const center = [e.target.getCenter().lat, e.target.getCenter().lng];
-    this.props.handleMoveend(center);
-  }
-
   locateUser() {
     this.refs.map.leafletElement.locate({setView: true});
   }
 
+  handleClick(event: Object) {
+    this.props.setLocation(latLngToArray(event.latlng));
+  }
+
   render() {
-    const {position, units, selected, handleClick} = this.props;
+    const {position, units, selected, handleClick: openUnit} = this.props;
     const {isMobile} = this.state;
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
-        <Map ref="map" zoomControl={false} attributionControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
+        <Map ref="map"
+          zoomControl={false}
+          attributionControl={false}
+          center={position}
+          zoom={12}
+          onClick={this.handleClick} >
           <TileLayer
-        url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+        url={MAP_URL}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
+          <UserLocationMarker />
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitMarker unit={unit} position={getUnitPosition(unit)} id={unit.id} key={index} handleClick={handleClick} />
+                <UnitMarker unit={unit} position={getUnitPosition(unit)} id={unit.id} key={index} handleClick={openUnit} />
             )
           }
           {!isMobile && <ZoomControl position="bottomright" />}

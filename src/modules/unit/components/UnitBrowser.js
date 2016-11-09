@@ -153,10 +153,12 @@ class UnitBrowser extends Component {
           searchResults={searchResults}
           searchEnabled={searchEnabled}
         />
-        <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
-          <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
-          <ListView units={units} position={position} show={isExpanded} handleClick={handleClick} />
-        </div>
+        {isExpanded &&
+          <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
+            <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
+            <ListView units={units} position={position} show={isExpanded} handleClick={handleClick} />
+          </div>
+        }
       </div>
     );
   }

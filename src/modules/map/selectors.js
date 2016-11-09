@@ -1,2 +1,2 @@
-export const getMapCenter = (state/*, props*/) =>
-  state.map.center
+export const getLocation = (state/*, props*/) =>
+  state.map.location;
