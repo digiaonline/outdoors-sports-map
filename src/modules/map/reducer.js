@@ -4,12 +4,12 @@ import {mapActions} from './constants';
 import {Action} from '../common/constants';
 
 const centerReducer = handleActions({
-  [mapActions.UPDATE_CENTER]: (state: Array, {payload: center}: Action) =>
-    center
+  [mapActions.SET_LOCATION]: (state: Array, {payload: position}: Action) =>
+    position
 }, []);
 
 const reducer = combineReducers({
-  center: centerReducer
+  location: centerReducer
 });
 
 export default reducer;
