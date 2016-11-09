@@ -12,11 +12,11 @@ const createIcon = (unit: Object) =>
     iconAnchor: [16, 40]
   });
 
-const UnitMarker = ({unit, router, ...rest}) =>
+const UnitMarker = ({unit, router, handleClick, ...rest}) =>
   <Marker
     icon={createIcon(unit)}
     onClick={() => {
-      router.push(`/unit/${id}`);
+      router.push(`/unit/${unit.id}`);
       handleClick();
     }}
     {...rest}/>;
