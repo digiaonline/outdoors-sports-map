@@ -8,6 +8,7 @@ import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import {getUnitPosition, getUnitQuality} from '../helpers';
 import {mobileBreakpoint} from '../../common/constants';
+import {MAP_URL} from '../../map/constants';
 import UnitMarker from './UnitMarker';
 
 export class MapView extends Component {
@@ -61,7 +62,7 @@ export class MapView extends Component {
       <View id="map-view" className="map-view" isSelected={selected}>
         <Map ref="map" zoomControl={false} attributionControl={false} center={position} zoom={12} onMoveend={this.onMoveend} >
           <TileLayer
-        url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+        url={MAP_URL}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           {
