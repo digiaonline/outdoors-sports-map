@@ -2,27 +2,30 @@ import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
 import {isEqual, values} from 'lodash';
-import {getObservation, sortByDistance, sortByName, sortByCondition} from '../helpers';
+import * as unitHelpers from '../helpers';
 import {SortKeys} from '../constants';
 import {View} from './View.js';
-import Time from '../../home/components/Time';
+import ObservationStatus from './ObservationStatus';
 import SortSelectorDropdown from './SortSelectorDropdown';
-import {getAttr, getUnitIconURL, getUnitQuality} from '../helpers.js';
-import {translate} from 'react-i18next';
 
-const UnitListItem = translate()(({unit, handleClick, t}) => (
+const {getAttr} = unitHelpers;
+
+const UnitListItem = ({unit, handleClick}) => {
+  const observation = unitHelpers.getObservation(unit);
+  const iconURL = unitHelpers.getUnitIconURL(unit);
+
+  return (
   <div className="list-view-item">
-    <div className="list-view-item__unit-marker"><img src={getUnitIconURL(unit)} alt=""/></div>
+    <div className="list-view-item__unit-marker"><img src={iconURL} alt=""/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{getAttr(unit.name)}</div>
-      {/* TODO: use observation value, not status as text! */}
-      <div className={`list-view-item__unit-status${getUnitQuality(unit) ? '--'+getUnitQuality(unit) : ''}`}>{getUnitQuality(unit) || t('UNIT.UNKNOWN')}</div>
-      <div className="list-view-item__unit-updated">{t('UNIT.UPDATED')} <Time time={new Date(getObservation(unit) ? getObservation(unit).time : null)} /></div>
+      <ObservationStatus observation={observation}/>
     </div>
     <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
         <Glyphicon glyph="chevron-right"/>
     </Link>
-  </div>));
+  </div>);
+};
 
 export class ListView extends Component {
   static propTypes = {
@@ -53,13 +56,13 @@ export class ListView extends Component {
     let sortedUnits = [];
     switch(sortKey) {
       case SortKeys.ALPHABETICAL:
-        sortedUnits = sortByName(props.units);
+        sortedUnits = unitHelpers.sortByName(props.units);
         break;
       case SortKeys.CONDITION:
-        sortedUnits = sortByCondition(props.units);
+        sortedUnits = unitHelpers.sortByCondition(props.units);
         break;
       case SortKeys.DISTANCE:
-        sortedUnits = sortByDistance(props.units, props.position);
+        sortedUnits = unitHelpers.sortByDistance(props.units, props.position);
         break;
 
       default:

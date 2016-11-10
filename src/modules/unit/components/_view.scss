@@ -32,36 +32,6 @@
         .list-view-item__unit-name {
           font-weight: 700;
         }
-
-        .list-view-item__unit-status {
-          background: $status-unknown;
-          padding: 0 2px;
-          width: 100%;
-          text-transform: uppercase;
-          font-size: 0.8em;
-          color: $ui-text;
-
-          &--good {
-            @extend .list-view-item__unit-status;
-            background: $status-ok;
-          }
-
-          &--satisfactory {
-            @extend .list-view-item__unit-status;
-            background: $status-average;
-          }
-
-          &--unusable {
-            @extend .list-view-item__unit-status;
-            background: $status-bad;
-          }
-
-          &--unknown {
-            @extend .list-view-item__unit-status;
-            background: $status-unknown;
-          }
-
-        }
       }
 
       &__unit-marker,

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Modal, Glyphicon} from 'react-bootstrap';
 import {Link} from 'react-router';
-import {getAttr} from '../helpers.js';
+import {getAttr, getObservation} from '../helpers.js';
 import {translate} from 'react-i18next';
+import ObservationStatus from './ObservationStatus';
 
 const ModalHeader = ({handleClick, name, address, zip}) =>
   <Modal.Header>
@@ -17,17 +18,10 @@ const ModalHeader = ({handleClick, name, address, zip}) =>
     </div>
   </Modal.Header>;
 
-const LocationState = ({state, t}) =>
+const LocationState = ({observation, t}) =>
   <div className="single-unit-modal__box">
     <p><strong>{t('MODAL.STATE')}</strong></p>
-    {state
-      ? state === 'Gut'
-        ? <p style={{ background: '#72bc3d' }}>HYVÄ</p>
-        : <p style={{ background: '#a8b5c2' }}>UNKNOWN</p>
-      : null
-    }
-    <p>Tieto päivitetty x päivää sitten</p>
-    <p>Kunnostettu y päivää sitten</p>
+    <ObservationStatus observation={observation}/>
   </div>;
 
 const LocationInfo = () =>
@@ -61,6 +55,7 @@ export class SingleUnitModalContainer extends Component {
     const currentUnit = this.getCurrentUnit(units, params.unitId);
     const currentUnitName = currentUnit ? getAttr(currentUnit.name) : t('MODAL.LOADING');
     const currentUnitAddress = currentUnit ? getAttr(currentUnit.street_address)+', '+currentUnit.address_zip : null;
+    const unitObservation = currentUnit ? getObservation(currentUnit) : null;
 
     return (
       <div>
@@ -68,7 +63,7 @@ export class SingleUnitModalContainer extends Component {
           <ModalHeader name={currentUnitName} address={currentUnitAddress} handleClick={handleClick}/>
             {currentUnit ?
               <Modal.Body>
-                <LocationState state='Gut' t={t}/>
+                <LocationState observation={unitObservation} t={t}/>
                 <LocationInfo/>
                 <LocationWeather/>
                 <LocationHeightProfile/>
