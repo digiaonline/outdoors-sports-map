@@ -43,6 +43,16 @@ export class MapView extends Component {
     window.removeEventListener('resize', this.updateIsMobile);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.unitId && nextProps.units && this.state.isMobile) {
+      const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
+      if (unit) {
+        //For some reason could not use reverse here so had to do this weird way.
+        this.refs.map.leafletElement.flyTo([unit.location.coordinates[1]+0.04, unit.location.coordinates[0]], 12);
+      }
+    }
+  }
+
   updateIsMobile() {
     this.setState({isMobile: window.innerWidth < mobileBreakpoint});
   }
