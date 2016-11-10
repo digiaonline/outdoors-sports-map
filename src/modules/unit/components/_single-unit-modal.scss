@@ -54,6 +54,12 @@
       background: #fff;
       padding: 10px;
       margin: 5px 0;
+      align-items: center;
+
+      &-headline {
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
     }
   }
 }

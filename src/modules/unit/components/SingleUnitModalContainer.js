@@ -42,22 +42,25 @@ const ModalHeader = ({handleClick, unit, t}) => {
 
 const LocationState = ({observation, t}) =>
   <div className="modal-body-box">
-    <p><strong>{t('MODAL.QUALITY')}</strong></p>
+    <div className="modal-body-box-headline">{t('MODAL.QUALITY')}</div>
     <ObservationStatus observation={observation}/>
   </div>;
 
-const LocationInfo = () =>
+const LocationInfo = ({t}) =>
   <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.INFO')}</div>
     Such info
   </div>;
 
-const LocationWeather = () =>
+const LocationWeather = ({t}) =>
   <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.WEATHER')}</div>
     Wow such weather.
   </div>;
 
-const LocationHeightProfile = () =>
+const LocationHeightProfile = ({t}) =>
   <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.HEIGHT_PROFILE')}</div>
     Wow such profile.
   </div>;
 
@@ -84,9 +87,9 @@ export class SingleUnitModalContainer extends Component {
           {currentUnit ?
             <Modal.Body>
               <LocationState observation={unitObservation} t={t}/>
-              <LocationInfo/>
-              <LocationWeather/>
-              <LocationHeightProfile/>
+              <LocationInfo t={t}/>
+              <LocationWeather t={t}/>
+              <LocationHeightProfile t={t}/>
             </Modal.Body>
             : null
           }
