@@ -32,14 +32,16 @@
       background: $ui-enabled;
       display: flex;
       align-items: center;
+      height: 100%;
 
       input[name="search"] {
-        flex: 2 0 auto;
+        flex: 2 1 auto;
         display: inline-block;
         border: 2px solid $ui-enabled;
         border-radius: 30px;
         padding: 0 $gap;
         line-height: 30px;
+        height: 34px;
 
         &:focus {
           box-shadow: 0 0 0 2px $content-background !important;
@@ -48,17 +50,14 @@
       }
 
       label {
-        flex: 0;
+        flex: 0 1 auto;
         color: $ui-text;
         padding-right: 6px;
         display: inline-block;
         font-size: 18px;
         line-height: 30px;
         margin: 0;
-
-        span {
-          //vertical-align: middle;
-        }
+        width: 24px;
 
         &:hover {
           cursor: pointer;
