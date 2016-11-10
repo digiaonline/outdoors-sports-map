@@ -18,6 +18,43 @@
     border: 0;
     background: #77d5ed;
     color: #333333;
+    padding: 10px 10px 0;
+  }
+
+  &-header {
+    background: #038ccc;
+    padding: 10px;
+    color: #fff;
+    border: none;
+
+    &-name {
+    }
+
+    &-description {
+      padding-top: 5px;
+      border-top: 1px solid #fff;
+      font-size: 12px;
+      display: flex;
+
+      p {
+        margin-bottom: 5px;
+      }
+
+      img {
+        height: 40px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &-body {
+    padding: 0;
+
+    &-box {
+      background: #fff;
+      padding: 10px;
+      margin: 5px 0;
+    }
   }
 }
 
@@ -46,14 +83,5 @@
     }
 
 
-  }
-}
-
-.single-unit-modal {
-
-  &__box {
-    background: #fff;
-    margin: 10px 0 10px 0;
-    padding: 10px;
   }
 }
