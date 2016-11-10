@@ -25,7 +25,10 @@
   },
   "MODAL": {
     "LOADING": "Loading location...",
-    "QUALITY": "Quality"
+    "QUALITY": "Quality",
+    "INFO": "Info",
+    "WEATHER": "Weather",
+    "HEIGHT_PROFILE": "Height profile"
   },
   "VIEW": {
     "POPUP": {
