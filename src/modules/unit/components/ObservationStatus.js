@@ -1,12 +1,13 @@
 import React from 'react';
 import {translate} from 'react-i18next';
+import moment from 'moment';
 import Time from '../../home/components/Time';
 import {getAttr} from '../helpers';
 
 
 export const ObservationStatus = translate()(({observation, t}) => {
   const quality = observation && observation.quality || 'unknown';
-  const observationTime = new Date(observation && observation.time || null);
+  const observationTime = moment(observation && observation.time || 0).toDate();
   const observationName = observation && getAttr(observation.name) || t('UNIT.UNKNOWN');
 
   return (
