@@ -25,15 +25,15 @@ export const getUnitSport = (unit: Object) => {
   if(unit.services && unit.services.length) {
     const service = unit.services[0];
 
-    if (IceSkatingServices.includes(service)) {
+    if (IceSkatingServices.includes(service.id)) {
       return 'iceskate';
     }
 
-    if (SkiingServices.includes(service)) {
+    if (SkiingServices.includes(service.id)) {
       return 'ski';
     }
 
-    if (SwimmingServices.includes(service)) {
+    if (SwimmingServices.includes(service.id)) {
       return 'swim';
     }
   }
