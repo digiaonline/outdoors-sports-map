@@ -64,6 +64,11 @@ export const getUnitIconURL = (unit: Object, selected = false, retina = true) =>
   return require(`@assets/markers/${sport}-${quality}-${onOff}${resolution}.png`);
 };
 
+export const getFilterIconURL = (filter: String, active: Boolean) => {
+  if (filter)
+  return require(`@assets/markers/${filter}-${active ? 'good' : 'unknown'}-off@2x.png`);
+};
+
 export const sortByDistance = (units: Array, position: Array) =>
   sortBy(units, (unit) => {
     const unitLatLng = new LatLng(...getUnitPosition(unit));
