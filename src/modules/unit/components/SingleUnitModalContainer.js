@@ -12,12 +12,14 @@ const ModalHeader = ({handleClick, unit, t}) => {
   return(
     <Modal.Header>
       <div>
-        <h4 className="modal-header-name">
-          {unit ? getAttr(unit.name) : t('MODAL.LOADING')}
-          <Link to="/">
-            <Glyphicon onClick={handleClick} style={{ position: 'relative', float: 'right' }} glyph="remove"/>
-          </Link>
-        </h4>
+        <div className="modal-header-name">
+          <div>
+            <h4>{unit ? getAttr(unit.name) : t('MODAL.LOADING')}</h4>
+          </div>
+          <div style={{alignSelf: 'center'}}>
+            <Link to="/"><Glyphicon onClick={handleClick} glyph="remove"/></Link>
+          </div>
+        </div>
         {unit
           ? <div className="modal-header-description">
               <img src={iconURL} alt=""/>
@@ -40,7 +42,7 @@ const ModalHeader = ({handleClick, unit, t}) => {
 };
 
 
-const LocationState = ({observation, t}) =>
+const LocationState = ({observation, updated, t}) =>
   <div className="modal-body-box">
     <div className="modal-body-box-headline">{t('MODAL.QUALITY')}</div>
     <ObservationStatus observation={observation}/>

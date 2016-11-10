@@ -28,6 +28,8 @@
     border: none;
 
     &-name {
+      display: flex;
+      justify-content: space-between;
     }
 
     &-description {
