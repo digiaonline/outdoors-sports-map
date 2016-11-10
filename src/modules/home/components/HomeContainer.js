@@ -71,11 +71,12 @@ export class HomeContainer extends Component {
   render() {
     const {unitData, position, mapCenter, params, location: {query: {filter}}} = this.props;
     const activeFilter = arrayifyQueryValue(filter);
+    console.log(unitData);
 
     return (
       <div>
         <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
-        <MapView setLocation={this.props.setLocation} position={position} units={unitData} handleClick={this.openModal} mapCenter={mapCenter}/>
+        <MapView params={params} setLocation={this.props.setLocation} position={position} units={unitData} handleClick={this.openModal} mapCenter={mapCenter}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
       </div>
     );
