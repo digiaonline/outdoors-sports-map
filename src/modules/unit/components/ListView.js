@@ -13,10 +13,11 @@ const {getAttr} = unitHelpers;
 const UnitListItem = ({unit, handleClick}) => {
   const observation = unitHelpers.getObservation(unit);
   const iconURL = unitHelpers.getUnitIconURL(unit);
+  const serviceName = unitHelpers.getServiceName(unit);
 
   return (
   <div className="list-view-item">
-    <div className="list-view-item__unit-marker"><img src={iconURL} alt=""/></div>
+    <div className="list-view-item__unit-marker"><img src={iconURL} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{getAttr(unit.name)}</div>
       <ObservationStatus observation={observation}/>

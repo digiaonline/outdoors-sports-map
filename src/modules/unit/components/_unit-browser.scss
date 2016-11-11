@@ -32,7 +32,6 @@
       background: $ui-enabled;
       display: flex;
       align-items: center;
-      height: 100%;
 
       input[name="search"] {
         flex: 2 1 auto;
@@ -66,14 +65,44 @@
     }
 
     .search-results {
-      background: #fff;
+      background: $content-background;
       text-align: center;
+      padding: 0 $gap;
+
+      &:empty {
+        padding: 0;
+      }
 
       &__result {
-        padding: 10px 0 10px 0;
-        margin: 0 10px 0 10px;
-        border-top: #000 solid 1px;
+        padding: $gap 0;
+        display: flex;
+        align-items: center;
+        background: $content-background;
+        color: $content-text;
+        text-decoration: none !important;
+        border-top: 2px solid $status-unknown;
+
+        &-icon {
+          flex: 0 1 auto;
+          padding-right: $gap;
+
+          img {
+            height: 40px;
+          }
+        }
+
+        &-details {
+          flex: 2 1 auto;
+          text-align: left;
+
+          &__name {
+            font-weight: 700;
+          }
+        }
       }
+
+
+
     }
 
     .toggle-view-button {
