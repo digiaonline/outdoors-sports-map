@@ -41,6 +41,10 @@ export const getUnitSport = (unit: Object) => {
   return 'unknown';
 };
 
+export const getServiceName = (unit: Object) => {
+  return getAttr(unit.services[0].name);
+};
+
 export const getObservation = (unit: Object) => {
   const {observations} = unit;
   return observations && observations.length ? observations[0] : null;
