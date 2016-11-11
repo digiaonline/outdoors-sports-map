@@ -5,6 +5,7 @@ import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {getLocation} from '../../map/selectors';
 import {getVisibleUnits} from '../../unit/selectors';
+import {changeLanguage} from '../../home/actions';
 import {DefaultFilters} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
@@ -39,6 +40,7 @@ export class HomeContainer extends Component {
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
   }
 
   componentWillMount() {
@@ -60,6 +62,11 @@ export class HomeContainer extends Component {
     clearInterval(this.pollUnitsInterval);
   }
 
+  handleChangeLanguage(language) {
+    console.log(language);
+    this.props.changeLanguage(language);
+  }
+
   openModal() {
     this.setState({modalOpen: true});
   }
@@ -76,7 +83,7 @@ export class HomeContainer extends Component {
     return (
       <div>
         <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
-        <MapView params={params} setLocation={this.props.setLocation} position={position} units={unitData} handleClick={this.openModal} mapCenter={mapCenter}/>
+        <MapView params={params} setLocation={this.props.setLocation} position={position} units={unitData} changeLanguage={this.handleChangeLanguage} handleClick={this.openModal} mapCenter={mapCenter}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
       </div>
     );
@@ -89,7 +96,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({fetchUnits, setLocation}, dispatch);
+  bindActionCreators({fetchUnits, setLocation, changeLanguage}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer

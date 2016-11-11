@@ -41,6 +41,7 @@ export class MapView extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateIsMobile);
+    //this.refs.map.leafletElement.setActiveArea('activeArea');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,7 +67,7 @@ export class MapView extends Component {
   }
 
   render() {
-    const {position, units, selected, handleClick: openUnit} = this.props;
+    const {position, units, selected, handleClick: openUnit, changeLanguage} = this.props;
     const {isMobile} = this.state;
 
     return (
@@ -95,9 +96,20 @@ export class MapView extends Component {
             </a>
           </Control>
           <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
-            <a>
-              <Glyphicon glyph="info-sign"/>
-            </a>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <div onClick={() => changeLanguage('SVE')}>
+                Svenska
+              </div>
+              <div>
+                |
+              </div>
+              <div onClick={() => changeLanguage('EN')}>
+                English
+              </div>
+              <a>
+                <Glyphicon glyph="info-sign"/>
+              </a>
+            </div>
           </Control>
         </Map>
         <Logo/>

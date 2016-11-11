@@ -1,7 +1,8 @@
 import {normalizeActionName} from '../common/helpers';
 
 export const homeActions = {
-  SET_HELLO_MESSAGE: normalizeActionName('home/SET_HELLO_MESSAGE')
+  SET_HELLO_MESSAGE: normalizeActionName('home/SET_HELLO_MESSAGE'),
+  CHANGE_LANGUAGE: 'home/CHANGE_LANGUAGE'
 };
 
 export const locations = {
