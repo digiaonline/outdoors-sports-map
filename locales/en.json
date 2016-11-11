@@ -13,7 +13,7 @@
     "FURTHER INFO": "Furhter info",
     "FILTER": {
       "ALL": "All",
-      "ICESKATE": "Ice skating",
+      "ICESKATE": "Skating",
       "SKI": "Skiing",
       "OPEN_NOW": "Open now"
     },
@@ -25,7 +25,10 @@
   },
   "MODAL": {
     "LOADING": "Loading location...",
-    "STATE": "State"
+    "QUALITY": "Quality",
+    "INFO": "Info",
+    "WEATHER": "Weather",
+    "HEIGHT_PROFILE": "Height profile"
   },
   "VIEW": {
     "POPUP": {

@@ -1,47 +1,66 @@
 import React, {Component} from 'react';
 import {Modal, Glyphicon} from 'react-bootstrap';
 import {Link} from 'react-router';
-import {getAttr} from '../helpers.js';
+import {getAttr, getObservation, getServiceName} from '../helpers.js';
 import {translate} from 'react-i18next';
+import ObservationStatus from './ObservationStatus';
+import * as unitHelpers from '../helpers';
 
-const ModalHeader = ({handleClick, name, address, zip}) =>
-  <Modal.Header>
-    <div>
-      <h3>
-        {name}
-        <Link to="/">
-          <Glyphicon onClick={handleClick} style={{ position: 'relative', float: 'right' }} glyph="remove"/>
-        </Link>
-      </h3>
-      <p>{address}</p>
-    </div>
-  </Modal.Header>;
+const ModalHeader = ({handleClick, unit, t}) => {
+  const iconURL = unit ? unitHelpers.getUnitIconURL(unit) : null;
 
-const LocationState = ({state, t}) =>
-  <div className="single-unit-modal__box">
-    <p><strong>{t('MODAL.STATE')}</strong></p>
-    {state
-      ? state === 'Gut'
-        ? <p style={{ background: '#72bc3d' }}>HYVÄ</p>
-        : <p style={{ background: '#a8b5c2' }}>UNKNOWN</p>
-      : null
-    }
-    <p>Tieto päivitetty x päivää sitten</p>
-    <p>Kunnostettu y päivää sitten</p>
+  return(
+    <Modal.Header>
+      <div>
+        <div className="modal-header-name">
+          <div>
+            <h4>{unit ? getAttr(unit.name) : t('MODAL.LOADING')}</h4>
+          </div>
+          <div style={{alignSelf: 'center'}}>
+            <Link to="/"><Glyphicon onClick={handleClick} glyph="remove"/></Link>
+          </div>
+        </div>
+        {unit
+          ? <div className="modal-header-description">
+              <img src={iconURL} alt=""/>
+              <div>
+                <p>
+                {
+                  getServiceName(unit)
+                }
+                </p>
+                <p>{getAttr(unit.street_address) + ', ' + unit.address_zip}</p>
+              </div>
+            </div>
+          : null
+        }
+      </div>
+    </Modal.Header>
+  );
+};
+
+
+const LocationState = ({observation, t}) =>
+  <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.QUALITY')}</div>
+    <ObservationStatus observation={observation}/>
   </div>;
 
-const LocationInfo = () =>
-  <div className="single-unit-modal__box">
+const LocationInfo = ({t}) =>
+  <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.INFO')}</div>
     Such info
   </div>;
 
-const LocationWeather = () =>
-  <div className="single-unit-modal__box">
+const LocationWeather = ({t}) =>
+  <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.WEATHER')}</div>
     Wow such weather.
   </div>;
 
-const LocationHeightProfile = () =>
-  <div className="single-unit-modal__box">
+const LocationHeightProfile = ({t}) =>
+  <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.HEIGHT_PROFILE')}</div>
     Wow such profile.
   </div>;
 
@@ -58,23 +77,22 @@ export class SingleUnitModalContainer extends Component {
 
   render(){
     const {units, handleClick, params, t} = this.props;
-    const currentUnit = this.getCurrentUnit(units, params.unitId);
-    const currentUnitName = currentUnit ? getAttr(currentUnit.name) : t('MODAL.LOADING');
-    const currentUnitAddress = currentUnit ? getAttr(currentUnit.street_address)+', '+currentUnit.address_zip : null;
+    const currentUnit = units ? this.getCurrentUnit(units, params.unitId) : null;
+    const unitObservation = currentUnit ? getObservation(currentUnit) : null;
 
     return (
       <div>
         <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false}>
-          <ModalHeader name={currentUnitName} address={currentUnitAddress} handleClick={handleClick}/>
-            {currentUnit ?
-              <Modal.Body>
-                <LocationState state='Gut' t={t}/>
-                <LocationInfo/>
-                <LocationWeather/>
-                <LocationHeightProfile/>
-              </Modal.Body>
-              : null
-            }
+          <ModalHeader unit={currentUnit} handleClick={handleClick} t={t}/>
+          {currentUnit ?
+            <Modal.Body>
+              <LocationState observation={unitObservation} t={t}/>
+              <LocationInfo t={t}/>
+              <LocationWeather t={t}/>
+              <LocationHeightProfile t={t}/>
+            </Modal.Body>
+            : null
+          }
         </Modal>
       </div>
     );

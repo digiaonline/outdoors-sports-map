@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {withRouter} from 'react-router';
+import {Link, withRouter} from 'react-router';
 import {ListView} from './ListView.js';
 import {Glyphicon} from 'react-bootstrap';
 import values from 'lodash/values';
@@ -10,7 +10,8 @@ import {bindActionCreators} from 'redux';
 import {searchTarget} from '../actions';
 import {translate} from 'react-i18next';
 import UnitFilter from './UnitFilter.js';
-import {getAttr} from '../helpers.js';
+import ObservationStatus from './ObservationStatus';
+import {getAttr, getUnitIconURL, getServiceName, getObservation} from '../helpers.js';
 import * as unitSelectors from '../selectors';
 
 const SearchBar = translate()(({handleChange, searchResults, enabled, t}) =>
@@ -32,34 +33,26 @@ const SearchResults = ({searchResults}) => (
   <div className="search-results">
     {searchResults.length > 0
       ? <div>
-          <a>näytä kaikki tulokset</a>
+          {/*TODO: <a>näytä kaikki tulokset</a>*/}
           {searchResults.map((result, index) =>
-            <SearchResult key={index}>
-              {index < 3
-                ? <div>
-                    <p>{getAttr(result.name)}</p>
-                    {result.observations
-                      ? <p style={{ background: '#72bc3d' }}>HYVÄ</p>
-                      : <p style={{ background: '#a8b5c2' }}>UNKNOWN</p>
-                    }
-                    <p>Päivitetty eilen</p>
-                  </div>
-                : <div>
-                    {getAttr(result.name)}
-                  </div>
-              }
-            </SearchResult>
-      )}
+            <SearchResult key={index} unit={result}/>
+          )}
         </div>
       : null
     }
   </div>
 );
 
-const SearchResult = ({children}) =>
-  <div className="search-results__result">
-    {children}
-  </div>;
+const SearchResult = ({unit, ...rest}) =>
+  <Link to={`/unit/${unit.id}`} className="search-results__result" {...rest}>
+    <div className="search-results__result-icon">
+      <img src={getUnitIconURL(unit)} alt={getServiceName(unit)} />
+    </div>
+    <div className="search-results__result-details">
+      <div className="search-results__result-details__name">{getAttr(unit.name)}</div>
+      <ObservationStatus observation={getObservation(unit)}/>
+    </div>
+  </Link>;
 
 const ToggleButton = ({toggle, glyph}) =>
   <button className="toggle-view-button" onClick={toggle}>

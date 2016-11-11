@@ -27,40 +27,10 @@
       margin-bottom: $gap;
 
       &__unit-details {
-        flex: 2 0 auto;
+        flex: 2 1 auto;
 
         .list-view-item__unit-name {
           font-weight: 700;
-        }
-
-        .list-view-item__unit-status {
-          background: $status-unknown;
-          padding: 0 2px;
-          width: 100%;
-          text-transform: uppercase;
-          font-size: 0.8em;
-          color: $ui-text;
-
-          &--good {
-            @extend .list-view-item__unit-status;
-            background: $status-ok;
-          }
-
-          &--satisfactory {
-            @extend .list-view-item__unit-status;
-            background: $status-average;
-          }
-
-          &--unusable {
-            @extend .list-view-item__unit-status;
-            background: $status-bad;
-          }
-
-          &--unknown {
-            @extend .list-view-item__unit-status;
-            background: $status-unknown;
-          }
-
         }
       }
 
@@ -89,65 +59,5 @@
     &__content {
 
     }
-  }
-}
-
-.modal {
-  width: 100%;
-  height: 70%;
-  display: block;
-
-  &-dialog {
-    z-index: 1000;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    background: #77d5ed;
-    overflow-y: initial;
-  }
-
-  &-content {
-    height: 100%;
-    border-radius: 0;
-    border: 0;
-    background: #77d5ed;
-    color: #333333;
-  }
-}
-
-@media only screen and (min-width : 768px) {
-
-  .modal {
-    width: 400px;
-    height: 100%;
-
-    &-dialog {
-      position: fixed;
-      left: 0;
-      top: 0;
-      z-index: 10000;
-      margin: 0;
-      width: 400px;
-      height: 100%;
-    }
-
-    &-content {
-      border-radius: 0;
-      border: 0;
-      height: 100%;
-      background: #77d5ed;
-      color: #333333;
-    }
-
-
-  }
-}
-
-.single-unit-modal {
-
-  &__box {
-    background: #fff;
-    margin: 10px 0 10px 0;
-    padding: 10px;
   }
 }

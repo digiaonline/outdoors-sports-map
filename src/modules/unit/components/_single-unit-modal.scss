@@ -1,0 +1,95 @@
+.modal {
+  width: 100%;
+  height: 70%;
+  display: block;
+
+  &-dialog {
+    z-index: 1000;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #77d5ed;
+    overflow-y: initial;
+  }
+
+  &-content {
+    height: 100%;
+    border-radius: 0;
+    border: 0;
+    background: #77d5ed;
+    color: #333333;
+    padding: 10px 10px 0;
+  }
+
+  &-header {
+    background: #038ccc;
+    padding: 10px;
+    color: #fff;
+    border: none;
+
+    &-name {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-description {
+      padding-top: 5px;
+      border-top: 1px solid #fff;
+      font-size: 12px;
+      display: flex;
+
+      p {
+        margin-bottom: 5px;
+      }
+
+      img {
+        height: 40px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &-body {
+    padding: 0;
+
+    &-box {
+      background: #fff;
+      padding: 10px;
+      margin: 5px 0;
+      align-items: center;
+
+      &-headline {
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width : 768px) {
+
+  .modal {
+    width: 400px;
+    height: 100%;
+
+    &-dialog {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 10000;
+      margin: 0;
+      width: 400px;
+      height: 100%;
+    }
+
+    &-content {
+      border-radius: 0;
+      border: 0;
+      height: 100%;
+      background: #77d5ed;
+      color: #333333;
+    }
+
+
+  }
+}

@@ -25,20 +25,24 @@ export const getUnitSport = (unit: Object) => {
   if(unit.services && unit.services.length) {
     const service = unit.services[0];
 
-    if (IceSkatingServices.includes(service)) {
+    if (IceSkatingServices.includes(service.id)) {
       return 'iceskate';
     }
 
-    if (SkiingServices.includes(service)) {
+    if (SkiingServices.includes(service.id)) {
       return 'ski';
     }
 
-    if (SwimmingServices.includes(service)) {
+    if (SwimmingServices.includes(service.id)) {
       return 'swim';
     }
   }
 
   return 'unknown';
+};
+
+export const getServiceName = (unit: Object) => {
+  return getAttr(unit.services[0].name);
 };
 
 export const getObservation = (unit: Object) => {
@@ -62,6 +66,11 @@ export const getUnitIconURL = (unit: Object, selected = false, retina = true) =>
   const resolution = retina ? '@2x' : '';
 
   return require(`@assets/markers/${sport}-${quality}-${onOff}${resolution}.png`);
+};
+
+export const getFilterIconURL = (filter: String, active: Boolean) => {
+  if (filter)
+  return require(`@assets/markers/${filter}-${active ? 'good' : 'unknown'}-off@2x.png`);
 };
 
 export const sortByDistance = (units: Array, position: Array) =>
