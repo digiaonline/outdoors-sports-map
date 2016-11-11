@@ -33,7 +33,7 @@ const SearchResults = ({searchResults}) => (
   <div className="search-results">
     {searchResults.length > 0
       ? <div>
-          <a>näytä kaikki tulokset</a>
+          {/*TODO: <a>näytä kaikki tulokset</a>*/}
           {searchResults.map((result, index) =>
             <SearchResult key={index} unit={result}/>
           )}
