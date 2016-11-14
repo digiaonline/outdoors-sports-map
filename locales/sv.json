@@ -1,0 +1,49 @@
+{
+  "APP": {
+    "NAME": "Kuntokartta",
+    "ABOUT": "About the service"
+  },
+  "MAP": {
+    "ATTRIBUTION": "OpenStreetMap contributors"
+  },
+  "UNIT": {
+    "STATUS": "Status",
+    "UNKNOWN": "Unknown",
+    "UPDATED": "Updated",
+    "FURTHER INFO": "Furhter info",
+    "FILTER": {
+      "ALL": "All",
+      "ICESKATE": "Skating",
+      "SKI": "Skiing",
+      "OPEN_NOW": "Open now"
+    },
+    "SORT": {
+      "ALPHABETICAL": "Alphabetical order",
+      "CONDITION": "Best condition first",
+      "DISTANCE": "Nearest first"
+    }
+  },
+  "MODAL": {
+    "LOADING": "Loading location...",
+    "QUALITY": "Qualiteeeeet",
+    "INFO": "Info",
+    "WEATHER": "Weather",
+    "HEIGHT_PROFILE": "Height profile"
+  },
+  "VIEW": {
+    "POPUP": {
+      "OPENING_HOURS": "Opening hours and further information"
+    }
+  },
+  "SEARCH": {
+    "SEARCH": "Search"
+  },
+  "TIME": {
+    "DAYS_AGO": "{{days}} days ago",
+    "NOT_AVAILABLE": "-",
+    "MONTHS_AGO": "{{months}} months ago",
+    "TODAY": "today",
+    "WEEKS_AGO": "{{weeks}} weeks ago",
+    "YESTERDAY": "yesterday"
+  }
+}
