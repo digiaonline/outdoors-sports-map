@@ -13,9 +13,9 @@
     "UPDATED": "Päivitetty",
     "FILTER": {
       "ALL": "All",
-      "SKATING": "Skating",
-      "SKIING": "Skiing",
-      "OPEN_NOW": "Open now"
+      "ICESKATE": "Luistelu",
+      "SKI": "Hiihto",
+      "OPEN_NOW": "Auki nyt"
     },
     "SORT": {
       "DEFAULT": "Oletus",
