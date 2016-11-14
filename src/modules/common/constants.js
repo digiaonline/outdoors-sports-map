@@ -34,3 +34,9 @@ export const routerPaths = {
 };
 
 export const mobileBreakpoint = 768;
+
+export const languages = {
+  English: 'en',
+  Svenska: 'se',
+  Suomi: 'fi'
+};
