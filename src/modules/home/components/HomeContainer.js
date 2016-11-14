@@ -5,6 +5,7 @@ import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {getLocation} from '../../map/selectors';
 import {getVisibleUnits} from '../../unit/selectors';
+import {getLanguage} from '../selectors';
 import {changeLanguage} from '../../home/actions';
 import {DefaultFilters} from '../../unit/constants';
 //import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
@@ -76,14 +77,13 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, position, mapCenter, params, location: {query: {filter}}} = this.props;
+    const {unitData, position, mapCenter, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = arrayifyQueryValue(filter);
-    console.log(unitData);
 
     return (
       <div>
         <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
-        <MapView params={params} setLocation={this.props.setLocation} position={position} units={unitData} changeLanguage={this.handleChangeLanguage} handleClick={this.openModal} mapCenter={mapCenter}/>
+        <MapView activeLanguage={activeLanguage} params={params} setLocation={this.props.setLocation} position={position} units={unitData} changeLanguage={this.handleChangeLanguage} handleClick={this.openModal} mapCenter={mapCenter}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
       </div>
     );
@@ -92,7 +92,8 @@ export class HomeContainer extends Component {
 
 const mapStateToProps = (state, props) => ({
   unitData: getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
-  mapCenter: getLocation(state)
+  mapCenter: getLocation(state),
+  activeLanguage: getLanguage(state)
 });
 
 const mapDispatchToProps = (dispatch) =>

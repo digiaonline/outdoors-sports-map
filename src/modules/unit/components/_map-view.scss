@@ -34,3 +34,19 @@
     }
   }
 }
+
+.language-changer {
+  position: fixed;
+  right: 50px;
+  top: 14px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000;
+
+  :hover {
+    cursor: pointer;
+  }
+  a {
+    color: black;
+  }
+}

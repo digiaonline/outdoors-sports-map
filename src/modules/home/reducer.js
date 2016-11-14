@@ -6,7 +6,7 @@ import {Action} from '../common/constants';
 
 const languageReducer = handleActions({
   [homeActions.CHANGE_LANGUAGE]: (state, {payload: language}) => language
-}, 'EN');
+}, 'en');
 
 const helloMessageReducer = handleActions({
   [homeActions.SET_HELLO_MESSAGE]: (state: string, {payload: message}: Action) => message
