@@ -6,7 +6,7 @@ import ObservationStatus from './ObservationStatus';
 import {getAttr, getUnitIconURL, getServiceName, getObservation} from '../helpers';
 
 
-const SearchBar = translate()(({handleChange, searchResults, enabled, t}) =>
+const SearchBar = translate()(({handleChange, searchResults, isLoading = true, t}) =>
   <div>
     <div className="search-container">
       <label htmlFor="search"><Glyphicon glyph="search"/></label>
@@ -14,8 +14,8 @@ const SearchBar = translate()(({handleChange, searchResults, enabled, t}) =>
              id="search"
              type="text"
              onChange={(e) => handleChange(e.target.value)}
-             placeholder={`${t('SEARCH.SEARCH')}...`}
-             disabled={!enabled}/>
+             placeholder={isLoading ? t('GENERAL.LOADING') : `${t('SEARCH.SEARCH')}...`}
+             disabled={isLoading}/>
     </div>
     <SearchResults searchResults={searchResults}/>
   </div>

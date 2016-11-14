@@ -3,6 +3,9 @@
     "NAME": "Kuntokartta",
     "ABOUT": "Tietoa palvelusta"
   },
+  "GENERAL": {
+    "LOADING": "Ladataan..."
+  },
   "MAP": {
     "ATTRIBUTION": "OpenStreetMap tekijät"
   },

@@ -4,9 +4,8 @@ import {connect} from 'react-redux';
 import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {getLocation} from '../../map/selectors';
-import {getVisibleUnits} from '../../unit/selectors';
+import {getVisibleUnits, getIsLoading} from '../../unit/selectors';
 import {DefaultFilters} from '../../unit/constants';
-//import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
@@ -69,13 +68,13 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, position, mapCenter, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, position, mapCenter, params, location: {query: {filter}}} = this.props;
     const activeFilter = arrayifyQueryValue(filter);
     console.log(unitData);
 
     return (
-      <div>
-        <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
+      <div className="home">
+        <UnitBrowser isLoading={isLoading} units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
         <MapView params={params} setLocation={this.props.setLocation} position={position} units={unitData} handleClick={this.openModal} mapCenter={mapCenter}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
       </div>
@@ -85,6 +84,7 @@ export class HomeContainer extends Component {
 
 const mapStateToProps = (state, props) => ({
   unitData: getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
+  isLoading: getIsLoading(state),
   mapCenter: getLocation(state)
 });
 

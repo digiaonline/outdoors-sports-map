@@ -1,6 +1,6 @@
 import {AppState} from '../common/constants';
 import {UnitFilters, DefaultFilters} from './constants';
-import {union, intersection} from 'lodash';
+import {union, intersection, isEmpty} from 'lodash';
 
 export const getUnitById = (state: AppState, props: Object) =>
   state.unit.byId[props.id];
@@ -27,3 +27,9 @@ export const getVisibleUnits = (state: AppState, filters = DefaultFilters) => {
 
 export const getSearchResults = (state: AppState/*, props: Object*/) =>
   state.unit.searchResults.map((id) => getUnitById(state, {id}));
+
+export const getIsFetchingUnits = (state: AppState) =>
+  state.unit.isFetching;
+
+export const getIsLoading = (state: AppState) =>
+  state.unit.isFetching && isEmpty(state.unit.all);

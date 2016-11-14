@@ -17,9 +17,9 @@ const ToggleButton = ({toggle, glyph}) =>
     <Glyphicon glyph={glyph}/>
   </button>;
 
-const Header = ({toggle, toggleGlyph, searchResults, handleChange, searchEnabled}) =>
+const Header = ({toggle, isLoading, toggleGlyph, searchResults, handleChange, searchEnabled}) =>
 <div className="header">
-  <SearchBar handleChange={handleChange} searchResults={searchResults} enabled={searchEnabled}/>
+  <SearchBar isLoading={isLoading} handleChange={handleChange} searchResults={searchResults} enabled={searchEnabled}/>
   <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
 </div>;
 
@@ -43,7 +43,7 @@ class UnitBrowser extends Component {
     this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
-    this.onSearch = this.onSearch.bind(this);
+    this.onSearchInput = this.onSearchInput.bind(this);
   }
 
   componentDidMount() {
@@ -82,26 +82,25 @@ class UnitBrowser extends Component {
     });
   }
 
-  onSearch(value) {
+  onSearchInput(value) {
     if (Object.keys(this.props.units).length > 0) {
       this.props.searchUnits(value);
     }
   }
 
   render() {
-    const {units, position, activeFilter, searchResults, handleClick} = this.props;
+    const {units, isLoading, position, activeFilter, searchResults, handleClick} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
-    const searchEnabled = Object.keys(units).length > 0;
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
         <Header
           toggle={() => this.setState({isExpanded: !isExpanded})}
           toggleGlyph={isExpanded ? 'globe' : 'list'}
-          handleChange={this.onSearch}
+          handleChange={this.onSearchInput}
           searchResults={searchResults}
-          searchEnabled={searchEnabled}
+          isLoading={isLoading}
         />
         {isExpanded &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
