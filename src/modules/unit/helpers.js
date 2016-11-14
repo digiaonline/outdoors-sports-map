@@ -1,5 +1,5 @@
 //@flow
-import {has, keys, sortBy, reverse} from 'lodash';
+import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
 import {QualityEnum, IceSkatingServices, SwimmingServices, SkiingServices} from './constants';
 
@@ -70,7 +70,7 @@ export const getUnitIconURL = (unit: Object, selected = false, retina = true) =>
 
 export const getFilterIconURL = (filter: String, active: Boolean) => {
   if (filter)
-  return require(`@assets/markers/${filter}-${active ? 'good' : 'unknown'}-off@2x.png`);
+  return require(`@assets/icons/icon-white-${filter}@2x.png`);
 };
 
 export const sortByDistance = (units: Array, position: Array) =>

@@ -8,8 +8,8 @@ const createIcon = (unit: Object) =>
   new Icon({
     iconUrl: getUnitIconURL(unit, false, false),
     iconRetinaUrl: getUnitIconURL(unit),
-    iconSize: [32, 40],
-    iconAnchor: [16, 40]
+    iconSize: [30, 36], // TODO: height 36 for skating etc and 30 for skiing
+    iconAnchor: [15, 36]
   });
 
 const UnitMarker = ({unit, router, handleClick, ...rest}) =>
