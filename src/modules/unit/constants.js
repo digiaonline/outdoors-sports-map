@@ -41,23 +41,18 @@ export const QualityEnum = {
 export const UnitActions = {
   FETCH: normalizeActionName('unit/FETCH'),
   RECEIVE: normalizeActionName('unit/RECEIVE'),
-  SET_FILTERS: normalizeActionName('unit/SET_FILTERS')
-};
-
-export const SearchActions = {
-  SEARCH: 'search/SEARCH',
-  RECEIVE_SEARCH_RESULTS: 'search/RECEIVE_SEARCH_RESULTS'
+  SEARCH_REQUEST: normalizeActionName('unit/SEARCH_REQUEST'),
+  SEARCH_RECEIVE: normalizeActionName('unit/SEARCH_RECEIVE')
 };
 
 export type UnitState = {
   isFetching: boolean,
   byId: Object,
   // Filtered arrays of ids
-  all: Array,
-  skating: Array,
-  skiing: Array,
-  // Array of filter active filter names
-  filters: Array
+  all: Array<string>,
+  skating: Array<string>,
+  skiing: Array<string>,
+  searchResults: Array<string>
 };
 
 export const unitSchema = new Schema('unit'/*, {}*/);

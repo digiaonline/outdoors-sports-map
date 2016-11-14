@@ -7,7 +7,7 @@ import {HEADER_HEIGHT} from '../../common/constants.js';
 import {UnitFilters, DefaultFilters} from '../constants.js';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {searchTarget} from '../actions';
+import {searchUnits} from '../actions';
 import UnitFilter from './UnitFilter.js';
 import SearchBar from './SearchBar.js';
 import * as unitSelectors from '../selectors';
@@ -83,9 +83,8 @@ class UnitBrowser extends Component {
   }
 
   onSearch(value) {
-    console.log(value);
     if (Object.keys(this.props.units).length > 0) {
-      this.props.searchTarget(value);
+      this.props.searchUnits(value);
     }
   }
 
@@ -120,6 +119,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({searchTarget}, dispatch);
+  bindActionCreators({searchUnits}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UnitBrowser));

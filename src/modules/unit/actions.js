@@ -1,6 +1,6 @@
 import {createAction} from 'redux-actions';
 import values from 'lodash/values';
-import {UnitActions, SearchActions} from './constants';
+import {UnitActions} from './constants';
 import {Action} from '../common/constants';
 import {ApiResponse, UnitServices} from './constants';
 
@@ -14,8 +14,12 @@ export const fetchUnits = (/*params: Object*/): Action =>
 export const receiveUnits = (data: ApiResponse): Action =>
   createAction(UnitActions.RECEIVE)(data);
 
-export const searchTarget = (data) =>
-  createAction(SearchActions.SEARCH)(data);
+export const searchUnits = (input: string): Action =>
+  createAction(UnitActions.SEARCH_REQUEST)({params : {
+    input,
+    service: `${values(UnitServices).join(',')}`,
+    page_size: 5
+  }});
 
-export const receiveSearchResults = (results) =>
-  createAction(SearchActions.RECEIVE_SEARCH_RESULTS)(results);
+export const receiveSearchResults = (results: Array<Object>) =>
+  createAction(UnitActions.SEARCH_RECEIVE)(results);

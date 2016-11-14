@@ -1,7 +1,7 @@
-import {keys, values} from 'lodash';
+import {keys} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
-import {UnitActions, SearchActions, IceSkatingServices, SkiingServices, UnitFilters} from './constants';
+import {UnitActions, SearchActions, IceSkatingServices, SkiingServices} from './constants';
 import {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
@@ -36,7 +36,7 @@ const openNow = handleActions({
 }, []);
 
 const searchResults = handleActions({
-  [SearchActions.RECEIVE_SEARCH_RESULTS]: (state: Object, {payload: {entities}}: EntityAction) =>
+  [UnitActions.SEARCH_RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
     entities ? [...keys(entities.unit)] : []
 }, []);
 
