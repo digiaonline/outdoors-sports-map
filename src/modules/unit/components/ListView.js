@@ -8,9 +8,9 @@ import {View} from './View.js';
 import ObservationStatus from './ObservationStatus';
 import SortSelectorDropdown from './SortSelectorDropdown';
 
-const {getAttr} = unitHelpers;
+//const {getAttr} = unitHelpers;
 
-const UnitListItem = ({unit, handleClick}) => {
+const UnitListItem = ({unit, handleClick}, context) => {
   const observation = unitHelpers.getObservation(unit);
   const iconURL = unitHelpers.getUnitIconURL(unit);
   const serviceName = unitHelpers.getServiceName(unit);
@@ -19,13 +19,18 @@ const UnitListItem = ({unit, handleClick}) => {
   <div className="list-view-item">
     <div className="list-view-item__unit-marker"><img src={iconURL} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
-      <div className="list-view-item__unit-name">{getAttr(unit.name)}</div>
+      <div className="list-view-item__unit-name">{context.getAttr(unit.name)}</div>
       <ObservationStatus observation={observation}/>
     </div>
     <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
         <Glyphicon glyph="chevron-right"/>
     </Link>
   </div>);
+};
+
+
+UnitListItem.contextTypes = {
+  getAttr: React.PropTypes.func
 };
 
 export class ListView extends Component {
@@ -36,7 +41,7 @@ export class ListView extends Component {
 
   state: {
     sortKey: string
-  }
+  };
 
   constructor(props) {
     super(props);

@@ -5,6 +5,7 @@ import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {getLocation} from '../../map/selectors';
 import {getVisibleUnits} from '../../unit/selectors';
+import {getAttr} from '../../unit/helpers';
 import {getLanguage} from '../selectors';
 import {changeLanguage} from '../../home/actions';
 import {DefaultFilters} from '../../unit/constants';
@@ -42,6 +43,13 @@ export class HomeContainer extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
+    this.getAttr = this.getAttr.bind(this);
+  }
+
+  getChildContext() {
+    return {
+      getAttr: this.getAttr
+    };
   }
 
   componentWillMount() {
@@ -76,6 +84,11 @@ export class HomeContainer extends Component {
     this.setState({modalOpen: false});
   }
 
+  getAttr(attr) {
+    const {activeLanguage} = this.props;
+    return getAttr(attr, activeLanguage);
+  }
+
   render() {
     const {unitData, position, mapCenter, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = arrayifyQueryValue(filter);
@@ -89,6 +102,10 @@ export class HomeContainer extends Component {
     );
   }
 }
+
+HomeContainer.childContextTypes = {
+  getAttr: React.PropTypes.func
+};
 
 const mapStateToProps = (state, props) => ({
   unitData: getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),

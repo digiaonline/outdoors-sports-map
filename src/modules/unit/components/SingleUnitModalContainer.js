@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {Modal, Glyphicon} from 'react-bootstrap';
 import {Link} from 'react-router';
-import {getAttr, getObservation, getServiceName} from '../helpers.js';
+import {getObservation, getServiceName} from '../helpers.js';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
 import * as unitHelpers from '../helpers';
 
-const ModalHeader = ({handleClick, unit, t}) => {
+const ModalHeader = ({handleClick, unit, t}, context) => {
   const iconURL = unit ? unitHelpers.getUnitIconURL(unit) : null;
+  const {getAttr} = context;
 
   return(
     <Modal.Header>
@@ -37,6 +38,10 @@ const ModalHeader = ({handleClick, unit, t}) => {
       </div>
     </Modal.Header>
   );
+};
+
+ModalHeader.contextTypes = {
+  getAttr: React.PropTypes.func
 };
 
 

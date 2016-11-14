@@ -11,7 +11,7 @@ import {searchTarget} from '../actions';
 import {translate} from 'react-i18next';
 import UnitFilter from './UnitFilter.js';
 import ObservationStatus from './ObservationStatus';
-import {getAttr, getUnitIconURL, getServiceName, getObservation} from '../helpers.js';
+import {getUnitIconURL, getServiceName, getObservation} from '../helpers.js';
 import * as unitSelectors from '../selectors';
 
 const SearchBar = translate()(({handleChange, searchResults, enabled, t}) =>
@@ -43,16 +43,20 @@ const SearchResults = ({searchResults}) => (
   </div>
 );
 
-const SearchResult = ({unit, ...rest}) =>
+const SearchResult = ({unit, ...rest}, context) =>
   <Link to={`/unit/${unit.id}`} className="search-results__result" {...rest}>
     <div className="search-results__result-icon">
       <img src={getUnitIconURL(unit)} alt={getServiceName(unit)} />
     </div>
     <div className="search-results__result-details">
-      <div className="search-results__result-details__name">{getAttr(unit.name)}</div>
+      <div className="search-results__result-details__name">{context.getAttr(unit.name)}</div>
       <ObservationStatus observation={getObservation(unit)}/>
     </div>
   </Link>;
+
+SearchResult.contextTypes = {
+  getAttr: React.PropTypes.func
+};
 
 const ToggleButton = ({toggle, glyph}) =>
   <button className="toggle-view-button" onClick={toggle}>
