@@ -14,7 +14,7 @@ function* fetchUnits({payload: {params}}: FetchAction) {
 }
 
 function* search({payload}) {
-  const params = {input: payload, service: '33418,33417', page_size: 1000}; //Service key contains filters for target types
+  const params = {input: payload, service: '33418,33417', page_size: 5}; //Service key contains filters for target types
   const request = createRequest(createUrl('search/', params));
   if (payload) {
     const {bodyAsJson} = yield call(callApi, request);
