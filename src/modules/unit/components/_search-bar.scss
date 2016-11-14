@@ -27,6 +27,12 @@
       }
     }
 
+    &-clear {
+      position: absolute;
+      right: 50px + 4 * $gap;
+      cursor: pointer;
+    }
+
     label {
       flex: 0 1 auto;
       color: $ui-text;

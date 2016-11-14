@@ -32,18 +32,53 @@ const SearchResult = ({unit, ...rest}) =>
 
 
 class SearchBar extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      input: ''
+    };
+
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearInput = this.clearInput.bind(this);
+  }
+
+  handleInput(value: string) {
+    this.setState({input: value});
+    this.props.handleChange(value);
+  }
+
+  handleSubmit() {
+    // TODO
+  }
+
+  clearInput() {
+    this.handleInput('');
+  }
+
   render() {
-    const {handleChange, searchResults, isLoading = true, t} = this.props;
+    const {searchResults, isLoading = true, t} = this.props;
+    const inputValue = this.state.input;
+
     return (
       <div className="search-bar">
         <div className="search-bar__input">
           <label htmlFor="search"><Glyphicon glyph="search"/></label>
           <input name="search"
-                 id="search"
-                 type="text"
-                 onChange={(e) => handleChange(e.target.value)}
-                 placeholder={isLoading ? t('GENERAL.LOADING') : `${t('SEARCH.SEARCH')}...`}
-                 disabled={isLoading}/>
+              id="search"
+              type="text"
+              onChange={(e) => this.handleInput(e.target.value)}
+              placeholder={isLoading ? t('GENERAL.LOADING') : `${t('SEARCH.SEARCH')}...`}
+              disabled={isLoading}
+              value={inputValue}
+          />
+          {inputValue &&
+            <div className="search-bar__input-clear" onClick={this.clearInput}>
+              <Glyphicon glyph="remove"/>
+            </div>
+          }
         </div>
         <SearchResults searchResults={searchResults}/>
       </div>
