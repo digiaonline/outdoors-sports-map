@@ -1,11 +1,11 @@
 import {combineReducers} from 'redux';
 import unitReducer from '../modules/unit/reducer';
 import mapReducer from '../modules/map/reducer';
-import homeReducer from '../modules/home/reducer';
+import languageReducer from '../modules/language/reducer';
 
 const createRootReducer = () =>
   combineReducers({
-    home: homeReducer,
+    language: languageReducer,
     unit: unitReducer,
     map: mapReducer
   });

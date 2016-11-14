@@ -5,7 +5,7 @@ import keyBy from 'lodash/keyBy';
 import mapValues from 'lodash/mapValues';
 import mapKeys from 'lodash/mapKeys';
 import {connect} from 'react-redux';
-import {getLanguage} from '../../../home/selectors';
+import {getLanguage} from '../../../language/selectors';
 
 const localesContext = require.context('../../../../../locales', false, /\.json$/);
 
