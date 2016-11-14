@@ -26,7 +26,7 @@ const i18n =
   i18next
     .init({
       resources: localesByName,
-      lng: 'se' // @todo: How should the user pick their preferred language? #UX
+      lng: 'en' // @todo: How should the user pick their preferred language? #UX
     }, (err, t) => {
       // @todo: do we have some error reporting mechanism in production?
       if (err) {
