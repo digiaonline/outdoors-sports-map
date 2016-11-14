@@ -4,6 +4,8 @@ import i18next from 'i18next';
 import keyBy from 'lodash/keyBy';
 import mapValues from 'lodash/mapValues';
 import mapKeys from 'lodash/mapKeys';
+import {connect} from 'react-redux';
+import {getLanguage} from '../../../home/selectors';
 
 const localesContext = require.context('../../../../../locales', false, /\.json$/);
 
@@ -24,7 +26,7 @@ const i18n =
   i18next
     .init({
       resources: localesByName,
-      lng: 'en' // @todo: How should the user pick their preferred language? #UX
+      lng: 'se' // @todo: How should the user pick their preferred language? #UX
     }, (err, t) => {
       // @todo: do we have some error reporting mechanism in production?
       if (err) {
@@ -32,8 +34,21 @@ const i18n =
       }
     });
 
-export default class TranslationProvider extends React.Component {
+class TranslationProvider extends React.Component {
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.language !== this.props.language) {
+      i18n.changeLanguage(nextProps.language);
+    }
+  }
+
   render() {
     return <I18nextProvider i18n={i18n}>{this.props.children}</I18nextProvider>;
   }
 }
+
+const mapStateToProps = (state) => ({
+  language: getLanguage(state)
+});
+
+export default connect(mapStateToProps)(TranslationProvider);
