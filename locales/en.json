@@ -3,6 +3,9 @@
     "NAME": "Kuntokartta",
     "ABOUT": "About the service"
   },
+  "GENERAL": {
+    "LOADING": "Loading..."
+  },
   "MAP": {
     "ATTRIBUTION": "OpenStreetMap contributors"
   },
