@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react';
+import {translate} from 'react-i18next';
 import {Link} from 'react-router';
 import {Glyphicon} from 'react-bootstrap';
 import {isEqual, values} from 'lodash';
 import * as unitHelpers from '../helpers';
-import {SortKeys} from '../constants';
+import {SortKeys, UNIT_BATCH_SIZE} from '../constants';
 import {View} from './View.js';
 import Loading from '../../home/components/Loading';
 import ObservationStatus from './ObservationStatus';
@@ -29,33 +30,35 @@ const UnitListItem = ({unit, handleClick}, context) => {
   </div>);
 };
 
-
 UnitListItem.contextTypes = {
   getAttr: React.PropTypes.func
 };
 
-export class ListView extends Component {
+class ListView extends Component {
   static propTypes = {
     units: PropTypes.array,
     sortKey: PropTypes.string
   };
 
   state: {
-    sortKey: string
+    sortKey: string,
+    maxUnitCount: number
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      sortKey: SortKeys.DISTANCE
+      sortKey: SortKeys.DISTANCE,
+      maxUnitCount: UNIT_BATCH_SIZE
     };
 
     this.selectSortKey = this.selectSortKey.bind(this);
+    this.loadMoreUnits = this.loadMoreUnits.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps.units, this.props.units) || !isEqual(nextProps.position, this.props.position)) {
-      this.sortUnits(nextProps);
+    if (!isEqual(nextProps.units, this.props.units) || !isEqual(nextProps.activeFilter, this.props.activeFilter)) {
+      this.resetUnitCount();
     }
   }
 
@@ -81,12 +84,22 @@ export class ListView extends Component {
 
   selectSortKey(sortKey: string) {
     this.setState({sortKey: sortKey});
+    this.resetUnitCount();
+  }
+
+  loadMoreUnits() {
+    this.setState({maxUnitCount: this.state.maxUnitCount + UNIT_BATCH_SIZE});
+  }
+
+  resetUnitCount() {
+    this.setState({maxUnitCount: UNIT_BATCH_SIZE});
   }
 
   render() {
-    const {handleClick, isLoading} = this.props;
-    const {sortKey} = this.state;
-    const units = this.sortUnits(this.props, sortKey);
+    const {handleClick, isLoading, t} = this.props;
+    const {sortKey, maxUnitCount} = this.state;
+    const totalUnits = this.props.units.length;
+    const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
     return (
       <View id="list-view" className="list-view">
         <div className="list-view__container">
@@ -94,15 +107,23 @@ export class ListView extends Component {
             <SortSelectorDropdown values={values(SortKeys)} active={sortKey} onSelect={this.selectSortKey}/>
           </div>
           <div className="list-view__block">
-            {!isLoading && units && units.map( (unit, index) =>
+            {isLoading && <Loading/>}
+            {units && units.map( (unit, index) =>
               <UnitListItem
               unit={unit}
               key={index}
               handleClick={handleClick}/>)}
-            {isLoading && <Loading/>}
+            {
+              units.length !== totalUnits &&
+              <a style={{display: 'block', textAlign: 'center', cursor: 'pointer'}} onClick={this.loadMoreUnits}>
+                {t('UNIT.SHOW_MORE')}
+              </a>
+            }
           </div>
         </div>
       </View>
     );
   }
 }
+
+export default translate()(ListView);

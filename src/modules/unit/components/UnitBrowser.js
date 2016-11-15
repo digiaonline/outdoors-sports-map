@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {withRouter} from 'react-router';
-import {ListView} from './ListView.js';
+import ListView from './ListView.js';
 import {Glyphicon} from 'react-bootstrap';
 import values from 'lodash/values';
 import {HEADER_HEIGHT} from '../../common/constants.js';
@@ -103,7 +103,7 @@ class UnitBrowser extends Component {
         {isExpanded &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
             <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
-            <ListView isLoading={isLoading || isSearching} units={units} position={position} show={isExpanded} handleClick={handleClick} />
+            <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} handleClick={handleClick} />
           </div>
         }
       </div>

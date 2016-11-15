@@ -30,6 +30,8 @@ export const SortKeys = {
   CONDITION: 'condition'
 };
 
+export const UNIT_BATCH_SIZE = 20;
+
 export const DefaultFilters = [
   UnitFilters.SKATING,
   UnitFilters.SKIING
