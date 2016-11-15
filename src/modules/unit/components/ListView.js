@@ -23,7 +23,7 @@ const UnitListItem = ({unit, handleClick}) => {
       <ObservationStatus observation={observation}/>
     </div>
     <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
-        <Glyphicon glyph="chevron-right"/>
+        <Glyphicon glyph="menu-right"/>
     </Link>
   </div>);
 };

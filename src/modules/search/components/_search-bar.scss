@@ -1,0 +1,48 @@
+.search-bar {
+  &__input {
+    padding: $gap $gap;
+    background: $ui-enabled;
+    display: flex;
+    align-items: center;
+
+    input[name="search"] {
+      flex: 2 1 auto;
+      display: inline-block;
+      border: 2px solid $ui-enabled;
+      border-radius: 30px;
+      padding: 0 $gap;
+      line-height: 30px;
+      height: 34px;
+
+      &:focus {
+        box-shadow: 0 0 0 2px $content-background !important;
+        outline: none;
+      }
+
+      &:disabled:hover {
+        cursor: not-allowed;
+      }
+    }
+
+    &-clear {
+      position: absolute;
+      right: 50px + 4 * $gap;
+      cursor: pointer;
+    }
+
+    label {
+      flex: 0 1 auto;
+      color: $ui-text;
+      padding-right: 6px;
+      display: inline-block;
+      font-size: 18px;
+      line-height: 30px;
+      margin: 0;
+      width: 24px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -6,9 +6,11 @@
 @import "modules/home/components/home";
 @import "modules/home/components/logo";
 @import "modules/home/components/disclaimer";
+@import "modules/search/components/search-bar";
+@import "modules/search/components/search-container";
+@import "modules/search/components/search-suggestions";
 @import "modules/unit/components/view";
 @import "modules/unit/components/map-view";
-@import "modules/unit/components/search-bar";
 @import "modules/unit/components/unit-browser";
 @import "modules/unit/components/unit-filter";
 @import "modules/unit/components/sort-selector-dropdown";
