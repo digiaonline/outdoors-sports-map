@@ -13,11 +13,11 @@ const routes = (
 );
 
 const App = ({store, history}) => (
-  <TranslationProvider>
     <Provider store={store}>
+      <TranslationProvider>
         <Router history={history} routes={routes} key={Math.random()}/>
-      </Provider>
-  </TranslationProvider>
+      </TranslationProvider>
+    </Provider>
 );
 
 export default App;

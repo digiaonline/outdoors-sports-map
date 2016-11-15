@@ -3,7 +3,8 @@ import {normalizeActionName} from '../common/helpers';
 
 export const UnitServices = {
   MECHANICALLY_FROZEN_ICE: 33417,
-  ICE_SKATING_FIELD: 33418
+  ICE_SKATING_FIELD: 33418,
+  SKI_TRACK: 33483
 };
 
 export const IceSkatingServices = [
@@ -11,7 +12,9 @@ export const IceSkatingServices = [
   UnitServices.ICE_SKATING_FIELD
 ];
 
-export const SkiingServices = [];
+export const SkiingServices = [
+  UnitServices.SKI_TRACK
+];
 
 export const SwimmingServices = [];
 
@@ -27,6 +30,8 @@ export const SortKeys = {
   CONDITION: 'condition'
 };
 
+export const UNIT_BATCH_SIZE = 20;
+
 export const DefaultFilters = [
   UnitFilters.SKATING,
   UnitFilters.SKIING
@@ -41,23 +46,21 @@ export const QualityEnum = {
 export const UnitActions = {
   FETCH: normalizeActionName('unit/FETCH'),
   RECEIVE: normalizeActionName('unit/RECEIVE'),
-  SET_FILTERS: normalizeActionName('unit/SET_FILTERS')
-};
-
-export const SearchActions = {
-  SEARCH: 'search/SEARCH',
-  RECEIVE_SEARCH_RESULTS: 'search/RECEIVE_SEARCH_RESULTS'
+  SEARCH_CLEAR: normalizeActionName('unit/SEARCH_CLEAR'),
+  SEARCH_REQUEST: normalizeActionName('unit/SEARCH_REQUEST'),
+  SEARCH_RECEIVE: normalizeActionName('unit/SEARCH_RECEIVE'),
+  FETCH_SEARCH_SUGGESTIONS: normalizeActionName('unit/FETCH_SEARCH_SUGGESTIONS'),
+  RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName('unit/RECEIVE_SEARCH_SUGGESTIONS')
 };
 
 export type UnitState = {
   isFetching: boolean,
   byId: Object,
   // Filtered arrays of ids
-  all: Array,
-  skating: Array,
-  skiing: Array,
-  // Array of filter active filter names
-  filters: Array
+  all: Array<string>,
+  skating: Array<string>,
+  skiing: Array<string>,
+  searchResults: Array<string>
 };
 
 export const unitSchema = new Schema('unit'/*, {}*/);

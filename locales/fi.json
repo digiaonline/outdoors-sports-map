@@ -3,19 +3,23 @@
     "NAME": "Kuntokartta",
     "ABOUT": "Tietoa palvelusta"
   },
+  "GENERAL": {
+    "LOADING": "Ladataan..."
+  },
   "MAP": {
     "ATTRIBUTION": "OpenStreetMap tekijät"
   },
   "UNIT": {
     "FURTHER_INFO": "Lisää tietoa",
+    "SHOW_MORE": "Näytä enemmän",
     "STATUS": "Kunto",
     "UNKNOWN": "Tuntematon",
     "UPDATED": "Päivitetty",
     "FILTER": {
       "ALL": "All",
-      "SKATING": "Skating",
-      "SKIING": "Skiing",
-      "OPEN_NOW": "Open now"
+      "ICESKATE": "Luistelu",
+      "SKI": "Hiihto",
+      "OPEN_NOW": "Auki nyt"
     },
     "SORT": {
       "DEFAULT": "Oletus",
@@ -23,12 +27,28 @@
       "DISTANCE": "Lähimmät ensin"
     }
   },
+  "MODAL": {
+    "LOADING": "Ladataan kohdetta...",
+    "QUALITY": "Kunto",
+    "INFO": "Info",
+    "WEATHER": "Sää",
+    "HEIGHT_PROFILE": "Korkeusprofiili"
+  },
   "VIEW": {
     "POPUP": {
       "OPENING_HOURS": "Aukioloajat ja lisätietoja"
     }
   },
   "SEARCH": {
-    "SEARCH": "Etsi"
+    "SEARCH": "Etsi",
+    "SHOW_ALL_RESULTS": "Näytä kaikki hakutulokset"
+  },
+  "TIME": {
+    "DAYS_AGO": "{{days}} päivää sitten",
+    "NOT_AVAILABLE": "-",
+    "MONTHS_AGO": "{{months}} kuukautta sitten",
+    "TODAY": "tänään",
+    "WEEKS_AGO": "{{weeks}} viikkoa sitten",
+    "YESTERDAY": "eilen"
   }
 }

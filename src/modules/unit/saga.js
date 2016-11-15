@@ -1,8 +1,8 @@
 import {takeLatest} from 'redux-saga';
 import {call, fork, put} from 'redux-saga/effects';
 import {arrayOf} from 'normalizr';
-import {receiveUnits, receiveSearchResults} from './actions';
-import {UnitActions, unitSchema, SearchActions} from './constants';
+import {receiveUnits, receiveSearchResults, receiveSearchSuggestions} from './actions';
+import {UnitActions, unitSchema} from './constants';
 import {FetchAction} from '../common/constants';
 import {createUrl, createRequest, callApi, normalizeEntityResults} from '../api/helpers';
 
@@ -13,17 +13,31 @@ function* fetchUnits({payload: {params}}: FetchAction) {
   yield put(receiveUnits(data));
 }
 
-function* search({payload}) {
-  const params = {input: payload, service: '33418,33417', page_size: 1000}; //Service key contains filters for target types
-  const request = createRequest(createUrl('search/', params));
-  if (payload) {
+function* search({payload: {params}}: FetchAction) {
+  let data = [];
+  // Make search request only when there's input
+  if (params.input && params.input.length) {
+    const request = createRequest(createUrl('search/', params));
     const {bodyAsJson} = yield call(callApi, request);
-    console.log(bodyAsJson);
-    const data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
-    yield put(receiveSearchResults(data));
-  } else {
-    yield put(receiveSearchResults([]));
+    data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
   }
+  yield put(receiveSearchResults(data));
+}
+
+function* searchSuggestions({payload: {params}}: FetchAction) {
+  let data = [];
+  // Make search request only when there's input
+  if (params.input && params.input.length) {
+    const request = createRequest(createUrl('search/', params));
+    const {bodyAsJson} = yield call(callApi, request);
+    data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
+  }
+  yield put(receiveSearchSuggestions(data));
+}
+
+function* clearSearch() {
+  //yield put(receiveSearchResults([]));
+  yield put(receiveSearchSuggestions([]));
 }
 
 function* watchFetchUnits() {
@@ -31,12 +45,22 @@ function* watchFetchUnits() {
 }
 
 function* watchSearchTarget() {
-  yield takeLatest(SearchActions.SEARCH, search);
+  yield takeLatest(UnitActions.SEARCH_REQUEST, search);
+}
+
+function* watchSearchSuggestions() {
+  yield takeLatest(UnitActions.FETCH_SEARCH_SUGGESTIONS, searchSuggestions);
+}
+
+function* watchClearSearch() {
+  yield takeLatest(UnitActions.SEARCH_CLEAR, clearSearch);
 }
 
 export default function* saga() {
   return [
     yield fork(watchFetchUnits),
-    yield fork(watchSearchTarget)
+    yield fork(watchSearchTarget),
+    yield fork(watchSearchSuggestions),
+    yield fork(watchClearSearch)
   ];
 }

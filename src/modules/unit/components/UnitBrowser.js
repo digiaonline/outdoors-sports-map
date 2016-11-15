@@ -1,67 +1,21 @@
 import React, {Component, PropTypes} from 'react';
-import {Link, withRouter} from 'react-router';
-import {ListView} from './ListView.js';
+import {withRouter} from 'react-router';
+import ListView from './ListView.js';
 import {Glyphicon} from 'react-bootstrap';
 import values from 'lodash/values';
 import {HEADER_HEIGHT} from '../../common/constants.js';
 import {UnitFilters, DefaultFilters} from '../constants.js';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {searchTarget} from '../actions';
-import {translate} from 'react-i18next';
 import UnitFilter from './UnitFilter.js';
-import ObservationStatus from './ObservationStatus';
-import {getAttr, getUnitIconURL, getServiceName, getObservation} from '../helpers.js';
-import * as unitSelectors from '../selectors';
-
-const SearchBar = translate()(({handleChange, searchResults, enabled, t}) =>
-  <div>
-    <div className="search-container">
-      <label htmlFor="search"><Glyphicon glyph="search"/></label>
-      <input name="search"
-             id="search"
-             type="text"
-             onChange={(e) => handleChange(e.target.value)}
-             placeholder={`${t('SEARCH.SEARCH')}...`}
-             disabled={!enabled}/>
-    </div>
-    <SearchResults searchResults={searchResults}/>
-  </div>
-);
-
-const SearchResults = ({searchResults}) => (
-  <div className="search-results">
-    {searchResults.length > 0
-      ? <div>
-          {/*TODO: <a>näytä kaikki tulokset</a>*/}
-          {searchResults.map((result, index) =>
-            <SearchResult key={index} unit={result}/>
-          )}
-        </div>
-      : null
-    }
-  </div>
-);
-
-const SearchResult = ({unit, ...rest}) =>
-  <Link to={`/unit/${unit.id}`} className="search-results__result" {...rest}>
-    <div className="search-results__result-icon">
-      <img src={getUnitIconURL(unit)} alt={getServiceName(unit)} />
-    </div>
-    <div className="search-results__result-details">
-      <div className="search-results__result-details__name">{getAttr(unit.name)}</div>
-      <ObservationStatus observation={getObservation(unit)}/>
-    </div>
-  </Link>;
+import SearchContainer from '../../search/components/SearchContainer';
 
 const ToggleButton = ({toggle, glyph}) =>
   <button className="toggle-view-button" onClick={toggle}>
     <Glyphicon glyph={glyph}/>
   </button>;
 
-const Header = ({toggle, toggleGlyph, searchResults, handleChange, searchEnabled}) =>
+const Header = ({expand, toggle, toggleGlyph}) =>
 <div className="header">
-  <SearchBar handleChange={handleChange} searchResults={searchResults} enabled={searchEnabled}/>
+  <SearchContainer onSearch={expand}/>
   <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
 </div>;
 
@@ -85,7 +39,8 @@ class UnitBrowser extends Component {
     this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
-    this.onSearch = this.onSearch.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.expand = this.expand.bind(this);
   }
 
   componentDidMount() {
@@ -107,9 +62,10 @@ class UnitBrowser extends Component {
   }
 
   toggleFilter(filter) {
-    const {activeFilter, router} = this.props;
+    const {activeFilter, router, location: query} = this.props;
     let newFilter = Array.isArray(activeFilter) ? activeFilter.slice() : [activeFilter];
     const index = newFilter.indexOf(filter);
+
     if (index === -1) {
       newFilter = [...newFilter, filter];
     } else {
@@ -120,36 +76,34 @@ class UnitBrowser extends Component {
     }
 
     router.push({
-      query: {filter: newFilter}
+      query: Object.assign({}, query, {filter: newFilter})
     });
   }
 
-  onSearch(value) {
-    console.log(value);
-    if (Object.keys(this.props.units).length > 0) {
-      this.props.searchTarget(value);
-    }
+  toggle() {
+    this.setState({isExpanded: !this.state.isExpanded});
+  }
+
+  expand() {
+    this.setState({isExpanded: true});
   }
 
   render() {
-    const {units, position, activeFilter, searchResults, handleClick} = this.props;
+    const {units, isLoading, isSearching, position, activeFilter, handleClick} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
-    const searchEnabled = Object.keys(units).length > 0;
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
         <Header
-          toggle={() => this.setState({isExpanded: !isExpanded})}
+          expand={this.expand}
+          toggle={this.toggle}
           toggleGlyph={isExpanded ? 'globe' : 'list'}
-          handleChange={this.onSearch}
-          searchResults={searchResults}
-          searchEnabled={searchEnabled}
         />
         {isExpanded &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
             <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
-            <ListView units={units} position={position} show={isExpanded} handleClick={handleClick} />
+            <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} handleClick={handleClick} />
           </div>
         }
       </div>
@@ -157,11 +111,4 @@ class UnitBrowser extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  searchResults: unitSelectors.getSearchResults(state)
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({searchTarget}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UnitBrowser));
+export default withRouter(UnitBrowser);

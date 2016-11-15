@@ -8,6 +8,7 @@ import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import {getUnitPosition} from '../helpers';
 import {mobileBreakpoint} from '../../common/constants';
+import {languages} from '../../language/constants';
 import {MAP_URL} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import UnitMarker from './UnitMarker';
@@ -41,6 +42,7 @@ export class MapView extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateIsMobile);
+    //this.refs.map.leafletElement.setActiveArea('activeArea');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,7 +68,7 @@ export class MapView extends Component {
   }
 
   render() {
-    const {position, units, selected, handleClick: openUnit} = this.props;
+    const {position, units, selected, activeLanguage, handleClick: openUnit, changeLanguage} = this.props;
     const {isMobile} = this.state;
 
     return (
@@ -94,6 +96,7 @@ export class MapView extends Component {
               <Glyphicon glyph="screenshot"/>
             </a>
           </Control>
+          <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
           <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
             <a>
               <Glyphicon glyph="info-sign"/>
@@ -106,3 +109,17 @@ export class MapView extends Component {
     );
   }
 }
+
+const LanguageChanger = ({changeLanguage, activeLanguage}) =>
+  <div className="language-changer">
+    {Object.keys(languages).filter((language) => languages[language] !== activeLanguage).map((languageKey, index) => (
+      <div key={index} style={{ display: 'flex' }}>
+        <a onClick={() => changeLanguage(languages[languageKey])}>
+          {languageKey}
+        </a>
+        {index < Object.keys(languages).length - 2
+          ? <div style={{ marginLeft: 2, marginRight: 2 }}>|</div>
+          : null}
+      </div>)
+    )}
+  </div>;

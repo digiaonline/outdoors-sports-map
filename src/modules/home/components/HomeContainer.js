@@ -3,10 +3,13 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
-import {getLocation} from '../../map/selectors';
-import {getVisibleUnits} from '../../unit/selectors';
+import {getAttr} from '../../unit/helpers';
+import {changeLanguage} from '../../language/actions';
+import * as fromMap from '../../map/selectors';
+import * as fromSearch from '../../search/selectors';
+import * as fromUnit from '../../unit/selectors';
+import * as fromLanguage from '../../language/selectors';
 import {DefaultFilters} from '../../unit/constants';
-//import {Map, Marker, Popup, TileLayer} from 'react-leaflet';
 import {MapView} from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
@@ -39,6 +42,14 @@ export class HomeContainer extends Component {
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
+    this.getAttr = this.getAttr.bind(this);
+  }
+
+  getChildContext() {
+    return {
+      getAttr: this.getAttr
+    };
   }
 
   componentWillMount() {
@@ -60,6 +71,11 @@ export class HomeContainer extends Component {
     clearInterval(this.pollUnitsInterval);
   }
 
+  handleChangeLanguage(language) {
+    console.log(language);
+    this.props.changeLanguage(language);
+  }
+
   openModal() {
     this.setState({modalOpen: true});
   }
@@ -68,28 +84,39 @@ export class HomeContainer extends Component {
     this.setState({modalOpen: false});
   }
 
+  getAttr(attr) {
+    const {activeLanguage} = this.props;
+    return getAttr(attr, activeLanguage);
+  }
+
   render() {
-    const {unitData, position, mapCenter, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, isSearching, position, mapCenter, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = arrayifyQueryValue(filter);
-    console.log(unitData);
 
     return (
-      <div>
-        <UnitBrowser units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
-        <MapView params={params} setLocation={this.props.setLocation} position={position} units={unitData} handleClick={this.openModal} mapCenter={mapCenter}/>
+      <div className="home">
+        <UnitBrowser isLoading={isLoading} isSearching={isSearching} units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
+        <MapView activeLanguage={activeLanguage} params={params} setLocation={this.props.setLocation} position={position} units={unitData} changeLanguage={this.handleChangeLanguage} handleClick={this.openModal} mapCenter={mapCenter}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
       </div>
     );
   }
 }
 
+HomeContainer.childContextTypes = {
+  getAttr: React.PropTypes.func
+};
+
 const mapStateToProps = (state, props) => ({
-  unitData: getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
-  mapCenter: getLocation(state)
+  unitData: fromUnit.getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
+  activeLanguage: fromLanguage.getLanguage(state),
+  isLoading: fromUnit.getIsLoading(state),
+  mapCenter: fromMap.getLocation(state),
+  isSearching: fromSearch.getIsFetching(state)
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({fetchUnits, setLocation}, dispatch);
+  bindActionCreators({fetchUnits, setLocation, changeLanguage}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer

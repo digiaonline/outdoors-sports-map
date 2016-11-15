@@ -3,6 +3,9 @@
     "NAME": "Kuntokartta",
     "ABOUT": "About the service"
   },
+  "GENERAL": {
+    "LOADING": "Loading..."
+  },
   "MAP": {
     "ATTRIBUTION": "OpenStreetMap contributors"
   },
@@ -10,7 +13,8 @@
     "STATUS": "Status",
     "UNKNOWN": "Unknown",
     "UPDATED": "Updated",
-    "FURTHER INFO": "Furhter info",
+    "FURTHER_INFO": "Further info",
+    "SHOW_MORE": "Show more",
     "FILTER": {
       "ALL": "All",
       "ICESKATE": "Skating",
@@ -36,7 +40,8 @@
     }
   },
   "SEARCH": {
-    "SEARCH": "Search"
+    "SEARCH": "Search",
+    "SHOW_ALL_RESULTS": "Show all search results"
   },
   "TIME": {
     "DAYS_AGO": "{{days}} days ago",
