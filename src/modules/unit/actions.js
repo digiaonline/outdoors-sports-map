@@ -15,8 +15,21 @@ export const fetchUnits = (/*params: Object*/): Action =>
 export const receiveUnits = (data: ApiResponse): Action =>
   createAction(UnitActions.RECEIVE)(data);
 
-export const searchUnits = (input: string): Action =>
-  createAction(UnitActions.SEARCH_REQUEST)({params : {
+export const clearSearch = () =>
+  createAction(UnitActions.SEARCH_CLEAR)();
+
+export const searchUnits = (input: string, params: Object): Action => {
+  const init = {
+    input,
+    service: `${values(UnitServices).join(',')}`
+  };
+
+  params = Object.assign({}, init, params);
+  return createAction(UnitActions.SEARCH_REQUEST)({params});
+};
+
+export const fetchSearchSuggestions = (input: string): Action =>
+  createAction(UnitActions.FETCH_SEARCH_SUGGESTIONS)({params: {
     input,
     service: `${values(UnitServices).join(',')}`,
     page_size: 5
@@ -24,3 +37,6 @@ export const searchUnits = (input: string): Action =>
 
 export const receiveSearchResults = (results: Array<Object>) =>
   createAction(UnitActions.SEARCH_RECEIVE)(results);
+
+export const receiveSearchSuggestions = (results: Array<Object>) =>
+  createAction(UnitActions.RECEIVE_SEARCH_SUGGESTIONS)(results);

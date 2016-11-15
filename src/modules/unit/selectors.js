@@ -22,11 +22,21 @@ export const getVisibleUnits = (state: AppState, filters = DefaultFilters) => {
     visibleUnits = intersection(visibleUnits, state.unit[UnitFilters.NOW_OPEN]);
   }
 
+  if(getSearchActive(state)) {
+    visibleUnits = intersection(visibleUnits, state.unit.searchResults);
+  }
+
   return visibleUnits.map((id) => getUnitById(state, {id}));
 };
 
 export const getSearchResults = (state: AppState/*, props: Object*/) =>
   state.unit.searchResults.map((id) => getUnitById(state, {id}));
+
+export const getSearchSuggestions = (state: AppState): Array<Object> =>
+  state.unit.searchSuggestions.map((id) => getUnitById(state, {id}));
+
+export const getSearchActive = (state: AppState): Boolean =>
+  state.unit.searchActive;
 
 export const getIsFetchingUnits = (state: AppState) =>
   state.unit.isFetching;

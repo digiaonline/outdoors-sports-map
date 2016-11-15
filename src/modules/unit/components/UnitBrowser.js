@@ -7,7 +7,7 @@ import {HEADER_HEIGHT} from '../../common/constants.js';
 import {UnitFilters, DefaultFilters} from '../constants.js';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {searchUnits} from '../actions';
+import {searchUnits, fetchSearchSuggestions, clearSearch} from '../actions';
 import UnitFilter from './UnitFilter.js';
 import SearchBar from './SearchBar.js';
 import * as unitSelectors from '../selectors';
@@ -17,9 +17,9 @@ const ToggleButton = ({toggle, glyph}) =>
     <Glyphicon glyph={glyph}/>
   </button>;
 
-const Header = ({toggle, isLoading, toggleGlyph, searchResults, handleChange, searchEnabled}) =>
+const Header = ({toggle, isLoading, toggleGlyph, searchSuggestions, clearSearch, handleChange, handleSubmit, searchEnabled}) =>
 <div className="header">
-  <SearchBar isLoading={isLoading} handleChange={handleChange} searchResults={searchResults} enabled={searchEnabled}/>
+  <SearchBar handleSubmit={handleSubmit} isLoading={isLoading} clearSearch={clearSearch} handleChange={handleChange} searchSuggestions={searchSuggestions} enabled={searchEnabled}/>
   <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
 </div>;
 
@@ -44,6 +44,9 @@ class UnitBrowser extends Component {
     this.toggleFilter = this.toggleFilter.bind(this);
     this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
     this.onSearchInput = this.onSearchInput.bind(this);
+    this.onSearchSubmit = this.onSearchSubmit.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   componentDidMount() {
@@ -65,9 +68,10 @@ class UnitBrowser extends Component {
   }
 
   toggleFilter(filter) {
-    const {activeFilter, router} = this.props;
+    const {activeFilter, router, location: query} = this.props;
     let newFilter = Array.isArray(activeFilter) ? activeFilter.slice() : [activeFilter];
     const index = newFilter.indexOf(filter);
+
     if (index === -1) {
       newFilter = [...newFilter, filter];
     } else {
@@ -78,28 +82,44 @@ class UnitBrowser extends Component {
     }
 
     router.push({
-      query: {filter: newFilter}
+      query: Object.assign({}, query, {filter: newFilter})
     });
   }
 
   onSearchInput(value) {
     if (Object.keys(this.props.units).length > 0) {
-      this.props.searchUnits(value);
+      this.props.fetchSearchSuggestions(value);
     }
   }
 
+  onSearchSubmit(value) {
+    this.props.searchUnits(value);
+    this.setState({isExpanded: true});
+    console.log(value);
+  }
+
+  clearSearch() {
+    this.props.clearSearch();
+  }
+
+  toggle() {
+    this.setState({isExpanded: !this.state.isExpanded});
+  }
+
   render() {
-    const {units, isLoading, position, activeFilter, searchResults, handleClick} = this.props;
+    const {units, isLoading, position, activeFilter, searchSuggestions, handleClick} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
         <Header
-          toggle={() => this.setState({isExpanded: !isExpanded})}
+          toggle={this.toggle}
           toggleGlyph={isExpanded ? 'globe' : 'list'}
           handleChange={this.onSearchInput}
-          searchResults={searchResults}
+          handleSubmit={this.onSearchSubmit}
+          clearSearch={this.props.clearSearch}
+          searchSuggestions={searchSuggestions}
           isLoading={isLoading}
         />
         {isExpanded &&
@@ -114,10 +134,10 @@ class UnitBrowser extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  searchResults: unitSelectors.getSearchResults(state)
+  searchSuggestions: unitSelectors.getSearchSuggestions(state)
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({searchUnits}, dispatch);
+  bindActionCreators({searchUnits, fetchSearchSuggestions, clearSearch}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UnitBrowser));

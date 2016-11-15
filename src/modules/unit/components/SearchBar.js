@@ -5,13 +5,13 @@ import {Glyphicon} from 'react-bootstrap';
 import ObservationStatus from './ObservationStatus';
 import {getAttr, getUnitIconURL, getServiceName, getObservation} from '../helpers';
 
-const SearchResults = ({searchResults}) => (
-  <div className="search-results">
-    {searchResults.length > 0
-      ? <div className="search-results__list">
+const SearchSuggestions = ({suggestions}) => (
+  <div className="search-suggestions">
+    {suggestions.length > 0
+      ? <div className="search-suggestions__list">
           <a>näytä kaikki tulokset</a>
-          {searchResults.map((result, index) =>
-            <SearchResult key={index} unit={result}/>
+          {suggestions.map((result, index) =>
+            <SearchSuggestion key={index} unit={result}/>
           )}
         </div>
       : null
@@ -19,13 +19,13 @@ const SearchResults = ({searchResults}) => (
   </div>
 );
 
-const SearchResult = ({unit, ...rest}) =>
-  <Link to={`/unit/${unit.id}`} className="search-results__result" {...rest}>
-    <div className="search-results__result-icon">
+const SearchSuggestion = ({unit, ...rest}) =>
+  <Link to={`/unit/${unit.id}`} className="search-suggestions__result" {...rest}>
+    <div className="search-suggestions__result-icon">
       <img src={getUnitIconURL(unit)} alt={getServiceName(unit)} />
     </div>
-    <div className="search-results__result-details">
-      <div className="search-results__result-details__name">{getAttr(unit.name)}</div>
+    <div className="search-suggestions__result-details">
+      <div className="search-suggestions__result-details__name">{getAttr(unit.name)}</div>
       <ObservationStatus observation={getObservation(unit)}/>
     </div>
   </Link>;
@@ -42,7 +42,7 @@ class SearchBar extends Component {
 
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.clearInput = this.clearInput.bind(this);
+    this.clearSearch = this.clearSearch.bind(this);
   }
 
   handleInput(value: string) {
@@ -50,21 +50,26 @@ class SearchBar extends Component {
     this.props.handleChange(value);
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
     // TODO
+    console.log(this.state.input);
+    this.props.router.push('?search=' + this.state.input);
+    this.props.handleSubmit(this.state.input);
   }
 
-  clearInput() {
-    this.handleInput('');
+  clearSearch() {
+    this.props.clearSearch();
+    this.setState({input: ''});
   }
 
   render() {
-    const {searchResults, isLoading = true, t} = this.props;
+    const {searchSuggestions, isLoading = true, t} = this.props;
     const inputValue = this.state.input;
 
     return (
       <div className="search-bar">
-        <div className="search-bar__input">
+        <form className="search-bar__input" onSubmit={this.handleSubmit}>
           <label htmlFor="search"><Glyphicon glyph="search"/></label>
           <input name="search"
               id="search"
@@ -75,12 +80,12 @@ class SearchBar extends Component {
               value={inputValue}
           />
           {inputValue &&
-            <div className="search-bar__input-clear" onClick={this.clearInput}>
+            <div className="search-bar__input-clear" onClick={this.clearSearch}>
               <Glyphicon glyph="remove"/>
             </div>
           }
-        </div>
-        <SearchResults searchResults={searchResults}/>
+        </form>
+        <SearchSuggestions suggestions={searchSuggestions}/>
       </div>
     );
   }

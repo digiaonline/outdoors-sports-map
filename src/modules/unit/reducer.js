@@ -1,7 +1,7 @@
 import {keys} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
-import {UnitActions, SearchActions, IceSkatingServices, SkiingServices} from './constants';
+import {UnitActions, IceSkatingServices, SkiingServices} from './constants';
 import {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
@@ -37,8 +37,21 @@ const openNow = handleActions({
 
 const searchResults = handleActions({
   [UnitActions.SEARCH_RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
-    entities ? [...keys(entities.unit)] : []
+    entities ? [...keys(entities.unit)] : [],
+  [UnitActions.SEARCH_CLEAR]: () => []
 }, []);
+
+const searchSuggestions = handleActions({
+  [UnitActions.RECEIVE_SEARCH_SUGGESTIONS]: (state: Object, {payload: {entities}}: EntityAction) =>
+    entities ? [...keys(entities.unit)] : [],
+  [UnitActions.SEARCH_RECEIVE]: () => [],
+  [UnitActions.SEARCH_CLEAR]: () => []
+}, []);
+
+const searchActive = handleActions({
+  [UnitActions.SEARCH_RECEIVE]: () => true,
+  [UnitActions.SEARCH_CLEAR]: () => false
+}, false);
 
 const reducer = combineReducers({
   isFetching: isFetchingReducer,
@@ -47,7 +60,9 @@ const reducer = combineReducers({
   iceskate,
   ski,
   openNow,
-  searchResults
+  searchResults,
+  searchSuggestions,
+  searchActive
 });
 
 export default reducer;
