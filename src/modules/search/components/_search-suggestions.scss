@@ -7,6 +7,9 @@
   padding-right: 50px + 3 * $gap;
   width: 100%;
 
+  &__open-all {
+    cursor: pointer;
+  }
 
   &__list {
     background: $content-background;

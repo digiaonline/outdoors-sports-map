@@ -39,7 +39,8 @@
     }
   },
   "SEARCH": {
-    "SEARCH": "Etsi"
+    "SEARCH": "Etsi",
+    "SHOW_ALL_RESULTS": "Näytä kaikki hakutulokset"
   },
   "TIME": {
     "DAYS_AGO": "{{days}} päivää sitten",
