@@ -7,6 +7,11 @@ import {searchUnits, fetchUnitSuggestions, clearSearch} from '../actions';
 import SearchBar from './SearchBar';
 import SearchSuggestions from './SearchSuggestions';
 
+const InitialState = {
+  searchPhrase: '',
+  showSuggestions: false
+};
+
 
 class SearchContainer extends Component {
   static propTypes = {
@@ -20,9 +25,7 @@ class SearchContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      searchPhrase: ''
-    };
+    this.state = InitialState;
 
     this.search = this.search.bind(this);
     this.getSuggestions = this.getSuggestions.bind(this);
@@ -31,13 +34,19 @@ class SearchContainer extends Component {
   }
 
   onInputChange(value: string) {
-    this.setState({searchPhrase: value});
+    this.setState({
+      searchPhrase: value,
+      showSuggestions: true
+    });
     this.getSuggestions(value);
   }
 
   search() {
     this.props.searchUnits(this.state.searchPhrase);
     this.props.onSearch(this.state.searchPhrase);
+    this.setState({
+      showSuggestions: false
+    });
   }
 
   getSuggestions(searchPhrase: string) {
@@ -45,13 +54,13 @@ class SearchContainer extends Component {
   }
 
   clear() {
-    this.setState({searchPhrase: ''});
+    this.setState(InitialState);
     this.props.clearSearch();
   }
 
   render() {
     const {unitSuggestions, isActive, searchDisabled} = this.props;
-    const {searchPhrase} = this.state;
+    const {searchPhrase, showSuggestions} = this.state;
 
     return (
       <div className="search-container">
@@ -62,7 +71,7 @@ class SearchContainer extends Component {
           onClear={this.clear}
           searchActive={isActive}
           disabled={searchDisabled} />
-        <SearchSuggestions openAllResults={this.search} units={unitSuggestions}/>
+        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions}/>}
       </div>
     );
   }
