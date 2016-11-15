@@ -3,7 +3,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
-import {getLocation} from '../../map/selectors';
+import * as fromMap from '../../map/selectors';
+import * as fromSearch from '../../search/selectors';
 import {getVisibleUnits, getIsLoading} from '../../unit/selectors';
 import {DefaultFilters} from '../../unit/constants';
 import {MapView} from '../../unit/components/MapView.js';
@@ -68,13 +69,12 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, position, mapCenter, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, isSearching, position, mapCenter, params, location: {query: {filter}}} = this.props;
     const activeFilter = arrayifyQueryValue(filter);
-    console.log(unitData);
 
     return (
       <div className="home">
-        <UnitBrowser isLoading={isLoading} units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
+        <UnitBrowser isLoading={isLoading} isSearching={isSearching} units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
         <MapView params={params} setLocation={this.props.setLocation} position={position} units={unitData} handleClick={this.openModal} mapCenter={mapCenter}/>
         <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
       </div>
@@ -85,7 +85,8 @@ export class HomeContainer extends Component {
 const mapStateToProps = (state, props) => ({
   unitData: getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
   isLoading: getIsLoading(state),
-  mapCenter: getLocation(state)
+  mapCenter: fromMap.getLocation(state),
+  isSearching: fromSearch.getIsFetching(state)
 });
 
 const mapDispatchToProps = (dispatch) =>

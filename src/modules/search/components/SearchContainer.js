@@ -13,7 +13,8 @@ class SearchContainer extends Component {
     unitSuggestions: PropTypes.array,
     searchUnits: PropTypes.func,
     fetchUnitSuggestions: PropTypes.func,
-    searchDisabled: PropTypes.bool
+    searchDisabled: PropTypes.bool,
+    onSearch: PropTypes.func
   }
 
   constructor(props) {
@@ -30,13 +31,13 @@ class SearchContainer extends Component {
   }
 
   onInputChange(value: string) {
-    console.log(value);
     this.setState({searchPhrase: value});
     this.getSuggestions(value);
   }
 
   search() {
     this.props.searchUnits(this.state.searchPhrase);
+    this.props.onSearch(this.state.searchPhrase);
   }
 
   getSuggestions(searchPhrase: string) {

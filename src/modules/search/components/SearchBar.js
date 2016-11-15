@@ -4,7 +4,7 @@ import {Glyphicon} from 'react-bootstrap';
 
 const SearchBar = translate()(({input, onInput, onSubmit, onClear, searchActive, disabled, t}) =>
 <div className="search-bar">
-  <form className="search-bar__input" onSubmit={(e) => {console.log(e); e.preventDefault(); onSubmit();}}>
+  <form className="search-bar__input" onSubmit={(e) => {e.preventDefault(); onSubmit();}}>
     <label htmlFor="search"><Glyphicon glyph="search"/></label>
     <input name="search"
         id="search"

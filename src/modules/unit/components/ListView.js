@@ -5,6 +5,7 @@ import {isEqual, values} from 'lodash';
 import * as unitHelpers from '../helpers';
 import {SortKeys} from '../constants';
 import {View} from './View.js';
+import Loading from '../../home/components/Loading';
 import ObservationStatus from './ObservationStatus';
 import SortSelectorDropdown from './SortSelectorDropdown';
 
@@ -78,7 +79,7 @@ export class ListView extends Component {
   }
 
   render() {
-    const {handleClick} = this.props;
+    const {handleClick, isLoading} = this.props;
     const {sortKey} = this.state;
     const units = this.sortUnits(this.props, sortKey);
     return (
@@ -88,11 +89,12 @@ export class ListView extends Component {
             <SortSelectorDropdown values={values(SortKeys)} active={sortKey} onSelect={this.selectSortKey}/>
           </div>
           <div className="list-view__block">
-            {units && units.map( (unit, index) =>
+            {!isLoading && units && units.map( (unit, index) =>
               <UnitListItem
               unit={unit}
               key={index}
               handleClick={handleClick}/>)}
+            {isLoading && <Loading/>}
           </div>
         </div>
       </View>

@@ -13,9 +13,9 @@ const ToggleButton = ({toggle, glyph}) =>
     <Glyphicon glyph={glyph}/>
   </button>;
 
-const Header = ({toggle, toggleGlyph}) =>
+const Header = ({expand, toggle, toggleGlyph}) =>
 <div className="header">
-  <SearchContainer/>
+  <SearchContainer onSearch={expand}/>
   <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
 </div>;
 
@@ -40,6 +40,7 @@ class UnitBrowser extends Component {
     this.toggleFilter = this.toggleFilter.bind(this);
     this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.expand = this.expand.bind(this);
   }
 
   componentDidMount() {
@@ -83,21 +84,26 @@ class UnitBrowser extends Component {
     this.setState({isExpanded: !this.state.isExpanded});
   }
 
+  expand() {
+    this.setState({isExpanded: true});
+  }
+
   render() {
-    const {units, position, activeFilter, handleClick} = this.props;
+    const {units, isLoading, isSearching, position, activeFilter, handleClick} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
         <Header
+          expand={this.expand}
           toggle={this.toggle}
           toggleGlyph={isExpanded ? 'globe' : 'list'}
         />
         {isExpanded &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
             <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
-            <ListView units={units} position={position} show={isExpanded} handleClick={handleClick} />
+            <ListView isLoading={isLoading || isSearching} units={units} position={position} show={isExpanded} handleClick={handleClick} />
           </div>
         }
       </div>
