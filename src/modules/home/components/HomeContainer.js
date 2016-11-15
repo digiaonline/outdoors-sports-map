@@ -57,6 +57,17 @@ export class HomeContainer extends Component {
     this.props.setLocation(locations.HELSINKI);
 
     this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
+    
+    if(!localStorage.getItem('outdoors-sports-map:language')) {
+      const userLang = navigator.language || navigator.userLanguage;
+
+      if(userLang === 'sv' || userLang === 'sv-sv' || userLang === 'sv-fi') {
+        this.handleChangeLanguage('sv');
+
+      } else if(userLang === 'fi') {
+        this.handleChangeLanguage('fi');
+      }
+    }
   }
 
   componentDidMount() {
@@ -71,8 +82,13 @@ export class HomeContainer extends Component {
     clearInterval(this.pollUnitsInterval);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.activeLanguage !== this.props.activeLanguage) {
+      this.forceUpdate();
+    }
+  }
+
   handleChangeLanguage(language) {
-    console.log(language);
     this.props.changeLanguage(language);
   }
 
