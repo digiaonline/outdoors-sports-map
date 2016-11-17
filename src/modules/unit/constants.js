@@ -58,13 +58,6 @@ export const QualityEnum = {
   [UnitQuality.UNKNOWN]: 4
 };
 
-export const UnitQualityColors = {
-  [UnitQuality.GOOD]: '#72bc3d',
-  [UnitQuality.SATISFACTORY]: '#f5c01a',
-  [UnitQuality.UNUSABLE]: '#f54730',
-  [UnitQuality.UNKNOWN]: '#a8b5c2'
-};
-
 export const UnitActions = {
   FETCH: normalizeActionName('unit/FETCH'),
   RECEIVE: normalizeActionName('unit/RECEIVE'),

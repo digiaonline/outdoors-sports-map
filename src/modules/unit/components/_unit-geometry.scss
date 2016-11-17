@@ -1,0 +1,36 @@
+.unit-geometry {
+  &__track {
+    stroke: $status-unknown;
+    stroke-width: 4px;
+
+    &--unknown {
+      @extend .unit-geometry__track;
+    }
+
+    &--good {
+      @extend .unit-geometry__track;
+      stroke: $status-ok;
+    }
+
+    &--satisfactory {
+      @extend .unit-geometry__track;
+      stroke: $status-average;
+    }
+
+    &--unusable {
+      @extend .unit-geometry__track;
+      stroke: $status-bad;
+    }
+  }
+
+  &__hilight {
+    display: none;
+    stroke-width: 8px;
+    stroke: $content-text;
+
+    &--show {
+      @extend .unit-geometry__hilight;
+      display: block;
+    }
+  }
+}
