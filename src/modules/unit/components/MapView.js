@@ -10,7 +10,7 @@ import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
 import {MAP_URL} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
-import UnitOnMap from './UnitOnMap';
+import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
 
 export class MapView extends Component {
@@ -83,12 +83,7 @@ export class MapView extends Component {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <UserLocationMarker />
-          {
-            units && units.map(
-              (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={index} openUnit={openUnit} />
-            )
-          }
+          <UnitsOnMap units={units} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control className="leaflet-bar leaflet-control-locate" position="bottomright">
             <a onClick={this.locateUser}>
