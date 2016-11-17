@@ -1,18 +1,18 @@
 import React from 'react';
 //import {getUnitGeometry} from '../helpers';
 import UnitMarker from './UnitMarker';
+import {GeoJSON} from 'react-leaflet';
 //import UnitGeometry from './UnitGeometry';
 
-const getUnitGeometry = () => false;
-const UnitGeometry = UnitMarker;
+const UnitGeometry = ({...rest}) => <GeoJSON {...rest}/>
 
 export const UnitOnMap = ({unit, isSelected, openUnit, ...rest}) => {
-  const geometry = getUnitGeometry(unit);
+  const geometry = unit.geometry;
 
   return(
     <div>
     <UnitMarker unit={unit} isSelected={isSelected} handleClick={() => openUnit(unit.id)} {...rest}/>
-    {geometry && <UnitGeometry unit={unit} onClick={() => openUnit(unit.id)} isSelected={isSelected}/> }
+    {geometry && <UnitGeometry data={unit.geometry} onClick={() => openUnit(unit.id)} isSelected={isSelected}/> }
     </div>
   );
 };

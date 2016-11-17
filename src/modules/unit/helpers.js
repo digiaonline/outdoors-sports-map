@@ -17,7 +17,7 @@ export const getAttr = (attr: Object, lang: ?string = 'en') => {
   return translated || null;
 };
 
-export const getUnitPosition = (unit: Object) => {
+export const getUnitPosition = (unit: Object): Array<number> => {
   return unit.location.coordinates.slice().reverse();
 };
 
