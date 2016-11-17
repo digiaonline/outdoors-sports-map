@@ -19,7 +19,7 @@ export const SkiingServices = [
 export const SwimmingServices = [];
 
 export const UnitFilters = {
-  SKATING: 'iceskate',
+  ICE_SKATING: 'iceskate',
   SKIING: 'ski',
   OPEN_NOW: 'open_now'
 };
@@ -33,7 +33,7 @@ export const SortKeys = {
 export const UNIT_BATCH_SIZE = 20;
 
 export const DefaultFilters = [
-  UnitFilters.SKATING,
+  UnitFilters.ICE_SKATING,
   UnitFilters.SKIING
 ];
 
