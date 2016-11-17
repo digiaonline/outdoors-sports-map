@@ -112,8 +112,26 @@ export class HomeContainer extends Component {
 
     return (
       <div className="home">
-        <UnitBrowser isLoading={isLoading} isSearching={isSearching} units={unitData} activeFilter={activeFilter} openUnit={this.openUnit} position={mapCenter} />
-        <MapView activeLanguage={activeLanguage} params={params} setLocation={this.props.setLocation} position={position} units={unitData} changeLanguage={this.handleChangeLanguage} openUnit={this.openUnit} mapCenter={mapCenter}/>
+        <UnitBrowser
+          isLoading={isLoading}
+          isSearching={isSearching}
+          units={unitData}
+          selectedUnitId={+params.unitId}
+          activeFilter={activeFilter}
+          openUnit={this.openUnit}
+          position={mapCenter}
+        />
+        <MapView
+          activeLanguage={activeLanguage}
+          selectedUnitId={+params.unitId}
+          params={params}
+          setLocation={this.props.setLocation}
+          position={position}
+          units={unitData}
+          changeLanguage={this.handleChangeLanguage}
+          openUnit={this.openUnit}
+          mapCenter={mapCenter}
+        />
         {params.unitId && <SingleUnitModalContainer isOpen={true} units={unitData} params={params} handleClick={this.closeUnit} /> }
       </div>
     );

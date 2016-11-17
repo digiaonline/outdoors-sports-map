@@ -11,8 +11,8 @@ export const UnitOnMap = ({unit, isSelected, openUnit, ...rest}) => {
 
   return(
     <div>
-    <UnitMarker unit={unit} isSelected={isSelected} handleClick={openUnit} {...rest}/>
-    {geometry && <UnitGeometry unit={unit} onClick={openUnit} isSelected={isSelected}/> }
+    <UnitMarker unit={unit} isSelected={isSelected} handleClick={() => openUnit(unit.id)} {...rest}/>
+    {geometry && <UnitGeometry unit={unit} onClick={() => openUnit(unit.id)} isSelected={isSelected}/> }
     </div>
   );
 };

@@ -67,7 +67,7 @@ export class MapView extends Component {
   }
 
   render() {
-    const {position, units, selected, activeLanguage, openUnit, changeLanguage} = this.props;
+    const {position, selectedUnitId, units, selected, activeLanguage, openUnit, changeLanguage} = this.props;
     const {isMobile} = this.state;
 
     return (
@@ -86,7 +86,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitOnMap unit={unit} key={index} openUnit={openUnit} />
+                <UnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={index} openUnit={openUnit} />
             )
           }
           {!isMobile && <ZoomControl position="bottomright" />}
