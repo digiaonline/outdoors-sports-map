@@ -24,6 +24,11 @@ export const UnitFilters = {
   OPEN_NOW: 'open_now'
 };
 
+export const SportFilters = [
+  UnitFilters.ICE_SKATING,
+  UnitFilters.SKIING
+];
+
 export const SortKeys = {
   ALPHABETICAL: 'alphabetical',
   DISTANCE: 'distance',

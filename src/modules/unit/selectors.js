@@ -1,5 +1,5 @@
 import {AppState} from '../common/constants';
-import {UnitFilters, DefaultFilters} from './constants';
+import {UnitFilters} from './constants';
 import {union, intersection, isEmpty} from 'lodash';
 import {getIsActive as getSearchActive, getUnitResultIDs} from '../search/selectors';
 
@@ -9,7 +9,7 @@ export const getUnitById = (state: AppState, props: Object) =>
 export const getAllUnits = (state: AppState/*, props: Object*/) =>
   state.unit.all.map((id) => getUnitById(state, {id}));
 
-export const getVisibleUnits = (state: AppState, filters = []) => {
+export const getVisibleUnits = (state: AppState, filters: Array<string>) => {
   let visibleUnits = [];
 
   filters.forEach((filter) => {

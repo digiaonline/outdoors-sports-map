@@ -107,7 +107,7 @@ export class HomeContainer extends Component {
 
   render() {
     const {unitData, isLoading, isSearching, position, mapCenter, activeLanguage, params, location: {query: {filter}}} = this.props;
-    const activeFilter = arrayifyQueryValue(filter);
+    const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
       <div className="home">
@@ -124,7 +124,7 @@ HomeContainer.childContextTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  unitData: fromUnit.getVisibleUnits(state, props.location.query && props.location.query.filter && arrayifyQueryValue(props.location.query.filter)),
+  unitData: fromUnit.getVisibleUnits(state, props.location.query.filter ? arrayifyQueryValue(props.location.query.filter) : DefaultFilters),
   activeLanguage: fromLanguage.getLanguage(state),
   isLoading: fromUnit.getIsLoading(state),
   mapCenter: fromMap.getLocation(state),

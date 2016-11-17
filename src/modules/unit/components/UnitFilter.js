@@ -3,11 +3,11 @@ import {Grid, Row, Col, Glyphicon} from 'react-bootstrap';
 import {translate} from 'react-i18next';
 import invert from 'lodash/invert';
 import {getFilterIconURL} from '../helpers';
-import {UnitFilters} from '../constants';
+import {UnitFilters, SportFilters} from '../constants';
 
 
 const FilterIcon = ({filter, active}) => {
-  if (filter !== UnitFilters.OPEN_NOW) {
+  if (SportFilters.includes(filter)) {
     return (
       <img src={getFilterIconURL(filter, active)}/>
     );
