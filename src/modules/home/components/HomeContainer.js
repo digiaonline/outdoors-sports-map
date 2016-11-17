@@ -57,7 +57,7 @@ export class HomeContainer extends Component {
     this.props.setLocation(locations.HELSINKI);
 
     this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
-    
+
     if(!localStorage.getItem('outdoors-sports-map:language')) {
       const userLang = navigator.language || navigator.userLanguage;
 

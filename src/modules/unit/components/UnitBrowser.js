@@ -25,9 +25,9 @@ class UnitBrowser extends Component {
     activeFilter: PropTypes.array
   };
 
-  static defaultProps = {
-    activeFilter: DefaultFilters
-  };
+  // static defaultProps = {
+  //   activeFilter: DefaultFilters
+  // };
 
   constructor(props) {
     super(props);
