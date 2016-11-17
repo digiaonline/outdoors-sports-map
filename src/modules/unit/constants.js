@@ -21,12 +21,14 @@ export const SwimmingServices = [];
 export const UnitFilters = {
   ICE_SKATING: 'iceskate',
   SKIING: 'ski',
+  //SWIMMING: 'swim',
   OPEN_NOW: 'open_now'
 };
 
 export const SportFilters = [
   UnitFilters.ICE_SKATING,
-  UnitFilters.SKIING
+  UnitFilters.SKIING,
+  //UnitFilters.SWIMMING
 ];
 
 export const SortKeys = {

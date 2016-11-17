@@ -1,15 +1,22 @@
 import React from 'react';
 import {Marker} from 'react-leaflet';
 import {Icon} from 'leaflet';
-import {getUnitIconURL, getUnitPosition} from '../helpers';
+import {getUnitIconURL, getUnitPosition, getUnitSport} from '../helpers';
+import {UnitFilters} from '../constants';
 
-const createIcon = (unit: Object, isSelected: boolean) =>
-  new Icon({
+export const getIconHeight = (unit: Object) =>
+  getUnitSport(unit) === UnitFilters.SKIING ? 30 : 36;
+
+const createIcon = (unit: Object, isSelected: boolean) => {
+  const iconHeight = getIconHeight(unit)
+
+  return new Icon({
     iconUrl: getUnitIconURL(unit, isSelected, false),
     iconRetinaUrl: getUnitIconURL(unit, isSelected),
-    iconSize: [30, 36], // TODO: height 36 for skating etc and 30 for skiing
-    iconAnchor: [15, 36]
+    iconSize: [30, iconHeight],
+    iconAnchor: [15, iconHeight]
   });
+};
 
 export const UnitMarker = ({unit, isSelected, handleClick, ...rest}) =>
   <Marker

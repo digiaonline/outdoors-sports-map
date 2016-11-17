@@ -1,7 +1,7 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
-import {QualityEnum, IceSkatingServices, SwimmingServices, SkiingServices} from './constants';
+import {QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 
 // FIXME: get the lang parameter actually from somewhere
 export const getAttr = (attr: Object, lang: ?string = 'en') => {
@@ -26,16 +26,16 @@ export const getUnitSport = (unit: Object) => {
     const service = unit.services[0];
 
     if (IceSkatingServices.includes(service.id)) {
-      return 'iceskate';
+      return UnitFilters.ICE_SKATING;
     }
 
     if (SkiingServices.includes(service.id)) {
-      return 'ski';
+      return UnitFilters.SKIING;
     }
 
-    if (SwimmingServices.includes(service.id)) {
-      return 'swim';
-    }
+    // if (SwimmingServices.includes(service.id)) {
+    //   return UnitFilters.SWIMMING;
+    // }
   }
 
   return 'unknown';
