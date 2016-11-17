@@ -25,10 +25,6 @@ class UnitBrowser extends Component {
     activeFilter: PropTypes.array
   };
 
-  static defaultProps = {
-    activeFilter: DefaultFilters
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -61,11 +57,18 @@ class UnitBrowser extends Component {
     return window.innerHeight - HEADER_HEIGHT - bottomSpace;
   }
 
-  toggleFilter(filter) {
+  toggleFilter(filter: string): void {
     const {activeFilter, router, location: query} = this.props;
-    let newFilter = Array.isArray(activeFilter) ? activeFilter.slice() : [activeFilter];
-    const index = newFilter.indexOf(filter);
+    const NO_FILTER = 'no_filter';
+    let newFilter = activeFilter.slice();
 
+    if (newFilter.includes(NO_FILTER)) {
+      const index = newFilter.indexOf(NO_FILTER);
+      newFilter = [...newFilter.slice(0, index), ...newFilter.slice(index + 1)];
+    }
+
+    // Toggle given filter
+    const index = newFilter.indexOf(filter);
     if (index === -1) {
       newFilter = [...newFilter, filter];
     } else {
@@ -74,6 +77,9 @@ class UnitBrowser extends Component {
         ...newFilter.slice(index + 1)
       ];
     }
+
+    // Empty filter parameter defaults to DefaultFilters.
+    newFilter = newFilter.length === 0 ? [NO_FILTER] : newFilter;
 
     router.push({
       query: Object.assign({}, query, {filter: newFilter})

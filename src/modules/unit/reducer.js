@@ -1,7 +1,8 @@
 import {keys} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
-import {UnitActions, IceSkatingServices, SkiingServices} from './constants';
+import {UnitActions, IceSkatingServices, SkiingServices, QualityEnum} from './constants';
+import {getUnitQuality, enumerableQuality} from './helpers';
 import {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
@@ -29,29 +30,10 @@ const ski = handleActions({
     [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkiingServices.indexOf(unitService.id) !== -1))]
 }, []);
 
-// TODO
 const openNow = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
-    [...keys(entities.unit)]
+    [...keys(entities.unit).filter((id) => enumerableQuality(getUnitQuality(entities.unit[id])) <= QualityEnum.satisfactory)]
 }, []);
-
-const searchResults = handleActions({
-  [UnitActions.SEARCH_RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
-    entities ? [...keys(entities.unit)] : [],
-  [UnitActions.SEARCH_CLEAR]: () => []
-}, []);
-
-const searchSuggestions = handleActions({
-  [UnitActions.RECEIVE_SEARCH_SUGGESTIONS]: (state: Object, {payload: {entities}}: EntityAction) =>
-    entities ? [...keys(entities.unit)] : [],
-  [UnitActions.SEARCH_RECEIVE]: () => [],
-  [UnitActions.SEARCH_CLEAR]: () => []
-}, []);
-
-const searchActive = handleActions({
-  [UnitActions.SEARCH_RECEIVE]: () => true,
-  [UnitActions.SEARCH_CLEAR]: () => false
-}, false);
 
 const reducer = combineReducers({
   isFetching: isFetchingReducer,
@@ -59,10 +41,7 @@ const reducer = combineReducers({
   all,
   iceskate,
   ski,
-  openNow,
-  searchResults,
-  searchSuggestions,
-  searchActive
+  open_now: openNow
 });
 
 export default reducer;

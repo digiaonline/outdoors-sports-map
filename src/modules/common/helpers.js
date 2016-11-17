@@ -1,14 +1,13 @@
 // @flow
-
-import {APP_NAME} from '../common/constants';
+import {APP_NAME, QueryValue} from './constants';
 
 export const normalizeActionName = (name: string): string =>
   `${APP_NAME}/${name}`;
 
-export const arrayifyQueryValue = (queryValue: mixed): mixed => {
-  // Hndle undefined
+export const arrayifyQueryValue = (queryValue: QueryValue): Array<string> => {
+  // Handle undefined
   if (typeof queryValue === 'undefined') {
-    return undefined;
+    return [];
   }
   // Handle single values
   else if (!Array.isArray(queryValue)){
