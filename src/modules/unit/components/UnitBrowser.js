@@ -95,7 +95,7 @@ class UnitBrowser extends Component {
   }
 
   render() {
-    const {units, isLoading, isSearching, position, activeFilter, handleClick} = this.props;
+    const {units, isLoading, isSearching, position, activeFilter, openUnit} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
 
@@ -109,7 +109,7 @@ class UnitBrowser extends Component {
         {isExpanded &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
             <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
-            <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} handleClick={handleClick} />
+            <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} openUnit={openUnit} />
           </div>
         }
       </div>

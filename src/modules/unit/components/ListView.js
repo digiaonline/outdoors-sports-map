@@ -96,7 +96,7 @@ class ListView extends Component {
   }
 
   render() {
-    const {handleClick, isLoading, t} = this.props;
+    const {openUnit, isLoading, t} = this.props;
     const {sortKey, maxUnitCount} = this.state;
     const totalUnits = this.props.units.length;
     const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
@@ -112,7 +112,7 @@ class ListView extends Component {
               <UnitListItem
               unit={unit}
               key={index}
-              handleClick={handleClick}/>)}
+              handleClick={() => openUnit(unit.id)}/>)}
             {
               units.length !== totalUnits &&
               <a style={{display: 'block', textAlign: 'center', cursor: 'pointer'}} onClick={this.loadMoreUnits}>

@@ -18,7 +18,7 @@ const ModalHeader = ({handleClick, unit, t}, context) => {
             <h4>{unit ? getAttr(unit.name) : t('MODAL.LOADING')}</h4>
           </div>
           <div style={{alignSelf: 'center'}}>
-            <Link to="/"><Glyphicon onClick={handleClick} glyph="remove"/></Link>
+            <a onClick={handleClick}><Glyphicon glyph="remove"/></a>
           </div>
         </div>
         {unit

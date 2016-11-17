@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
 import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {getAttr} from '../../unit/helpers';
@@ -40,8 +41,8 @@ export class HomeContainer extends Component {
 
     this.state = {modalOpen: false};
 
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.openUnit = this.openUnit.bind(this);
+    this.closeUnit = this.closeUnit.bind(this);
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.getAttr = this.getAttr.bind(this);
   }
@@ -70,14 +71,6 @@ export class HomeContainer extends Component {
     }
   }
 
-  componentDidMount() {
-    const {params} = this.props;
-
-    if (params.unitId) {
-      this.openModal();
-    }
-  }
-
   componentWillUnmount() {
     clearInterval(this.pollUnitsInterval);
   }
@@ -92,12 +85,20 @@ export class HomeContainer extends Component {
     this.props.changeLanguage(language);
   }
 
-  openModal() {
-    this.setState({modalOpen: true});
+  openUnit(unitId: string) {
+    const {router, location: {query}} = this.props;
+    router.push({
+      pathname: `/unit/${unitId}`,
+      query
+    });
   }
 
-  closeModal() {
-    this.setState({modalOpen: false});
+  closeUnit() {
+    const {router, location: {query}} = this.props;
+    router.push({
+      pathname: '/',
+      query
+    });
   }
 
   getAttr(attr) {
@@ -111,9 +112,9 @@ export class HomeContainer extends Component {
 
     return (
       <div className="home">
-        <UnitBrowser isLoading={isLoading} isSearching={isSearching} units={unitData} activeFilter={activeFilter} handleClick={this.openModal} position={mapCenter} />
-        <MapView activeLanguage={activeLanguage} params={params} setLocation={this.props.setLocation} position={position} units={unitData} changeLanguage={this.handleChangeLanguage} handleClick={this.openModal} mapCenter={mapCenter}/>
-        <SingleUnitModalContainer isOpen={this.state.modalOpen} units={unitData} params={params} handleClick={this.closeModal} />
+        <UnitBrowser isLoading={isLoading} isSearching={isSearching} units={unitData} activeFilter={activeFilter} openUnit={this.openUnit} position={mapCenter} />
+        <MapView activeLanguage={activeLanguage} params={params} setLocation={this.props.setLocation} position={position} units={unitData} changeLanguage={this.handleChangeLanguage} openUnit={this.openUnit} mapCenter={mapCenter}/>
+        {params.unitId && <SingleUnitModalContainer isOpen={true} units={unitData} params={params} handleClick={this.closeUnit} /> }
       </div>
     );
   }
@@ -134,6 +135,6 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators({fetchUnits, setLocation, changeLanguage}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer
-);
+));

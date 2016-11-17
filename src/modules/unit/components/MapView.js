@@ -6,12 +6,11 @@ import Logo from '../../home/components/Logo';
 import Disclaimer from '../../home/components/Disclaimer';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
-import {getUnitPosition} from '../helpers';
 import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
 import {MAP_URL} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
-import UnitMarker from './UnitMarker';
+import UnitOnMap from './UnitOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
 
 export class MapView extends Component {
@@ -68,7 +67,7 @@ export class MapView extends Component {
   }
 
   render() {
-    const {position, units, selected, activeLanguage, handleClick: openUnit, changeLanguage} = this.props;
+    const {position, units, selected, activeLanguage, openUnit, changeLanguage} = this.props;
     const {isMobile} = this.state;
 
     return (
@@ -87,7 +86,7 @@ export class MapView extends Component {
           {
             units && units.map(
               (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
-                <UnitMarker unit={unit} position={getUnitPosition(unit)} id={unit.id} key={index} handleClick={openUnit} />
+                <UnitOnMap unit={unit} key={index} openUnit={openUnit} />
             )
           }
           {!isMobile && <ZoomControl position="bottomright" />}
