@@ -44,10 +44,25 @@ export const DefaultFilters = [
   UnitFilters.SKIING
 ];
 
+export const UnitQuality = {
+  GOOD: 'good',
+  SATISFACTORY: 'satisfactory',
+  UNUSABLE: 'unusable',
+  UNKNOWN: 'unknown'
+};
+
 export const QualityEnum = {
-  'good': 1,
-  'satisfactory': 2,
-  'unusable': 3
+  [UnitQuality.GOOD]: 1,
+  [UnitQuality.SATISFACTORY]: 2,
+  [UnitQuality.UNUSABLE]: 3,
+  [UnitQuality.UNKNOWN]: 4
+};
+
+export const UnitQualityColors = {
+  [UnitQuality.GOOD]: '#72bc3d',
+  [UnitQuality.SATISFACTORY]: '#f5c01a',
+  [UnitQuality.UNUSABLE]: '#f54730',
+  [UnitQuality.UNKNOWN]: '#a8b5c2'
 };
 
 export const UnitActions = {
