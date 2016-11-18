@@ -15,11 +15,10 @@ export const StatusUpdated = translate()(({time, t}) =>
   </div>
 );
 
-export const MaintenanceUpdated = translate()(({time, t}) =>
+export const MaintenanceUpdated = ({text, time}) =>
   <div className="observation-status__time">
-    {t('UNIT.MAINTENANCE_DONE')} <Time time={time}/>
-  </div>
-);
+    {text} <Time time={time}/>
+  </div>;
 
 const getObservationTime = (observation: Object) =>
   moment(observation && observation.time || 0).toDate();
@@ -36,7 +35,7 @@ export const ObservationStatus = ({unit, t}, context) => {
       <StatusUpdated time={getObservationTime(condition)}/>
       {
         maintenance &&
-        <MaintenanceUpdated time={getObservationTime(maintenance)}/>
+        <MaintenanceUpdated text={getAttr(maintenance.name)} time={getObservationTime(maintenance)}/>
       }
     </div>
   );
