@@ -44,12 +44,12 @@ export class HomeContainer extends Component {
     this.openUnit = this.openUnit.bind(this);
     this.closeUnit = this.closeUnit.bind(this);
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
-    this.getAttr = this.getAttr.bind(this);
+    this.getActiveLanguage = this.getActiveLanguage.bind(this);
   }
 
   getChildContext() {
     return {
-      getAttr: this.getAttr
+      getActiveLanguage: this.getActiveLanguage
     };
   }
 
@@ -101,9 +101,8 @@ export class HomeContainer extends Component {
     });
   }
 
-  getAttr(attr) {
-    const {activeLanguage} = this.props;
-    return getAttr(attr, activeLanguage);
+  getActiveLanguage() {
+    return this.props.activeLanguage;
   }
 
   render() {
@@ -139,7 +138,7 @@ export class HomeContainer extends Component {
 }
 
 HomeContainer.childContextTypes = {
-  getAttr: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func
 };
 
 const mapStateToProps = (state, props) => ({
