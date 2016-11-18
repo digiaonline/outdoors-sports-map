@@ -15,13 +15,19 @@ export const UnitGeometry = ({unit, isSelected, ...rest}) => (
         data={unit.geometry}
         {...rest}
        />
-     }
+    }
+    <GeoJSON // Click area
+      className="unit-geometry__click-area"
+      key={`${unit.id}_click-area`}
+      data={unit.geometry}
+      {...rest} />
     <GeoJSON // actual track
       className={
         `unit-geometry__track unit-geometry__track--${getUnitQuality(unit)}`
       }
       key={unit.id}
-      data={unit.geometry} {...rest} />
+      data={unit.geometry}
+      {...rest} />
   </div>
 );
 

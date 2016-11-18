@@ -27,4 +27,9 @@
     stroke-width: 7px;
     stroke: $content-text;
   }
+
+  &__click-area {
+    stroke-width: 12px;
+    opacity: 0;
+  }
 }
