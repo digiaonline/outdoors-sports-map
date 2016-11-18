@@ -1,4 +1,5 @@
 import React from 'react';
+import isEmpty from 'lodash/isEmpty';
 import SingleUnitOnMap from './SingleUnitOnMap';
 import {sortByCondition} from '../helpers';
 
@@ -8,7 +9,7 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
   // Draw things in condition order
   unitsInOrder = sortByCondition(unitsInOrder).reverse();
 
-  if(selectedUnitId) {
+  if(!isEmpty(unitsInOrder) && selectedUnitId) {
     const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);
     const selectedUnit = unitsInOrder[index];
 
@@ -22,8 +23,8 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
   return(
     <div className="units-on-map">
     {
-      unitsInOrder && unitsInOrder.map(
-        (unit, index) => //{console.log(unit); return <p key={index}>getAttr(unit.name)</p>;}
+      !isEmpty(unitsInOrder) && unitsInOrder.map(
+        (unit, index) =>
           <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={index} openUnit={openUnit} />
       )
     }
