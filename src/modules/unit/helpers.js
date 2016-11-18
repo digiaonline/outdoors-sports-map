@@ -1,7 +1,7 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
-import {QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
+import {UnitQuality, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 
 const DEFAULT_LANG = 'en';
 
@@ -42,7 +42,6 @@ export const getUnitSport = (unit: Object) => {
   return 'unknown';
 };
 
-// TODO : MOVE TO THE COMPONENT
 export const getServiceName = (unit: Object, language: ?string = DEFAULT_LANG) => {
   return getAttr(unit.services[0].name, language);
 };
@@ -54,7 +53,7 @@ export const getObservation = (unit: Object, matchProperty: ?string='condition')
 
 export const getUnitQuality = (unit: Object): string => {
   const observation = getObservation(unit);
-  return observation ? observation.quality : 'unknown';
+  return observation ? observation.quality : UnitQuality.UNKNOWN;
 };
 
 export const enumerableQuality = (quality: string): number => {
@@ -75,11 +74,8 @@ export const getUnitIconURL = (unit: Object, selected = false, retina = true) =>
   return require(`@assets/markers/${sport}-${quality}-${onOff}${resolution}.png`);
 };
 
-export const getFilterIconURL = (filter: String, active: Boolean) => {
-  if (filter)
-  return require(`@assets/icons/icon-white-${filter}@2x.png`);
-};
-
+export const getFilterIconURL = (filter: String) =>
+  filter ? require(`@assets/icons/icon-white-${filter}@2x.png`) : '';
 
 /**
  * TODO: MOVE TO TEH COMPONENT
