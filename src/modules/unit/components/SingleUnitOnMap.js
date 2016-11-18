@@ -1,17 +1,35 @@
-import React from 'react';
+import React, {Component} from 'react';
+import L from 'leaflet';
 //import {getUnitGeometry} from '../helpers';
 import UnitMarker from './UnitMarker';
 import UnitGeometry from './UnitGeometry';
 
-export const SingleUnitOnMap = ({unit, isSelected, openUnit, ...rest}) => {
-  const geometry = unit.geometry;
+export class SingleUnitOnMap extends Component{
 
-  return(
-    <div>
-    <UnitMarker unit={unit} isSelected={isSelected} handleClick={() => openUnit(unit.id)} {...rest}/>
-    {geometry && <UnitGeometry unit={unit} onClick={() => openUnit(unit.id)} isSelected={isSelected}/> }
-    </div>
-  );
-};
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    const {unit, openUnit} = this.props;
+    L.DomEvent.stopPropagation(e);
+
+    openUnit(unit.id);
+  }
+
+  render () {
+    const {unit, isSelected, ...rest} = this.props;
+    const geometry = unit.geometry;
+
+    return(
+      <div>
+      <UnitMarker unit={unit} isSelected={isSelected} handleClick={this.handleClick} {...rest}/>
+      {geometry && <UnitGeometry unit={unit} onClick={this.handleClick} isSelected={isSelected}/> }
+      </div>
+    );
+  }
+}
 
 export default SingleUnitOnMap;

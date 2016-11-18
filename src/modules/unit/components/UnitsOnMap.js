@@ -4,19 +4,17 @@ import SingleUnitOnMap from './SingleUnitOnMap';
 export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
   let unitsInOrder = units;
 
-  // TODO: How to get the selected to front/top?
+  if(selectedUnitId) {
+    const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);
+    const selectedUnit = unitsInOrder[index];
 
-  // if(selectedUnitId) {
-  //   const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);
-  //   const selectedUnit = unitsInOrder[index];
-  //
-  //   // unitsInOrder = [
-  //   //   ...unitsInOrder.slice(0, index),
-  //   //   ...unitsInOrder.slice(index + 1),
-  //   //   selectedUnit
-  //   // ];
-  //   // unitsInOrder.push(selectedUnit);
-  // }
+    unitsInOrder = [
+      ...unitsInOrder.slice(0, index),
+      ...unitsInOrder.slice(index + 1),
+      selectedUnit
+    ];
+    //unitsInOrder.push(selectedUnit);
+  }
 
   return(
     <div className="units-on-map">
