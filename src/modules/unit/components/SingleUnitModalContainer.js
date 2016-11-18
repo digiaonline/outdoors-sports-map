@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
 import {Modal, Glyphicon} from 'react-bootstrap';
 import {Link} from 'react-router';
-import {getObservation, getServiceName} from '../helpers.js';
+import {getObservation, getServiceName, getAttr} from '../helpers.js';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
 import * as unitHelpers from '../helpers';
 
 const ModalHeader = ({handleClick, unit, t}, context) => {
   const iconURL = unit ? unitHelpers.getUnitIconURL(unit) : null;
-  const {getAttr} = context;
 
   return(
     <Modal.Header>
       <div>
         <div className="modal-header-name">
           <div>
-            <h4>{unit ? getAttr(unit.name) : t('MODAL.LOADING')}</h4>
+            <h4>{unit ? getAttr(unit.name, context.getActiveLanguage()) : t('MODAL.LOADING')}</h4>
           </div>
           <div style={{alignSelf: 'center'}}>
             <Link to="/"><Glyphicon onClick={handleClick} glyph="remove"/></Link>
@@ -27,10 +26,10 @@ const ModalHeader = ({handleClick, unit, t}, context) => {
               <div>
                 <p>
                 {
-                  getServiceName(unit)
+                  getServiceName(unit, context.getActiveLanguage())
                 }
                 </p>
-                <p>{getAttr(unit.street_address) + ', ' + unit.address_zip}</p>
+                <p>{getAttr(unit.street_address, context.getActiveLanguage()) + ', ' + unit.address_zip}</p>
               </div>
             </div>
           : null
@@ -41,7 +40,7 @@ const ModalHeader = ({handleClick, unit, t}, context) => {
 };
 
 ModalHeader.contextTypes = {
-  getAttr: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func
 };
 
 

@@ -41,8 +41,8 @@ export const getUnitSport = (unit: Object) => {
   return 'unknown';
 };
 
-export const getServiceName = (unit: Object) => {
-  return getAttr(unit.services[0].name);
+export const getServiceName = (unit: Object, lang: ?string) => {
+  return getAttr(unit.services[0].name, lang);
 };
 
 export const getObservation = (unit: Object) => {
@@ -80,8 +80,8 @@ export const sortByDistance = (units: Array, position: Array) =>
     return unitLatLng.distanceTo(mapLatLng);
   });
 
-export const sortByName = (units: Array) =>
-  sortBy(units, (unit) => getAttr(unit.name));
+export const sortByName = (units: Array, lang: ?string) =>
+  sortBy(units, (unit) => getAttr(unit.name, lang));
 
 export const sortByCondition = (units: Array) =>
   sortBy(units, [

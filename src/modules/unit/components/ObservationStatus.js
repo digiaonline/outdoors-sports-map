@@ -4,11 +4,10 @@ import moment from 'moment';
 import Time from '../../home/components/Time';
 import {getAttr} from '../helpers';
 
-
-export const ObservationStatus = translate()(({observation, t}) => {
+export const ObservationStatus = ({observation, t}, context) => {
   const quality = observation && observation.quality || 'unknown';
   const observationTime = moment(observation && observation.time || 0).toDate();
-  const observationName = observation && getAttr(observation.name) || t('UNIT.UNKNOWN');
+  const observationName = observation && getAttr(observation.name, context.getActiveLanguage()) || t('UNIT.UNKNOWN');
 
   return (
     <div className="observation-status">
@@ -19,7 +18,10 @@ export const ObservationStatus = translate()(({observation, t}) => {
         {t('UNIT.UPDATED')} <Time time={observationTime}/>
       </div>
     </div>);
-});
+};
 
+ObservationStatus.contextTypes = {
+  getActiveLanguage: React.PropTypes.func
+};
 
-export default ObservationStatus;
+export default translate()(ObservationStatus);
