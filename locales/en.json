@@ -13,6 +13,7 @@
     "STATUS": "Status",
     "UNKNOWN": "Unknown",
     "UPDATED": "Updated",
+    "MAINTENANCE_DONE": "Maintenance done ",
     "FURTHER_INFO": "Further info",
     "SHOW_MORE": "Show more",
     "FILTER": {

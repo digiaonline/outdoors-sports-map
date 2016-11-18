@@ -1,11 +1,16 @@
 .unit-browser {
   position: fixed;
+  pointer-events: none;
   z-index: 1010;
   padding: $gap $gap 0 $gap;
   background: transparent;
   width: 100%;
   height: 100%;
   overflow: hidden;
+
+  * {
+    pointer-events: auto;
+  }
 
   .unit-browser__content {
     display: none;

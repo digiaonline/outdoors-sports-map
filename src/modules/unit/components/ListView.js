@@ -22,7 +22,7 @@ const UnitListItem = ({unit, handleClick}, context) => {
     <div className="list-view-item__unit-marker"><img src={iconURL} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{context.getAttr(unit.name)}</div>
-      <ObservationStatus observation={observation}/>
+      <ObservationStatus unit={unit}/>
     </div>
     <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
         <Glyphicon glyph="menu-right"/>
@@ -96,7 +96,7 @@ class ListView extends Component {
   }
 
   render() {
-    const {handleClick, isLoading, t} = this.props;
+    const {openUnit, isLoading, t} = this.props;
     const {sortKey, maxUnitCount} = this.state;
     const totalUnits = this.props.units.length;
     const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
@@ -112,7 +112,7 @@ class ListView extends Component {
               <UnitListItem
               unit={unit}
               key={index}
-              handleClick={handleClick}/>)}
+              handleClick={() => openUnit(unit.id)}/>)}
             {
               units.length !== totalUnits &&
               <a style={{display: 'block', textAlign: 'center', cursor: 'pointer'}} onClick={this.loadMoreUnits}>

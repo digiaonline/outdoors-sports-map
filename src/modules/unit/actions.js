@@ -9,6 +9,7 @@ export const fetchUnits = (/*params: Object*/): Action =>
     service: `${values(UnitServices).join(',')}`,
     only: 'id,name,location,street_address,address_zip',
     include: 'observations,services',
+    geometry: 'true',
     page_size: 1000
   }});
 
