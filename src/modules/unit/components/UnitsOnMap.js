@@ -1,8 +1,12 @@
 import React from 'react';
 import SingleUnitOnMap from './SingleUnitOnMap';
+import {sortByCondition} from '../helpers';
 
 export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
-  let unitsInOrder = units;
+  let unitsInOrder = units.slice();
+
+  // Draw things in condition order
+  unitsInOrder = sortByCondition(unitsInOrder).reverse();
 
   if(selectedUnitId) {
     const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);

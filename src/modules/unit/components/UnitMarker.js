@@ -7,14 +7,18 @@ import {UnitFilters} from '../constants';
 export const getIconHeight = (unit: Object) =>
   getUnitSport(unit) === UnitFilters.SKIING ? 30 : 36;
 
+export const getAnchorHeight = (unit: Objcect) =>
+  getUnitSport(unit) === UnitFilters.SKIING ? 15 : 36;
+
 const createIcon = (unit: Object, isSelected: boolean) => {
   const iconHeight = getIconHeight(unit);
+  const anchorHeight = getAnchorHeight(unit);
 
   return new Icon({
     iconUrl: getUnitIconURL(unit, isSelected, false),
     iconRetinaUrl: getUnitIconURL(unit, isSelected),
     iconSize: [30, iconHeight],
-    iconAnchor: [15, iconHeight]
+    iconAnchor: [15, anchorHeight]
   });
 };
 
