@@ -25,6 +25,10 @@
       background: darken($ui-disabled, 10%);
     }
 
+    &:hover {
+      background: #036ea4;
+    }
+
     &-icon {
       padding-right: $gap;
       font-size: 24px;
@@ -41,6 +45,10 @@
 
       &:active {
         background: darken($ui-enabled, 10%);
+      }
+
+      &:hover {
+        background: #036ea4;
       }
     }
   }
