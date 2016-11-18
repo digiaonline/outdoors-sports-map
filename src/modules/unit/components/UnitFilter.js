@@ -1,7 +1,8 @@
 import React from 'react';
-import {Grid, Row, Col, Glyphicon} from 'react-bootstrap';
+import {Grid, Row, Col} from 'react-bootstrap';
 import {translate} from 'react-i18next';
 import invert from 'lodash/invert';
+import SMIcon from '../../home/components/SMIcon';
 import {getFilterIconURL} from '../helpers';
 import {UnitFilters, SportFilters} from '../constants';
 
@@ -13,7 +14,7 @@ const FilterIcon = ({filter, active}) => {
     );
   } else {
     return (
-      <Glyphicon className={active ? 'active' : 'inactive'} glyph="filter"/>
+      <SMIcon icon="opening-hours"/>
     );
   }
 };

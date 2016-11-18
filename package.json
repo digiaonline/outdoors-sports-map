@@ -20,6 +20,7 @@
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-polyfill": "^6.16.0",
     "favicons-webpack-plugin": "0.0.7",
+    "file-loader": "^0.9.0",
     "i18next": "^3.4.4",
     "imports-loader": "^0.6.5",
     "leaflet": "^1.0.1",

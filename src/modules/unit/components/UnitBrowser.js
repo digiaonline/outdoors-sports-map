@@ -1,22 +1,22 @@
 import React, {Component, PropTypes} from 'react';
 import {withRouter} from 'react-router';
 import ListView from './ListView.js';
-import {Glyphicon} from 'react-bootstrap';
+import SMIcon from '../../home/components/SMIcon';
 import values from 'lodash/values';
 import {HEADER_HEIGHT} from '../../common/constants.js';
-import {UnitFilters, DefaultFilters} from '../constants.js';
+import {UnitFilters} from '../constants.js';
 import UnitFilter from './UnitFilter.js';
 import SearchContainer from '../../search/components/SearchContainer';
 
-const ToggleButton = ({toggle, glyph}) =>
+const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
-    <Glyphicon glyph={glyph}/>
+    <SMIcon icon={icon} />
   </button>;
 
-const Header = ({expand, toggle, toggleGlyph}) =>
+const Header = ({expand, toggle, toggleIcon}) =>
 <div className="header">
   <SearchContainer onSearch={expand}/>
-  <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
+  <ToggleButton toggle={toggle} icon={toggleIcon}/>
 </div>;
 
 class UnitBrowser extends Component {
@@ -104,7 +104,7 @@ class UnitBrowser extends Component {
         <Header
           expand={this.expand}
           toggle={this.toggle}
-          toggleGlyph={isExpanded ? 'globe' : 'list'}
+          toggleIcon={isExpanded ? 'map-options' : 'browse'}
         />
         {isExpanded && !params.unitId &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>

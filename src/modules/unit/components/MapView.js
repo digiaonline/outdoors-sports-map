@@ -1,6 +1,6 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
-import {Glyphicon} from 'react-bootstrap';
+import SMIcon from '../../home/components/SMIcon';
 import {View} from './View';
 import Logo from '../../home/components/Logo';
 import Disclaimer from '../../home/components/Disclaimer';
@@ -86,14 +86,14 @@ export class MapView extends Component {
           <UnitsOnMap units={units} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control className="leaflet-bar leaflet-control-locate" position="bottomright">
-            <a onClick={this.locateUser}>
-              <Glyphicon glyph="screenshot"/>
+            <a className="custom-control-button" onClick={this.locateUser}>
+              <SMIcon icon="address" />
             </a>
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
           <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
-            <a>
-              <Glyphicon glyph="info-sign"/>
+            <a className="custom-control-button">
+              <SMIcon icon="info" />
             </a>
           </Control>
         </Map>

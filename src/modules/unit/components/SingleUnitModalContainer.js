@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Modal, Glyphicon} from 'react-bootstrap';
-import {Link} from 'react-router';
-import {getObservation, getServiceName, getAttr} from '../helpers.js';
+import {Modal} from 'react-bootstrap';
+import SMIcon from '../../home/components/SMIcon';
+import {getServiceName, getAttr} from '../helpers.js';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
 import * as unitHelpers from '../helpers';
@@ -17,7 +17,7 @@ const ModalHeader = ({handleClick, unit, t}, context) => {
             <h4>{unit ? getAttr(unit.name, context.getActiveLanguage()) : t('MODAL.LOADING')}</h4>
           </div>
           <div style={{alignSelf: 'center'}}>
-            <a onClick={handleClick}><Glyphicon glyph="remove"/></a>
+            <a onClick={handleClick}><SMIcon icon="close"/></a>
           </div>
         </div>
         {unit

@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {translate} from 'react-i18next';
 import {Link} from 'react-router';
-import {Glyphicon} from 'react-bootstrap';
 import {isEqual, values} from 'lodash';
+import SMIcon from '../../home/components/SMIcon';
 import * as unitHelpers from '../helpers';
 import {SortKeys, UNIT_BATCH_SIZE} from '../constants';
 import {View} from './View.js';
@@ -24,7 +24,7 @@ const UnitListItem = ({unit, handleClick}, context) => {
       <ObservationStatus unit={unit}/>
     </div>
     <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
-        <Glyphicon glyph="menu-right"/>
+        <SMIcon icon="forward"/>
     </Link>
   </div>);
 };
