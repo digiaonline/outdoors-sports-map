@@ -13,7 +13,6 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
       ...unitsInOrder.slice(index + 1),
       selectedUnit
     ];
-    //unitsInOrder.push(selectedUnit);
   }
 
   return(

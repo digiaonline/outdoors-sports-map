@@ -45,10 +45,10 @@ ModalHeader.contextTypes = {
 };
 
 
-const LocationState = ({observation, t}) =>
+const LocationState = ({unit, t}) =>
   <div className="modal-body-box">
     <div className="modal-body-box-headline">{t('MODAL.QUALITY')}</div>
-    <ObservationStatus observation={observation}/>
+    <ObservationStatus unit={unit}/>
   </div>;
 
 const LocationInfo = ({t}) =>
@@ -83,7 +83,6 @@ export class SingleUnitModalContainer extends Component {
   render(){
     const {units, handleClick, params, t} = this.props;
     const currentUnit = units ? this.getCurrentUnit(units, params.unitId) : null;
-    const unitObservation = currentUnit ? getObservation(currentUnit) : null;
 
     return (
       <div>
@@ -91,7 +90,7 @@ export class SingleUnitModalContainer extends Component {
           <ModalHeader unit={currentUnit} handleClick={handleClick} t={t}/>
           {currentUnit ?
             <Modal.Body>
-              <LocationState observation={unitObservation} t={t}/>
+              <LocationState unit={currentUnit} t={t}/>
               <LocationInfo t={t}/>
               <LocationWeather t={t}/>
               <LocationHeightProfile t={t}/>

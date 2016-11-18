@@ -15,6 +15,7 @@
     "STATUS": "Kunto",
     "UNKNOWN": "Tuntematon",
     "UPDATED": "Päivitetty",
+    "MAINTENANCE_DONE" : "Kunnostettu",
     "FILTER": {
       "ALL": "All",
       "ICE_SKATING": "Luistelu",

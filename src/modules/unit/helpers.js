@@ -3,8 +3,9 @@ import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
 import {QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 
-// FIXME: get the lang parameter actually from somewhere
-export const getAttr = (attr: Object, lang: ?string = 'en') => {
+const DEFAULT_LANG = 'en';
+
+export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
   let translated = has(attr, lang) && attr[lang];
   if (!translated) {
     for (let i = 0; i < keys(attr).length; ++i) {
@@ -41,13 +42,14 @@ export const getUnitSport = (unit: Object) => {
   return 'unknown';
 };
 
-export const getServiceName = (unit: Object) => {
-  return getAttr(unit.services[0].name);
+// TODO : MOVE TO THE COMPONENT
+export const getServiceName = (unit: Object, language: ?string = DEFAULT_LANG) => {
+  return getAttr(unit.services[0].name, language);
 };
 
-export const getObservation = (unit: Object) => {
+export const getObservation = (unit: Object, matchProperty: ?string='condition') => {
   const {observations} = unit;
-  return observations && observations.length ? observations[0] : null;
+  return observations ? observations.find((obs) => obs.property.includes(matchProperty)) : null;
 };
 
 export const getUnitQuality = (unit: Object): string => {
@@ -58,6 +60,11 @@ export const getUnitQuality = (unit: Object): string => {
 export const enumerableQuality = (quality: string): number => {
   return QualityEnum[quality] ? QualityEnum[quality] : Number.MAX_VALUE;
 };
+
+
+/**
+ * ICONS
+ */
 
 export const getUnitIconURL = (unit: Object, selected = false, retina = true) => {
   const quality = getUnitQuality(unit);
@@ -72,6 +79,12 @@ export const getFilterIconURL = (filter: String, active: Boolean) => {
   if (filter)
   return require(`@assets/icons/icon-white-${filter}@2x.png`);
 };
+
+
+/**
+ * TODO: MOVE TO TEH COMPONENT
+ * SORT UNIT LIST
+ */
 
 export const sortByDistance = (units: Array, position: Array) =>
   sortBy(units, (unit) => {

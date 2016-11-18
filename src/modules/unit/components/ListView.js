@@ -22,7 +22,7 @@ const UnitListItem = ({unit, handleClick}, context) => {
     <div className="list-view-item__unit-marker"><img src={iconURL} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{context.getAttr(unit.name)}</div>
-      <ObservationStatus observation={observation}/>
+      <ObservationStatus unit={unit}/>
     </div>
     <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
         <Glyphicon glyph="menu-right"/>
