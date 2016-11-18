@@ -24,7 +24,7 @@ export const MaintenanceUpdated = translate()(({time, t}) =>
 const getObservationTime = (observation: Object) =>
   moment(observation && observation.time || 0).toDate();
 
-export const ObservationStatus = ({unit}, context) => {
+export const ObservationStatus = ({unit, t}, context) => {
   const {getAttr} = context;
   const quality = getUnitQuality(unit);
   const condition = getObservation(unit);
@@ -32,7 +32,7 @@ export const ObservationStatus = ({unit}, context) => {
 
   return (
     <div className="observation-status">
-      <StatusBar quality={quality} label={condition && condition.name ? getAttr(condition.name) : 'UNIT.UNKNOWN'}/>
+      <StatusBar quality={quality} label={condition && condition.name ? getAttr(condition.name) : t('UNIT.UNKNOWN')}/>
       <StatusUpdated time={getObservationTime(condition)}/>
       {
         maintenance &&
@@ -47,4 +47,4 @@ ObservationStatus.contextTypes = {
 };
 
 
-export default ObservationStatus;
+export default translate()(ObservationStatus);
