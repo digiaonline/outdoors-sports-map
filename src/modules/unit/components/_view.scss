@@ -50,6 +50,10 @@
         height: $marker-height;
       }
 
+      &:hover {
+        background: $list-view-item-hover;
+      }
+
 
     }
   }
