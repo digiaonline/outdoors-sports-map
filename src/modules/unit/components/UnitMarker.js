@@ -4,11 +4,15 @@ import {Icon} from 'leaflet';
 import {getUnitIconURL, getUnitPosition, getUnitSport} from '../helpers';
 import {UnitFilters} from '../constants';
 
-export const getIconHeight = (unit: Object) =>
-  getUnitSport(unit) === UnitFilters.SKIING ? 30 : 36;
+const POINTER_ICON_HEIGHT = 36;
+const HANDLE_ICON_HEIGHT = 30;
+const ICON_WIDTH = 30;
 
-export const getAnchorHeight = (unit: Objcect) =>
-  getUnitSport(unit) === UnitFilters.SKIING ? 15 : 36;
+const getIconHeight = (unit: Object) =>
+  getUnitSport(unit) === UnitFilters.SKIING ? HANDLE_ICON_HEIGHT : POINTER_ICON_HEIGHT;
+
+const getAnchorHeight = (unit: Objcect) =>
+  getUnitSport(unit) === UnitFilters.SKIING ? HANDLE_ICON_HEIGHT / 2 : POINTER_ICON_HEIGHT;
 
 const createIcon = (unit: Object, isSelected: boolean) => {
   const iconHeight = getIconHeight(unit);
@@ -17,11 +21,13 @@ const createIcon = (unit: Object, isSelected: boolean) => {
   return new Icon({
     iconUrl: getUnitIconURL(unit, isSelected, false),
     iconRetinaUrl: getUnitIconURL(unit, isSelected),
-    iconSize: [30, iconHeight],
-    iconAnchor: [15, anchorHeight]
+    iconSize: [ICON_WIDTH, iconHeight],
+    iconAnchor: [ICON_WIDTH / 2, anchorHeight]
   });
 };
 
+// TODO: Use only getUnitPosition when ski tracks
+// have correct locations in backend.
 const temporarilyGetUnitPosition = (unit: Object) => {
   if (!unit.geometry || !unit.geometry.coordinates) {
     return getUnitPosition(unit);
