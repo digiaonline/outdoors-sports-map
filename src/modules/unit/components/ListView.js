@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {translate} from 'react-i18next';
 import {Link} from 'react-router';
-import {Glyphicon} from 'react-bootstrap';
 import {isEqual, values} from 'lodash';
+import SMIcon from '../../home/components/SMIcon';
 import * as unitHelpers from '../helpers';
 import {SortKeys, UNIT_BATCH_SIZE} from '../constants';
 import {View} from './View.js';
@@ -13,25 +13,24 @@ import SortSelectorDropdown from './SortSelectorDropdown';
 //const {getAttr} = unitHelpers;
 
 const UnitListItem = ({unit, handleClick}, context) => {
-  const observation = unitHelpers.getObservation(unit);
   const iconURL = unitHelpers.getUnitIconURL(unit);
-  const serviceName = unitHelpers.getServiceName(unit);
+  const serviceName = unitHelpers.getServiceName(unit, context.getActiveLanguage());
 
   return (
   <div className="list-view-item">
     <div className="list-view-item__unit-marker"><img src={iconURL} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
-      <div className="list-view-item__unit-name">{context.getAttr(unit.name)}</div>
-      <ObservationStatus observation={observation}/>
+      <div className="list-view-item__unit-name">{unitHelpers.getAttr(unit.name, context.getActiveLanguage())}</div>
+      <ObservationStatus unit={unit}/>
     </div>
     <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
-        <Glyphicon glyph="menu-right"/>
+        <SMIcon icon="forward"/>
     </Link>
   </div>);
 };
 
 UnitListItem.contextTypes = {
-  getAttr: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func
 };
 
 class ListView extends Component {
@@ -66,7 +65,7 @@ class ListView extends Component {
     let sortedUnits = [];
     switch(sortKey) {
       case SortKeys.ALPHABETICAL:
-        sortedUnits = unitHelpers.sortByName(props.units);
+        sortedUnits = unitHelpers.sortByName(props.units, this.context.getActiveLanguage());
         break;
       case SortKeys.CONDITION:
         sortedUnits = unitHelpers.sortByCondition(props.units);
@@ -96,7 +95,7 @@ class ListView extends Component {
   }
 
   render() {
-    const {handleClick, isLoading, t} = this.props;
+    const {openUnit, isLoading, t} = this.props;
     const {sortKey, maxUnitCount} = this.state;
     const totalUnits = this.props.units.length;
     const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
@@ -112,7 +111,7 @@ class ListView extends Component {
               <UnitListItem
               unit={unit}
               key={index}
-              handleClick={handleClick}/>)}
+              handleClick={() => openUnit(unit.id)}/>)}
             {
               units.length !== totalUnits &&
               <a style={{display: 'block', textAlign: 'center', cursor: 'pointer'}} onClick={this.loadMoreUnits}>
@@ -125,5 +124,9 @@ class ListView extends Component {
     );
   }
 }
+
+ListView.contextTypes = {
+  getActiveLanguage: React.PropTypes.func
+};
 
 export default translate()(ListView);

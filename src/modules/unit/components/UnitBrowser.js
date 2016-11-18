@@ -1,32 +1,28 @@
 import React, {Component, PropTypes} from 'react';
 import {withRouter} from 'react-router';
 import ListView from './ListView.js';
-import {Glyphicon} from 'react-bootstrap';
+import SMIcon from '../../home/components/SMIcon';
 import values from 'lodash/values';
 import {HEADER_HEIGHT} from '../../common/constants.js';
-import {UnitFilters, DefaultFilters} from '../constants.js';
+import {UnitFilters} from '../constants.js';
 import UnitFilter from './UnitFilter.js';
 import SearchContainer from '../../search/components/SearchContainer';
 
-const ToggleButton = ({toggle, glyph}) =>
+const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
-    <Glyphicon glyph={glyph}/>
+    <SMIcon icon={icon} />
   </button>;
 
-const Header = ({expand, toggle, toggleGlyph}) =>
+const Header = ({expand, toggle, toggleIcon}) =>
 <div className="header">
   <SearchContainer onSearch={expand}/>
-  <ToggleButton toggle={toggle} glyph={toggleGlyph}/>
+  <ToggleButton toggle={toggle} icon={toggleIcon}/>
 </div>;
 
 class UnitBrowser extends Component {
   static propTypes = {
     units: PropTypes.array,
     activeFilter: PropTypes.array
-  };
-
-  static defaultProps = {
-    activeFilter: DefaultFilters
   };
 
   constructor(props) {
@@ -61,11 +57,18 @@ class UnitBrowser extends Component {
     return window.innerHeight - HEADER_HEIGHT - bottomSpace;
   }
 
-  toggleFilter(filter) {
+  toggleFilter(filter: string): void {
     const {activeFilter, router, location: query} = this.props;
-    let newFilter = Array.isArray(activeFilter) ? activeFilter.slice() : [activeFilter];
-    const index = newFilter.indexOf(filter);
+    const NO_FILTER = 'no_filter';
+    let newFilter = activeFilter.slice();
 
+    if (newFilter.includes(NO_FILTER)) {
+      const index = newFilter.indexOf(NO_FILTER);
+      newFilter = [...newFilter.slice(0, index), ...newFilter.slice(index + 1)];
+    }
+
+    // Toggle given filter
+    const index = newFilter.indexOf(filter);
     if (index === -1) {
       newFilter = [...newFilter, filter];
     } else {
@@ -74,6 +77,9 @@ class UnitBrowser extends Component {
         ...newFilter.slice(index + 1)
       ];
     }
+
+    // Empty filter parameter defaults to DefaultFilters.
+    newFilter = newFilter.length === 0 ? [NO_FILTER] : newFilter;
 
     router.push({
       query: Object.assign({}, query, {filter: newFilter})
@@ -89,21 +95,21 @@ class UnitBrowser extends Component {
   }
 
   render() {
-    const {units, isLoading, isSearching, position, activeFilter, handleClick} = this.props;
+    const {units, isLoading, isSearching, position, activeFilter, openUnit, params} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
 
     return (
-      <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
+      <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`} style={params.unitId ? {display: 'none'} : null}>
         <Header
           expand={this.expand}
           toggle={this.toggle}
-          toggleGlyph={isExpanded ? 'globe' : 'list'}
+          toggleIcon={isExpanded ? 'map-options' : 'browse'}
         />
-        {isExpanded &&
+        {isExpanded && !params.unitId &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
             <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
-            <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} handleClick={handleClick} />
+            <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} openUnit={openUnit} />
           </div>
         }
       </div>

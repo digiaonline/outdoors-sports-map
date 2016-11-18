@@ -15,10 +15,11 @@
     "STATUS": "Kunto",
     "UNKNOWN": "Tuntematon",
     "UPDATED": "Päivitetty",
+    "MAINTENANCE_DONE" : "Kunnostettu",
     "FILTER": {
       "ALL": "All",
-      "ICESKATE": "Luistelu",
-      "SKI": "Hiihto",
+      "ICE_SKATING": "Luistelu",
+      "SKIING": "Hiihto",
       "OPEN_NOW": "Auki nyt"
     },
     "SORT": {

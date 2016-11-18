@@ -16,8 +16,8 @@
             background: $content-background;
             border-radius: 50%;
 
-            .glyphicon {
-              font-size: 16px;
+            &.custom-control-button {
+              font-size: 19px;
               line-height: 26px;
             }
           }

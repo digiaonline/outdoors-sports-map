@@ -1,11 +1,11 @@
 import React from 'react';
 import {translate} from 'react-i18next';
-import {Glyphicon} from 'react-bootstrap';
+import SMIcon from '../../home/components/SMIcon';
 
 const SearchBar = translate()(({input, onInput, onSubmit, onClear, searchActive, disabled, t}) =>
 <div className="search-bar">
   <form className="search-bar__input" onSubmit={(e) => {e.preventDefault(); onSubmit();}}>
-    <label htmlFor="search"><Glyphicon glyph="search"/></label>
+    <label htmlFor="search"><SMIcon icon="search"/></label>
     <input name="search"
         id="search"
         type="text"
@@ -16,7 +16,7 @@ const SearchBar = translate()(({input, onInput, onSubmit, onClear, searchActive,
     />
     {(input || searchActive) &&
       <div className="search-bar__input-clear" onClick={onClear}>
-        <Glyphicon glyph="remove"/>
+        <SMIcon icon="close"/>
       </div>
     }
   </form>

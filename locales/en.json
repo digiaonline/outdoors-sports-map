@@ -13,12 +13,13 @@
     "STATUS": "Status",
     "UNKNOWN": "Unknown",
     "UPDATED": "Updated",
+    "MAINTENANCE_DONE": "Maintenance done ",
     "FURTHER_INFO": "Further info",
     "SHOW_MORE": "Show more",
     "FILTER": {
       "ALL": "All",
-      "ICESKATE": "Skating",
-      "SKI": "Skiing",
+      "ICE_SKATING": "Ice skating",
+      "SKIING": "Skiing",
       "OPEN_NOW": "Open now"
     },
     "SORT": {

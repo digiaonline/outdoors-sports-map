@@ -50,6 +50,15 @@
         height: $marker-height;
       }
 
+      &__unit-name {
+        line-height: 1;
+        padding-bottom: 3px;
+      }
+
+      &:hover {
+        background: $list-view-item-hover;
+      }
+
 
     }
   }

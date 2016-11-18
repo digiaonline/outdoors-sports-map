@@ -1,6 +1,7 @@
 import React from 'react';
 import {translate} from 'react-i18next';
-import {Dropdown, MenuItem, Glyphicon} from 'react-bootstrap';
+import {Dropdown, MenuItem} from 'react-bootstrap';
+import SMIcon from '../../home/components/SMIcon';
 
 const SortSelectorDropdown = translate()(({active, values, onSelect, t}) =>
 
@@ -8,7 +9,7 @@ const SortSelectorDropdown = translate()(({active, values, onSelect, t}) =>
     <Dropdown.Toggle noCaret>
       {t(`UNIT.SORT.${active.toUpperCase()}`)}
       <span className="custom-caret">
-        <Glyphicon glyph="triangle-bottom"/>
+        <SMIcon icon="expand"/>
       </span>
     </Dropdown.Toggle>
     <Dropdown.Menu>

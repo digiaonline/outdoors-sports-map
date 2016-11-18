@@ -17,8 +17,8 @@
     "SHOW_MORE": "Show more units",
     "FILTER": {
       "ALL": "All",
-      "ICESKATE": "Skating",
-      "SKI": "Skiing",
+      "ICE_SKATING": "Skating",
+      "SKIING": "Skiing",
       "OPEN_NOW": "Open now"
     },
     "SORT": {
