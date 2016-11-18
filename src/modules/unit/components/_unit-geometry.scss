@@ -24,13 +24,7 @@
   }
 
   &__hilight {
-    display: none;
-    stroke-width: 8px;
+    stroke-width: 7px;
     stroke: $content-text;
-
-    &--show {
-      @extend .unit-geometry__hilight;
-      display: block;
-    }
   }
 }
