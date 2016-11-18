@@ -95,18 +95,18 @@ class UnitBrowser extends Component {
   }
 
   render() {
-    const {units, isLoading, isSearching, position, activeFilter, openUnit} = this.props;
+    const {units, isLoading, isSearching, position, activeFilter, openUnit, params} = this.props;
     const {isExpanded} = this.state;
     const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
 
     return (
-      <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`}>
+      <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`} style={params.unitId ? {display: 'none'} : null}>
         <Header
           expand={this.expand}
           toggle={this.toggle}
           toggleGlyph={isExpanded ? 'globe' : 'list'}
         />
-        {isExpanded &&
+        {isExpanded && !params.unitId &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
             <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
             <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} openUnit={openUnit} />

@@ -119,6 +119,7 @@ export class HomeContainer extends Component {
           activeFilter={activeFilter}
           openUnit={this.openUnit}
           position={mapCenter}
+          params={params}
         />
         <MapView
           activeLanguage={activeLanguage}
