@@ -19,6 +19,10 @@
             &.custom-control-button {
               font-size: 19px;
               line-height: 26px;
+
+              &:hover {
+                background: $list-view-item-hover;
+              }
             }
           }
         }
