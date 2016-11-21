@@ -85,21 +85,17 @@ class MapView extends Component {
   toggleModal() {
     if(this.state.modalOpen) {
       this.setState({modalOpen: false});
-      console.log(this.state.modalOpen);
     } else {
       this.setState({modalOpen: true});
-      console.log(this.state.modalOpen);
     }
   }
 
   openModal() {
     this.setState({modalOpen: true});
-    console.log(this.state.modalOpen);
   }
 
   closeModal() {
     this.setState({modalOpen: false});
-    console.log(this.state.modalOpen);
   }
 
   render() {
@@ -176,7 +172,6 @@ const InfoMenuItem = ({children, handleClick, icon}) =>
 
 const AboutModal = ({closeModal, t}) =>
   <div className="about-modal-backdrop">
-    <div className="about-modal-wrapper">
       <div className="about-modal-box">
         <div className="about-modal-controls">
           <SMIcon icon="close" onClick={() => closeModal()} />
