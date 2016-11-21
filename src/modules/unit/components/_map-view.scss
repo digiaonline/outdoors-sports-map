@@ -4,6 +4,10 @@
 
     .leaflet-control-container {
 
+      .leaflet-top, .leaflet-bottom, .leaflet-left, .leaflet-right {
+        z-index: 1010;
+      }
+
       .leaflet-control {
 
         a {
