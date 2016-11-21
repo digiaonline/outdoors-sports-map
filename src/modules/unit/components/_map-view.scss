@@ -17,6 +17,7 @@
             border-radius: 50%;
 
             &.custom-control-button {
+              z-index: 2005;
               font-size: 19px;
               line-height: 26px;
 
@@ -60,8 +61,8 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  right: 10px;
-  top: 45px;
+  left: 10px;
+  bottom: 45px;
   z-index: 10000;
   background: #fff;
   padding: 8px 5px;
@@ -71,6 +72,27 @@
     &:hover {
       background: $list-view-item-hover;
       cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (min-width : $breakpoint) {
+  .info-menu {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    right: 10px;
+    top: 45px;
+    z-index: 10000;
+    background: #fff;
+    padding: 8px 5px;
+
+    &-item {
+
+      &:hover {
+        background: $list-view-item-hover;
+        cursor: pointer;
+      }
     }
   }
 }
