@@ -12,8 +12,10 @@ import {MAP_URL} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
+import {Modal} from 'react-bootstrap';
+import {translate} from 'react-i18next';
 
-export class MapView extends Component {
+class MapView extends Component {
   static propTypes = {
     position: PropTypes.array.isRequired,
     units: PropTypes.array
@@ -28,13 +30,17 @@ export class MapView extends Component {
 
     this.state = {
       isMobile: window.innerWidth < mobileBreakpoint,
-      menuOpen: false
+      menuOpen: false,
+      modalOpen: false
     };
 
     this.locateUser = this.locateUser.bind(this);
     this.updateIsMobile = this.updateIsMobile.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -76,8 +82,28 @@ export class MapView extends Component {
     }
   }
 
+  toggleModal() {
+    if(this.state.modalOpen) {
+      this.setState({modalOpen: false});
+      console.log(this.state.modalOpen);
+    } else {
+      this.setState({modalOpen: true});
+      console.log(this.state.modalOpen);
+    }
+  }
+
+  openModal() {
+    this.setState({modalOpen: true});
+    console.log(this.state.modalOpen);
+  }
+
+  closeModal() {
+    this.setState({modalOpen: false});
+    console.log(this.state.modalOpen);
+  }
+
   render() {
-    const {position, selectedUnitId, units, selected, activeLanguage, openUnit, changeLanguage} = this.props;
+    const {position, selectedUnitId, units, selected, activeLanguage, openUnit, changeLanguage, t} = this.props;
     const {isMobile, menuOpen} = this.state;
 
     return (
@@ -101,7 +127,7 @@ export class MapView extends Component {
             </a>
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
-          {menuOpen ? <InfoMenu /> : null}
+          {menuOpen ? <InfoMenu t={t} openModal={this.openModal} /> : null}
           <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
             <a className="custom-control-button" onClick={() => this.toggleMenu()}>
               <SMIcon icon="info" />
@@ -110,10 +136,13 @@ export class MapView extends Component {
         </Map>
         <Logo/>
         <Disclaimer attributionLink="http://osm.org/copyright" />
+        {this.state.modalOpen ? <AboutModal closeModal={this.closeModal} t={t}/> : null}
       </View>
     );
   }
 }
+
+export default translate()(MapView);
 
 const LanguageChanger = ({changeLanguage, activeLanguage}) =>
   <div className="language-changer">
@@ -129,18 +158,32 @@ const LanguageChanger = ({changeLanguage, activeLanguage}) =>
     )}
   </div>;
 
-const InfoMenu = () =>
+const InfoMenu = ({openModal, t}) =>
   <div className="info-menu">
-    <InfoMenuItem icon='info'>
-      Anna palautetta
+    <InfoMenuItem icon='info' t={t}>
+      {t('MAP.INFO_MENU.GIVE_FEEDBACK')}
     </InfoMenuItem>
-    <InfoMenuItem icon='info'>
-      Tietoa palvelusta
+    <InfoMenuItem icon='info' handleClick={openModal}>
+      {t('MAP.INFO_MENU.ABOUT_SERVICE')}
     </InfoMenuItem>
   </div>;
 
 const InfoMenuItem = ({children, handleClick, icon}) =>
-  <div className="info-menu-item" onClick={handleClick}>
+  <div className="info-menu-item" onClick={() => handleClick()}>
     {icon ? <SMIcon icon={icon} style={{paddingRight: 2}}/> : null}
     {children}
+  </div>;
+
+const AboutModal = ({closeModal, t}) =>
+  <div className="about-modal-backdrop">
+    <div className="about-modal-wrapper">
+      <div className="about-modal-box">
+        <div className="about-modal-controls">
+          <SMIcon icon="close" onClick={() => closeModal()} />
+        </div>
+        <div className="about-modal-content">
+          {t('MAP.ABOUT')}
+        </div>
+      </div>
+    </div>
   </div>;

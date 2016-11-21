@@ -7,7 +7,12 @@
     "LOADING": "Loading..."
   },
   "MAP": {
-    "ATTRIBUTION": "OpenStreetMap contributors"
+    "ATTRIBUTION": "OpenStreetMap contributors",
+    "ABOUT": "THIS IS AWESOME TEXT ABOUT THIS AWESOME SERVICE",
+    "INFO_MENU" : {
+      "GIVE_FEEDBACK": "Give feedback",
+      "ABOUT_SERVICE": "About the service"
+    }
   },
   "UNIT": {
     "STATUS": "Status",
