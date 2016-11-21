@@ -22,6 +22,7 @@
 
               &:hover {
                 background: $list-view-item-hover;
+                cursor: pointer;
               }
             }
           }
@@ -52,5 +53,24 @@
   }
   a {
     color: black;
+  }
+}
+
+.info-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  right: 10px;
+  top: 45px;
+  z-index: 10000;
+  background: #fff;
+  padding: 8px 5px;
+
+  &-item {
+
+    &:hover {
+      background: $list-view-item-hover;
+      cursor: pointer;
+    }
   }
 }

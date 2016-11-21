@@ -27,12 +27,14 @@ export class MapView extends Component {
     super(props);
 
     this.state = {
-      isMobile: window.innerWidth < mobileBreakpoint
+      isMobile: window.innerWidth < mobileBreakpoint,
+      menuOpen: false
     };
 
     this.locateUser = this.locateUser.bind(this);
     this.updateIsMobile = this.updateIsMobile.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
   }
 
   componentDidMount() {
@@ -66,9 +68,17 @@ export class MapView extends Component {
     this.props.setLocation(latLngToArray(event.latlng));
   }
 
+  toggleMenu() {
+    if(this.state.menuOpen) {
+      this.setState({menuOpen: false});
+    } else {
+      this.setState({menuOpen: true});
+    }
+  }
+
   render() {
     const {position, selectedUnitId, units, selected, activeLanguage, openUnit, changeLanguage} = this.props;
-    const {isMobile} = this.state;
+    const {isMobile, menuOpen} = this.state;
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
@@ -91,8 +101,9 @@ export class MapView extends Component {
             </a>
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
+          {menuOpen ? <InfoMenu /> : null}
           <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
-            <a className="custom-control-button">
+            <a className="custom-control-button" onClick={() => this.toggleMenu()}>
               <SMIcon icon="info" />
             </a>
           </Control>
@@ -116,4 +127,20 @@ const LanguageChanger = ({changeLanguage, activeLanguage}) =>
           : null}
       </div>)
     )}
+  </div>;
+
+const InfoMenu = () =>
+  <div className="info-menu">
+    <InfoMenuItem icon='info'>
+      Anna palautetta
+    </InfoMenuItem>
+    <InfoMenuItem icon='info'>
+      Tietoa palvelusta
+    </InfoMenuItem>
+  </div>;
+
+const InfoMenuItem = ({children, handleClick, icon}) =>
+  <div className="info-menu-item" onClick={handleClick}>
+    {icon ? <SMIcon icon={icon} style={{paddingRight: 2}}/> : null}
+    {children}
   </div>;
