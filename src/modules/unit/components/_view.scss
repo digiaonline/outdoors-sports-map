@@ -25,6 +25,8 @@
       align-items: center;
       background: $content-background;
       margin-bottom: $gap;
+      color: $content-text;
+      cursor: pointer;
 
       &__unit-details {
         flex: 2 1 auto;
@@ -57,6 +59,7 @@
 
       &:hover {
         background: $list-view-item-hover;
+        text-decoration: none;
       }
 
 
