@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Marker, Popup} from 'react-leaflet';
+import {Marker} from 'react-leaflet';
 import {Icon} from 'leaflet';
-import {getAttr, getUnitIconURL, getUnitPosition, getUnitSport} from '../helpers';
+import {getUnitIconURL, getUnitPosition, getUnitSport} from '../helpers';
 import {UnitFilters} from '../constants';
+import UnitPopup from './UnitPopup';
 
 const POINTER_ICON_HEIGHT = 36;
 const HANDLE_ICON_HEIGHT = 30;
@@ -32,7 +33,7 @@ class UnitMarker extends Component {
   }
 
   closePopup() {
-    this.refs.marker.leafletElement.closePopup();
+    //this.refs.marker.leafletElement.closePopup();
   }
 
   _createIcon(unit: Object, isSelected: boolean) {
@@ -72,15 +73,10 @@ class UnitMarker extends Component {
         onMouseOver={this.openPopup}
         onMouseOut={this.closePopup}
         {...rest}>
-        <Popup autoPan={false} offset={[0, this._getPopupOffset(unit)]}><div>{getAttr(unit.name, getLang())}</div></Popup>
+        <UnitPopup unit={unit} offset={this._getPopupOffset(unit)}/>
       </Marker>
     );
   }
 }
-
-UnitMarker.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
-};
-
 
 export default UnitMarker;
