@@ -110,7 +110,8 @@ class MapView extends Component {
           attributionControl={false}
           center={position}
           zoom={12}
-          onClick={this.handleClick} >
+          onClick={this.handleClick}
+          onLocationfound={this.handleClick} >
           <TileLayer
         url={MAP_URL}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
