@@ -7,8 +7,8 @@ const SearchSuggestions = translate()(({units, openAllResults, t}) => (
     {units.length > 0
       ? <div className="search-suggestions__list">
           <a className="search-suggestions__open-all" onClick={openAllResults}>{t('SEARCH.SHOW_ALL_RESULTS')}</a>
-          {units.map((result, index) =>
-            <UnitSuggestion key={index} unit={result}/>
+          {units.map((result) =>
+            <UnitSuggestion key={result.id} unit={result}/>
           )}
         </div>
       : null
