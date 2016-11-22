@@ -13,11 +13,7 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
     const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);
     const selectedUnit = unitsInOrder[index];
 
-    unitsInOrder = [
-      ...unitsInOrder.slice(0, index),
-      ...unitsInOrder.slice(index + 1),
-      selectedUnit
-    ];
+    unitsInOrder.push(selectedUnit);
   }
 
   return(
@@ -25,7 +21,7 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
     {
       !isEmpty(unitsInOrder) && unitsInOrder.map(
         (unit, index) =>
-          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={index} openUnit={openUnit} />
+          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={`${index}:${unit.id}`} openUnit={openUnit} />
       )
     }
     </div>

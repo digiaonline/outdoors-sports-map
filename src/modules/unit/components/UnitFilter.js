@@ -22,8 +22,8 @@ const FilterIcon = ({filter, active}) => {
 const UnitFilter = translate()(({active = [], all, toggleFilter, t}) =>
   <Grid className="unit-filter" fluid={true}>
     <Row>
-      {all && all.map((filter, index) =>
-        <Col key={index} xs={6}>
+      {all && all.map((filter) =>
+        <Col key={filter} xs={6}>
         <div className={`unit-filter__filter ${active.indexOf(filter) !== -1 ? 'active' : ''}`}
           onClick={() => toggleFilter(filter)}>
           <span className="unit-filter__filter-icon"><FilterIcon filter={filter} active={active.indexOf(filter) !== -1} /></span>

@@ -17,16 +17,16 @@ const UnitListItem = ({unit, handleClick}, context) => {
   const serviceName = unitHelpers.getServiceName(unit, context.getActiveLanguage());
 
   return (
-  <div className="list-view-item">
+  <Link to={`/unit/${unit.id}`} className="list-view-item">
     <div className="list-view-item__unit-marker"><img src={iconURL} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{unitHelpers.getAttr(unit.name, context.getActiveLanguage())}</div>
       <ObservationStatus unit={unit}/>
     </div>
-    <Link to={`/unit/${unit.id}`} className="list-view-item__unit-open" onClick={() => handleClick()}>
+    <div className="list-view-item__unit-open" onClick={() => handleClick()}>
         <SMIcon icon="forward"/>
-    </Link>
-  </div>);
+    </div>
+  </Link>);
 };
 
 UnitListItem.contextTypes = {
@@ -107,10 +107,10 @@ class ListView extends Component {
           </div>
           <div className="list-view__block">
             {isLoading && <Loading/>}
-            {units && units.map( (unit, index) =>
+            {units && units.map( (unit) =>
               <UnitListItem
               unit={unit}
-              key={index}
+              key={unit.id}
               handleClick={() => openUnit(unit.id)}/>)}
             {
               units.length !== totalUnits &&

@@ -1,0 +1,24 @@
+.custom-control {
+  box-shadow: 0 1px 5px rgba(0,0,0,.6);
+
+  &, & &-button {
+    background: $content-background;
+    border-radius: 50%;
+  }
+
+  & &-button {
+    display: block;
+    width: 26px;
+    font-size: 19px;
+    line-height: 26px;
+    text-align: center;
+
+    &:hover, &:active {
+      color: $ui-enabled;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

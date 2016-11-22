@@ -25,10 +25,6 @@
       background: darken($ui-disabled, 10%);
     }
 
-    &:hover {
-      background: #036ea4;
-    }
-
     &-icon {
       padding-right: $gap;
       font-size: 24px;
@@ -46,10 +42,14 @@
       &:active {
         background: darken($ui-enabled, 10%);
       }
+    }
+  }
+}
 
-      &:hover {
-        background: $unit-filter-hover;
-      }
+@media only screen and (min-width : $breakpoint) {
+  .unit-filter {
+    & &__filter:hover, &.active:hover {
+      background: #036ea4;
     }
   }
 }

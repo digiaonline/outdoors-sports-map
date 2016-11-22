@@ -3,6 +3,8 @@
   z-index: 1001;
   bottom: $disclaimer-height;// + $gap;
   width: 100%;
+  pointer-events: none;
+
   h2 {
     text-align: center;
     font-size: 2em;
@@ -10,6 +12,8 @@
 
     a {
       color: $content-text;
+      pointer-events: auto;
+      cursor: pointer;
 
       &:hover, &:focus {
         text-decoration: none;

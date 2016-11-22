@@ -4,33 +4,21 @@
 
     .leaflet-control-container {
 
+      .leaflet-top, .leaflet-bottom, .leaflet-left, .leaflet-right {
+        z-index: 1002;
+      }
+
       .leaflet-control {
 
         a {
           color: $content-text-secondary;
-        }
 
-        &.leaflet-control-locate,
-        &.leaflet-control-info {
-          &, a {
+          &:hover, &:active {
             background: $content-background;
-            border-radius: 50%;
-
-            &.custom-control-button {
-              font-size: 19px;
-              line-height: 26px;
-            }
+            color: $ui-enabled;
           }
         }
       }
-    }
-  }
-}
-
-@media only screen and (min-width : $breakpoint) {
-  .map-view {
-    .leaflet-bottom {
-      bottom: 20px;
     }
   }
 }
@@ -48,5 +36,98 @@
   }
   a {
     color: black;
+  }
+}
+
+.info-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: auto;
+  right: auto;
+  left: 10px;
+  bottom: 45px;
+  z-index: 10000;
+  background: #fff;
+  padding: 8px 5px;
+
+  &-item {
+
+    &:hover {
+      background: $list-view-item-hover;
+      cursor: pointer;
+    }
+  }
+}
+
+.about-modal {
+
+  &-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5) ;
+    z-index: 10000;
+  }
+
+  &-box {
+    position: absolute;
+    margin: auto;
+    width: 100%;
+    height: 80%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    z-index: 10001;
+  }
+
+  &-controls {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px 20px 5px 95%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (min-width : $breakpoint) {
+
+  .map-view {
+    .leaflet-bottom {
+      bottom: 20px;
+    }
+  }
+
+  .info-menu {
+    right: 10px;
+    top: 45px;
+    left: auto;
+    bottom: auto;
+
+    &-item {
+
+      &:hover {
+        background: $list-view-item-hover;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .about-modal {
+
+    &-box {
+      width: 40%;
+      height: 40%;
+    }
   }
 }

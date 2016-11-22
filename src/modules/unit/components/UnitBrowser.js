@@ -53,7 +53,7 @@ class UnitBrowser extends Component {
 
   calculateMaxHeight() {
     const isMobile = window.innerWidth < 768;
-    const bottomSpace = isMobile ? 200 : 0;
+    const bottomSpace = isMobile ? 80 : 0;
     return window.innerHeight - HEADER_HEIGHT - bottomSpace;
   }
 
@@ -97,7 +97,10 @@ class UnitBrowser extends Component {
   render() {
     const {units, isLoading, isSearching, position, activeFilter, openUnit, params} = this.props;
     const {isExpanded} = this.state;
-    const contentMaxHeight = this.state.contentMaxHeight || this.calculateMaxHeight();
+    let contentMaxHeight = this.state.contentMaxHeight;
+    if (isExpanded) {
+      contentMaxHeight = contentMaxHeight || this.calculateMaxHeight();
+    }
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`} style={params.unitId ? {display: 'none'} : null}>

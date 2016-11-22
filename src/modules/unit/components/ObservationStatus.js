@@ -10,13 +10,13 @@ export const StatusBar = ({quality, label}) =>
   </div>;
 
 export const StatusUpdated = translate()(({time, t}) =>
-  <div className="obervation-status__time">
+  <div className="obervation-status__time"  style={{fontSize: 12}}>
     {t('UNIT.UPDATED')} <Time time={time}/>
   </div>
 );
 
 export const MaintenanceUpdated = ({text, time}) =>
-  <div className="observation-status__time">
+  <div className="observation-status__time"  style={{fontSize: 12}}>
     {text} <Time time={time}/>
   </div>;
 

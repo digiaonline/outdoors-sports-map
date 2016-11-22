@@ -7,7 +7,12 @@
     "LOADING": "Ladataan..."
   },
   "MAP": {
-    "ATTRIBUTION": "OpenStreetMap tekijät"
+    "ATTRIBUTION": "OpenStreetMap tekijät",
+    "ABOUT": "THIS IS AWESOME TEXT ABOUT THIS AWESOME SERVICE",
+    "INFO_MENU" : {
+      "GIVE_FEEDBACK": "Anna palautetta",
+      "ABOUT_SERVICE": "Tietoa palvelusta"
+    }
   },
   "UNIT": {
     "FURTHER_INFO": "Lisää tietoa",
