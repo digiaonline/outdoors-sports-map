@@ -72,7 +72,7 @@ class UnitMarker extends Component {
         onMouseOver={this.openPopup}
         onMouseOut={this.closePopup}
         {...rest}>
-        <Popup offset={[0, this._getPopupOffset(unit)]}><div>{getAttr(unit.name, getLang())}</div></Popup>
+        <Popup autoPan={false} offset={[0, this._getPopupOffset(unit)]}><div>{getAttr(unit.name, getLang())}</div></Popup>
       </Marker>
     );
   }
