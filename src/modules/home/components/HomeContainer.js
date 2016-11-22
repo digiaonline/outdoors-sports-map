@@ -6,6 +6,7 @@ import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {getAttr} from '../../unit/helpers';
 import {changeLanguage} from '../../language/actions';
+import {getStoredLang} from '../../language/helpers';
 import * as fromMap from '../../map/selectors';
 import * as fromSearch from '../../search/selectors';
 import * as fromUnit from '../../unit/selectors';
@@ -59,7 +60,7 @@ export class HomeContainer extends Component {
 
     this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
 
-    if(!localStorage.getItem('outdoors-sports-map:language')) {
+    if(!getStoredLang()) {
       const userLang = navigator.language || navigator.userLanguage;
 
       if(userLang === 'sv' || userLang === 'sv-sv' || userLang === 'sv-fi') {

@@ -19,6 +19,11 @@ export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
 };
 
 export const getUnitPosition = (unit: Object): Array<number> => {
+  // TODO: REMOVE THIS WHEN SKI TRACK LOCATIONS ARE CORRECT IN API
+  if (unit.geometry && unit.geometry.coordinates) {
+    return unit.geometry.coordinates[0][0].slice().reverse();
+  }
+
   return unit.location.coordinates.slice().reverse();
 };
 

@@ -11,6 +11,7 @@ import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
 import {MAP_URL} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
+import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
 import {Modal} from 'react-bootstrap';
@@ -57,8 +58,10 @@ class MapView extends Component {
     if (nextProps.params.unitId && nextProps.units && this.state.isMobile) {
       const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
       if (unit) {
+        let location = getUnitPosition(unit);
+        location[0] = location[0] + 0.04;
         //For some reason could not use reverse here so had to do this weird way.
-        this.refs.map.leafletElement.flyTo([unit.location.coordinates[1]+0.04, unit.location.coordinates[0]], 12);
+        this.refs.map.leafletElement.flyTo(location, 12);
       }
     }
   }
