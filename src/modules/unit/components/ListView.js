@@ -107,10 +107,10 @@ class ListView extends Component {
           </div>
           <div className="list-view__block">
             {isLoading && <Loading/>}
-            {units && units.map( (unit, index) =>
+            {units && units.map( (unit) =>
               <UnitListItem
               unit={unit}
-              key={index}
+              key={unit.id}
               handleClick={() => openUnit(unit.id)}/>)}
             {
               units.length !== totalUnits &&

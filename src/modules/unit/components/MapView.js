@@ -141,7 +141,7 @@ export default translate()(MapView);
 const LanguageChanger = ({changeLanguage, activeLanguage}) =>
   <div className="language-changer">
     {Object.keys(languages).filter((language) => languages[language] !== activeLanguage).map((languageKey, index) => (
-      <div key={index} style={{ display: 'flex' }}>
+      <div key={languageKey} style={{ display: 'flex' }}>
         <a onClick={() => changeLanguage(languages[languageKey])}>
           {languageKey}
         </a>

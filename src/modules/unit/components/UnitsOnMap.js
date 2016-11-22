@@ -25,7 +25,7 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
     {
       !isEmpty(unitsInOrder) && unitsInOrder.map(
         (unit, index) =>
-          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={index} openUnit={openUnit} />
+          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={`${index}:${unit.id}`} openUnit={openUnit} />
       )
     }
     </div>
