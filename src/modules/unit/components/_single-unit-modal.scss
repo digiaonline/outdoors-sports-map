@@ -29,6 +29,10 @@
     &-name {
       display: flex;
       justify-content: space-between;
+
+      .close-unit-modal {
+        color: $ui-text;
+      }
     }
 
     &-description {

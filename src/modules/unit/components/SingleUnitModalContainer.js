@@ -19,7 +19,7 @@ const ModalHeader = ({handleClick, unit, t}, context) => {
             <h4>{unit ? getAttr(unit.name, context.getActiveLanguage()) : t('MODAL.LOADING')}</h4>
           </div>
           <div style={{alignSelf: 'center'}}>
-            <a onClick={handleClick}><SMIcon icon="close"/></a>
+            <a className="close-unit-modal" onClick={handleClick}><SMIcon icon="close"/></a>
           </div>
         </div>
         {unit
