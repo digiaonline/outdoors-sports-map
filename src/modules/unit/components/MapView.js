@@ -5,7 +5,8 @@ import {View} from './View';
 import Logo from '../../home/components/Logo';
 import Disclaimer from '../../home/components/Disclaimer';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
-import Control from 'react-leaflet-control';
+import Control from '../../map/components/Control';
+//import Control from 'react-leaflet-control';
 import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
 import {MAP_URL} from '../../map/constants';
@@ -117,17 +118,13 @@ class MapView extends Component {
           <UserLocationMarker />
           <UnitsOnMap units={units} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
-          <Control className="leaflet-bar leaflet-control-locate" position="bottomright">
-            <a className="custom-control-button" onClick={this.locateUser}>
-              <SMIcon icon="address" />
-            </a>
+          <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
+            <SMIcon icon="address" />
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
           {menuOpen ? <InfoMenu t={t} openModal={this.openModal} /> : null}
-          <Control className="leaflet-bar leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
-            <a className="custom-control-button" onClick={() => this.toggleMenu()}>
-              <SMIcon icon="info" />
-            </a>
+          <Control handleClick={this.toggleMenu} className="leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
+            <SMIcon icon="info" />
           </Control>
         </Map>
         <Logo/>
@@ -172,13 +169,12 @@ const InfoMenuItem = ({children, handleClick, icon}) =>
 
 const AboutModal = ({closeModal, t}) =>
   <div className="about-modal-backdrop">
-      <div className="about-modal-box">
-        <div className="about-modal-controls">
-          <SMIcon icon="close" onClick={() => closeModal()} />
-        </div>
-        <div className="about-modal-content">
-          {t('MAP.ABOUT')}
-        </div>
+    <div className="about-modal-box">
+      <div className="about-modal-controls">
+        <SMIcon icon="close" onClick={() => closeModal()} />
+      </div>
+      <div className="about-modal-content">
+        {t('MAP.ABOUT')}
       </div>
     </div>
   </div>;

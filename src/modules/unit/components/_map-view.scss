@@ -12,23 +12,10 @@
 
         a {
           color: $content-text-secondary;
-        }
 
-        &.leaflet-control-locate,
-        &.leaflet-control-info {
-          &, a {
+          &:hover, &:active {
             background: $content-background;
-            border-radius: 50%;
-
-            &.custom-control-button {
-              font-size: 19px;
-              line-height: 26px;
-
-              &:hover {
-                background: $list-view-item-hover;
-                cursor: pointer;
-              }
-            }
+            color: $ui-enabled;
           }
         }
       }
