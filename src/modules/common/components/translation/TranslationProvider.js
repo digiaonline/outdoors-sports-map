@@ -6,6 +6,7 @@ import mapValues from 'lodash/mapValues';
 import mapKeys from 'lodash/mapKeys';
 import {connect} from 'react-redux';
 import {getLanguage} from '../../../language/selectors';
+import {DEFAULT_LANG} from '../../constants';
 
 const localesContext = require.context('../../../../../locales', false, /\.json$/);
 
@@ -26,7 +27,7 @@ const i18n =
   i18next
     .init({
       resources: localesByName,
-      lng: 'en' // @todo: How should the user pick their preferred language? #UX
+      lng: DEFAULT_LANG // @todo: How should the user pick their preferred language? #UX
     }, (err, t) => {
       // @todo: do we have some error reporting mechanism in production?
       if (err) {

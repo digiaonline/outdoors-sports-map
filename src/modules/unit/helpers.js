@@ -2,8 +2,7 @@
 import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
 import {UnitQuality, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
-
-const DEFAULT_LANG = 'en';
+import {DEFAULT_LANG} from '../common/constants';
 
 export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
   let translated = has(attr, lang) && attr[lang];

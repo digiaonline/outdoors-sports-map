@@ -33,7 +33,7 @@ class UnitMarker extends Component {
   }
 
   closePopup() {
-    //this.refs.marker.leafletElement.closePopup();
+    this.refs.marker.leafletElement.closePopup();
   }
 
   _createIcon(unit: Object, isSelected: boolean) {
