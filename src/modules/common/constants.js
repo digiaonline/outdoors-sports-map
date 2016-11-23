@@ -3,7 +3,10 @@ import {UnitState} from '../unit/constants';
 export const API_URL = 'http://209.50.48.39/servicemap/v1/';//'http://api.hel.fi/servicemap/v1';
 export const APP_NAME = 'outdoors-sports-map';
 
+export const DEFAULT_LANG = 'fi';
+
 export const HEADER_HEIGHT = 66;
+export const mobileBreakpoint = 768;
 
 export type Action = {
   type: string,
@@ -35,5 +38,3 @@ export type QueryValue = | string | Array<string>;
 export const routerPaths = {
   singleUnit: 'unit/:unitId'
 };
-
-export const mobileBreakpoint = 768;

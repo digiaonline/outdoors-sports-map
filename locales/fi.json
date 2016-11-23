@@ -30,6 +30,7 @@
     "SORT": {
       "DEFAULT": "Oletus",
       "ALPHABETICAL": "Aakkosellinen",
+      "CONDITION": "Paras kunto ensin",
       "DISTANCE": "Lähimmät ensin"
     }
   },

@@ -60,16 +60,17 @@ export class HomeContainer extends Component {
 
     this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
 
-    if(!getStoredLang()) {
-      const userLang = navigator.language || navigator.userLanguage;
-
-      if(userLang === 'sv' || userLang === 'sv-sv' || userLang === 'sv-fi') {
-        this.handleChangeLanguage('sv');
-
-      } else if(userLang === 'fi') {
-        this.handleChangeLanguage('fi');
-      }
-    }
+    // TODO: re-enable langauge guessing from browser
+    // if(!getStoredLang()) {
+    //   const userLang = navigator.language || navigator.userLanguage;
+    //
+    //   if(userLang === 'sv' || userLang === 'sv-sv' || userLang === 'sv-fi') {
+    //     this.handleChangeLanguage('sv');
+    //
+    //   } else if(userLang === 'fi') {
+    //     this.handleChangeLanguage('fi');
+    //   }
+    // }
   }
 
   componentWillUnmount() {
