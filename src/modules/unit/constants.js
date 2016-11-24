@@ -1,6 +1,10 @@
 import {Schema} from 'normalizr';
 import {normalizeActionName} from '../common/helpers';
 
+export const UNIT_PIN_HEIGHT = 35;
+export const UNIT_HANDLE_HEIGHT = 30;
+export const UNIT_ICON_WIDTH = 30;
+
 export const UnitServices = {
   MECHANICALLY_FROZEN_ICE: 33417,
   ICE_SKATING_FIELD: 33418,

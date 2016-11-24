@@ -1,24 +1,11 @@
 import React, {Component} from 'react';
 import {Marker} from 'react-leaflet';
 import {Icon} from 'leaflet';
-import {getUnitIconURL, getUnitPosition, getUnitSport} from '../helpers';
-import {UnitFilters} from '../constants';
+import {getUnitIcon, getUnitPosition, getUnitSport} from '../helpers';
+import {UNIT_ICON_WIDTH, UnitFilters} from '../constants';
 import UnitPopup from './UnitPopup';
 
-const POINTER_ICON_HEIGHT = 36;
-const HANDLE_ICON_HEIGHT = 30;
-const ICON_WIDTH = 30;
 const POPUP_OFFSET = 4;
-
-// TODO: Use only getUnitPosition when ski tracks
-// have correct locations in backend.
-const temporarilyGetUnitPosition = (unit: Object) => {
-  if (!unit.geometry || !unit.geometry.coordinates) {
-    return getUnitPosition(unit);
-  }
-  return unit.geometry.coordinates[0][0].slice().reverse();
-
-};
 
 class UnitMarker extends Component {
   constructor(props) {
@@ -37,23 +24,20 @@ class UnitMarker extends Component {
   }
 
   _createIcon(unit: Object, isSelected: boolean) {
-    const iconHeight = this._getIconHeight(unit);
+    const icon = getUnitIcon(unit, isSelected);
     const anchorHeight = this._getAnchorHeight(unit);
 
     return new Icon({
-      iconUrl: getUnitIconURL(unit, isSelected, false),
-      iconRetinaUrl: getUnitIconURL(unit, isSelected),
-      iconSize: [ICON_WIDTH, iconHeight],
-      iconAnchor: [ICON_WIDTH / 2, anchorHeight]
+      iconUrl: icon.url,
+      iconRetinaUrl: icon.retinaUrl,
+      iconSize: [UNIT_ICON_WIDTH, icon.height],
+      iconAnchor: [UNIT_ICON_WIDTH / 2, anchorHeight]
     });
   }
 
-  _getIconHeight(unit: Object) {
-    return getUnitSport(unit) === UnitFilters.SKIING ? HANDLE_ICON_HEIGHT : POINTER_ICON_HEIGHT;
-  }
-
-  _getAnchorHeight(unit: Objcect) {
-    return getUnitSport(unit) === UnitFilters.SKIING ? HANDLE_ICON_HEIGHT / 2 : POINTER_ICON_HEIGHT;
+  _getAnchorHeight(unit) {
+    const iconHeight = getUnitIcon(unit).height;
+    return getUnitSport(unit) === UnitFilters.SKIING ? iconHeight / 2 : iconHeight;
   }
 
   _getPopupOffset(unit) {
@@ -62,12 +46,10 @@ class UnitMarker extends Component {
 
   render() {
     const {unit, isSelected, handleClick, ...rest} = this.props;
-    const {getActiveLanguage: getLang} = this.context;
-
     return (
       <Marker
         ref="marker"
-        position={temporarilyGetUnitPosition(unit)}
+        position={getUnitPosition(unit)}
         icon={this._createIcon(unit, isSelected)}
         onClick={handleClick}
         onMouseOver={this.openPopup}

@@ -4,10 +4,9 @@ import SMIcon from '../../home/components/SMIcon';
 import {getServiceName, getAttr} from '../helpers.js';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
-import * as unitHelpers from '../helpers';
+import UnitIcon from './UnitIcon';
 
 const ModalHeader = ({handleClick, unit, t}, context) => {
-  const iconURL = unit ? unitHelpers.getUnitIconURL(unit) : null;
   const unitAddress = getAttr(unit.street_address, context.getActiveLanguage());
   const unitZIP = unit.address_zip;
 
@@ -24,7 +23,7 @@ const ModalHeader = ({handleClick, unit, t}, context) => {
         </div>
         {unit
           ? <div className="modal-header-description">
-              <img src={iconURL} alt=""/>
+              <UnitIcon unit={unit} alt={getServiceName(unit)}/>
               <div>
                 <p>
                 {
