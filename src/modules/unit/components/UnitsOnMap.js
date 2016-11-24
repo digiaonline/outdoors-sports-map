@@ -11,7 +11,7 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
 
   if(!isEmpty(unitsInOrder) && selectedUnitId) {
     const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);
-    const selectedUnit = unitsInOrder[index];
+    const selectedUnit = unitsInOrder[index]; //FIXME: This fails if url parameter unitId does not exist
 
     unitsInOrder.push(selectedUnit);
   }
