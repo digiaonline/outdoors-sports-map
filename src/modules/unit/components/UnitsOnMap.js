@@ -10,10 +10,9 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
   unitsInOrder = sortByCondition(unitsInOrder).reverse();
 
   if(!isEmpty(unitsInOrder) && selectedUnitId) {
-    const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);
-    const selectedUnit = unitsInOrder[index]; //FIXME: This fails if url parameter unitId does not exist
+    const selectedUnit = unitsInOrder.find((unit) => unit.id === selectedUnitId);
 
-    unitsInOrder.push(selectedUnit);
+    !isEmpty(selectedUnit) && unitsInOrder.push(selectedUnit);
   }
 
   return(
