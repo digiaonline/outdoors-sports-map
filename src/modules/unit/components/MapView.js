@@ -9,7 +9,7 @@ import Control from '../../map/components/Control';
 //import Control from 'react-leaflet-control';
 import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
-import {MAP_URL} from '../../map/constants';
+import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
@@ -112,7 +112,8 @@ class MapView extends Component {
           zoomControl={false}
           attributionControl={false}
           center={position}
-          zoom={12}
+          zoom={DEFAULT_ZOOM}
+          minZoom={MIN_ZOOM}
           onClick={this.handleClick}
           onLocationfound={this.handleClick} >
           <TileLayer
