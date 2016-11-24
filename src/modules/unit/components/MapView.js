@@ -1,5 +1,6 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
+import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
 import {View} from './View';
 import Logo from '../../home/components/Logo';
@@ -55,14 +56,24 @@ class MapView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.unitId && nextProps.units && this.state.isMobile) {
+    if (nextProps.params.unitId && !isEmpty(nextProps.units)) {
       const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
-      if (unit) {
-        let location = getUnitPosition(unit);
-        location[0] = location[0] + 0.04;
-        //For some reason could not use reverse here so had to do this weird way.
-        this.refs.map.leafletElement.flyTo(location, 12);
-      }
+      !isEmpty(unit) && this.centerMapToUnit(unit);
+    }
+  }
+
+  centerMapToUnit(unit: Object) {
+    if (this.state.isMobile) {
+      let location = getUnitPosition(unit);
+      location[0] = location[0] + 0.02;
+      //For some reason could not use reverse here so had to do this weird way.
+      this.refs.map.leafletElement.flyTo(location, DEFAULT_ZOOM);
+    }
+    else {
+      let location = getUnitPosition(unit);
+      location[1] = location[1] - 0.04;
+
+      this.refs.map.leafletElement.flyTo(location, DEFAULT_ZOOM);
     }
   }
 
