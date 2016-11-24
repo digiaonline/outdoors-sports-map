@@ -134,7 +134,7 @@ export class HomeContainer extends Component {
           openUnit={this.openUnit}
           mapCenter={mapCenter}
         />
-        {params.unitId && <SingleUnitModalContainer isOpen={true} units={unitData} params={params} handleClick={this.closeUnit} /> }
+        {params.unitId && <SingleUnitModalContainer isLoading={isLoading} isOpen={true} units={unitData} params={params} handleClick={this.closeUnit} /> }
       </div>
     );
   }
