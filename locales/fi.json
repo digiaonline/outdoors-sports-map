@@ -36,6 +36,7 @@
   },
   "MODAL": {
     "LOADING": "Ladataan kohdetta...",
+    "NOT_FOUND": "Pahoittelut, kohdetta ei löytynyt :(",
     "QUALITY": "Kunto",
     "INFO": "Info",
     "WEATHER": "Sää",

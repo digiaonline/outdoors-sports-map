@@ -35,6 +35,7 @@
   },
   "MODAL": {
     "LOADING": "Loading location...",
+    "NOT_FOUND": "Sorry, couldn't find the location :(",
     "QUALITY": "Quality",
     "INFO": "Info",
     "WEATHER": "Weather",
