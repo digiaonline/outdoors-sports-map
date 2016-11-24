@@ -61,6 +61,7 @@ export const QualityEnum = {
 export const UnitActions = {
   FETCH: normalizeActionName('unit/FETCH'),
   RECEIVE: normalizeActionName('unit/RECEIVE'),
+  FETCH_ERROR: normalizeActionName('unit/FETCH_ERROR'),
   SEARCH_CLEAR: normalizeActionName('unit/SEARCH_CLEAR'),
   SEARCH_REQUEST: normalizeActionName('unit/SEARCH_REQUEST'),
   SEARCH_RECEIVE: normalizeActionName('unit/SEARCH_RECEIVE'),
