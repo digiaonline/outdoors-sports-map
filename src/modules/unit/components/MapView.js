@@ -67,13 +67,13 @@ class MapView extends Component {
       let location = getUnitPosition(unit);
       location[0] = location[0] + 0.02;
       //For some reason could not use reverse here so had to do this weird way.
-      this.refs.map.leafletElement.flyTo(location, DEFAULT_ZOOM);
+      this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
     }
     else {
       let location = getUnitPosition(unit);
       location[1] = location[1] - 0.04;
 
-      this.refs.map.leafletElement.flyTo(location, DEFAULT_ZOOM);
+      this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
     }
   }
 
