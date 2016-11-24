@@ -6,11 +6,10 @@ import SMIcon from '../../home/components/SMIcon';
 import {getFilterIconURL} from '../helpers';
 import {UnitFilters, SportFilters} from '../constants';
 
-
 const FilterIcon = ({filter, active}) => {
   if (SportFilters.includes(filter)) {
     return (
-      <img src={getFilterIconURL(filter, active)}/>
+      <img src={getFilterIconURL(filter, active)} alt=""/>
     );
   } else {
     return (

@@ -9,16 +9,14 @@ import {View} from './View.js';
 import Loading from '../../home/components/Loading';
 import ObservationStatus from './ObservationStatus';
 import SortSelectorDropdown from './SortSelectorDropdown';
-
-//const {getAttr} = unitHelpers;
+import UnitIcon from './UnitIcon';
 
 const UnitListItem = ({unit, handleClick}, context) => {
-  const iconURL = unitHelpers.getUnitIconURL(unit);
   const serviceName = unitHelpers.getServiceName(unit, context.getActiveLanguage());
 
   return (
   <Link to={`/unit/${unit.id}`} className="list-view-item">
-    <div className="list-view-item__unit-marker"><img src={iconURL} alt={serviceName}/></div>
+    <div className="list-view-item__unit-marker"><UnitIcon unit={unit} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{unitHelpers.getAttr(unit.name, context.getActiveLanguage())}</div>
       <ObservationStatus unit={unit}/>
