@@ -1,7 +1,7 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
-import {UnitQuality, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
+import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 import {DEFAULT_LANG} from '../common/constants';
 
 export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
@@ -69,7 +69,7 @@ export const enumerableQuality = (quality: string): number => {
  * ICONS
  */
 
-export const getUnitIconURL = (unit: Object, selected = false, retina = true) => {
+export const getUnitIconURL = (unit: Object, selected: ?boolean = false, retina: ?boolean = true) => {
   const quality = getUnitQuality(unit);
   const sport = getUnitSport(unit);
   const onOff = selected ? 'on' : 'off';
@@ -78,15 +78,27 @@ export const getUnitIconURL = (unit: Object, selected = false, retina = true) =>
   return require(`@assets/markers/${sport}-${quality}-${onOff}${resolution}.png`);
 };
 
+export const getUnitIconHeight = (unit: Object) => (
+  getUnitSport(unit) === UnitFilters.SKIING ? UNIT_HANDLE_HEIGHT : UNIT_PIN_HEIGHT
+);
+
+
+export const getUnitIcon = (unit: Object, selected: ?boolean = false) => (
+  {
+    url: getUnitIconURL(unit, selected, false),
+    retinaUrl: getUnitIconURL(unit, selected, true),
+    height: getUnitIconHeight(unit)
+  }
+);
+
 export const getFilterIconURL = (filter: String) =>
   filter ? require(`@assets/icons/icon-white-${filter}@2x.png`) : '';
 
 /**
- * TODO: MOVE TO TEH COMPONENT
  * SORT UNIT LIST
  */
 
-export const sortByDistance = (units: Array, position: Array) =>
+export const sortByDistance = (units: Array<Object>, position: Array<number>) =>
   sortBy(units, (unit) => {
     const unitLatLng = new LatLng(...getUnitPosition(unit));
     const mapLatLng = new LatLng(...position);

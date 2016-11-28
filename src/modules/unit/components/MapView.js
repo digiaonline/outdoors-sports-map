@@ -1,5 +1,6 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
+import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
 import {View} from './View';
 import Logo from '../../home/components/Logo';
@@ -9,7 +10,7 @@ import Control from '../../map/components/Control';
 //import Control from 'react-leaflet-control';
 import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
-import {MAP_URL} from '../../map/constants';
+import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
@@ -33,7 +34,8 @@ class MapView extends Component {
     this.state = {
       isMobile: window.innerWidth < mobileBreakpoint,
       menuOpen: false,
-      modalOpen: false
+      modalOpen: false,
+      zoomLevel: DEFAULT_ZOOM
     };
 
     this.locateUser = this.locateUser.bind(this);
@@ -43,6 +45,7 @@ class MapView extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleZoom = this.handleZoom.bind(this);
   }
 
   componentDidMount() {
@@ -55,15 +58,29 @@ class MapView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.unitId && nextProps.units && this.state.isMobile) {
+    if (nextProps.params.unitId && !isEmpty(nextProps.units)) {
       const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
-      if (unit) {
-        let location = getUnitPosition(unit);
-        location[0] = location[0] + 0.04;
-        //For some reason could not use reverse here so had to do this weird way.
-        this.refs.map.leafletElement.flyTo(location, 12);
-      }
+      !isEmpty(unit) && this.centerMapToUnit(unit);
     }
+  }
+
+  centerMapToUnit(unit: Object) {
+    if (this.state.isMobile) {
+      let location = getUnitPosition(unit);
+      location[0] = location[0] + 0.02;
+      //For some reason could not use reverse here so had to do this weird way.
+      this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
+    }
+    else {
+      let location = getUnitPosition(unit);
+      location[1] = location[1] - 0.04;
+
+      this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
+    }
+  }
+
+  handleZoom() {
+    this.setState({zoomLevel: this.refs.map.leafletElement.getZoom()});
   }
 
   updateIsMobile() {
@@ -104,7 +121,7 @@ class MapView extends Component {
 
   render() {
     const {position, selectedUnitId, units, selected, activeLanguage, openUnit, changeLanguage, t} = this.props;
-    const {isMobile, menuOpen} = this.state;
+    const {isMobile, zoomLevel, menuOpen} = this.state;
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
@@ -112,15 +129,17 @@ class MapView extends Component {
           zoomControl={false}
           attributionControl={false}
           center={position}
-          zoom={12}
+          zoom={DEFAULT_ZOOM}
+          minZoom={MIN_ZOOM}
           onClick={this.handleClick}
-          onLocationfound={this.handleClick} >
+          onLocationfound={this.handleClick}
+          onZoomend={this.handleZoom}>
           <TileLayer
         url={MAP_URL}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <UserLocationMarker />
-          <UnitsOnMap units={units} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
+          <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
             <SMIcon icon="address" />

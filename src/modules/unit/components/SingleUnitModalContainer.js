@@ -4,19 +4,21 @@ import SMIcon from '../../home/components/SMIcon';
 import {getServiceName, getAttr} from '../helpers.js';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
-import * as unitHelpers from '../helpers';
+import UnitIcon from './UnitIcon';
 
-const ModalHeader = ({handleClick, unit, t}, context) => {
-  const iconURL = unit ? unitHelpers.getUnitIconURL(unit) : null;
-  const unitAddress = getAttr(unit.street_address, context.getActiveLanguage());
-  const unitZIP = unit.address_zip;
+const ModalHeader = ({handleClick, unit, isLoading, t}, context) => {
+  const unitAddress = unit ? getAttr(unit.street_address, context.getActiveLanguage()) : null;
+  const unitZIP = unit ? unit.address_zip : null;
 
   return(
     <Modal.Header>
       <div>
         <div className="modal-header-name">
           <div>
-            <h4>{unit ? getAttr(unit.name, context.getActiveLanguage()) : t('MODAL.LOADING')}</h4>
+            {isLoading
+              ? <h4>{t('MODAL.LOADING')}</h4>
+              : <h4>{unit ? getAttr(unit.name, context.getActiveLanguage()) : t('MODAL.NOT_FOUND')}</h4>
+            }
           </div>
           <div style={{alignSelf: 'center'}}>
             <a className="close-unit-modal" onClick={handleClick}><SMIcon icon="close"/></a>
@@ -24,7 +26,7 @@ const ModalHeader = ({handleClick, unit, t}, context) => {
         </div>
         {unit
           ? <div className="modal-header-description">
-              <img src={iconURL} alt=""/>
+              <UnitIcon unit={unit} alt={getServiceName(unit)}/>
               <div>
                 <p>
                 {
@@ -85,14 +87,14 @@ export class SingleUnitModalContainer extends Component {
   }
 
   render(){
-    const {units, handleClick, params, t} = this.props;
+    const {units, handleClick, params, isLoading, t} = this.props;
     const currentUnit = units ? this.getCurrentUnit(units, params.unitId) : null;
 
     return (
       <div>
-        <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false}>
-          <ModalHeader unit={currentUnit} handleClick={handleClick} t={t}/>
-          {currentUnit ?
+        <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false} animation={false}>
+          <ModalHeader unit={currentUnit} handleClick={handleClick} isLoading={isLoading} t={t}/>
+          {currentUnit && !isLoading ?
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
               <LocationInfo t={t}/>

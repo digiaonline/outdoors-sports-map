@@ -16,3 +16,8 @@ export const arrayifyQueryValue = (queryValue: QueryValue): Array<string> => {
   // It's an array
   return queryValue;
 };
+
+export const isRetina = () => (
+	window.devicePixelRatio > 1 ||
+	(window.matchMedia && window.matchMedia('(-webkit-min-device-pixel-ratio: 1.5),(-moz-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)').matches)
+);

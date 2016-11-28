@@ -16,6 +16,9 @@ export const fetchUnits = (/*params: Object*/): Action =>
 export const receiveUnits = (data: ApiResponse): Action =>
   createAction(UnitActions.RECEIVE)(data);
 
+export const setFetchError = (error: ApiResponse) =>
+  createAction(UnitActions.FETCH_ERROR)({error});
+
 export const clearSearch = () =>
   createAction(UnitActions.SEARCH_CLEAR)();
 

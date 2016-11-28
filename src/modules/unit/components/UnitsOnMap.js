@@ -3,17 +3,16 @@ import isEmpty from 'lodash/isEmpty';
 import SingleUnitOnMap from './SingleUnitOnMap';
 import {sortByCondition} from '../helpers';
 
-export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
+export const UnitsOnMap = ({units, selectedUnitId, openUnit, zoomLevel}) => {
   let unitsInOrder = units.slice();
 
   // Draw things in condition order
   unitsInOrder = sortByCondition(unitsInOrder).reverse();
 
   if(!isEmpty(unitsInOrder) && selectedUnitId) {
-    const index = unitsInOrder.findIndex((unit) => unit.id === selectedUnitId);
-    const selectedUnit = unitsInOrder[index];
+    const selectedUnit = unitsInOrder.find((unit) => unit.id === selectedUnitId);
 
-    unitsInOrder.push(selectedUnit);
+    !isEmpty(selectedUnit) && unitsInOrder.push(selectedUnit);
   }
 
   return(
@@ -21,7 +20,7 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
     {
       !isEmpty(unitsInOrder) && unitsInOrder.map(
         (unit, index) =>
-          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={`${index}:${unit.id}`} openUnit={openUnit} />
+          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} zoomLevel={zoomLevel} key={`${index}:${unit.id}`} openUnit={openUnit} />
       )
     }
     </div>

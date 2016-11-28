@@ -7,8 +7,15 @@ import {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
   [UnitActions.FETCH]: () => true,
-  [UnitActions.RECEIVE]: () => false
+  [UnitActions.RECEIVE]: () => false,
+  [UnitActions.FETCH_ERROR]: () => false
 }, false);
+
+const fetchErrorReducer = handleActions({
+  [UnitActions.FETCH]: () => null,
+  [UnitActions.RECEIVE]: () => null,
+  [UnitActions.FETCH_ERROR]: (state: Object, {payload: {error}}) => error
+}, null);
 
 const byIdReducer = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
@@ -37,6 +44,7 @@ const openNow = handleActions({
 
 const reducer = combineReducers({
   isFetching: isFetchingReducer,
+  fetchError: fetchErrorReducer,
   byId: byIdReducer,
   all,
   iceskate,

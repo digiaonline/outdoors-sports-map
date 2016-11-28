@@ -20,12 +20,12 @@ export class SingleUnitOnMap extends Component{
   }
 
   render () {
-    const {unit, isSelected, ...rest} = this.props;
+    const {unit, zoomLevel, isSelected, ...rest} = this.props;
     const geometry = unit.geometry;
 
     return(
       <div>
-      <UnitMarker unit={unit} isSelected={isSelected} handleClick={this.handleClick} {...rest}/>
+      <UnitMarker unit={unit} zoomLevel={zoomLevel} isSelected={isSelected} handleClick={this.handleClick} {...rest}/>
       {geometry && <UnitGeometry unit={unit} onClick={this.handleClick} isSelected={isSelected}/> }
       </div>
     );
