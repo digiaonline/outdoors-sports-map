@@ -92,7 +92,7 @@ export class SingleUnitModalContainer extends Component {
 
     return (
       <div>
-        <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false}>
+        <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false} animation={false}>
           <ModalHeader unit={currentUnit} handleClick={handleClick} isLoading={isLoading} t={t}/>
           {currentUnit && !isLoading ?
             <Modal.Body>
