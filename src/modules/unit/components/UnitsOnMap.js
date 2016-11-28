@@ -3,7 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import SingleUnitOnMap from './SingleUnitOnMap';
 import {sortByCondition} from '../helpers';
 
-export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
+export const UnitsOnMap = ({units, selectedUnitId, openUnit, zoomLevel}) => {
   let unitsInOrder = units.slice();
 
   // Draw things in condition order
@@ -20,7 +20,7 @@ export const UnitsOnMap = ({units, selectedUnitId, openUnit}) => {
     {
       !isEmpty(unitsInOrder) && unitsInOrder.map(
         (unit, index) =>
-          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} key={`${index}:${unit.id}`} openUnit={openUnit} />
+          <SingleUnitOnMap isSelected={unit.id === selectedUnitId} unit={unit} zoomLevel={zoomLevel} key={`${index}:${unit.id}`} openUnit={openUnit} />
       )
     }
     </div>

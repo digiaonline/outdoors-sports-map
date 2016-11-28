@@ -3,6 +3,7 @@ import {Marker} from 'react-leaflet';
 import {Icon} from 'leaflet';
 import {getUnitIcon, getUnitPosition, getUnitSport} from '../helpers';
 import {UNIT_ICON_WIDTH, UnitFilters} from '../constants';
+import {DEFAULT_ZOOM} from '../../map/constants';
 import UnitPopup from './UnitPopup';
 
 const POPUP_OFFSET = 4;
@@ -13,6 +14,8 @@ class UnitMarker extends Component {
 
     this.openPopup = this.openPopup.bind(this);
     this.closePopup = this.closePopup.bind(this);
+    this.getIconWidth = this.getIconWidth.bind(this);
+    this.getIconHeight = this.getIconHeight.bind(this);
   }
 
   openPopup() {
@@ -23,20 +26,37 @@ class UnitMarker extends Component {
     this.refs.marker.leafletElement.closePopup();
   }
 
+  getIconWidth(zoomLevel) {
+    if(zoomLevel - DEFAULT_ZOOM > 0) {
+      return (zoomLevel - DEFAULT_ZOOM + 4) * 0.25 * UNIT_ICON_WIDTH;
+    } else {
+      return zoomLevel / DEFAULT_ZOOM * UNIT_ICON_WIDTH;
+    }
+  }
+
+  getIconHeight(icon, zoomLevel) {
+    if(zoomLevel - DEFAULT_ZOOM > 0) {
+      return (zoomLevel - DEFAULT_ZOOM + 4) * 0.25 * icon.height;
+    } else {
+      return zoomLevel / DEFAULT_ZOOM * icon.height;
+    }
+  }
+
   _createIcon(unit: Object, isSelected: boolean) {
     const icon = getUnitIcon(unit, isSelected);
-    const anchorHeight = this._getAnchorHeight(unit);
+    const iconWidth = this.getIconWidth(this.props.zoomLevel);
+    const iconHeight = this.getIconHeight(icon, this.props.zoomLevel);
+    const anchorHeight = this._getAnchorHeight(iconHeight, unit);
 
     return new Icon({
       iconUrl: icon.url,
       iconRetinaUrl: icon.retinaUrl,
-      iconSize: [UNIT_ICON_WIDTH, icon.height],
-      iconAnchor: [UNIT_ICON_WIDTH / 2, anchorHeight]
+      iconSize: [iconWidth, iconHeight],
+      iconAnchor: [iconWidth / 2, anchorHeight]
     });
   }
 
-  _getAnchorHeight(unit) {
-    const iconHeight = getUnitIcon(unit).height;
+  _getAnchorHeight(iconHeight, unit) {
     return getUnitSport(unit) === UnitFilters.SKIING ? iconHeight / 2 : iconHeight;
   }
 

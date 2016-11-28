@@ -34,7 +34,8 @@ class MapView extends Component {
     this.state = {
       isMobile: window.innerWidth < mobileBreakpoint,
       menuOpen: false,
-      modalOpen: false
+      modalOpen: false,
+      zoomLevel: DEFAULT_ZOOM
     };
 
     this.locateUser = this.locateUser.bind(this);
@@ -44,6 +45,7 @@ class MapView extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleZoom = this.handleZoom.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +77,10 @@ class MapView extends Component {
 
       this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
     }
+  }
+
+  handleZoom() {
+    this.setState({zoomLevel: this.refs.map.leafletElement.getZoom()});
   }
 
   updateIsMobile() {
@@ -115,7 +121,7 @@ class MapView extends Component {
 
   render() {
     const {position, selectedUnitId, units, selected, activeLanguage, openUnit, changeLanguage, t} = this.props;
-    const {isMobile, menuOpen} = this.state;
+    const {isMobile, zoomLevel, menuOpen} = this.state;
 
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
@@ -126,13 +132,14 @@ class MapView extends Component {
           zoom={DEFAULT_ZOOM}
           minZoom={MIN_ZOOM}
           onClick={this.handleClick}
-          onLocationfound={this.handleClick} >
+          onLocationfound={this.handleClick}
+          onZoomend={this.handleZoom}>
           <TileLayer
         url={MAP_URL}
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <UserLocationMarker />
-          <UnitsOnMap units={units} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
+          <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
             <SMIcon icon="address" />
