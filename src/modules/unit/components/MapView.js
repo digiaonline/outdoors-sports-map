@@ -10,7 +10,7 @@ import Control from '../../map/components/Control';
 //import Control from 'react-leaflet-control';
 import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
-import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM} from '../../map/constants';
+import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, BOUNDARIES} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
@@ -129,15 +129,15 @@ class MapView extends Component {
           zoomControl={false}
           attributionControl={false}
           center={position}
-          maxBounds={[[60.1, 24.7], [60.4, 25.4]]}
+          maxBounds={BOUNDARIES}
           zoom={DEFAULT_ZOOM}
           minZoom={MIN_ZOOM}
           onClick={this.handleClick}
           onLocationfound={this.handleClick}
           onZoomend={this.handleZoom}>
           <TileLayer
-        url={MAP_URL}
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url={MAP_URL}
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <UserLocationMarker />
           <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnitId={selectedUnitId} openUnit={openUnit}/>

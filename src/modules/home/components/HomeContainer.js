@@ -56,7 +56,6 @@ export class HomeContainer extends Component {
 
   componentWillMount() {
     this.props.fetchUnits();
-    this.props.setLocation(locations.HELSINKI);
 
     this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
 
@@ -149,6 +148,7 @@ const mapStateToProps = (state, props) => ({
   activeLanguage: fromLanguage.getLanguage(state),
   isLoading: fromUnit.getIsLoading(state),
   mapCenter: fromMap.getLocation(state),
+  position: fromMap.getLocation(state),
   isSearching: fromSearch.getIsFetching(state)
 });
 
