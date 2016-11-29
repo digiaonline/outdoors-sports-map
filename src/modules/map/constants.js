@@ -6,5 +6,6 @@ export const MIN_ZOOM = 12;
 export const BOUNDARIES = [[60.1, 24.65], [60.4, 25.4]];
 
 export const mapActions = {
-  SET_LOCATION: normalizeActionName('map/SET_LOCATION')
+  SET_LOCATION: normalizeActionName('map/SET_LOCATION'),
+  RECEIVE_ADDRESS: normalizeActionName('map/RECEIVE_ADDRESS')
 };
