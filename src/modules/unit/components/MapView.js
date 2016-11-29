@@ -129,6 +129,7 @@ class MapView extends Component {
           zoomControl={false}
           attributionControl={false}
           center={position}
+          maxBounds={[[60.1, 24.7], [60.4, 25.4]]}
           zoom={DEFAULT_ZOOM}
           minZoom={MIN_ZOOM}
           onClick={this.handleClick}
