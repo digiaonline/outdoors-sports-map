@@ -116,9 +116,9 @@ class UnitBrowser extends Component {
           toggleIcon={isExpanded ? 'map-options' : 'browse'}
         />
         {Object.keys(address).length !== 0 && <AddressBar address={address} />}
+        <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
         {isExpanded && !params.unitId &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
-            <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
             <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} openUnit={openUnit} />
           </div>
         }

@@ -1,6 +1,11 @@
 .unit-filter {
   width: 100%;
   color: $ui-text;
+  background: $ui-enabled;
+
+  .row {
+    padding: $gap $gap 0 $gap;
+  }
 
   .col-xs-6 {
     padding: 0 0 $gap;
@@ -14,7 +19,7 @@
     }
   }
 
-  & &__filter {
+  & &__filter { // Actual filter button
     background: $ui-disabled;
     padding: $gap;
     display: flex;
@@ -33,11 +38,15 @@
       img {
         height: 30px;
       }
+
+      span {
+        line-height: 30px;
+      }
     }
 
 
     &.active {
-      background: $ui-enabled;
+      background: darken($ui-enabled, 10%);
 
       &:active {
         background: darken($ui-enabled, 10%);
