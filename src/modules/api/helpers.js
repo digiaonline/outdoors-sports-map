@@ -1,6 +1,6 @@
 import {call} from 'redux-saga/effects';
 import {normalize} from 'normalizr';
-import {API_URL} from '../common/constants';
+import {API_URL, DIGITRANSIT_API_URL} from '../common/constants';
 import {ApiResponse} from './constants';
 
 export const normalizeEntityResults = (results: Object, schema: Schema): Object =>
@@ -21,7 +21,10 @@ export const createRequest = (url: string, init: Object): Request =>
   new Request(url, init);
 
 export const createUrl = (url: string, params: Object): string =>
-  `${API_URL}/${url}${params ? `?${stringifyQuery(params)}` : ''}`; //&include=observable_properties,observations`;
+  `${API_URL}/${url}${params ? `?${stringifyQuery(params)}` : ''}`;
+
+export const createDigitransitUrl = (url: string, params: Object): string =>
+  `${DIGITRANSIT_API_URL}/${url}${params ? `?${stringifyQuery(params)}` : ''}`;
 
 const stringifyQuery = (query: Object): string =>
   Object
