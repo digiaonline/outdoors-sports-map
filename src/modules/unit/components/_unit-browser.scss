@@ -52,6 +52,13 @@
   }
 }
 
+.address-bar_container {
+  border-radius: 18px;
+  padding: 3px 10px;
+  background: $ui-enabled;
+  color: #fff;
+}
+
 @media only screen and (min-width : $breakpoint) {
   .unit-browser {
     width: 400px;

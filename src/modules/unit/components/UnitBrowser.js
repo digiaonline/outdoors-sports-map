@@ -7,6 +7,7 @@ import {HEADER_HEIGHT} from '../../common/constants.js';
 import {UnitFilters} from '../constants.js';
 import UnitFilter from './UnitFilter.js';
 import SearchContainer from '../../search/components/SearchContainer';
+import {getAddressToDisplay} from '../helpers';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
@@ -18,6 +19,11 @@ const Header = ({expand, toggle, toggleIcon}) =>
   <SearchContainer onSearch={expand}/>
   <ToggleButton toggle={toggle} icon={toggleIcon}/>
 </div>;
+
+const AddressBar = ({address}) =>
+  <div className="address-bar_container">
+    {address && getAddressToDisplay(address)}
+  </div>;
 
 class UnitBrowser extends Component {
   static propTypes = {
@@ -95,7 +101,7 @@ class UnitBrowser extends Component {
   }
 
   render() {
-    const {units, isLoading, isSearching, position, activeFilter, openUnit, params} = this.props;
+    const {units, isLoading, isSearching, position, activeFilter, openUnit, address, params} = this.props;
     const {isExpanded} = this.state;
     let contentMaxHeight = this.state.contentMaxHeight;
     if (isExpanded) {
@@ -109,6 +115,7 @@ class UnitBrowser extends Component {
           toggle={this.toggle}
           toggleIcon={isExpanded ? 'map-options' : 'browse'}
         />
+        <AddressBar address={address} />
         {isExpanded && !params.unitId &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
             <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />

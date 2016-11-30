@@ -121,3 +121,7 @@ export const sortByCondition = (units: Array) =>
       return (new Date()).getTime() - observationTime;
     }
   ]);
+
+export const getAddressToDisplay = (address) => {
+  return address ? address.street.name.fi+', '+address.street.municipality : 'Location not found :(';
+}

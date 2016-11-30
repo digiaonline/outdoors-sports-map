@@ -107,7 +107,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, isSearching, position, mapCenter, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, isSearching, position, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
@@ -120,6 +120,7 @@ export class HomeContainer extends Component {
           activeFilter={activeFilter}
           openUnit={this.openUnit}
           position={mapCenter}
+          address={address}
           params={params}
         />
         <MapView
@@ -149,6 +150,7 @@ const mapStateToProps = (state, props) => ({
   isLoading: fromUnit.getIsLoading(state),
   mapCenter: fromMap.getLocation(state),
   position: fromMap.getLocation(state),
+  address: fromMap.getAddress(state),
   isSearching: fromSearch.getIsFetching(state)
 });
 
