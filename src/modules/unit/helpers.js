@@ -123,5 +123,5 @@ export const sortByCondition = (units: Array) =>
   ]);
 
 export const getAddressToDisplay = (address) => {
-  return address ? address.street.name.fi+' '+address.number+', '+address.street.municipality : 'Location not found :(';
-}
+  return Object.keys(address).length !== 0 ? address.street.name.fi+' '+address.number+', '+address.street.municipality : null;
+};
