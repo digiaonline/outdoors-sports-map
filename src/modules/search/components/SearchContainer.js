@@ -59,7 +59,7 @@ class SearchContainer extends Component {
   }
 
   render() {
-    const {unitSuggestions, isActive, searchDisabled} = this.props;
+    const {unitSuggestions, addresses, isActive, searchDisabled} = this.props;
     const {searchPhrase, showSuggestions} = this.state;
 
     return (
@@ -71,7 +71,7 @@ class SearchContainer extends Component {
           onClear={this.clear}
           searchActive={isActive}
           disabled={searchDisabled} />
-        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions}/>}
+        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} addresses={addresses}/>}
       </div>
     );
   }
@@ -80,7 +80,8 @@ class SearchContainer extends Component {
 const mapStateToProps = (state) => ({
   unitSuggestions: selectors.getUnitSuggestions(state),
   isActive: selectors.getIsActive(state),
-  searchDisabled: getIsUnitLoading(state)
+  searchDisabled: getIsUnitLoading(state),
+  addresses: selectors.getAddresses(state)
 });
 
 const mapDispatchToProps = (dispatch) =>

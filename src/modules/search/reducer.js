@@ -27,11 +27,17 @@ const unitSuggestions = handleActions({
   [SearchActions.CLEAR]: () => []
 }, []);
 
+const addressSuggestions = handleActions({
+  [SearchActions.RECEIVE_ADDRESS_SUGGESTIONS]: (state: Object, {payload: results}: EntityAction) =>
+    results ? results : []
+}, []);
+
 const reducer = combineReducers({
   isFetching,
   isActive,
   unitResults,
-  unitSuggestions
+  unitSuggestions,
+  addressSuggestions
 });
 
 export default reducer;

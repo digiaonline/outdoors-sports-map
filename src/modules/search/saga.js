@@ -1,7 +1,7 @@
 import {takeLatest} from 'redux-saga';
 import {call, fork, put} from 'redux-saga/effects';
 import {arrayOf} from 'normalizr';
-import {receiveUnits, receiveUnitSuggestions} from './actions';
+import {receiveUnits, receiveUnitSuggestions, receiveAddressSuggestions} from './actions';
 import {SearchActions} from './constants';
 import {unitSchema} from '../unit/constants';
 import {FetchAction} from '../common/constants';
@@ -20,6 +20,7 @@ function* searchUnits({payload: {params}}: FetchAction) {
 
 function* fetchUnitSuggestions({payload: {params}}: FetchAction) {
   let data = [];
+  let addressData = [];
   console.log(params);
   const digitransitParams = {
     text: params.input,
@@ -38,9 +39,12 @@ function* fetchUnitSuggestions({payload: {params}}: FetchAction) {
     const {bodyAsJson} = yield call(callApi, request);
     const {bodyAsJson: addressBodyAsJson} = yield call(callApi, addressRequest);
     console.log(addressBodyAsJson);
+    addressData = addressBodyAsJson ? addressBodyAsJson.features.filter((feature) => feature.properties.layer !== 'stop') : [];
+    console.log(addressData);
     data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
   }
   yield put(receiveUnitSuggestions(data));
+  yield put(receiveAddressSuggestions(addressData));
 }
 
 function* clearSearch() {
