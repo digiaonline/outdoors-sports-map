@@ -64,7 +64,7 @@ class UnitBrowser extends Component {
   }
 
   toggleFilter(filter: string): void {
-    const {activeFilter, router, location: query} = this.props;
+    const {activeFilter, router, location: {query}} = this.props;
     const NO_FILTER = 'no_filter';
     let newFilter = activeFilter.slice();
 
