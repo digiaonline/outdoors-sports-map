@@ -20,7 +20,7 @@ class SearchContainer extends Component {
     fetchUnitSuggestions: PropTypes.func,
     searchDisabled: PropTypes.bool,
     onSearch: PropTypes.func
-  }
+  };
 
   constructor(props) {
     super(props);
