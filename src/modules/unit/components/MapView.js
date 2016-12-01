@@ -1,5 +1,6 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
 import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
 import OSMIcon from '../../home/components/OSMIcon';
@@ -192,6 +193,9 @@ const InfoMenu = ({openModal, t}) =>
     </InfoMenuItem>
     <InfoMenuItem icon='info' handleClick={openModal}>
       {t('MAP.INFO_MENU.ABOUT_SERVICE')}
+    </InfoMenuItem>
+    <InfoMenuItem>
+      <a target="_blank" href='http://osm.org/copyright' style={{padding: 1}}>&copy; {t('MAP.ATTRIBUTION')} </a>
     </InfoMenuItem>
   </div>;
 
