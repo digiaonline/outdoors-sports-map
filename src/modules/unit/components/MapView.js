@@ -163,7 +163,6 @@ class MapView extends Component {
           </Control>
         </Map>
         <Logo/>
-        <Disclaimer attributionLink="http://osm.org/copyright" />
         {this.state.modalOpen ? <AboutModal closeModal={this.closeModal} t={t}/> : null}
       </View>
     );

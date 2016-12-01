@@ -1,13 +1,13 @@
 .logo {
   position: fixed;
   z-index: 1001;
-  bottom: $disclaimer-height;// + $gap;
+  bottom: 0;
   width: 100%;
   pointer-events: none;
 
   h2 {
     text-align: center;
-    font-size: 2em;
+    font-size: 1.5em;
     font-weight: bold;
 
     a {
