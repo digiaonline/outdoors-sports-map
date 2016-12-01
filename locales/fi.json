@@ -22,10 +22,10 @@
     "UPDATED": "Päivitetty",
     "MAINTENANCE_DONE" : "Kunnostettu",
     "FILTER": {
-      "ALL": "All",
+      "STATUS_ALL": "Kaikenkuntoiset",
       "ICE_SKATING": "Luistelu",
       "SKIING": "Hiihto",
-      "OPEN_NOW": "Auki nyt"
+      "STATUS_OK": "Käyttökuntoiset"
     },
     "SORT": {
       "DEFAULT": "Oletus",

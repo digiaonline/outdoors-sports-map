@@ -59,6 +59,11 @@
   background: $ui-content;
   color: #fff;
   margin-bottom: $gap;
+
+  &:hover {
+    background: $ui-enabled;
+    cursor: pointer;
+  }
 }
 
 @media only screen and (min-width : $breakpoint) {
