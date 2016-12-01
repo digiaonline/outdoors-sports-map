@@ -46,6 +46,8 @@ export class HomeContainer extends Component {
     this.closeUnit = this.closeUnit.bind(this);
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.getActiveLanguage = this.getActiveLanguage.bind(this);
+    this.setLocation = this.setLocation.bind(this);
+    this.setView = this.setView.bind(this);
   }
 
   getChildContext() {
@@ -58,6 +60,7 @@ export class HomeContainer extends Component {
     this.props.fetchUnits();
 
     this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
+    this.initialPosition = this.props.position;
 
     // TODO: re-enable langauge guessing from browser
     // if(!getStoredLang()) {
@@ -84,6 +87,14 @@ export class HomeContainer extends Component {
 
   handleChangeLanguage(language) {
     this.props.changeLanguage(language);
+  }
+
+  setLocation(location: array) {
+    this.props.setLocation(location);
+  }
+
+  setView(coordinates) {
+    this.refs.map.getWrappedInstance().setView(coordinates);
   }
 
   openUnit(unitId: string) {
@@ -122,13 +133,16 @@ export class HomeContainer extends Component {
           position={mapCenter}
           address={address}
           params={params}
+          setLocation={this.setLocation}
+          setView={this.setView}
         />
         <MapView
+          ref="map"
           activeLanguage={activeLanguage}
           selectedUnitId={+params.unitId}
           params={params}
           setLocation={this.props.setLocation}
-          position={position}
+          position={this.initialPosition}
           units={unitData}
           changeLanguage={this.handleChangeLanguage}
           openUnit={this.openUnit}

@@ -4,9 +4,9 @@ import ObservationStatus from '../../unit/components/ObservationStatus';
 import {SMIcon} from '../../home/components/SMIcon';
 import {getServiceName, getAttr} from '../../unit/helpers';
 
-const AddressSuggestion = ({address, ...rest}, context) =>
-  <Link className="search-suggestions__result" onClick={() => console.log('Wryyyyy')}>
-    <div className="search-suggestions__address-icon" style={{width: 37, paddingRight: 8}}>
+const AddressSuggestion = ({address, setView, setLocation, ...rest}, context) =>
+  <Link className="search-suggestions__result" onClick={() => {setLocation(address.geometry.coordinates.slice().reverse()); setView(address.geometry.coordinates.slice().reverse())}}>
+    <div className="search-suggestions__address-icon">
       <img src={require('../../../../assets/markers/unknown-satisfactory-off.png')} height="21px" />
     </div>
     <div className="search-suggestions__result-details">

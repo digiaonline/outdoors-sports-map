@@ -46,6 +46,7 @@ class MapView extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleZoom = this.handleZoom.bind(this);
+    this.setView = this.setView.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +63,11 @@ class MapView extends Component {
       const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
       !isEmpty(unit) && this.centerMapToUnit(unit);
     }
+
+    /*if (nextProps.position[0] !== this.props.position[0] || nextProps.position[1] !== this.props.position[1]) {
+      console.log('here');
+      this.refs.map.leafletElement.setView([60,25]);
+    }*/
   }
 
   centerMapToUnit(unit: Object) {
@@ -109,6 +115,10 @@ class MapView extends Component {
     } else {
       this.setState({modalOpen: true});
     }
+  }
+
+  setView(coordinates) {
+    this.refs.map.leafletElement.setView(coordinates);
   }
 
   openModal() {
@@ -159,7 +169,7 @@ class MapView extends Component {
   }
 }
 
-export default translate()(MapView);
+export default translate([], {withRef: true})(MapView);
 
 const LanguageChanger = ({changeLanguage, activeLanguage}) =>
   <div className="language-changer">

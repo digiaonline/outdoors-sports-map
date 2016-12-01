@@ -3,7 +3,7 @@ import {translate} from 'react-i18next';
 import UnitSuggestion from './UnitSuggestion';
 import AddressSuggestion from './AddressSuggestion';
 
-const SearchSuggestions = translate()(({units, addresses, openAllResults, t}) => (
+const SearchSuggestions = translate()(({units, addresses, openAllResults, setView, setLocation, t}) => (
   <div className="search-suggestions">
     {units.length > 0 || addresses.length > 0
       ? <div className="search-suggestions__list">
@@ -12,7 +12,7 @@ const SearchSuggestions = translate()(({units, addresses, openAllResults, t}) =>
           <UnitSuggestion key={result.id} unit={result}/>
         )}
         {addresses.map((address) =>
-          <AddressSuggestion address={address} />
+          <AddressSuggestion key={address.properties.id} address={address} setView={setView} setLocation={setLocation} />
         )}
         </div>
       : null

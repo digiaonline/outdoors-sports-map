@@ -30,6 +30,7 @@ function* fetchUnitSuggestions({payload: {params}}: FetchAction) {
     'boundary.rect.max_lon': 25.5,
     'focus.point.lat': 60.17,
     'focus.point.lon': 24.94,
+    size: 5,
     lang: 'fi'
   };
   // Make search request only when there's input
@@ -38,9 +39,7 @@ function* fetchUnitSuggestions({payload: {params}}: FetchAction) {
     const addressRequest = createRequest(createDigitransitUrl('search', digitransitParams));
     const {bodyAsJson} = yield call(callApi, request);
     const {bodyAsJson: addressBodyAsJson} = yield call(callApi, addressRequest);
-    console.log(addressBodyAsJson);
     addressData = addressBodyAsJson ? addressBodyAsJson.features.filter((feature) => feature.properties.layer !== 'stop') : [];
-    console.log(addressData);
     data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
   }
   yield put(receiveUnitSuggestions(data));
