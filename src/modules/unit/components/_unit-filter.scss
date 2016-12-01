@@ -1,7 +1,7 @@
 .unit-filter {
   width: 100%;
   color: $ui-text;
-  background: $ui-enabled;
+  background: $ui-content;
 
   .row {
     padding: $gap $gap 0 $gap;
@@ -21,14 +21,21 @@
 
   & &__filter { // Actual filter button
     background: $ui-disabled;
+    color: $ui-text-disabled;
     padding: $gap;
     display: flex;
     align-items: center;
     cursor: pointer;
 
     &:active {
-      background: darken($ui-disabled, 10%);
+      background: $ui-enabled;
+      color: $ui-text;
     }
+
+    &:hover {
+      color: $ui-text;
+    }
+
 
     &-icon {
       padding-right: $gap;
@@ -46,19 +53,17 @@
 
 
     &.active {
-      background: darken($ui-enabled, 10%);
+      background: $ui-enabled;
+      color: $ui-text;
 
       &:active {
-        background: darken($ui-enabled, 10%);
+        background: $ui-disabled;
+        color: $ui-text-disabled;
       }
-    }
-  }
-}
 
-@media only screen and (min-width : $breakpoint) {
-  .unit-filter {
-    & &__filter:hover, &.active:hover {
-      background: #036ea4;
+      &:hover {
+        color: $ui-text-disabled;
+      }
     }
   }
 }
