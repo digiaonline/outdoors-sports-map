@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 
 const context = path.resolve(__dirname, '../..');
@@ -60,10 +60,9 @@ export default {
       inject: 'body',
       template: 'src/index.html'
     }),
-    new FaviconsWebpackPlugin({
-      logo: './assets/favicon.png',
-      prefix: 'icons-[hash]/'
-    }),
+    new CopyWebpackPlugin([{
+      from: './favicon'
+    }]),
     new webpack.optimize.OccurenceOrderPlugin()
   ],
   postcss: [autoprefixer({ browsers: ['last 2 versions'] })],
