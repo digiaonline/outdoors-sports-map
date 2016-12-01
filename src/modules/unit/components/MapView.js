@@ -144,7 +144,7 @@ class MapView extends Component {
           <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
-            <OSMIcon icon="crosscountry" />
+            <OSMIcon icon="locate" />
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
           {menuOpen ? <InfoMenu t={t} openModal={this.openModal} /> : null}
