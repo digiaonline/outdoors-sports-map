@@ -20,10 +20,14 @@ const Header = ({expand, toggle, toggleIcon, setView}) =>
   <ToggleButton toggle={toggle} icon={toggleIcon}/>
 </div>;
 
-const AddressBar = ({address, handleClick}) =>
+const AddressBar = ({address, handleClick}, context) =>
   <div className="address-bar_container" onClick={() => handleClick(address.location.coordinates.slice().reverse())}>
-    {address && getAddressToDisplay(address)}
+    {address && getAddressToDisplay(address, context.getActiveLanguage())}
   </div>;
+
+AddressBar.contextTypes = {
+  getActiveLanguage: React.PropTypes.func
+};
 
 class UnitBrowser extends Component {
   static propTypes = {

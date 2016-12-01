@@ -3,6 +3,7 @@ import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
 import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 import {DEFAULT_LANG} from '../common/constants';
+import upperFirst from 'lodash/upperFirst';
 
 export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
   let translated = has(attr, lang) && attr[lang];
@@ -122,6 +123,8 @@ export const sortByCondition = (units: Array) =>
     }
   ]);
 
-export const getAddressToDisplay = (address) => {
-  return Object.keys(address).length !== 0 ? address.street.name.fi+' '+address.number+', '+address.street.municipality : null;
+export const getAddressToDisplay = (address, activeLang) => {
+  return Object.keys(address).length !== 0
+    ? getAttr(address.street.name, activeLang)+' '+address.number+', '+upperFirst(address.street.municipality)
+    : null;
 };
