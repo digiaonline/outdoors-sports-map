@@ -2,6 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
+import OSMIcon from '../../home/components/OSMIcon';
 import {View} from './View';
 import Logo from '../../home/components/Logo';
 import Disclaimer from '../../home/components/Disclaimer';
@@ -143,7 +144,7 @@ class MapView extends Component {
           <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
-            <SMIcon icon="address" />
+            <OSMIcon icon="locate" />
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
           {menuOpen ? <InfoMenu t={t} openModal={this.openModal} /> : null}

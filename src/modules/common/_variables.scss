@@ -2,13 +2,15 @@ $disclaimer-height: 24px;
 $header-height: 66px;
 $gap: 8px;
 $breakpoint: 768px;
-$marker-height: 35px;
+$marker-height: 40px;
 
 // COLORS
 $ui-background: #77d5ed;
-$ui-enabled: #038ccc;
-$ui-disabled: #59b3dd;
+$ui-content: #038ccc;
+$ui-enabled: #3b6a9e;
+$ui-disabled: #61abd3;
 $ui-text: #ffffff;
+$ui-text-disabled: #c1dded;
 $status-ok: #72bc3d;
 $status-average: #f5c01a;
 $status-bad: #f54730;
