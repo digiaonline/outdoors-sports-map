@@ -16,10 +16,10 @@ const FilterIcon = ({filter}) => {
     case UnitFilters.SKIING:
       iconName = SKIING_ICON;
       break;
-    case UnitFilters.OPEN_NOW: // FIXME -> STATUS_OK when refactoring filters
+    case UnitFilters.STATUS_OK:
       iconName = STATUS_OK_ICON;
       break;
-    case UnitFilters.STATUS_ANY:
+    case UnitFilters.STATUS_ALL:
       iconName = STATUS_ANY_ICON;
       break;
     default:
