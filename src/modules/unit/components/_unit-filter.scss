@@ -26,21 +26,17 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    border-radius: 999999px;
 
     &:active {
       background: $ui-enabled;
       color: $ui-text;
     }
 
-    &:hover {
-      color: $ui-text;
-    }
-
-
     &-icon {
       padding-right: $gap;
-      font-size: 24px;
-      line-height: 24px;
+      font-size: 30px;
+      line-height: 1;
 
       img {
         height: 30px;
@@ -60,10 +56,18 @@
         background: $ui-disabled;
         color: $ui-text-disabled;
       }
+    }
+  }
+}
 
-      &:hover {
-        color: $ui-text-disabled;
-      }
+@media only screen and (min-width : $breakpoint) {
+  .unit-filter {
+    & &__filter:hover {
+      color: $ui-text;
+    }
+
+    & &__filter.active:hover {
+      color: $ui-text-disabled;
     }
   }
 }

@@ -55,8 +55,9 @@
 .address-bar_container {
   border-radius: 18px;
   padding: 3px 10px;
-  background: $ui-enabled;
+  background: $ui-content;
   color: #fff;
+  margin-bottom: $gap;
 }
 
 @media only screen and (min-width : $breakpoint) {
