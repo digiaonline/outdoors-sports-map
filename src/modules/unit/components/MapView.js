@@ -169,7 +169,7 @@ class MapView extends Component {
   }
 }
 
-export default translate([], {withRef: true})(MapView);
+export default translate(null, {withRef: true})(MapView);
 
 const LanguageChanger = ({changeLanguage, activeLanguage}) =>
   <div className="language-changer">

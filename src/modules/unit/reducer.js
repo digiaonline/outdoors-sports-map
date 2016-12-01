@@ -37,7 +37,7 @@ const ski = handleActions({
     [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkiingServices.indexOf(unitService.id) !== -1))]
 }, []);
 
-const openNow = handleActions({
+const statusOk = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
     [...keys(entities.unit).filter((id) => enumerableQuality(getUnitQuality(entities.unit[id])) <= QualityEnum.satisfactory)]
 }, []);
@@ -49,7 +49,7 @@ const reducer = combineReducers({
   all,
   iceskate,
   ski,
-  open_now: openNow
+  status_ok: statusOk
 });
 
 export default reducer;

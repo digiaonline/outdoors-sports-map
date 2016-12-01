@@ -13,14 +13,14 @@ export const getVisibleUnits = (state: AppState, filters: Array<string>) => {
   let visibleUnits = [];
 
   filters.forEach((filter) => {
-    if(filter === UnitFilters.OPEN_NOW) {
+    if(filter === UnitFilters.STATUS_OK || filter === UnitFilters.STATUS_ALL) {
       return;
     }
     visibleUnits = union(visibleUnits, state.unit[filter]);
   });
 
-  if (filters.includes(UnitFilters.OPEN_NOW)) {
-    visibleUnits = intersection(visibleUnits, state.unit[UnitFilters.OPEN_NOW]);
+  if (filters.includes(UnitFilters.STATUS_OK)) {
+    visibleUnits = intersection(visibleUnits, state.unit[UnitFilters.STATUS_OK]);
   }
 
   if(getSearchActive(state)) {

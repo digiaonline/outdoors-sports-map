@@ -21,10 +21,10 @@
     "FURTHER_INFO": "Further info",
     "SHOW_MORE": "Show more units",
     "FILTER": {
-      "ALL": "All",
+      "STATUS_ALL": "All conditions",
       "ICE_SKATING": "Skating",
       "SKIING": "Skiing",
-      "OPEN_NOW": "Open now"
+      "STATUS_OK": "Usable"
     },
     "SORT": {
       "ALPHABETICAL": "Alphabetical order",
