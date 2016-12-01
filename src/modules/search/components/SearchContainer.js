@@ -32,6 +32,7 @@ class SearchContainer extends Component {
     this.getSuggestions = this.getSuggestions.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.clear = this.clear.bind(this);
+    this.handleAddressClick = this.handleAddressClick.bind(this);
   }
 
   onInputChange(value: string) {
@@ -59,6 +60,13 @@ class SearchContainer extends Component {
     this.props.clearSearch();
   }
 
+  handleAddressClick(coordinates) {
+    const {setView, setLocation} = this.props;
+    this.clear();
+    setLocation(coordinates);
+    setView(coordinates);
+  }
+
   render() {
     const {unitSuggestions, addresses, isActive, setLocation, setView, searchDisabled} = this.props;
     const {searchPhrase, showSuggestions} = this.state;
@@ -72,7 +80,7 @@ class SearchContainer extends Component {
           onClear={this.clear}
           searchActive={isActive}
           disabled={searchDisabled} />
-        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} setLocation={setLocation} setView={setView} addresses={addresses}/>}
+        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} handleClick={this.handleAddressClick} addresses={addresses}/>}
       </div>
     );
   }

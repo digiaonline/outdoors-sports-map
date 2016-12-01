@@ -29,7 +29,8 @@ const unitSuggestions = handleActions({
 
 const addressSuggestions = handleActions({
   [SearchActions.RECEIVE_ADDRESS_SUGGESTIONS]: (state: Object, {payload: results}: EntityAction) =>
-    results ? results : []
+    results ? results : [],
+  [SearchActions.CLEAR]: () => []
 }, []);
 
 const reducer = combineReducers({
