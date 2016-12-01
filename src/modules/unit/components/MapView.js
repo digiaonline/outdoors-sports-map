@@ -2,6 +2,7 @@
 import React, {Component, PropTypes} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
+import OSMIcon from '../../home/components/OSMIcon';
 import {View} from './View';
 import Logo from '../../home/components/Logo';
 import Disclaimer from '../../home/components/Disclaimer';
@@ -10,7 +11,7 @@ import Control from '../../map/components/Control';
 //import Control from 'react-leaflet-control';
 import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
-import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM} from '../../map/constants';
+import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, BOUNDARIES} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
@@ -46,6 +47,7 @@ class MapView extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleZoom = this.handleZoom.bind(this);
+    this.setView = this.setView.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +64,11 @@ class MapView extends Component {
       const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
       !isEmpty(unit) && this.centerMapToUnit(unit);
     }
+
+    /*if (nextProps.position[0] !== this.props.position[0] || nextProps.position[1] !== this.props.position[1]) {
+      console.log('here');
+      this.refs.map.leafletElement.setView([60,25]);
+    }*/
   }
 
   centerMapToUnit(unit: Object) {
@@ -111,6 +118,10 @@ class MapView extends Component {
     }
   }
 
+  setView(coordinates) {
+    this.refs.map.leafletElement.setView(coordinates);
+  }
+
   openModal() {
     this.setState({modalOpen: true});
   }
@@ -129,20 +140,21 @@ class MapView extends Component {
           zoomControl={false}
           attributionControl={false}
           center={position}
+          maxBounds={BOUNDARIES}
           zoom={DEFAULT_ZOOM}
           minZoom={MIN_ZOOM}
           onClick={this.handleClick}
           onLocationfound={this.handleClick}
           onZoomend={this.handleZoom}>
           <TileLayer
-        url={MAP_URL}
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url={MAP_URL}
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <UserLocationMarker />
           <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
-            <SMIcon icon="address" />
+            <OSMIcon icon="locate" />
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
           {menuOpen ? <InfoMenu t={t} openModal={this.openModal} /> : null}
@@ -158,7 +170,7 @@ class MapView extends Component {
   }
 }
 
-export default translate()(MapView);
+export default translate([], {withRef: true})(MapView);
 
 const LanguageChanger = ({changeLanguage, activeLanguage}) =>
   <div className="language-changer">

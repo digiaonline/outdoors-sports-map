@@ -29,3 +29,6 @@ export const fetchUnitSuggestions = (input: string): Action =>
 
 export const receiveUnitSuggestions = (results: Array<Object>) =>
   createAction(SearchActions.RECEIVE_UNIT_SUGGESTIONS)(results);
+
+export const receiveAddressSuggestions = (results: Array<Object>) =>
+  createAction(SearchActions.RECEIVE_ADDRESS_SUGGESTIONS)(results);

@@ -16,3 +16,6 @@ export const getUnitSuggestions = (state: AppState): Array<Object> =>
 
 export const getUnitResultIDs = (state: AppState): Array<string> =>
   state.search.unitResults;
+
+export const getAddresses = (state: AppState): Array<Object> =>
+  state.search.addressSuggestions;

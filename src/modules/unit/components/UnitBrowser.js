@@ -7,17 +7,23 @@ import {HEADER_HEIGHT} from '../../common/constants.js';
 import {UnitFilters} from '../constants.js';
 import UnitFilter from './UnitFilter.js';
 import SearchContainer from '../../search/components/SearchContainer';
+import {getAddressToDisplay} from '../helpers';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
     <SMIcon icon={icon} />
   </button>;
 
-const Header = ({expand, toggle, toggleIcon}) =>
+const Header = ({expand, toggle, toggleIcon, setView}) =>
 <div className="header">
-  <SearchContainer onSearch={expand}/>
+  <SearchContainer onSearch={expand} setView={setView}/>
   <ToggleButton toggle={toggle} icon={toggleIcon}/>
 </div>;
+
+const AddressBar = ({address, handleClick}) =>
+  <div className="address-bar_container" onClick={() => handleClick(address.location.coordinates.slice().reverse())}>
+    {address && getAddressToDisplay(address)}
+  </div>;
 
 class UnitBrowser extends Component {
   static propTypes = {
@@ -58,7 +64,7 @@ class UnitBrowser extends Component {
   }
 
   toggleFilter(filter: string): void {
-    const {activeFilter, router, location: query} = this.props;
+    const {activeFilter, router, location: {query}} = this.props;
     const NO_FILTER = 'no_filter';
     let newFilter = activeFilter.slice();
 
@@ -95,7 +101,7 @@ class UnitBrowser extends Component {
   }
 
   render() {
-    const {units, isLoading, isSearching, position, activeFilter, openUnit, params} = this.props;
+    const {units, isLoading, isSearching, position, activeFilter, openUnit, setLocation, setView, address, params} = this.props;
     const {isExpanded} = this.state;
     let contentMaxHeight = this.state.contentMaxHeight;
     if (isExpanded) {
@@ -108,10 +114,12 @@ class UnitBrowser extends Component {
           expand={this.expand}
           toggle={this.toggle}
           toggleIcon={isExpanded ? 'map-options' : 'browse'}
+          setView={setView}
         />
+        <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
+        {Object.keys(address).length !== 0 && <AddressBar handleClick={setView} address={address} />}
         {isExpanded && !params.unitId &&
           <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
-            <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
             <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} openUnit={openUnit} />
           </div>
         }

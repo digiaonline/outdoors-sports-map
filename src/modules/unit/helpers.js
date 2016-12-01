@@ -121,3 +121,7 @@ export const sortByCondition = (units: Array) =>
       return (new Date()).getTime() - observationTime;
     }
   ]);
+
+export const getAddressToDisplay = (address) => {
+  return Object.keys(address).length !== 0 ? address.street.name.fi+' '+address.number+', '+address.street.municipality : null;
+};

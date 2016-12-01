@@ -3,7 +3,7 @@
 
    .dropdown-toggle {
      width: 100%;
-     background: $ui-enabled !important;
+     background: $ui-content !important;
      border: 0;
      padding: $gap 2*$gap;
      color: $ui-text !important;
@@ -21,11 +21,11 @@
      }
 
      &:active {
-       background: darken($ui-enabled, 10%);
+       background: darken($ui-content, 10%);
      }
 
      &:hover {
-       background: $ui-enabled;
+       background: $ui-content;
        color: $ui-text;
      }
    }
@@ -60,7 +60,7 @@
 
   //  &.open {
   //    .dropdown-toggle, .dropdown-toggle:active {
-  //      background: $ui-enabled !important;
+  //      background: $ui-content !important;
   //      color: $ui-text !important;
   //    }
   //  }

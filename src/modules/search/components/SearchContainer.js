@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import * as selectors from '../selectors';
 import {getIsLoading as getIsUnitLoading} from '../../unit/selectors';
 import {searchUnits, fetchUnitSuggestions, clearSearch} from '../actions';
+import {setLocation} from '../../map/actions';
 import SearchBar from './SearchBar';
 import SearchSuggestions from './SearchSuggestions';
 
@@ -20,7 +21,7 @@ class SearchContainer extends Component {
     fetchUnitSuggestions: PropTypes.func,
     searchDisabled: PropTypes.bool,
     onSearch: PropTypes.func
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -59,7 +60,7 @@ class SearchContainer extends Component {
   }
 
   render() {
-    const {unitSuggestions, isActive, searchDisabled} = this.props;
+    const {unitSuggestions, addresses, isActive, setLocation, setView, searchDisabled} = this.props;
     const {searchPhrase, showSuggestions} = this.state;
 
     return (
@@ -71,7 +72,7 @@ class SearchContainer extends Component {
           onClear={this.clear}
           searchActive={isActive}
           disabled={searchDisabled} />
-        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions}/>}
+        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} setLocation={setLocation} setView={setView} addresses={addresses}/>}
       </div>
     );
   }
@@ -80,10 +81,11 @@ class SearchContainer extends Component {
 const mapStateToProps = (state) => ({
   unitSuggestions: selectors.getUnitSuggestions(state),
   isActive: selectors.getIsActive(state),
-  searchDisabled: getIsUnitLoading(state)
+  searchDisabled: getIsUnitLoading(state),
+  addresses: selectors.getAddresses(state)
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({searchUnits, fetchUnitSuggestions, clearSearch}, dispatch);
+  bindActionCreators({searchUnits, fetchUnitSuggestions, clearSearch, setLocation}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);

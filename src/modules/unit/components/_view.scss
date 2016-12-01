@@ -14,7 +14,7 @@
       margin: 0;
 
       .list-view__block {
-        border-top: 1px solid $ui-enabled;
+        border-top: 1px solid $ui-content;
         padding: $gap 0;
       }
     }
@@ -45,7 +45,7 @@
       }
 
       &__unit-open {
-        color: $ui-enabled;
+        color: $ui-content;
       }
 
       &__unit-marker img {

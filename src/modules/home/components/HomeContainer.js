@@ -46,6 +46,8 @@ export class HomeContainer extends Component {
     this.closeUnit = this.closeUnit.bind(this);
     this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
     this.getActiveLanguage = this.getActiveLanguage.bind(this);
+    this.setLocation = this.setLocation.bind(this);
+    this.setView = this.setView.bind(this);
   }
 
   getChildContext() {
@@ -56,9 +58,9 @@ export class HomeContainer extends Component {
 
   componentWillMount() {
     this.props.fetchUnits();
-    this.props.setLocation(locations.HELSINKI);
 
     this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
+    this.initialPosition = this.props.position;
 
     // TODO: re-enable langauge guessing from browser
     // if(!getStoredLang()) {
@@ -87,6 +89,14 @@ export class HomeContainer extends Component {
     this.props.changeLanguage(language);
   }
 
+  setLocation(location: array) {
+    this.props.setLocation(location);
+  }
+
+  setView(coordinates) {
+    this.refs.map.getWrappedInstance().setView(coordinates);
+  }
+
   openUnit(unitId: string) {
     const {router, location: {query}} = this.props;
     router.push({
@@ -108,7 +118,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, isSearching, position, mapCenter, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, isSearching, position, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
@@ -121,14 +131,18 @@ export class HomeContainer extends Component {
           activeFilter={activeFilter}
           openUnit={this.openUnit}
           position={mapCenter}
+          address={address}
           params={params}
+          setLocation={this.setLocation}
+          setView={this.setView}
         />
         <MapView
+          ref="map"
           activeLanguage={activeLanguage}
           selectedUnitId={+params.unitId}
           params={params}
           setLocation={this.props.setLocation}
-          position={position}
+          position={this.initialPosition}
           units={unitData}
           changeLanguage={this.handleChangeLanguage}
           openUnit={this.openUnit}
@@ -149,6 +163,8 @@ const mapStateToProps = (state, props) => ({
   activeLanguage: fromLanguage.getLanguage(state),
   isLoading: fromUnit.getIsLoading(state),
   mapCenter: fromMap.getLocation(state),
+  position: fromMap.getLocation(state),
+  address: fromMap.getAddress(state),
   isSearching: fromSearch.getIsFetching(state)
 });
 
