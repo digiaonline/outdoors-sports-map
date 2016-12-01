@@ -27,19 +27,11 @@ class UnitMarker extends Component {
   }
 
   getIconWidth(zoomLevel) {
-    if(zoomLevel - DEFAULT_ZOOM > 0) {
-      return (zoomLevel - DEFAULT_ZOOM + 4) * 0.25 * UNIT_ICON_WIDTH;
-    } else {
-      return zoomLevel / DEFAULT_ZOOM * UNIT_ICON_WIDTH;
-    }
+    return zoomLevel / 18 * UNIT_ICON_WIDTH;
   }
 
   getIconHeight(icon, zoomLevel) {
-    if(zoomLevel - DEFAULT_ZOOM > 0) {
-      return (zoomLevel - DEFAULT_ZOOM + 4) * 0.25 * icon.height;
-    } else {
-      return zoomLevel / DEFAULT_ZOOM * icon.height;
-    }
+    return zoomLevel / 18 * icon.height;
   }
 
   _createIcon(unit: Object, isSelected: boolean) {
