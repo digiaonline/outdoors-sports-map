@@ -194,7 +194,7 @@ const InfoMenu = ({openModal, t}) =>
     <InfoMenuItem icon='info' handleClick={openModal}>
       {t('MAP.INFO_MENU.ABOUT_SERVICE')}
     </InfoMenuItem>
-    <InfoMenuItem>
+    <InfoMenuItem handleClick={() => null}>
       <a target="_blank" href='http://osm.org/copyright' style={{padding: 1}}>&copy; {t('MAP.ATTRIBUTION')} </a>
     </InfoMenuItem>
   </div>;
