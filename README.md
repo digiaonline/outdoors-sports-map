@@ -6,6 +6,7 @@ Helsingin kaupungin Ulkoliikuntakartta.
 
 - Install [NPM](https://www.npmjs.com/) and [Yarn](https://yarnpkg.com)
 - Clone this project
+- Checkout the submodule (`git submodule update --init`)
 - Run `yarn` to install dependencies
 - Run `npm start` to start up the development server
 - Application is now available at `localhost:5000`
@@ -14,4 +15,13 @@ On Linux `npm rebuild node-sass` might be necessary.
 
 ## Deploying
 
-TODO
+* Install Capistrano by running the following commands:
+
+```
+gem install capistrano -v '~> 3.6.0'
+gem install capistrano-git-submodule-strategy
+```
+
+* Run `cap production deploy` from the project's root directory
+
+If you want to deploy a branch, run e.g. `BRANCH=develop cap production deploy` instead.
