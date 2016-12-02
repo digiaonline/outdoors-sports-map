@@ -49,10 +49,10 @@ export const SortKeys = {
 
 export const UNIT_BATCH_SIZE = 20;
 
-export const DefaultFilters = [
-  UnitFilters.SKIING,
-  UnitFilters.STATUS_OK
-];
+export const DefaultFilters = {
+  sport: UnitFilters.SKIING,
+  status: UnitFilters.STATUS_OK
+};
 
 export const UnitQuality = {
   GOOD: 'good',
