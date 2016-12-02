@@ -121,7 +121,7 @@ class ListView extends Component {
               handleClick={() => openUnit(unit.id)}/>)}
             {
               units.length !== totalUnits &&
-              <a style={{display: 'block', textAlign: 'center', cursor: 'pointer'}} onClick={this.loadMoreUnits}>
+              <a style={{display: 'block', textAlign: 'center', cursor: 'pointer', 'margin': '18px auto 10px'}} onClick={this.loadMoreUnits}>
                 {t('UNIT.SHOW_MORE')}
               </a>
             }

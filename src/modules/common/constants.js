@@ -6,7 +6,6 @@ export const APP_NAME = 'outdoors-sports-map';
 
 export const DEFAULT_LANG = 'fi';
 
-export const HEADER_HEIGHT = 66;
 export const mobileBreakpoint = 768;
 
 export type Action = {
