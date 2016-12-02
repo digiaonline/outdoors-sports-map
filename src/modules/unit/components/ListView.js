@@ -15,13 +15,13 @@ const UnitListItem = ({unit, handleClick}, context) => {
   const serviceName = unitHelpers.getServiceName(unit, context.getActiveLanguage());
 
   return (
-  <Link to={`/unit/${unit.id}`} className="list-view-item">
+  <Link to={`/unit/${unit.id}`} onClick={(e) => {e.preventDefault(); handleClick();}} className="list-view-item">
     <div className="list-view-item__unit-marker"><UnitIcon unit={unit} alt={serviceName}/></div>
     <div className="list-view-item__unit-details">
       <div className="list-view-item__unit-name">{unitHelpers.getAttr(unit.name, context.getActiveLanguage())}</div>
       <ObservationStatus unit={unit}/>
     </div>
-    <div className="list-view-item__unit-open" onClick={() => handleClick()}>
+    <div className="list-view-item__unit-open">
         <SMIcon icon="forward"/>
     </div>
   </Link>);
