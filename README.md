@@ -11,3 +11,7 @@ Helsingin kaupungin Ulkoliikuntakartta.
 - Application is now available at `localhost:5000`
 
 On Linux `npm rebuild node-sass` might be necessary.
+
+## Deploying
+
+TODO
