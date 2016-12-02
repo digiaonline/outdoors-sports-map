@@ -11,7 +11,6 @@ export const getAllUnits = (state: AppState/*, props: Object*/) =>
   state.unit.all.map((id) => getUnitById(state, {id}));
 
 const _getVisibleUnits = (state: AppState, query: Object) => {
-  console.log('calculating visible units');
   const sport = query && query.sport || DefaultFilters.sport;
   const status = query && query.status || DefaultFilters.status;
 
