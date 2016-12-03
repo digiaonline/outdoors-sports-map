@@ -3,12 +3,10 @@ import {withRouter} from 'react-router';
 import ListView from './ListView.js';
 import SMIcon from '../../home/components/SMIcon';
 import values from 'lodash/values';
-import {HEADER_HEIGHT} from '../../common/constants.js';
-import {UnitFilters, SportFilters, StatusFilters} from '../constants.js';
+import {DefaultFilters, SportFilters, StatusFilters} from '../constants.js';
 import UnitFilter from './UnitFilter.js';
 import SearchContainer from '../../search/components/SearchContainer';
 import {getAddressToDisplay} from '../helpers';
-import without from 'lodash/without';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
@@ -32,8 +30,7 @@ AddressBar.contextTypes = {
 
 class UnitBrowser extends Component {
   static propTypes = {
-    units: PropTypes.array,
-    activeFilter: PropTypes.array
+    units: PropTypes.array
   };
 
   constructor(props) {
@@ -44,10 +41,12 @@ class UnitBrowser extends Component {
     };
 
     this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
-    this.toggleFilter = this.toggleFilter.bind(this);
+    this.toggleStatusFilter = this.toggleStatusFilter.bind(this);
+    this.toggleSportFilter = this.toggleSportFilter.bind(this);
     this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
     this.toggle = this.toggle.bind(this);
     this.expand = this.expand.bind(this);
+    this.updateQueryParameter = this.updateQueryParameter.bind(this);
   }
 
   componentDidMount() {
@@ -65,53 +64,24 @@ class UnitBrowser extends Component {
   calculateMaxHeight() {
     const isMobile = window.innerWidth < 768;
     const bottomSpace = isMobile ? 80 : 0;
-    return window.innerHeight - HEADER_HEIGHT - bottomSpace;
+    const fixedPartHeight = document.getElementById('always-visible').offsetHeight;
+    return window.innerHeight - fixedPartHeight - bottomSpace;
   }
 
-  // toggleFilter(filter: string): void {
-  //   const {activeFilter, router, location: {query}} = this.props;
-  //   const NO_FILTER = 'no_filter';
-  //   let newFilter = activeFilter.slice();
-  //
-  //   // if (newFilter.includes(NO_FILTER)) {
-  //   //   const index = newFilter.indexOf(NO_FILTER);
-  //   //   newFilter = [...newFilter.slice(0, index), ...newFilter.slice(index + 1)];
-  //   // }
-  //   //
-  //   // Toggle given filter
-  //   const index = newFilter.indexOf(filter);
-  //   if (index === -1) {
-  //     newFilter = [...newFilter, filter];
-  //   } else {
-  //     newFilter = [
-  //       ...newFilter.slice(0, index),
-  //       ...newFilter.slice(index + 1)
-  //     ];
-  //   }
-  //   //
-  //   // // Empty filter parameter defaults to DefaultFilters.
-  //   // newFilter = newFilter.length === 0 ? [NO_FILTER] : newFilter;
-  //
-  //   router.push({
-  //     query: Object.assign({}, query, {filter: newFilter})
-  //   });
-  // }
-
-  toggleFilter(filter: string): void {
-    const {activeFilter, router, location: {query}} = this.props;
-    let newFilter = activeFilter.slice();
-
-    if(SportFilters.includes(filter)){
-      newFilter = without(activeFilter.slice(), ...SportFilters);
-    } else if(StatusFilters.includes(filter)){
-      newFilter = without(activeFilter.slice(), ...StatusFilters);
-    }
-
-    newFilter = [...newFilter, filter];
+  updateQueryParameter(key: string, value: string): void {
+    const {router, location: {query}} = this.props;
 
     router.push({
-      query: Object.assign({}, query, {filter: newFilter})
+      query: Object.assign({}, query, {[key]: value})
     });
+  }
+
+  toggleStatusFilter(filter: string): void {
+    this.updateQueryParameter('status', filter);
+  }
+
+  toggleSportFilter(sport: string): void {
+    this.updateQueryParameter('sport', sport);
   }
 
   toggle() {
@@ -123,28 +93,32 @@ class UnitBrowser extends Component {
   }
 
   render() {
-    const {units, isLoading, isSearching, position, activeFilter, openUnit, setLocation, setView, address, params} = this.props;
+    const {units, isLoading, isSearching, position, openUnit, setLocation, setView, address, params, location: {query}} = this.props;
     const {isExpanded} = this.state;
     let contentMaxHeight = this.state.contentMaxHeight;
     if (isExpanded) {
       contentMaxHeight = contentMaxHeight || this.calculateMaxHeight();
     }
 
+    const currentSportFilter = query && query.sport || DefaultFilters.sport;
+    const currentStatusFilter = query && query.status || DefaultFilters.status;
+
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`} style={params.unitId ? {display: 'none'} : null}>
+        <div id="always-visible" className="unit-browser__fixed">
         <Header
           expand={this.expand}
           toggle={this.toggle}
           toggleIcon={isExpanded ? 'map-options' : 'browse'}
           setView={setView}
         />
-        <UnitFilter active={activeFilter} all={values(UnitFilters)} toggleFilter={this.toggleFilter} />
+        <UnitFilter active={currentSportFilter} all={values(SportFilters)} toggleFilter={this.toggleSportFilter} />
+        <UnitFilter active={currentStatusFilter} all={values(StatusFilters)} toggleFilter={this.toggleStatusFilter} />
         {Object.keys(address).length !== 0 && <AddressBar handleClick={setView} address={address} />}
-        {isExpanded && !params.unitId &&
-          <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
-            <ListView activeFilter={activeFilter} isLoading={isLoading || isSearching} units={units} position={position} openUnit={openUnit} />
-          </div>
-        }
+      </div>
+        <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
+          <ListView isLoading={isLoading || isSearching} units={units} position={position} openUnit={openUnit} />
+        </div>
       </div>
     );
   }

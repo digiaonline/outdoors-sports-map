@@ -1,6 +1,7 @@
 import {AppState} from '../common/constants';
-import {UnitFilters} from './constants';
-import {union, intersection, isEmpty} from 'lodash';
+import {UnitFilters, DefaultFilters, QualityEnum} from './constants';
+import {enumerableQuality, getUnitQuality} from './helpers';
+import {intersection, isEmpty, memoize} from 'lodash';
 import {getIsActive as getSearchActive, getUnitResultIDs} from '../search/selectors';
 
 export const getUnitById = (state: AppState, props: Object) =>
@@ -9,17 +10,13 @@ export const getUnitById = (state: AppState, props: Object) =>
 export const getAllUnits = (state: AppState/*, props: Object*/) =>
   state.unit.all.map((id) => getUnitById(state, {id}));
 
-export const getVisibleUnits = (state: AppState, filters: Array<string>) => {
-  let visibleUnits = [];
+const _getVisibleUnits = (state: AppState, query: Object) => {
+  const sport = query && query.sport || DefaultFilters.sport;
+  const status = query && query.status || DefaultFilters.status;
 
-  filters.forEach((filter) => {
-    if(filter === UnitFilters.STATUS_OK || filter === UnitFilters.STATUS_ALL) {
-      return;
-    }
-    visibleUnits = union(visibleUnits, state.unit[filter]);
-  });
+  let visibleUnits = state.unit[sport];
 
-  if (filters.includes(UnitFilters.STATUS_OK)) {
+  if (status === UnitFilters.STATUS_OK) {
     visibleUnits = intersection(visibleUnits, state.unit[UnitFilters.STATUS_OK]);
   }
 
@@ -29,6 +26,10 @@ export const getVisibleUnits = (state: AppState, filters: Array<string>) => {
 
   return visibleUnits.map((id) => getUnitById(state, {id}));
 };
+
+export const getVisibleUnits = memoize(_getVisibleUnits, (state: AppState, query: Array<string>) => (
+  `${JSON.stringify(state.unit)}${JSON.stringify(query)}`
+));
 
 export const getSearchResults = (state: AppState/*, props: Object*/) =>
   state.unit.searchResults.map((id) => getUnitById(state, {id}));

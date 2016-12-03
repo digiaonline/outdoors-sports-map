@@ -11,21 +11,30 @@ import ObservationStatus from './ObservationStatus';
 import SortSelectorDropdown from './SortSelectorDropdown';
 import UnitIcon from './UnitIcon';
 
-const UnitListItem = ({unit, handleClick}, context) => {
-  const serviceName = unitHelpers.getServiceName(unit, context.getActiveLanguage());
 
-  return (
-  <Link to={`/unit/${unit.id}`} className="list-view-item">
-    <div className="list-view-item__unit-marker"><UnitIcon unit={unit} alt={serviceName}/></div>
-    <div className="list-view-item__unit-details">
-      <div className="list-view-item__unit-name">{unitHelpers.getAttr(unit.name, context.getActiveLanguage())}</div>
-      <ObservationStatus unit={unit}/>
-    </div>
-    <div className="list-view-item__unit-open" onClick={() => handleClick()}>
-        <SMIcon icon="forward"/>
-    </div>
-  </Link>);
-};
+class UnitListItem extends Component {
+  shouldComponentUpdate({unit}) {
+    return JSON.stringify(this.props.unit) !== JSON.stringify(unit);
+  }
+
+  render() {
+    const {unit, handleClick} = this.props;
+    const context = this.context;
+    const serviceName = unitHelpers.getServiceName(unit, context.getActiveLanguage());
+
+    return (
+    <Link to={`/unit/${unit.id}`} onClick={(e) => {e.preventDefault(); handleClick();}} className="list-view-item">
+      <div className="list-view-item__unit-marker"><UnitIcon unit={unit} alt={serviceName}/></div>
+      <div className="list-view-item__unit-details">
+        <div className="list-view-item__unit-name">{unitHelpers.getAttr(unit.name, context.getActiveLanguage())}</div>
+        <ObservationStatus unit={unit}/>
+      </div>
+      <div className="list-view-item__unit-open">
+          <SMIcon icon="forward"/>
+      </div>
+    </Link>);
+  }
+}
 
 UnitListItem.contextTypes = {
   getActiveLanguage: React.PropTypes.func
@@ -112,7 +121,7 @@ class ListView extends Component {
               handleClick={() => openUnit(unit.id)}/>)}
             {
               units.length !== totalUnits &&
-              <a style={{display: 'block', textAlign: 'center', cursor: 'pointer'}} onClick={this.loadMoreUnits}>
+              <a style={{display: 'block', textAlign: 'center', cursor: 'pointer', 'margin': '18px auto 10px'}} onClick={this.loadMoreUnits}>
                 {t('UNIT.SHOW_MORE')}
               </a>
             }

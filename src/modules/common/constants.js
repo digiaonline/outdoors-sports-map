@@ -1,12 +1,11 @@
 import {UnitState} from '../unit/constants';
 
-export const API_URL = 'http://209.50.48.39/servicemap/v1';//'http://api.hel.fi/servicemap/v1';
+export const API_URL = 'https://servicemat.hel.ninja/servicemap/v1/'; //http://api.hel.fi/servicemap/v1';
 export const DIGITRANSIT_API_URL = 'https://api.digitransit.fi/geocoding/v1';
 export const APP_NAME = 'outdoors-sports-map';
 
 export const DEFAULT_LANG = 'fi';
 
-export const HEADER_HEIGHT = 66;
 export const mobileBreakpoint = 768;
 
 export type Action = {

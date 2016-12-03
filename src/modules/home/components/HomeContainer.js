@@ -4,9 +4,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
-import {getAttr} from '../../unit/helpers';
 import {changeLanguage} from '../../language/actions';
-import {getStoredLang} from '../../language/helpers';
 import * as fromMap from '../../map/selectors';
 import * as fromSearch from '../../search/selectors';
 import * as fromUnit from '../../unit/selectors';
@@ -22,16 +20,12 @@ export class HomeContainer extends Component {
   static propTypes = {
     fetchUnits: PropTypes.func.isRequired,
     position: PropTypes.array.isRequired,
-    selectedView: PropTypes.string.isRequired,
-    unitData: PropTypes.array,
-    filter: PropTypes.any.isRequired
+    unitData: PropTypes.array
   };
 
   static defaultProps = {
     unitData: [],
-    position: locations.HELSINKI,
-    selectedView: views.MAP,
-    filter: DefaultFilters
+    position: locations.HELSINKI
   };
 
   constructor(props) {
@@ -118,7 +112,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, isSearching, position, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
@@ -148,7 +142,7 @@ export class HomeContainer extends Component {
           openUnit={this.openUnit}
           mapCenter={mapCenter}
         />
-        {params.unitId && <SingleUnitModalContainer isLoading={isLoading} isOpen={true} units={unitData} params={params} handleClick={this.closeUnit} /> }
+        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} units={unitData} params={params} handleClick={this.closeUnit} />
       </div>
     );
   }
@@ -159,7 +153,7 @@ HomeContainer.childContextTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  unitData: fromUnit.getVisibleUnits(state, props.location.query.filter ? arrayifyQueryValue(props.location.query.filter) : DefaultFilters),
+  unitData: fromUnit.getVisibleUnits(state, props.location.query),
   activeLanguage: fromLanguage.getLanguage(state),
   isLoading: fromUnit.getIsLoading(state),
   mapCenter: fromMap.getLocation(state),

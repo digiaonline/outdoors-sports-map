@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import L from 'leaflet';
-//import {getUnitGeometry} from '../helpers';
+import {getUnitQuality} from '../helpers';
 import UnitMarker from './UnitMarker';
 import UnitGeometry from './UnitGeometry';
 
@@ -17,6 +17,13 @@ export class SingleUnitOnMap extends Component{
     L.DomEvent.stopPropagation(e);
 
     openUnit(unit.id);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {unit, isSelected} = this.props;
+    const isQuality = getUnitQuality(unit) !== getUnitQuality(nextProps.unit);
+    const isSelectedUpdated = isSelected !== nextProps.isSelected;
+    return isQuality || isSelectedUpdated;
   }
 
   render () {
