@@ -7,7 +7,6 @@ import {DefaultFilters, SportFilters, StatusFilters} from '../constants.js';
 import UnitFilter from './UnitFilter.js';
 import SearchContainer from '../../search/components/SearchContainer';
 import {getAddressToDisplay} from '../helpers';
-import without from 'lodash/without';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
@@ -65,9 +64,7 @@ class UnitBrowser extends Component {
   calculateMaxHeight() {
     const isMobile = window.innerWidth < 768;
     const bottomSpace = isMobile ? 80 : 0;
-    //const fixedPartHeight = window.getComputedStyle(document.getElementById('always-visible')).height;
     const fixedPartHeight = document.getElementById('always-visible').offsetHeight;
-    console.log(fixedPartHeight);
     return window.innerHeight - fixedPartHeight - bottomSpace;
   }
 

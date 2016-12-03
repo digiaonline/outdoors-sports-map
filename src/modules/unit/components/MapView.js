@@ -40,6 +40,7 @@ class MapView extends Component {
       zoomLevel: DEFAULT_ZOOM
     };
 
+    this.setLocation = this.setLocation.bind(this);
     this.locateUser = this.locateUser.bind(this);
     this.updateIsMobile = this.updateIsMobile.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -100,6 +101,14 @@ class MapView extends Component {
   }
 
   handleClick(event: Object) {
+    // Click events from info menu and language changer hit this. Don't
+    // do anything for those events.
+    if(event.originalEvent.target.className.includes('leaflet')) {
+      this.setLocation(event);
+    }
+  }
+
+  setLocation(event: Object) {
     this.props.setLocation(latLngToArray(event.latlng));
   }
 
@@ -145,7 +154,7 @@ class MapView extends Component {
           zoom={DEFAULT_ZOOM}
           minZoom={MIN_ZOOM}
           onClick={this.handleClick}
-          onLocationfound={this.handleClick}
+          onLocationfound={this.setLocation}
           onZoomend={this.handleZoom}>
           <TileLayer
             url={MAP_URL}
@@ -200,7 +209,7 @@ const InfoMenu = ({openModal, t}) =>
   </div>;
 
 const InfoMenuItem = ({children, handleClick, icon}) =>
-  <div className="info-menu-item" onClick={() => handleClick()}>
+  <div className="info-menu-item" onClick={handleClick}>
     {icon ? <SMIcon icon={icon} style={{paddingRight: 2}}/> : null}
     {children}
   </div>;
