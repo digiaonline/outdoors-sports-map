@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import SMIcon from '../../home/components/SMIcon';
-import {getServiceName, getAttr} from '../helpers.js';
+import {getServiceName, getAttr, getOpeningHours} from '../helpers.js';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
 import UnitIcon from './UnitIcon';
 
-const ModalHeader = ({handleClick, unit, isLoading, t}, context) => {
-  const unitAddress = unit ? getAttr(unit.street_address, context.getActiveLanguage()) : null;
+const ModalHeader = ({handleClick, unit, isLoading, activeLang, t}) => {
+  const unitAddress = unit ? getAttr(unit.street_address, activeLang()) : null;
   const unitZIP = unit ? unit.address_zip : null;
 
   return(
@@ -17,7 +17,7 @@ const ModalHeader = ({handleClick, unit, isLoading, t}, context) => {
           <div>
             {isLoading
               ? <h4>{t('MODAL.LOADING')}</h4>
-              : <h4>{unit ? getAttr(unit.name, context.getActiveLanguage()) : t('MODAL.NOT_FOUND')}</h4>
+              : <h4>{unit ? getAttr(unit.name, activeLang()) : t('MODAL.NOT_FOUND')}</h4>
             }
           </div>
           <div style={{alignSelf: 'center'}}>
@@ -30,7 +30,7 @@ const ModalHeader = ({handleClick, unit, isLoading, t}, context) => {
               <div>
                 <p>
                 {
-                  getServiceName(unit, context.getActiveLanguage())
+                  getServiceName(unit, activeLang())
                 }
                 </p>
                 <p>
@@ -45,11 +45,6 @@ const ModalHeader = ({handleClick, unit, isLoading, t}, context) => {
     </Modal.Header>
   );
 };
-
-ModalHeader.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
-};
-
 
 const LocationState = ({unit, t}) =>
   <div className="modal-body-box">
@@ -75,6 +70,12 @@ const LocationHeightProfile = ({t}) =>
     Wow such profile.
   </div>;
 
+const LocationOpeningHours = ({unit, t, activeLang}) =>
+  <div className="modal-body-box">
+    <div className="modal-body-box-headline">{t('MODAL.OPENING_HOURS')}</div>
+    {getOpeningHours(unit, activeLang())}
+  </div>;
+
 export class SingleUnitModalContainer extends Component {
 
   constructor(props) {
@@ -88,16 +89,18 @@ export class SingleUnitModalContainer extends Component {
 
   render(){
     const {units, handleClick, params, isLoading, t} = this.props;
+    const {getActiveLanguage} = this.context;
     const currentUnit = units ? this.getCurrentUnit(units, params.unitId) : null;
 
     return (
       <div>
         <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false} animation={false}>
-          <ModalHeader unit={currentUnit} handleClick={handleClick} isLoading={isLoading} t={t}/>
+          <ModalHeader unit={currentUnit} handleClick={handleClick} isLoading={isLoading} t={t} activeLang={getActiveLanguage}/>
           {currentUnit && !isLoading ?
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
               <LocationInfo t={t}/>
+              {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
             </Modal.Body>
             : null
           }
@@ -106,5 +109,9 @@ export class SingleUnitModalContainer extends Component {
     );
   }
 }
+
+SingleUnitModalContainer.contextTypes = {
+  getActiveLanguage: React.PropTypes.func
+};
 
 export default translate()(SingleUnitModalContainer);

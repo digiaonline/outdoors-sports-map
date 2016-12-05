@@ -38,7 +38,8 @@
     "QUALITY": "Quality",
     "INFO": "Info",
     "WEATHER": "Weather",
-    "HEIGHT_PROFILE": "Height profile"
+    "HEIGHT_PROFILE": "Height profile",
+    "OPENING_HOURS": "Opening hours"
   },
   "VIEW": {
     "POPUP": {

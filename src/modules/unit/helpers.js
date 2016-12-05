@@ -61,6 +61,11 @@ export const getUnitQuality = (unit: Object): string => {
   return observation ? observation.quality : UnitQuality.UNKNOWN;
 };
 
+export const getOpeningHours = (unit: Object, activeLang: string): string => {
+  if(unit.services[0].id == UnitServices.MECHANICALLY_FROZEN_ICE && unit.connections && unit.connections[1]){
+    return getAttr(unit.connections[1].name, activeLang);
+  }};
+
 export const enumerableQuality = (quality: string): number => {
   return QualityEnum[quality] ? QualityEnum[quality] : Number.MAX_VALUE;
 };
