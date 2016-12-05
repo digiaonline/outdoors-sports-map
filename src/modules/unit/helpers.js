@@ -1,7 +1,7 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
-import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
+import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, UnitServices, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 import {DEFAULT_LANG} from '../common/constants';
 import upperFirst from 'lodash/upperFirst';
 
@@ -53,6 +53,7 @@ export const getServiceName = (unit: Object, language: ?string = DEFAULT_LANG) =
 
 export const getObservation = (unit: Object, matchProperty: ?string='condition') => {
   const {observations} = unit;
+
   return observations ? observations.find((obs) => obs.property.includes(matchProperty)) : null;
 };
 
