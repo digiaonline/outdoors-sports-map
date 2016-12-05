@@ -8,16 +8,20 @@ export const UNIT_ICON_WIDTH = 32;
 export const UnitServices = {
   MECHANICALLY_FROZEN_ICE: 33417,
   ICE_SKATING_FIELD: 33418,
-  SKI_TRACK: 33483
+  SPEED_SKATING_TRACK: 33420,
+  SKI_TRACK: 33483,
+  DOG_SKI_TRACK: 33492
 };
 
 export const IceSkatingServices = [
   UnitServices.MECHANICALLY_FROZEN_ICE,
-  UnitServices.ICE_SKATING_FIELD
+  UnitServices.ICE_SKATING_FIELD,
+  UnitServices.SPEED_SKATING_TRACK
 ];
 
 export const SkiingServices = [
-  UnitServices.SKI_TRACK
+  UnitServices.SKI_TRACK,
+  UnitServices.DOG_SKI_TRACK
 ];
 
 export const SwimmingServices = [];
