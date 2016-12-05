@@ -22,7 +22,7 @@ const ModalHeader = ({handleClick, unit, isLoading, activeLang, t}) => {
             }
           </div>
           <div style={{alignSelf: 'center'}}>
-            <a className="modal-close-button" onClick={handleClick}><SMIcon icon="close"/></a>
+            <a className="modal-close-button close-unit-modal" onClick={handleClick}><SMIcon icon="close"/></a>
           </div>
         </div>
         {unit
