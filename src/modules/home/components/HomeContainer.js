@@ -124,7 +124,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
@@ -133,7 +133,6 @@ export class HomeContainer extends Component {
           isLoading={isLoading}
           isSearching={isSearching}
           units={unitData}
-          selectedUnitId={+params.unitId}
           activeFilter={activeFilter}
           openUnit={this.openUnit}
           position={mapCenter}
@@ -144,8 +143,8 @@ export class HomeContainer extends Component {
         />
         <MapView
           ref="map"
+          selectedUnit={selectedUnit}
           activeLanguage={activeLanguage}
-          selectedUnitId={+params.unitId}
           params={params}
           setLocation={this.props.setLocation}
           position={this.initialPosition}
@@ -154,7 +153,7 @@ export class HomeContainer extends Component {
           openUnit={this.openUnit}
           mapCenter={mapCenter}
         />
-        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} units={unitData} params={params} handleClick={this.closeUnit} />
+        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} unit={selectedUnit} params={params} handleClick={this.closeUnit} />
       </div>
     );
   }
@@ -166,6 +165,7 @@ HomeContainer.childContextTypes = {
 
 const mapStateToProps = (state, props) => ({
   unitData: fromUnit.getVisibleUnits(state, props.location.query),
+  selectedUnit: fromUnit.getUnitById(state, {id: props.params.unitId}),
   activeLanguage: fromLanguage.getLanguage(state),
   isLoading: fromUnit.getIsLoading(state),
   mapCenter: fromMap.getLocation(state),

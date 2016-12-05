@@ -91,9 +91,8 @@ export class SingleUnitModalContainer extends Component {
   }
 
   render(){
-    const {units, handleClick, params, isLoading, t} = this.props;
+    const {handleClick, isLoading, unit: currentUnit, t} = this.props;
     const {getActiveLanguage} = this.context;
-    const currentUnit = units ? this.getCurrentUnit(units, params.unitId) : null;
 
     return (
       <div>

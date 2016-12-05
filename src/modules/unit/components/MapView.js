@@ -1,15 +1,12 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
-import {Link} from 'react-router';
 import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
 import OSMIcon from '../../home/components/OSMIcon';
 import {View} from './View';
 import Logo from '../../home/components/Logo';
-import Disclaimer from '../../home/components/Disclaimer';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from '../../map/components/Control';
-//import Control from 'react-leaflet-control';
 import {mobileBreakpoint} from '../../common/constants';
 import {languages} from '../../language/constants';
 import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, BOUNDARIES} from '../../map/constants';
@@ -17,7 +14,6 @@ import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
-import {Modal} from 'react-bootstrap';
 import {translate} from 'react-i18next';
 
 class MapView extends Component {
@@ -27,7 +23,9 @@ class MapView extends Component {
   };
 
   state: {
-    isMobile: boolean
+    isMobile: boolean,
+    zoomLevel: number,
+    menuOpen: boolean
   };
 
   constructor(props: Object) {
@@ -141,7 +139,7 @@ class MapView extends Component {
   }
 
   render() {
-    const {position, selectedUnitId, units, selected, activeLanguage, openUnit, changeLanguage, t} = this.props;
+    const {position, selectedUnit, units, selected, activeLanguage, openUnit, changeLanguage, t} = this.props;
     const {isMobile, zoomLevel, menuOpen} = this.state;
 
     return (
@@ -161,7 +159,7 @@ class MapView extends Component {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <UserLocationMarker />
-          <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnitId={selectedUnitId} openUnit={openUnit}/>
+          <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnit={selectedUnit} openUnit={openUnit}/>
           {!isMobile && <ZoomControl position="bottomright" />}
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
             <OSMIcon icon="locate" />

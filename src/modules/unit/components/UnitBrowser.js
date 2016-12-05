@@ -93,7 +93,7 @@ class UnitBrowser extends Component {
   }
 
   render() {
-    const {units, isLoading, isSearching, position, openUnit, setLocation, setView, address, params, location: {query}} = this.props;
+    const {units, isLoading, isSearching, position, openUnit, setView, address, params, location: {query}} = this.props;
     const {isExpanded} = this.state;
     let contentMaxHeight = this.state.contentMaxHeight;
     if (isExpanded) {
