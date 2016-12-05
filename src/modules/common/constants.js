@@ -4,7 +4,7 @@ export const API_URL = 'https://servicemat.hel.ninja/servicemap/v1/'; //http://a
 export const DIGITRANSIT_API_URL = 'https://api.digitransit.fi/geocoding/v1';
 export const APP_NAME = 'outdoors-sports-map';
 
-export const DEFAULT_LANG = 'fi';
+export const DEFAULT_LANG = 'en';
 
 export const mobileBreakpoint = 768;
 
