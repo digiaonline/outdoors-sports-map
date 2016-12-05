@@ -9,15 +9,14 @@ export const StatusBar = ({quality, label}) =>
     {label}
   </div>;
 
-export const StatusUpdated = translate()(({time, t}) =>
+export const StatusUpdated = ({time, t}) =>
   <div className="obervation-status__time"  style={{fontSize: 12}}>
     {t('UNIT.UPDATED')} <Time time={time}/>
-  </div>
-);
+  </div>;
 
-export const MaintenanceUpdated = ({text, time}) =>
+export const MaintenanceUpdated = ({name, activeLang, time}) =>
   <div className="observation-status__time"  style={{fontSize: 12}}>
-    {text} <Time time={time}/>
+    {getAttr(name, activeLang())} <Time time={time}/>
   </div>;
 
 const getObservationTime = (observation: Object) =>
@@ -31,10 +30,10 @@ export const ObservationStatus = ({unit, t}, context) => {
   return (
     <div className="observation-status">
       <StatusBar quality={quality} label={condition && condition.name ? getAttr(condition.name, context.getActiveLanguage()) : t('UNIT.UNKNOWN')}/>
-      <StatusUpdated time={getObservationTime(condition)}/>
+      <StatusUpdated t={t} time={getObservationTime(condition)}/>
       {
         maintenance &&
-        <MaintenanceUpdated text={getAttr(maintenance.name, context.getActiveLanguage())} time={getObservationTime(maintenance)}/>
+        <MaintenanceUpdated name={maintenance.name} activeLang={context.getActiveLanguage} time={getObservationTime(maintenance)}/>
       }
     </div>
   );
