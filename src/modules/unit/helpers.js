@@ -19,8 +19,9 @@ export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
 };
 
 export const getUnitPosition = (unit: Object): Array<number> => {
-  // TODO: REMOVE THIS WHEN SKI TRACK LOCATIONS ARE CORRECT IN API
-  if (unit.geometry && unit.geometry.coordinates) {
+  // If the unit doesn't have set location but has a geometry, eg. ski track,
+  // use the first point in the geometry.
+  if (!unit.location && unit.geometry && unit.geometry.coordinates) {
     return unit.geometry.coordinates[0][0].slice().reverse();
   }
 
