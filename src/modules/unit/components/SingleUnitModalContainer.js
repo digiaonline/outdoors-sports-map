@@ -5,6 +5,7 @@ import {getServiceName, getAttr, getOpeningHours} from '../helpers.js';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
 import UnitIcon from './UnitIcon';
+import upperFirst from 'lodash/upperFirst';
 
 const ModalHeader = ({handleClick, unit, isLoading, activeLang, t}) => {
   const unitAddress = unit ? getAttr(unit.street_address, activeLang()) : null;
@@ -52,11 +53,13 @@ const LocationState = ({unit, t}) =>
     <ObservationStatus unit={unit}/>
   </div>;
 
-const LocationInfo = ({t}) =>
+const LocationInfo = ({unit, t, activeLang}) =>
   <div className="modal-body-box">
     <div className="modal-body-box-headline">{t('MODAL.INFO')}</div>
-    Such info
-  </div>;
+    {unit.extensions.length && <p>{t('MODAL.LENGTH') + ': '}<strong>{unit.extensions.length}km</strong></p>}
+    {unit.extensions.lighting && <p>{t('MODAL.LIGHTING') + ': '}<strong>{upperFirst(getAttr(unit.extensions.lighting, activeLang()))}</strong></p>}
+    {unit.extensions.skiing_technique && <p>{t('MODAL.SKIING_TECHNIQUE') + ': '}<strong>{upperFirst(getAttr(unit.extensions.skiing_technique, activeLang()))}</strong></p>}
+    </div>;
 
 const LocationWeather = ({t}) =>
   <div className="modal-body-box">
@@ -91,6 +94,7 @@ export class SingleUnitModalContainer extends Component {
     const {units, handleClick, params, isLoading, t} = this.props;
     const {getActiveLanguage} = this.context;
     const currentUnit = units ? this.getCurrentUnit(units, params.unitId) : null;
+    console.log(currentUnit);
 
     return (
       <div>
@@ -99,7 +103,7 @@ export class SingleUnitModalContainer extends Component {
           {currentUnit && !isLoading ?
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
-              <LocationInfo t={t}/>
+              {currentUnit.extensions && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
             </Modal.Body>
             : null

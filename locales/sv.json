@@ -39,7 +39,10 @@
     "INFO": "Info",
     "WEATHER": "Weather",
     "HEIGHT_PROFILE": "Height profile",
-    "OPENING_HOURS": "Opening hours"
+    "OPENING_HOURS": "Opening hours",
+    "LENGTH": "Track length",
+    "LIGHTING": "Lighting",
+    "SKIING_TECHNIQUE": "Skiing technique"
   },
   "VIEW": {
     "POPUP": {
