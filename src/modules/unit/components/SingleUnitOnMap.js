@@ -28,7 +28,7 @@ export class SingleUnitOnMap extends Component{
 
   render () {
     const {unit, zoomLevel, isSelected, ...rest} = this.props;
-    const geometry = unit.geometry;
+    const geometry = unit.geometry && unit.geometry.type === 'MultiLineString' ? unit.geometry : null;
 
     return(
       <div>
