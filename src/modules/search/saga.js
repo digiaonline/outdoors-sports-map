@@ -21,7 +21,6 @@ function* searchUnits({payload: {params}}: FetchAction) {
 function* fetchUnitSuggestions({payload: {params}}: FetchAction) {
   let data = [];
   let addressData = [];
-  console.log(params);
   const digitransitParams = {
     text: params.input,
     'boundary.rect.min_lat': 59.9,
