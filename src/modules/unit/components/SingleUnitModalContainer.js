@@ -83,11 +83,6 @@ export class SingleUnitModalContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.getCurrentUnit = this.getCurrentUnit.bind(this);
-  }
-
-  getCurrentUnit(units, currentUnitId) {
-    return units.filter((unit) => unit.id == currentUnitId)[0];
   }
 
   render(){
