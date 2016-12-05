@@ -13,9 +13,9 @@ const ToggleButton = ({toggle, icon}) =>
     <SMIcon icon={icon} />
   </button>;
 
-const Header = ({expand, toggle, toggleIcon, setView}) =>
+const Header = ({expand, toggle, toggleIcon, openUnit, setView}) =>
 <div className="header">
-  <SearchContainer onSearch={expand} setView={setView}/>
+  <SearchContainer onSearch={expand} openUnit={openUnit} setView={setView}/>
   <ToggleButton toggle={toggle} icon={toggleIcon}/>
 </div>;
 
@@ -111,6 +111,7 @@ class UnitBrowser extends Component {
           toggle={this.toggle}
           toggleIcon={isExpanded ? 'map-options' : 'browse'}
           setView={setView}
+          openUnit={openUnit}
         />
         <UnitFilter active={currentSportFilter} all={values(SportFilters)} toggleFilter={this.toggleSportFilter} />
         <UnitFilter active={currentStatusFilter} all={values(StatusFilters)} toggleFilter={this.toggleStatusFilter} />
