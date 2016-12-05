@@ -7,3 +7,5 @@ export const languages = {
 export const languageActions = {
   CHANGE_LANGUAGE: 'home/CHANGE_LANGUAGE'
 };
+
+export const MODULE_NAME = 'language';

@@ -5,6 +5,7 @@ import {withRouter} from 'react-router';
 import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {changeLanguage} from '../../language/actions';
+import {getStoredLang} from '../../language/helpers';
 import * as fromMap from '../../map/selectors';
 import * as fromSearch from '../../search/selectors';
 import * as fromUnit from '../../unit/selectors';
@@ -57,16 +58,16 @@ export class HomeContainer extends Component {
     this.initialPosition = this.props.position;
 
     // TODO: re-enable langauge guessing from browser
-    // if(!getStoredLang()) {
-    //   const userLang = navigator.language || navigator.userLanguage;
-    //
-    //   if(userLang === 'sv' || userLang === 'sv-sv' || userLang === 'sv-fi') {
-    //     this.handleChangeLanguage('sv');
-    //
-    //   } else if(userLang === 'fi') {
-    //     this.handleChangeLanguage('fi');
-    //   }
-    // }
+    if(!getStoredLang()) {
+      const userLang = navigator.language || navigator.userLanguage;
+
+      if(userLang.includes('sv')) {
+        this.handleChangeLanguage('sv');
+
+      } else if(userLang.includes('en')) {
+        this.handleChangeLanguage('en');
+      }
+    }
   }
 
   componentWillUnmount() {
