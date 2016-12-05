@@ -94,7 +94,6 @@ export class SingleUnitModalContainer extends Component {
     const {units, handleClick, params, isLoading, t} = this.props;
     const {getActiveLanguage} = this.context;
     const currentUnit = units ? this.getCurrentUnit(units, params.unitId) : null;
-    console.log(currentUnit);
 
     return (
       <div>
@@ -103,7 +102,9 @@ export class SingleUnitModalContainer extends Component {
           {currentUnit && !isLoading ?
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
-              {currentUnit.extensions && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
+              {currentUnit.extensions
+                && (currentUnit.extensions.length || currentUnit.extensions.lighting || currentUnit.extensions.skiing_technique)
+                && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
             </Modal.Body>
             : null
