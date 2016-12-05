@@ -68,7 +68,7 @@ class SearchContainer extends Component {
   }
 
   render() {
-    const {unitSuggestions, addresses, isActive, setLocation, setView, searchDisabled} = this.props;
+    const {unitSuggestions, addresses, isActive, setLocation, setView, searchDisabled, openUnit} = this.props;
     const {searchPhrase, showSuggestions} = this.state;
 
     return (
@@ -80,7 +80,7 @@ class SearchContainer extends Component {
           onClear={this.clear}
           searchActive={isActive}
           disabled={searchDisabled} />
-        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} handleClick={this.handleAddressClick} addresses={addresses}/>}
+        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} openUnit={openUnit} handleAddressClick={this.handleAddressClick} addresses={addresses}/>}
       </div>
     );
   }

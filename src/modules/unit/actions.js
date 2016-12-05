@@ -4,14 +4,8 @@ import {UnitActions} from './constants';
 import {Action} from '../common/constants';
 import {ApiResponse, UnitServices} from './constants';
 
-export const fetchUnits = (/*params: Object*/): Action =>
-  createAction(UnitActions.FETCH)({params: {
-    service: `${values(UnitServices).join(',')}`,
-    only: 'id,name,location,street_address,address_zip',
-    include: 'observations,services',
-    geometry: 'true',
-    page_size: 1000
-  }});
+export const fetchUnits = (params: Object): Action =>
+  createAction(UnitActions.FETCH)({params});
 
 export const receiveUnits = (data: ApiResponse): Action =>
   createAction(UnitActions.RECEIVE)(data);

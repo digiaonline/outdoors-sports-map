@@ -4,8 +4,8 @@ import ObservationStatus from '../../unit/components/ObservationStatus';
 import {getServiceName, getAttr} from '../../unit/helpers';
 import UnitIcon from '../../unit/components/UnitIcon';
 
-const UnitSuggestion = ({unit, ...rest}, context) =>
-  <Link to={`/unit/${unit.id}`} className="search-suggestions__result" {...rest}>
+const UnitSuggestion = ({unit, handleClick, ...rest}, context) =>
+  <Link to={`/unit/${unit.id}`} onClick={(e) => {e.preventDefault(); handleClick();}} className="search-suggestions__result" {...rest}>
     <div className="search-suggestions__result-icon">
       <UnitIcon unit={unit} alt={getServiceName(unit)} />
     </div>

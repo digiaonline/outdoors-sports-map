@@ -5,6 +5,7 @@ import {withRouter} from 'react-router';
 import {fetchUnits} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {changeLanguage} from '../../language/actions';
+import {getStoredLang} from '../../language/helpers';
 import * as fromMap from '../../map/selectors';
 import * as fromSearch from '../../search/selectors';
 import * as fromUnit from '../../unit/selectors';
@@ -42,6 +43,7 @@ export class HomeContainer extends Component {
     this.getActiveLanguage = this.getActiveLanguage.bind(this);
     this.setLocation = this.setLocation.bind(this);
     this.setView = this.setView.bind(this);
+    this.fetchUnits = this.fetchUnits.bind(this);
   }
 
   getChildContext() {
@@ -51,22 +53,32 @@ export class HomeContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchUnits();
+    this.props.fetchUnits({
+      lat: this.props.position[0],
+      lon: this.props.position[1]
+    });
 
-    this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
+    this.pollUnitsInterval = setInterval(this.fetchUnits, POLL_INTERVAL);
     this.initialPosition = this.props.position;
 
     // TODO: re-enable langauge guessing from browser
-    // if(!getStoredLang()) {
-    //   const userLang = navigator.language || navigator.userLanguage;
-    //
-    //   if(userLang === 'sv' || userLang === 'sv-sv' || userLang === 'sv-fi') {
-    //     this.handleChangeLanguage('sv');
-    //
-    //   } else if(userLang === 'fi') {
-    //     this.handleChangeLanguage('fi');
-    //   }
-    // }
+    if(!getStoredLang()) {
+      const userLang = navigator.language || navigator.userLanguage;
+
+      if(userLang.includes('sv')) {
+        this.handleChangeLanguage('sv');
+
+      } else if(userLang.includes('en')) {
+        this.handleChangeLanguage('en');
+      }
+    }
+  }
+
+  fetchUnits() {
+    this.props.fetchUnits({
+      lat: this.props.position[0],
+      lon: this.props.position[1]
+    });
   }
 
   componentWillUnmount() {
@@ -112,7 +124,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
@@ -121,7 +133,6 @@ export class HomeContainer extends Component {
           isLoading={isLoading}
           isSearching={isSearching}
           units={unitData}
-          selectedUnitId={+params.unitId}
           activeFilter={activeFilter}
           openUnit={this.openUnit}
           position={mapCenter}
@@ -132,8 +143,8 @@ export class HomeContainer extends Component {
         />
         <MapView
           ref="map"
+          selectedUnit={selectedUnit}
           activeLanguage={activeLanguage}
-          selectedUnitId={+params.unitId}
           params={params}
           setLocation={this.props.setLocation}
           position={this.initialPosition}
@@ -142,7 +153,7 @@ export class HomeContainer extends Component {
           openUnit={this.openUnit}
           mapCenter={mapCenter}
         />
-        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} units={unitData} params={params} handleClick={this.closeUnit} />
+        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} unit={selectedUnit} params={params} handleClick={this.closeUnit} />
       </div>
     );
   }
@@ -154,6 +165,7 @@ HomeContainer.childContextTypes = {
 
 const mapStateToProps = (state, props) => ({
   unitData: fromUnit.getVisibleUnits(state, props.location.query),
+  selectedUnit: fromUnit.getUnitById(state, {id: props.params.unitId}),
   activeLanguage: fromLanguage.getLanguage(state),
   isLoading: fromUnit.getIsLoading(state),
   mapCenter: fromMap.getLocation(state),

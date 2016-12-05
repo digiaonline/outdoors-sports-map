@@ -37,10 +37,15 @@ const i18n =
 
 class TranslationProvider extends React.Component {
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.language !== this.props.language) {
-      i18n.changeLanguage(nextProps.language);
+  componentWillMount() {
+    if(this.props.language !== DEFAULT_LANG) {
+      i18n.changeLanguage(this.props.language);
+      this.forceUpdate();
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    i18n.changeLanguage(nextProps.language);
   }
 
   render() {

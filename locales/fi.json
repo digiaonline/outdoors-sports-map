@@ -40,7 +40,11 @@
     "QUALITY": "Kunto",
     "INFO": "Info",
     "WEATHER": "Sää",
-    "HEIGHT_PROFILE": "Korkeusprofiili"
+    "HEIGHT_PROFILE": "Korkeusprofiili",
+    "OPENING_HOURS": "Aukioloajat",
+    "LENGTH": "Ladun pituus",
+    "LIGHTING": "Valaistus",
+    "SKIING_TECHNIQUE": "Hiihtotekniikka"
   },
   "VIEW": {
     "POPUP": {
