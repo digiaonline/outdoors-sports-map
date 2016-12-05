@@ -1,7 +1,7 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
 import {LatLng} from 'leaflet';
-import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, QualityEnum, UnitFilters, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
+import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, QualityEnum, UnitFilters, UnitServices, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 import {DEFAULT_LANG} from '../common/constants';
 import upperFirst from 'lodash/upperFirst';
 
