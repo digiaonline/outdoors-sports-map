@@ -7,7 +7,7 @@ import {FetchAction} from '../common/constants';
 import {createUrl, createDigitransitUrl, createRequest, callApi, normalizeEntityResults} from '../api/helpers';
 
 function* fetchUnits({payload: {params}}: FetchAction) {
-  const request = createRequest(createUrl('unit', params));
+  const request = createRequest(createUrl('unit/', params));
   const {response, bodyAsJson} = yield call(callApi, request);
 
   if(response.status === 200) {
