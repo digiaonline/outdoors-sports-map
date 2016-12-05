@@ -21,7 +21,7 @@ const ModalHeader = ({handleClick, unit, isLoading, t}, context) => {
             }
           </div>
           <div style={{alignSelf: 'center'}}>
-            <a className="close-unit-modal" onClick={handleClick}><SMIcon icon="close"/></a>
+            <a className="modal-close-button" onClick={handleClick}><SMIcon icon="close"/></a>
           </div>
         </div>
         {unit
@@ -98,8 +98,6 @@ export class SingleUnitModalContainer extends Component {
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
               <LocationInfo t={t}/>
-              <LocationWeather t={t}/>
-              <LocationHeightProfile t={t}/>
             </Modal.Body>
             : null
           }
