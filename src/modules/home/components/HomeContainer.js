@@ -43,6 +43,7 @@ export class HomeContainer extends Component {
     this.getActiveLanguage = this.getActiveLanguage.bind(this);
     this.setLocation = this.setLocation.bind(this);
     this.setView = this.setView.bind(this);
+    this.fetchUnits = this.fetchUnits.bind(this);
   }
 
   getChildContext() {
@@ -52,9 +53,12 @@ export class HomeContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchUnits();
+    this.props.fetchUnits({
+      lat: this.props.position[0],
+      lon: this.props.position[1]
+    });
 
-    this.pollUnitsInterval = setInterval(this.props.fetchUnits, POLL_INTERVAL);
+    this.pollUnitsInterval = setInterval(this.fetchUnits, POLL_INTERVAL);
     this.initialPosition = this.props.position;
 
     // TODO: re-enable langauge guessing from browser
@@ -68,6 +72,13 @@ export class HomeContainer extends Component {
         this.handleChangeLanguage('en');
       }
     }
+  }
+
+  fetchUnits() {
+    this.props.fetchUnits({
+      lat: this.props.position[0],
+      lon: this.props.position[1]
+    });
   }
 
   componentWillUnmount() {

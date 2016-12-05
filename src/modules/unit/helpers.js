@@ -1,9 +1,21 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
-import {LatLng} from 'leaflet';
+import {createRequest, createUrl} from '../api/helpers.js';
 import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, QualityEnum, UnitFilters, UnitServices, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
 import {DEFAULT_LANG} from '../common/constants';
 import upperFirst from 'lodash/upperFirst';
+import values from 'lodash/values';
+
+export const getFetchUnitsRequest = (params: Object)  => {
+  return createRequest(createUrl('unit/', {
+    service: `${values(UnitServices).join(',')}`,
+    only: 'id,name,location,street_address,address_zip',
+    include: 'observations,services',
+    geometry: 'true',
+    page_size: 1000,
+    ...params
+  }));
+};
 
 export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
   let translated = has(attr, lang) && attr[lang];
@@ -21,7 +33,7 @@ export const getAttr = (attr: Object, lang: ?string = DEFAULT_LANG) => {
 export const getUnitPosition = (unit: Object): Array<number> => {
   // If the unit doesn't have set location but has a geometry, eg. ski track,
   // use the first point in the geometry.
-  if (!unit.location && unit.geometry && unit.geometry.coordinates) {
+  if (!unit.location && unit.geometry === 'MultiLineString' && unit.geometry.coordinates) {
     return unit.geometry.coordinates[0][0].slice().reverse();
   }
 
@@ -106,12 +118,8 @@ export const getFilterIconURL = (filter: String) =>
  * SORT UNIT LIST
  */
 
-export const sortByDistance = (units: Array<Object>, position: Array<number>) =>
-  sortBy(units, (unit) => {
-    const unitLatLng = new LatLng(...getUnitPosition(unit));
-    const mapLatLng = new LatLng(...position);
-    return unitLatLng.distanceTo(mapLatLng);
-  });
+export const sortByDistance = (units: Array<Object>) =>
+  sortBy(units, (unit) => +unit.distance);
 
 export const sortByName = (units: Array, lang: ?string) =>
   sortBy(units, (unit) => getAttr(unit.name, lang));
