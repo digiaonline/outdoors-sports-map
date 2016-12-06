@@ -1,6 +1,5 @@
 // @flow
 import React, {Component, PropTypes} from 'react';
-import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
 import OSMIcon from '../../home/components/OSMIcon';
 import FeedbackModal from './FeedbackModal';
@@ -10,12 +9,22 @@ import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from '../../map/components/Control';
 import {mobileBreakpoint} from '../../common/constants';
 import {SUPPORTED_LANGUAGES} from '../../language/constants';
-import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, BOUNDARIES} from '../../map/constants';
+import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, BOUNDARIES} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
 import {translate} from 'react-i18next';
+require('proj4leaflet');
+
+const bounds = L.bounds(L.point(-548576, 6291456), L.point(1548576, 8388608));
+const originNw = [bounds.min.x, bounds.max.y];
+const TM35CRS = new L.Proj.CRS(
+  'EPSG:3067',
+  '+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs', {
+    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125],
+    bounds, transformation: new L.Transformation(1, -originNw[0], -1, originNw[1])
+  });
 
 class MapView extends Component {
   static propTypes = {
@@ -143,12 +152,14 @@ class MapView extends Component {
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
         <Map ref="map"
+          crs={TM35CRS}
           zoomControl={false}
           attributionControl={false}
           center={position}
           maxBounds={BOUNDARIES}
           zoom={DEFAULT_ZOOM}
           minZoom={MIN_ZOOM}
+          maxZoom={MAX_ZOOM}
           onClick={this.handleClick}
           onLocationfound={this.setLocation}
           onZoomend={this.handleZoom}>
@@ -170,7 +181,7 @@ class MapView extends Component {
         </Map>
         <Logo/>
         {this.state.aboutModalOpen ? <AboutModal closeModal={this.closeAboutModal} t={t}/> : null}
-        {this.state.feedbackModalOpen ? <FeedbackModal handleSubmit={this.handleFeedbackSubmit} closeModal={this.closeFeedbackModal} /> : null}
+        {this.state.feedbackModalOpen ? <FeedbackModal closeModal={this.closeFeedbackModal} /> : null}
       </View>
     );
   }
@@ -181,12 +192,12 @@ export default translate(null, {withRef: true})(MapView);
 const LanguageChanger = ({changeLanguage, activeLanguage, isMobile}) =>
   <div className={isMobile ? 'language-changer__mobile' : 'language-changer'}>
     {Object.keys(SUPPORTED_LANGUAGES).filter((language) => SUPPORTED_LANGUAGES[language] !== activeLanguage).map((languageKey, index) => (
-      <div key={languageKey} style={{ display: 'flex' }}>
+      <div key={languageKey} style={{display: 'flex'}}>
         <a onClick={() => changeLanguage(SUPPORTED_LANGUAGES[languageKey])}>
           {languageKey}
         </a>
         {index < Object.keys(SUPPORTED_LANGUAGES).length - 2 && !isMobile
-          ? <div style={{ marginLeft: 2, marginRight: 2 }}>|</div>
+          ? <div style={{marginLeft: 2, marginRight: 2}}>|</div>
           : null}
       </div>)
     )}
