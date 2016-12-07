@@ -22,6 +22,8 @@ gem install capistrano -v '~> 3.6.0'
 gem install capistrano-git-submodule-strategy
 ```
 
+* Place the `outdoors-sports-map` private SSH key in the `ops/packer/ansible/keys` directory. Ask your coworkers if you 
+don't have the file.
 * Run `cap production deploy` from the project's root directory
 
 If you want to deploy a branch, run e.g. `BRANCH=develop cap production deploy` instead.
