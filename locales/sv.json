@@ -12,6 +12,11 @@
     "INFO_MENU" : {
       "GIVE_FEEDBACK": "Give feedback",
       "ABOUT_SERVICE": "About the service"
+    },
+    "FEEDBACK": {
+      "FEEDBACK": "Feedback",
+      "WANT_ANSWER": "I want answer to my email",
+      "SEND": "Send"
     }
   },
   "UNIT": {

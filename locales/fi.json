@@ -12,6 +12,11 @@
     "INFO_MENU" : {
       "GIVE_FEEDBACK": "Anna palautetta",
       "ABOUT_SERVICE": "Tietoa palvelusta"
+    },
+    "FEEDBACK": {
+      "FEEDBACK": "Palaute",
+      "WANT_ANSWER": "Haluan vastauksen sähköpostiini",
+      "SEND": "Lähetä"
     }
   },
   "UNIT": {

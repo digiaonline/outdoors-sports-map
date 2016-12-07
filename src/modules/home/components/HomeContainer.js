@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import {fetchUnits} from '../../unit/actions';
+import {fetchUnits, sendFeedback} from '../../unit/actions';
 import {setLocation} from '../../map/actions';
 import {changeLanguage} from '../../language/actions';
 import {getStoredLang} from '../../language/helpers';
@@ -124,7 +124,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {unitData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, sendFeedback, location: {query: {filter}}} = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
@@ -152,6 +152,7 @@ export class HomeContainer extends Component {
           changeLanguage={this.handleChangeLanguage}
           openUnit={this.openUnit}
           mapCenter={mapCenter}
+          sendFeedback={sendFeedback}
         />
         <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} unit={selectedUnit} params={params} handleClick={this.closeUnit} />
       </div>
@@ -175,7 +176,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({fetchUnits, setLocation, changeLanguage}, dispatch);
+  bindActionCreators({fetchUnits, setLocation, changeLanguage, sendFeedback}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer

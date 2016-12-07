@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import isEmpty from 'lodash/isEmpty';
 import SMIcon from '../../home/components/SMIcon';
 import OSMIcon from '../../home/components/OSMIcon';
+import FeedbackModal from './FeedbackModal';
 import {View} from './View';
 import Logo from '../../home/components/Logo';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
@@ -169,7 +170,7 @@ class MapView extends Component {
         </Map>
         <Logo/>
         {this.state.aboutModalOpen ? <AboutModal closeModal={this.closeAboutModal} t={t}/> : null}
-        {this.state.feedbackModalOpen ? <FeedbackModal closeModal={this.closeFeedbackModal} t={t}/> : null}
+        {this.state.feedbackModalOpen ? <FeedbackModal handleSubmit={this.handleFeedbackSubmit} closeModal={this.closeFeedbackModal} /> : null}
       </View>
     );
   }
@@ -222,24 +223,31 @@ const AboutModal = ({closeModal, t}) =>
     </div>
   </div>;
 
-const FeedbackModal = ({closeModal, t}) =>
-  <div className="about-modal-backdrop">
-    <div className="about-modal-box">
-      <div className="about-modal-controls">
-        <SMIcon icon="close" onClick={() => closeModal()} />
-      </div>
-      <div className="about-modal-content">
-        <h3>{t('MAP.INFO_MENU.GIVE_FEEDBACK')}</h3>
-        <form>
-          <div><textarea type="text" placeholder="Message" /></div>
-          <div>
-            <label>
-              <input type="checkbox" />
-              Haluan palautetta sähköpostiin
-            </label>
-          </div>
-          <button>Send</button>
-        </form>
-      </div>
-    </div>
-  </div>;
+// const FeedbackModal = ({closeModal, handleSubmit, t}) => {
+//   let wantAnswer = null;
+//   let feedback = null;
+//   let email = null;
+//
+//   return (
+//     <div className="about-modal-backdrop">
+//       <div className="about-modal-box">
+//         <div className="about-modal-controls">
+//           <SMIcon icon="close" onClick={() => closeModal()} />
+//         </div>
+//         <div className="about-modal-content">
+//           <h3>{t('MAP.INFO_MENU.GIVE_FEEDBACK')}</h3>
+//           <form onSubmit={(e) => handleSubmit(e, feedback.value, wantAnswer.value)}>
+//             <div><textarea type="text" placeholder="Message" ref={(textarea) => feedback = textarea} /></div>
+//             <div>
+//               <label>
+//                 <input type="checkbox" value={true} ref={(checbox) => wantAnswer = checbox} />
+//                 Haluan palautetta sähköpostiin
+//               </label>
+//             </div>
+//             {wantAnswer && <div><input type="text" ref={(input) => email = input}/></div>}
+//             <button type="submit">Send</button>
+//           </form>
+//         </div>
+//       </div>
+//     </div>);
+// };

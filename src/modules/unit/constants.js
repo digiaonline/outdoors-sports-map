@@ -80,7 +80,8 @@ export const UnitActions = {
   SEARCH_REQUEST: normalizeActionName('unit/SEARCH_REQUEST'),
   SEARCH_RECEIVE: normalizeActionName('unit/SEARCH_RECEIVE'),
   FETCH_SEARCH_SUGGESTIONS: normalizeActionName('unit/FETCH_SEARCH_SUGGESTIONS'),
-  RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName('unit/RECEIVE_SEARCH_SUGGESTIONS')
+  RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName('unit/RECEIVE_SEARCH_SUGGESTIONS'),
+  SEND_FEEDBACK: normalizeActionName('unit/SEND_FEEDBACK')
 };
 
 export type UnitState = {
