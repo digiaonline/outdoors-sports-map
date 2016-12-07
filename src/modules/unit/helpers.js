@@ -9,8 +9,8 @@ import values from 'lodash/values';
 export const getFetchUnitsRequest = (params: Object)  => {
   return createRequest(createUrl('unit/', {
     service: `${values(UnitServices).join(',')}`,
-    only: 'id,name,location,street_address,address_zip,extensions',
-    include: 'observations,services,connections',
+    only: 'id,name,location,street_address,address_zip,extensions,services',
+    include: 'observations,connections',
     geometry: 'true',
     page_size: 1000,
     ...params
@@ -44,11 +44,11 @@ export const getUnitSport = (unit: Object) => {
   if(unit.services && unit.services.length) {
     const service = unit.services[0];
 
-    if (IceSkatingServices.includes(service.id)) {
+    if (IceSkatingServices.includes(service)) {
       return UnitFilters.ICE_SKATING;
     }
 
-    if (SkiingServices.includes(service.id)) {
+    if (SkiingServices.includes(service)) {
       return UnitFilters.SKIING;
     }
 
@@ -58,10 +58,6 @@ export const getUnitSport = (unit: Object) => {
   }
 
   return 'unknown';
-};
-
-export const getServiceName = (unit: Object, language: ?string = DEFAULT_LANG) => {
-  return getAttr(unit.services[0].name, language);
 };
 
 export const getObservation = (unit: Object, matchProperty: ?string='condition') => {

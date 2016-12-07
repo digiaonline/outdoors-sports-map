@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as selectors from '../selectors';
 import {getIsLoading as getIsUnitLoading} from '../../unit/selectors';
+import {getServicesObject} from '../../service/selectors';
 import {searchUnits, fetchUnitSuggestions, clearSearch} from '../actions';
 import {setLocation} from '../../map/actions';
 import SearchBar from './SearchBar';
@@ -18,6 +19,7 @@ class SearchContainer extends Component {
   static propTypes = {
     unitSuggestions: PropTypes.array,
     searchUnits: PropTypes.func,
+    services: PropTypes.object.isRequired,
     fetchUnitSuggestions: PropTypes.func,
     searchDisabled: PropTypes.bool,
     onSearch: PropTypes.func
@@ -68,7 +70,7 @@ class SearchContainer extends Component {
   }
 
   render() {
-    const {unitSuggestions, addresses, isActive, setLocation, setView, searchDisabled, openUnit} = this.props;
+    const {unitSuggestions, addresses, services, isActive, setLocation, setView, searchDisabled, openUnit} = this.props;
     const {searchPhrase, showSuggestions} = this.state;
 
     return (
@@ -80,7 +82,7 @@ class SearchContainer extends Component {
           onClear={this.clear}
           searchActive={isActive}
           disabled={searchDisabled} />
-        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} openUnit={openUnit} handleAddressClick={this.handleAddressClick} addresses={addresses}/>}
+        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} services={services} openUnit={openUnit} handleAddressClick={this.handleAddressClick} addresses={addresses}/>}
       </div>
     );
   }
@@ -88,6 +90,7 @@ class SearchContainer extends Component {
 
 const mapStateToProps = (state) => ({
   unitSuggestions: selectors.getUnitSuggestions(state),
+  services: getServicesObject(state),
   isActive: selectors.getIsActive(state),
   searchDisabled: getIsUnitLoading(state),
   addresses: selectors.getAddresses(state)

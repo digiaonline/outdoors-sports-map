@@ -8,7 +8,7 @@ import Logo from '../../home/components/Logo';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from '../../map/components/Control';
 import {mobileBreakpoint} from '../../common/constants';
-import {languages} from '../../language/constants';
+import {SUPPORTED_LANGUAGES} from '../../language/constants';
 import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, BOUNDARIES} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
@@ -34,7 +34,8 @@ class MapView extends Component {
     this.state = {
       isMobile: window.innerWidth < mobileBreakpoint,
       menuOpen: false,
-      modalOpen: false,
+      aboutModalOpen: false,
+      feedbackModalOpen: false,
       zoomLevel: DEFAULT_ZOOM
     };
 
@@ -43,9 +44,10 @@ class MapView extends Component {
     this.updateIsMobile = this.updateIsMobile.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.openAboutModal = this.openAboutModal.bind(this);
+    this.closeAboutModal = this.closeAboutModal.bind(this);
+    this.openFeedbackModal = this.openFeedbackModal.bind(this);
+    this.closeFeedbackModal = this.closeFeedbackModal.bind(this);
     this.handleZoom = this.handleZoom.bind(this);
     this.setView = this.setView.bind(this);
   }
@@ -56,19 +58,14 @@ class MapView extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateIsMobile);
-    //this.refs.map.leafletElement.setActiveArea('activeArea');
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.unitId && !isEmpty(nextProps.units)) {
-      const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
-      !isEmpty(unit) && this.centerMapToUnit(unit);
+    const {selectedUnit} = this.props;
+    if (nextProps.selectedUnit &&
+      (!selectedUnit || selectedUnit.id !== nextProps.selectedUnit.id ) ) {
+      this.centerMapToUnit(nextProps.selectedUnit);
     }
-
-    /*if (nextProps.position[0] !== this.props.position[0] || nextProps.position[1] !== this.props.position[1]) {
-      console.log('here');
-      this.refs.map.leafletElement.setView([60,25]);
-    }*/
   }
 
   centerMapToUnit(unit: Object) {
@@ -118,24 +115,24 @@ class MapView extends Component {
     }
   }
 
-  toggleModal() {
-    if(this.state.modalOpen) {
-      this.setState({modalOpen: false});
-    } else {
-      this.setState({modalOpen: true});
-    }
-  }
-
   setView(coordinates) {
     this.refs.map.leafletElement.setView(coordinates);
   }
 
-  openModal() {
-    this.setState({modalOpen: true});
+  openAboutModal() {
+    this.setState({aboutModalOpen: true});
   }
 
-  closeModal() {
-    this.setState({modalOpen: false});
+  closeAboutModal() {
+    this.setState({aboutModalOpen: false});
+  }
+
+  openFeedbackModal() {
+    this.setState({feedbackModalOpen: true});
+  }
+
+  closeFeedbackModal() {
+    this.setState({feedbackModalOpen: false});
   }
 
   render() {
@@ -164,14 +161,15 @@ class MapView extends Component {
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
             <OSMIcon icon="locate" />
           </Control>
-          <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
-          {menuOpen ? <InfoMenu t={t} openModal={this.openModal} /> : null}
+          {Object.keys(SUPPORTED_LANGUAGES).length > 1 && <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />}
+          {menuOpen ? <InfoMenu t={t} openAboutModal={this.openAboutModal} openFeedbackModal={this.openFeedbackModal} /> : null}
           <Control handleClick={this.toggleMenu} className="leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
             <SMIcon icon="info" />
           </Control>
         </Map>
         <Logo/>
-        {this.state.modalOpen ? <AboutModal closeModal={this.closeModal} t={t}/> : null}
+        {this.state.aboutModalOpen ? <AboutModal closeModal={this.closeAboutModal} t={t}/> : null}
+        {this.state.feedbackModalOpen ? <FeedbackModal closeModal={this.closeFeedbackModal} t={t}/> : null}
       </View>
     );
   }
@@ -181,24 +179,24 @@ export default translate(null, {withRef: true})(MapView);
 
 const LanguageChanger = ({changeLanguage, activeLanguage}) =>
   <div className="language-changer">
-    {Object.keys(languages).filter((language) => languages[language] !== activeLanguage).map((languageKey, index) => (
+    {Object.keys(SUPPORTED_LANGUAGES).filter((language) => SUPPORTED_LANGUAGES[language] !== activeLanguage).map((languageKey, index) => (
       <div key={languageKey} style={{ display: 'flex' }}>
-        <a onClick={() => changeLanguage(languages[languageKey])}>
+        <a onClick={() => changeLanguage(SUPPORTED_LANGUAGES[languageKey])}>
           {languageKey}
         </a>
-        {index < Object.keys(languages).length - 2
+        {index < Object.keys(SUPPORTED_LANGUAGES).length - 2
           ? <div style={{ marginLeft: 2, marginRight: 2 }}>|</div>
           : null}
       </div>)
     )}
   </div>;
 
-const InfoMenu = ({openModal, t}) =>
+const InfoMenu = ({openAboutModal, openFeedbackModal, t}) =>
   <div className="info-menu">
-    <InfoMenuItem icon='info' t={t}>
+    <InfoMenuItem icon='info' handleClick={openFeedbackModal} t={t}>
       {t('MAP.INFO_MENU.GIVE_FEEDBACK')}
     </InfoMenuItem>
-    <InfoMenuItem icon='info' handleClick={openModal}>
+    <InfoMenuItem icon='info' handleClick={openAboutModal}>
       {t('MAP.INFO_MENU.ABOUT_SERVICE')}
     </InfoMenuItem>
     <InfoMenuItem handleClick={() => null}>
@@ -220,6 +218,28 @@ const AboutModal = ({closeModal, t}) =>
       </div>
       <div className="about-modal-content">
         {t('MAP.ABOUT')}
+      </div>
+    </div>
+  </div>;
+
+const FeedbackModal = ({closeModal, t}) =>
+  <div className="about-modal-backdrop">
+    <div className="about-modal-box">
+      <div className="about-modal-controls">
+        <SMIcon icon="close" onClick={() => closeModal()} />
+      </div>
+      <div className="about-modal-content">
+        <h3>{t('MAP.INFO_MENU.GIVE_FEEDBACK')}</h3>
+        <form>
+          <div><textarea type="text" placeholder="Message" /></div>
+          <div>
+            <label>
+              <input type="checkbox" />
+              Haluan palautetta sähköpostiin
+            </label>
+          </div>
+          <button>Send</button>
+        </form>
       </div>
     </div>
   </div>;

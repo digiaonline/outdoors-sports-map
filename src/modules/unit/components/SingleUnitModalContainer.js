@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import SMIcon from '../../home/components/SMIcon';
-import {getServiceName, getAttr, getOpeningHours} from '../helpers.js';
+import {getAttr, getOpeningHours} from '../helpers';
+import {getServiceName} from '../../service/helpers';
 import {translate} from 'react-i18next';
 import ObservationStatus from './ObservationStatus';
 import UnitIcon from './UnitIcon';
 import upperFirst from 'lodash/upperFirst';
 
-const ModalHeader = ({handleClick, unit, isLoading, activeLang, t}) => {
+const ModalHeader = ({handleClick, unit, services, isLoading, activeLang, t}) => {
   const unitAddress = unit ? getAttr(unit.street_address, activeLang()) : null;
   const unitZIP = unit ? unit.address_zip : null;
 
@@ -27,11 +28,11 @@ const ModalHeader = ({handleClick, unit, isLoading, activeLang, t}) => {
         </div>
         {unit
           ? <div className="modal-header-description">
-              <UnitIcon unit={unit} alt={getServiceName(unit)}/>
+              <UnitIcon unit={unit} alt={getServiceName(unit.services[0], services, activeLang())}/>
               <div>
                 <p>
                 {
-                  getServiceName(unit, activeLang())
+                  getServiceName(unit.services[0], services, activeLang())
                 }
                 </p>
                 <p>
@@ -86,13 +87,13 @@ export class SingleUnitModalContainer extends Component {
   }
 
   render(){
-    const {handleClick, isLoading, unit: currentUnit, t} = this.props;
+    const {handleClick, isLoading, unit: currentUnit, services, t} = this.props;
     const {getActiveLanguage} = this.context;
 
     return (
       <div>
         <Modal className="single-unit-modal" show={this.props.isOpen} backdrop={false} animation={false}>
-          <ModalHeader unit={currentUnit} handleClick={handleClick} isLoading={isLoading} t={t} activeLang={getActiveLanguage}/>
+          <ModalHeader unit={currentUnit} services={services} handleClick={handleClick} isLoading={isLoading} t={t} activeLang={getActiveLanguage}/>
           {currentUnit && !isLoading ?
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>

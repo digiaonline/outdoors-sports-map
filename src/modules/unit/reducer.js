@@ -29,12 +29,12 @@ const all = handleActions({
 
 const iceskate = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
-    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => IceSkatingServices.indexOf(unitService.id) !== -1))]
+    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => IceSkatingServices.indexOf(unitService) !== -1))]
 }, []);
 
 const ski = handleActions({
   [UnitActions.RECEIVE]: (state: Object, {payload: {entities}}: EntityAction) =>
-    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkiingServices.indexOf(unitService.id) !== -1))]
+    [...keys(entities.unit).filter((id) => entities.unit[id].services.some((unitService) => SkiingServices.indexOf(unitService) !== -1))]
 }, []);
 
 const statusOk = handleActions({

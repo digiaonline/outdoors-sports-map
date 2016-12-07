@@ -1,2 +1,6 @@
-export const getHelloMessage = (state/*, props*/) =>
-  state.home.helloMessage;
+
+import isEmpty from 'lodash/isEmpty';
+
+export const getIsLoading = (state: AppState) =>
+  state.unit.isFetching && state.service.isFetching
+  && isEmpty(state.unit) && isEmpty(state.service);
