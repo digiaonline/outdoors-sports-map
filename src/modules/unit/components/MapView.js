@@ -34,7 +34,8 @@ class MapView extends Component {
     this.state = {
       isMobile: window.innerWidth < mobileBreakpoint,
       menuOpen: false,
-      modalOpen: false,
+      aboutModalOpen: false,
+      feedbackModalOpen: false,
       zoomLevel: DEFAULT_ZOOM
     };
 
@@ -43,9 +44,10 @@ class MapView extends Component {
     this.updateIsMobile = this.updateIsMobile.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.openAboutModal = this.openAboutModal.bind(this);
+    this.closeAboutModal = this.closeAboutModal.bind(this);
+    this.openFeedbackModal = this.openFeedbackModal.bind(this);
+    this.closeFeedbackModal = this.closeFeedbackModal.bind(this);
     this.handleZoom = this.handleZoom.bind(this);
     this.setView = this.setView.bind(this);
   }
@@ -113,24 +115,24 @@ class MapView extends Component {
     }
   }
 
-  toggleModal() {
-    if(this.state.modalOpen) {
-      this.setState({modalOpen: false});
-    } else {
-      this.setState({modalOpen: true});
-    }
-  }
-
   setView(coordinates) {
     this.refs.map.leafletElement.setView(coordinates);
   }
 
-  openModal() {
-    this.setState({modalOpen: true});
+  openAboutModal() {
+    this.setState({aboutModalOpen: true});
   }
 
-  closeModal() {
-    this.setState({modalOpen: false});
+  closeAboutModal() {
+    this.setState({aboutModalOpen: false});
+  }
+
+  openFeedbackModal() {
+    this.setState({feedbackModalOpen: true});
+  }
+
+  closeFeedbackModal() {
+    this.setState({feedbackModalOpen: false});
   }
 
   render() {
@@ -160,13 +162,14 @@ class MapView extends Component {
             <OSMIcon icon="locate" />
           </Control>
           <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
-          {menuOpen ? <InfoMenu t={t} openModal={this.openModal} /> : null}
+          {menuOpen ? <InfoMenu t={t} openAboutModal={this.openAboutModal} openFeedbackModal={this.openFeedbackModal} /> : null}
           <Control handleClick={this.toggleMenu} className="leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
             <SMIcon icon="info" />
           </Control>
         </Map>
         <Logo/>
-        {this.state.modalOpen ? <AboutModal closeModal={this.closeModal} t={t}/> : null}
+        {this.state.aboutModalOpen ? <AboutModal closeModal={this.closeAboutModal} t={t}/> : null}
+        {this.state.feedbackModalOpen ? <FeedbackModal closeModal={this.closeFeedbackModal} t={t}/> : null}
       </View>
     );
   }
@@ -188,12 +191,12 @@ const LanguageChanger = ({changeLanguage, activeLanguage}) =>
     )}
   </div>;
 
-const InfoMenu = ({openModal, t}) =>
+const InfoMenu = ({openAboutModal, openFeedbackModal, t}) =>
   <div className="info-menu">
-    <InfoMenuItem icon='info' t={t}>
+    <InfoMenuItem icon='info' handleClick={openFeedbackModal} t={t}>
       {t('MAP.INFO_MENU.GIVE_FEEDBACK')}
     </InfoMenuItem>
-    <InfoMenuItem icon='info' handleClick={openModal}>
+    <InfoMenuItem icon='info' handleClick={openAboutModal}>
       {t('MAP.INFO_MENU.ABOUT_SERVICE')}
     </InfoMenuItem>
     <InfoMenuItem handleClick={() => null}>
@@ -215,6 +218,28 @@ const AboutModal = ({closeModal, t}) =>
       </div>
       <div className="about-modal-content">
         {t('MAP.ABOUT')}
+      </div>
+    </div>
+  </div>;
+
+const FeedbackModal = ({closeModal, t}) =>
+  <div className="about-modal-backdrop">
+    <div className="about-modal-box">
+      <div className="about-modal-controls">
+        <SMIcon icon="close" onClick={() => closeModal()} />
+      </div>
+      <div className="about-modal-content">
+        <h3>{t('MAP.GIVE_FEEDBACK')}</h3>
+        <form>
+          <div><textarea type="text" placeholder="Message" /></div>
+          <div>
+            <label>
+              <input type="checkbox" />
+              Haluan palautetta sähköpostiin
+            </label>
+          </div>
+          <button>Send</button>
+        </form>
       </div>
     </div>
   </div>;
