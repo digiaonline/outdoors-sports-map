@@ -1,5 +1,3 @@
-import {normalizeActionName} from '../common/helpers';
-
 export const locations = {
   HELSINKI: [60.171944, 24.941389],
   ESPOO: [60.19792, 24.708885],

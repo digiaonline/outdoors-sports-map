@@ -3,12 +3,16 @@
   color: $ui-text;
   background: $ui-content;
 
+  & + & {
+    margin-top: -$gap/2;
+  }
+
   .row {
-    padding: $gap $gap 0 $gap;
+    padding: $gap/2;
   }
 
   .col-xs-6 {
-    padding: 0 0 $gap;
+    padding: 0;
 
     &:nth-child(even) {
       padding-left: $gap/2;
@@ -20,14 +24,15 @@
   }
 
   & &__filter { // Actual filter button
-    background: $ui-disabled;
+    background: transparent;
     color: $ui-text-disabled;
-    padding: $gap;
+    padding: 2px $gap;
     display: flex;
     align-items: center;
     cursor: pointer;
     border-radius: 999999px;
     font-size: 12px;
+    line-height: 1;
 
     &:active {
       background: $ui-enabled;
@@ -36,15 +41,11 @@
 
     &-icon {
       padding-right: $gap;
-      font-size: 30px;
+      font-size: 28px;
       line-height: 1;
 
-      img {
-        height: 30px;
-      }
-
       span {
-        line-height: 30px;
+        line-height: 28px;
       }
     }
 

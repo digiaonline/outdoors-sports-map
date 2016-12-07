@@ -9,3 +9,5 @@ export const languageActions = {
 };
 
 export const MODULE_NAME = 'language';
+
+export type LanguageState = string;
