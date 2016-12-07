@@ -1,7 +1,8 @@
 import {keys} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
-import {UnitActions, IceSkatingServices, SkiingServices, QualityEnum} from './constants';
+import {UnitActions, QualityEnum} from './constants';
+import {IceSkatingServices, SkiingServices} from '../service/constants';
 import {getUnitQuality, enumerableQuality} from './helpers';
 import {EntityAction} from '../common/constants';
 

@@ -5,13 +5,29 @@ import {isEqual, values} from 'lodash';
 import SMIcon from '../../home/components/SMIcon';
 import * as unitHelpers from '../helpers';
 import {getServiceName} from '../../service/helpers';
-import {SortKeys, UNIT_BATCH_SIZE} from '../constants';
+import {SortKeys, UNIT_BATCH_SIZE, UnitFilters} from '../constants';
 import {View} from './View.js';
 import Loading from '../../home/components/Loading';
 import ObservationStatus from './ObservationStatus';
 import SortSelectorDropdown from './SortSelectorDropdown';
-import UnitIcon from './UnitIcon';
+import OSMIcon from '../../home/components/OSMIcon';
 
+const UnitIcon = ({unit}) => {
+  let icon = 'status-unknown';
+
+  switch(unitHelpers.getUnitSport(unit)) {
+    case UnitFilters.ICE_SKATING:
+      icon = 'iceskate';
+      break;
+    case UnitFilters.SKIING:
+      icon = 'crosscountry';
+      break;
+    default:
+      // Use default value
+  }
+
+  return <OSMIcon icon={icon} />
+};
 
 class UnitListItem extends Component {
   shouldComponentUpdate({unit}) {
@@ -25,7 +41,7 @@ class UnitListItem extends Component {
 
     return (
     <Link to={`/unit/${unit.id}`} onClick={(e) => {e.preventDefault(); handleClick();}} className="list-view-item">
-      <div className="list-view-item__unit-marker"><UnitIcon unit={unit} alt={serviceName}/></div>
+      <div className="list-view-item__unit-marker"><UnitIcon unit={unit}/></div>
       <div className="list-view-item__unit-details">
         <div className="list-view-item__unit-name">{unitHelpers.getAttr(unit.name, context.getActiveLanguage())}</div>
         <ObservationStatus unit={unit}/>
