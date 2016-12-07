@@ -3,18 +3,21 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {fetchUnits} from '../../unit/actions';
+import {fetchServices} from '../../service/actions';
 import {setLocation} from '../../map/actions';
 import {changeLanguage} from '../../language/actions';
 import {getStoredLang} from '../../language/helpers';
 import * as fromMap from '../../map/selectors';
 import * as fromSearch from '../../search/selectors';
 import * as fromUnit from '../../unit/selectors';
+import * as fromService from '../../service/selectors';
 import * as fromLanguage from '../../language/selectors';
+import {getIsLoading} from '../selectors';
 import {DefaultFilters} from '../../unit/constants';
 import MapView from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
-import {locations, views, POLL_INTERVAL} from '../constants.js';
+import {locations, POLL_INTERVAL} from '../constants.js';
 import {arrayifyQueryValue} from '../../common/helpers';
 
 export class HomeContainer extends Component {
@@ -57,6 +60,8 @@ export class HomeContainer extends Component {
       lat: this.props.position[0],
       lon: this.props.position[1]
     });
+
+    this.props.fetchServices();
 
     this.pollUnitsInterval = setInterval(this.fetchUnits, POLL_INTERVAL);
     this.initialPosition = this.props.position;
@@ -124,7 +129,7 @@ export class HomeContainer extends Component {
   }
 
   render() {
-    const {unitData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {unitData, serviceData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
 
     return (
@@ -133,6 +138,7 @@ export class HomeContainer extends Component {
           isLoading={isLoading}
           isSearching={isSearching}
           units={unitData}
+          services={serviceData}
           activeFilter={activeFilter}
           openUnit={this.openUnit}
           position={mapCenter}
@@ -149,11 +155,12 @@ export class HomeContainer extends Component {
           setLocation={this.props.setLocation}
           position={this.initialPosition}
           units={unitData}
+          services={serviceData}
           changeLanguage={this.handleChangeLanguage}
           openUnit={this.openUnit}
           mapCenter={mapCenter}
         />
-        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} unit={selectedUnit} params={params} handleClick={this.closeUnit} />
+        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} unit={selectedUnit} services={serviceData} params={params} handleClick={this.closeUnit} />
       </div>
     );
   }
@@ -165,9 +172,10 @@ HomeContainer.childContextTypes = {
 
 const mapStateToProps = (state, props) => ({
   unitData: fromUnit.getVisibleUnits(state, props.location.query),
+  serviceData: fromService.getServicesObject(state),
   selectedUnit: fromUnit.getUnitById(state, {id: props.params.unitId}),
   activeLanguage: fromLanguage.getLanguage(state),
-  isLoading: fromUnit.getIsLoading(state),
+  isLoading: getIsLoading(state),
   mapCenter: fromMap.getLocation(state),
   position: fromMap.getLocation(state),
   address: fromMap.getAddress(state),
@@ -175,7 +183,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({fetchUnits, setLocation, changeLanguage}, dispatch);
+  bindActionCreators({fetchUnits, fetchServices, setLocation, changeLanguage}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(
   HomeContainer

@@ -4,6 +4,7 @@ import {Link} from 'react-router';
 import {isEqual, values} from 'lodash';
 import SMIcon from '../../home/components/SMIcon';
 import * as unitHelpers from '../helpers';
+import {getServiceName} from '../../service/helpers';
 import {SortKeys, UNIT_BATCH_SIZE} from '../constants';
 import {View} from './View.js';
 import Loading from '../../home/components/Loading';
@@ -18,9 +19,9 @@ class UnitListItem extends Component {
   }
 
   render() {
-    const {unit, handleClick} = this.props;
+    const {unit, services, handleClick} = this.props;
     const context = this.context;
-    const serviceName = unitHelpers.getServiceName(unit, context.getActiveLanguage());
+    const serviceName = getServiceName(unit.services[0], services, context.getActiveLanguage());
 
     return (
     <Link to={`/unit/${unit.id}`} onClick={(e) => {e.preventDefault(); handleClick();}} className="list-view-item">
@@ -43,6 +44,7 @@ UnitListItem.contextTypes = {
 class ListView extends Component {
   static propTypes = {
     units: PropTypes.array,
+    services: PropTypes.object,
     sortKey: PropTypes.string
   };
 
@@ -102,10 +104,11 @@ class ListView extends Component {
   }
 
   render() {
-    const {openUnit, isLoading, t} = this.props;
+    const {services, openUnit, isLoading, t} = this.props;
     const {sortKey, maxUnitCount} = this.state;
     const totalUnits = this.props.units.length;
     const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
+
     return (
       <View id="list-view" className="list-view">
         <div className="list-view__container">
@@ -117,6 +120,7 @@ class ListView extends Component {
             {units && units.map( (unit) =>
               <UnitListItem
               unit={unit}
+              services={services}
               key={unit.id}
               handleClick={() => openUnit(unit.id)}/>)}
             {
