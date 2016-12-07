@@ -56,19 +56,14 @@ class MapView extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateIsMobile);
-    //this.refs.map.leafletElement.setActiveArea('activeArea');
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.unitId && !isEmpty(nextProps.units)) {
-      const unit = nextProps.units.filter((unit) => unit.id == nextProps.params.unitId)[0];
-      !isEmpty(unit) && this.centerMapToUnit(unit);
+    const {selectedUnit} = this.props;
+    if (nextProps.selectedUnit &&
+      (!selectedUnit || selectedUnit.id !== nextProps.selectedUnit.id ) ) {
+      this.centerMapToUnit(nextProps.selectedUnit);
     }
-
-    /*if (nextProps.position[0] !== this.props.position[0] || nextProps.position[1] !== this.props.position[1]) {
-      console.log('here');
-      this.refs.map.leafletElement.setView([60,25]);
-    }*/
   }
 
   centerMapToUnit(unit: Object) {
