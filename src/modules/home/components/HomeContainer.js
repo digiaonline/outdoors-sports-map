@@ -62,16 +62,16 @@ export class HomeContainer extends Component {
     this.initialPosition = this.props.position;
 
     // TODO: re-enable langauge guessing from browser
-    if(!getStoredLang()) {
-      const userLang = navigator.language || navigator.userLanguage;
-
-      if(userLang.includes('sv')) {
-        this.handleChangeLanguage('sv');
-
-      } else if(userLang.includes('en')) {
-        this.handleChangeLanguage('en');
-      }
-    }
+    // if(!getStoredLang()) {
+    //   const userLang = navigator.language || navigator.userLanguage;
+    //
+    //   if(userLang.includes('sv')) {
+    //     this.handleChangeLanguage('sv');
+    //
+    //   } else if(userLang.includes('en')) {
+    //     this.handleChangeLanguage('en');
+    //   }
+    // }
   }
 
   fetchUnits() {
