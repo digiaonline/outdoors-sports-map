@@ -8,7 +8,7 @@ import Logo from '../../home/components/Logo';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from '../../map/components/Control';
 import {mobileBreakpoint} from '../../common/constants';
-import {languages} from '../../language/constants';
+import {SUPPORTED_LANGUAGES} from '../../language/constants';
 import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, BOUNDARIES} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
@@ -161,7 +161,7 @@ class MapView extends Component {
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
             <OSMIcon icon="locate" />
           </Control>
-          <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />
+          {Object.keys(SUPPORTED_LANGUAGES).length > 1 && <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />}
           {menuOpen ? <InfoMenu t={t} openAboutModal={this.openAboutModal} openFeedbackModal={this.openFeedbackModal} /> : null}
           <Control handleClick={this.toggleMenu} className="leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
             <SMIcon icon="info" />
@@ -179,12 +179,12 @@ export default translate(null, {withRef: true})(MapView);
 
 const LanguageChanger = ({changeLanguage, activeLanguage}) =>
   <div className="language-changer">
-    {Object.keys(languages).filter((language) => languages[language] !== activeLanguage).map((languageKey, index) => (
+    {Object.keys(SUPPORTED_LANGUAGES).filter((language) => SUPPORTED_LANGUAGES[language] !== activeLanguage).map((languageKey, index) => (
       <div key={languageKey} style={{ display: 'flex' }}>
-        <a onClick={() => changeLanguage(languages[languageKey])}>
+        <a onClick={() => changeLanguage(SUPPORTED_LANGUAGES[languageKey])}>
           {languageKey}
         </a>
-        {index < Object.keys(languages).length - 2
+        {index < Object.keys(SUPPORTED_LANGUAGES).length - 2
           ? <div style={{ marginLeft: 2, marginRight: 2 }}>|</div>
           : null}
       </div>)
@@ -229,7 +229,7 @@ const FeedbackModal = ({closeModal, t}) =>
         <SMIcon icon="close" onClick={() => closeModal()} />
       </div>
       <div className="about-modal-content">
-        <h3>{t('MAP.GIVE_FEEDBACK')}</h3>
+        <h3>{t('MAP.INFO_MENU.GIVE_FEEDBACK')}</h3>
         <form>
           <div><textarea type="text" placeholder="Message" /></div>
           <div>
