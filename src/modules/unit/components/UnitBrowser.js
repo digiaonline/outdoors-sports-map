@@ -21,7 +21,7 @@ const Header = ({expand, toggle, toggleIcon, openUnit, setView}) =>
 
 const AddressBar = ({address, handleClick}, context) =>
   <div className="address-bar__container" onClick={() => handleClick(address.location.coordinates.slice().reverse())}>
-    <img className="address-bar__marker" src={require('../../../../assets/markers/location.png')}/>
+    <img className="address-bar__marker" src={require('../../../../assets/markers/location.svg')} height="20px" width="16px"/>
     {address && getAddressToDisplay(address, context.getActiveLanguage())}
   </div>;
 
