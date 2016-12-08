@@ -2,7 +2,7 @@ import {createAction} from 'redux-actions';
 import values from 'lodash/values';
 import {SearchActions, MAX_SUGGESTION_COUNT} from './constants';
 import {Action} from '../common/constants';
-import {UnitServices} from '../unit/constants';
+import {UnitServices} from '../service/constants';
 
 export const clearSearch = () =>
   createAction(SearchActions.CLEAR)();
