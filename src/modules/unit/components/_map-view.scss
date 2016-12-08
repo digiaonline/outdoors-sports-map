@@ -1,6 +1,8 @@
 .map-view {
+  height: 100%;
+  width: 100%;
   .leaflet-container {
-    height: 100vh;
+    height: 100%;
 
     .leaflet-control-container {
 
@@ -37,6 +39,12 @@
   a {
     color: black;
   }
+
+  &__mobile{
+    display: flex;
+    position: static;
+    flex-direction: column;
+  }
 }
 
 .info-menu {
@@ -50,6 +58,8 @@
   z-index: 10000;
   background: #fff;
   padding: 8px 5px;
+  font-size: 14px;
+  line-height: 24px;
 
   &-item {
 
@@ -103,6 +113,10 @@
   }
 }
 
+.leaflet-control-zoom {
+  display: none;
+}
+
 @media only screen and (min-width : $breakpoint) {
 
   .map-view {
@@ -132,5 +146,9 @@
       width: 40%;
       height: 40%;
     }
+  }
+
+  .leaflet-control-zoom {
+    display: inline;
   }
 }

@@ -70,7 +70,7 @@ class SearchContainer extends Component {
   }
 
   render() {
-    const {unitSuggestions, addresses, services, isActive, setLocation, setView, searchDisabled, openUnit} = this.props;
+    const {unitSuggestions, addresses, services, isActive, searchDisabled, openUnit} = this.props;
     const {searchPhrase, showSuggestions} = this.state;
 
     return (

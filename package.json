@@ -28,6 +28,8 @@
     "moment": "^2.15.2",
     "normalize.css": "^5.0.0",
     "normalizr": "^2.2.1",
+    "proj4": "^2.3.14",
+    "proj4leaflet": "git://github.com/kartena/Proj4Leaflet.git#leaflet-proj-refactor",
     "react": "^15.4.1",
     "react-bootstrap": "^0.30.6",
     "react-dom": "^15.4.1",

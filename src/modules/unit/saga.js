@@ -5,7 +5,7 @@ import {receiveUnits, receiveSearchSuggestions, setFetchError} from './actions';
 import {UnitActions, unitSchema} from './constants';
 import {getFetchUnitsRequest} from './helpers';
 import {FetchAction} from '../common/constants';
-import {callApi, normalizeEntityResults} from '../api/helpers';
+import {callApi, createRequest, normalizeEntityResults, stringifyQuery} from '../api/helpers';
 
 function* fetchUnits({payload: {params}}: FetchAction) {
   const request = getFetchUnitsRequest(params);
@@ -24,6 +24,32 @@ function* clearSearch() {
   yield put(receiveSearchSuggestions([]));
 }
 
+function* sendFeedback({payload: {feedback, email}}) {
+  console.log(feedback);
+  const params = {
+    description: feedback,
+    service_request_type: 'OTHER',
+    can_be_published: false,
+    internal_feedback: true,
+    service_code: 2815
+  };
+
+  if (email) {
+    params.email = email;
+  }
+
+  const request = createRequest(`https://api.hel.fi/servicemap/open311/`,
+    { method: 'POST',
+      body: stringifyQuery(params),
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    });
+  const {bodyAsJson} = yield call(callApi, request);
+  console.log(bodyAsJson);
+
+}
+
 function* watchFetchUnits() {
   yield takeLatest(UnitActions.FETCH, fetchUnits);
 }
@@ -32,9 +58,14 @@ function* watchClearSearch() {
   yield takeLatest(UnitActions.SEARCH_CLEAR, clearSearch);
 }
 
+function* watchSendFeedback() {
+  yield takeLatest(UnitActions.SEND_FEEDBACK, sendFeedback);
+}
+
 export default function* saga() {
   return [
     yield fork(watchFetchUnits),
-    yield fork(watchClearSearch)
+    yield fork(watchClearSearch),
+    yield fork(watchSendFeedback)
   ];
 }

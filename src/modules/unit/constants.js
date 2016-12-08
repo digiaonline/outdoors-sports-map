@@ -5,27 +5,6 @@ export const UNIT_PIN_HEIGHT = 40;
 export const UNIT_HANDLE_HEIGHT = 32;
 export const UNIT_ICON_WIDTH = 32;
 
-export const UnitServices = {
-  MECHANICALLY_FROZEN_ICE: 33417,
-  ICE_SKATING_FIELD: 33418,
-  SPEED_SKATING_TRACK: 33420,
-  SKI_TRACK: 33483,
-  DOG_SKI_TRACK: 33492
-};
-
-export const IceSkatingServices = [
-  UnitServices.MECHANICALLY_FROZEN_ICE,
-  UnitServices.ICE_SKATING_FIELD,
-  UnitServices.SPEED_SKATING_TRACK
-];
-
-export const SkiingServices = [
-  UnitServices.SKI_TRACK,
-  UnitServices.DOG_SKI_TRACK
-];
-
-export const SwimmingServices = [];
-
 export const UnitFilters = {
   SKIING: 'ski',
   ICE_SKATING: 'iceskate',
@@ -80,7 +59,8 @@ export const UnitActions = {
   SEARCH_REQUEST: normalizeActionName('unit/SEARCH_REQUEST'),
   SEARCH_RECEIVE: normalizeActionName('unit/SEARCH_RECEIVE'),
   FETCH_SEARCH_SUGGESTIONS: normalizeActionName('unit/FETCH_SEARCH_SUGGESTIONS'),
-  RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName('unit/RECEIVE_SEARCH_SUGGESTIONS')
+  RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName('unit/RECEIVE_SEARCH_SUGGESTIONS'),
+  SEND_FEEDBACK: normalizeActionName('unit/SEND_FEEDBACK')
 };
 
 export type UnitState = {

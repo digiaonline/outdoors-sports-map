@@ -2914,7 +2914,7 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-leaflet@^1.0.2:
+leaflet@^1.0.0-rc.3, leaflet@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.0.2.tgz#fa4fbcb7844944fc2bfb0bcf9ca0dea13463ca21"
 
@@ -3240,6 +3240,10 @@ merge-descriptors@1.0.1:
 methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
+
+mgrs@~0.0.2:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/mgrs/-/mgrs-0.0.3.tgz#3058d38ae92e1abfbf74b32a8f6cb5225a6eaa05"
 
 micromatch@^2.1.5, micromatch@^2.3.11:
   version "2.3.11"
@@ -4038,6 +4042,19 @@ process@~0.5.1:
 progress@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
+
+proj4@^2.3.14:
+  version "2.3.15"
+  resolved "https://registry.yarnpkg.com/proj4/-/proj4-2.3.15.tgz#5ad06e8bca30be0ffa389a49e4565f51f06d089e"
+  dependencies:
+    mgrs "~0.0.2"
+
+"proj4leaflet@git://github.com/kartena/Proj4Leaflet.git#leaflet-proj-refactor":
+  version "1.0.0-rc.3"
+  resolved "git://github.com/kartena/Proj4Leaflet.git#3019d278b5d3e42a72b65142db2d5f0b06039b53"
+  dependencies:
+    leaflet "^1.0.0-rc.3"
+    proj4 "^2.3.14"
 
 promise@^7.1.1:
   version "7.1.1"

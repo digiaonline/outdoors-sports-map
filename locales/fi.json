@@ -11,7 +11,13 @@
     "ABOUT": "THIS IS AWESOME TEXT ABOUT THIS AWESOME SERVICE",
     "INFO_MENU" : {
       "GIVE_FEEDBACK": "Anna palautetta",
-      "ABOUT_SERVICE": "Tietoa palvelusta"
+      "ABOUT_SERVICE": "Tietoa palvelusta",
+      "CHOOSE_LANGUAGE": "Valitse kieli"
+    },
+    "FEEDBACK": {
+      "FEEDBACK": "Palaute",
+      "WANT_ANSWER": "Haluan vastauksen sähköpostiini",
+      "SEND": "Lähetä"
     }
   },
   "UNIT": {

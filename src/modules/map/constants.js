@@ -1,8 +1,11 @@
 import {normalizeActionName} from '../common/helpers.js';
 
-export const MAP_URL = 'https://api.mapbox.com/styles/v1/tituomin/civ9gjuzd000d2jpyhizymhjr/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGl0dW9taW4iLCJhIjoiS29lVUNMayJ9.TNwCZkDKvgNLMelagkad7w';
-export const DEFAULT_ZOOM = 13;
-export const MIN_ZOOM = 12;
+export const MAP_URL = 'https://geoserver.hel.fi/mapproxy/wmts/osm-lite/etrs_tm35fin/{z}/{x}/{y}.png';
+export const MAP_RETINA_URL = 'https://geoserver.hel.fi/mapproxy/wmts/osm-lite-hq/etrs_tm35fin/{z}/{x}/{y}.png';
+
+export const DEFAULT_ZOOM = 9;
+export const MIN_ZOOM = 8;
+export const MAX_ZOOM = 15;
 export const BOUNDARIES = [[59.4, 23.8], [61.5, 25.8]];
 
 export const mapActions = {

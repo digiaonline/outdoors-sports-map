@@ -26,7 +26,7 @@ export const createUrl = (url: string, params: Object): string =>
 export const createDigitransitUrl = (url: string, params: Object): string =>
   `${DIGITRANSIT_API_URL}/${url}${params ? `?${stringifyQuery(params)}` : ''}`;
 
-const stringifyQuery = (query: Object): string =>
+export const stringifyQuery = (query: Object): string =>
   Object
     .keys(query)
     .map((key) => [key, query[key]].map((v) => encodeURIComponent(v)).join('='))

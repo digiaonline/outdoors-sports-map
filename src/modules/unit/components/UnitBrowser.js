@@ -10,7 +10,7 @@ import {getAddressToDisplay} from '../helpers';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
-    <SMIcon icon={icon} />
+    <SMIcon className="unit-browser__toggle" icon={icon} />
   </button>;
 
 const Header = ({expand, toggle, toggleIcon, openUnit, setView}) =>
@@ -20,7 +20,8 @@ const Header = ({expand, toggle, toggleIcon, openUnit, setView}) =>
 </div>;
 
 const AddressBar = ({address, handleClick}, context) =>
-  <div className="address-bar_container" onClick={() => handleClick(address.location.coordinates.slice().reverse())}>
+  <div className="address-bar__container" onClick={() => handleClick(address.location.coordinates.slice().reverse())}>
+    <img className="address-bar__marker" src={require('../../../../assets/markers/location.svg')} height="20px" width="16px"/>
     {address && getAddressToDisplay(address, context.getActiveLanguage())}
   </div>;
 
@@ -62,10 +63,8 @@ class UnitBrowser extends Component {
   }
 
   calculateMaxHeight() {
-    const isMobile = window.innerWidth < 768;
-    const bottomSpace = isMobile ? 80 : 0;
     const fixedPartHeight = document.getElementById('always-visible').offsetHeight;
-    return window.innerHeight - fixedPartHeight - bottomSpace;
+    return window.innerHeight - fixedPartHeight;
   }
 
   updateQueryParameter(key: string, value: string): void {
@@ -113,9 +112,9 @@ class UnitBrowser extends Component {
           setView={setView}
           openUnit={openUnit}
         />
-        <UnitFilter active={currentSportFilter} all={values(SportFilters)} toggleFilter={this.toggleSportFilter} />
-        <UnitFilter active={currentStatusFilter} all={values(StatusFilters)} toggleFilter={this.toggleStatusFilter} />
-        {Object.keys(address).length !== 0 && <AddressBar handleClick={setView} address={address} />}
+        {!isLoading && <UnitFilter active={currentSportFilter} all={values(SportFilters)} toggleFilter={this.toggleSportFilter} />}
+        {!isLoading && <UnitFilter active={currentStatusFilter} all={values(StatusFilters)} toggleFilter={this.toggleStatusFilter} />}
+        {!isLoading && Object.keys(address).length !== 0 && <AddressBar handleClick={setView} address={address} />}
       </div>
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
           <ListView isLoading={isLoading || isSearching} units={units} services={services} position={position} openUnit={openUnit} />

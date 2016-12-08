@@ -1,7 +1,8 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
 import {createRequest, createUrl} from '../api/helpers.js';
-import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, QualityEnum, UnitFilters, UnitServices, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from './constants';
+import {UnitServices, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from '../service/constants';
+import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, UnitFilters, QualityEnum} from './constants';
 import {DEFAULT_LANG} from '../common/constants';
 import upperFirst from 'lodash/upperFirst';
 import values from 'lodash/values';
