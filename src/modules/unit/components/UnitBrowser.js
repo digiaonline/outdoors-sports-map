@@ -10,7 +10,7 @@ import {getAddressToDisplay} from '../helpers';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
-    <SMIcon icon={icon} />
+    <SMIcon className="unit-browser__toggle" icon={icon} />
   </button>;
 
 const Header = ({expand, toggle, toggleIcon, openUnit, setView}) =>
