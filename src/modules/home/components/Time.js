@@ -32,7 +32,7 @@ const Time = translate()(({time, t}) =>
     {
       formatTime(time, t)
     }
-    {moment().diff(time, 'days') < 2 && ' '+time.getHours()+':'+time.getMinutes()}
+    {moment().diff(time, 'days') < 2 && ' '+time.getUTCHours()+':'+('0'+time.getMinutes()).slice(-2)}
   </time>
 );
 
