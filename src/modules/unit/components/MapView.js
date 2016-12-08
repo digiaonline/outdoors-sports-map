@@ -82,13 +82,14 @@ class MapView extends Component {
   centerMapToUnit(unit: Object) {
     if (this.state.isMobile) {
       let location = getUnitPosition(unit);
-      location[0] = location[0] + 0.02;
+      location[0] = location[0] + 0.035;
+      location[1] = location[1] - 0.005;
       //For some reason could not use reverse here so had to do this weird way.
       this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
     }
     else {
       let location = getUnitPosition(unit);
-      location[1] = location[1] - 0.04;
+      location[1] = location[1] - 0.07;
 
       this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
     }
