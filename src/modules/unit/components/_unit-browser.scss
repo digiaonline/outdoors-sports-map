@@ -52,16 +52,24 @@
   }
 }
 
-.address-bar_container {
-  border-radius: 18px;
-  padding: 3px 10px;
-  background: $ui-content;
-  color: #fff;
-  margin-top: $gap;
+.address-bar {
 
-  &:hover {
-    background: $ui-enabled;
-    cursor: pointer;
+  &__container {
+    border-radius: 18px;
+    padding: 3px 10px;
+    background: $ui-content;
+    color: #fff;
+    margin-top: $gap;
+
+    &:hover {
+      background: $ui-enabled;
+      cursor: pointer;
+    }
+  }
+
+  &__marker {
+    background: $ui-content !important;
+    margin-right: 8px !important;
   }
 }
 
