@@ -3,7 +3,7 @@ import {Marker} from 'react-leaflet';
 import {Icon} from 'leaflet';
 import {getUnitIcon, getUnitPosition, getUnitSport} from '../helpers';
 import {UNIT_ICON_WIDTH, UnitFilters} from '../constants';
-import {DEFAULT_ZOOM} from '../../map/constants';
+import {MAX_ZOOM} from '../../map/constants';
 import UnitPopup from './UnitPopup';
 
 const POPUP_OFFSET = 4;
@@ -34,11 +34,11 @@ class UnitMarker extends Component {
   }
 
   getIconWidth(zoomLevel) {
-    return zoomLevel / 18 * UNIT_ICON_WIDTH;
+    return zoomLevel / MAX_ZOOM * UNIT_ICON_WIDTH;
   }
 
   getIconHeight(icon, zoomLevel) {
-    return zoomLevel / 18 * icon.height;
+    return zoomLevel / MAX_ZOOM * icon.height;
   }
 
   _createIcon(unit: Object, isSelected: boolean) {
