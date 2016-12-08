@@ -10,24 +10,7 @@ import {View} from './View.js';
 import Loading from '../../home/components/Loading';
 import ObservationStatus from './ObservationStatus';
 import SortSelectorDropdown from './SortSelectorDropdown';
-import OSMIcon from '../../home/components/OSMIcon';
-
-const UnitIcon = ({unit}) => {
-  let icon = 'status-unknown';
-
-  switch(unitHelpers.getUnitSport(unit)) {
-    case UnitFilters.ICE_SKATING:
-      icon = 'iceskate';
-      break;
-    case UnitFilters.SKIING:
-      icon = 'crosscountry';
-      break;
-    default:
-      // Use default value
-  }
-
-  return <OSMIcon icon={icon} />
-};
+import UnitIcon from './UnitIcon';
 
 class UnitListItem extends Component {
   shouldComponentUpdate({unit}) {
@@ -37,7 +20,6 @@ class UnitListItem extends Component {
   render() {
     const {unit, services, handleClick} = this.props;
     const context = this.context;
-    const serviceName = getServiceName(unit.services[0], services, context.getActiveLanguage());
 
     return (
     <Link to={`/unit/${unit.id}`} onClick={(e) => {e.preventDefault(); handleClick();}} className="list-view-item">

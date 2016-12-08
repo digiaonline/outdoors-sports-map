@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const SMIcon = ({icon, ...rest}) =>
-  <span className={`icon-icon-${icon}`} {...rest} />;
+export const SMIcon = ({icon, className, ...rest}) =>
+  <span className={`icon-icon-${icon} ${className}`} {...rest} />;
 
 export default SMIcon;
