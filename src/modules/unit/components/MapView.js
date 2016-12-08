@@ -169,7 +169,7 @@ class MapView extends Component {
           />
           <UserLocationMarker />
           <UnitsOnMap units={units} zoomLevel={zoomLevel} selectedUnit={selectedUnit} openUnit={openUnit}/>
-          {!isMobile && <ZoomControl position="bottomright" />}
+          <ZoomControl position="bottomright"/>
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
             <OSMIcon icon="locate" />
           </Control>
