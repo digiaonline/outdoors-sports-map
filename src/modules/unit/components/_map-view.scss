@@ -37,6 +37,12 @@
   a {
     color: black;
   }
+
+  &__mobile{
+    display: flex;
+    position: static;
+    flex-direction: column;
+  }
 }
 
 .info-menu {

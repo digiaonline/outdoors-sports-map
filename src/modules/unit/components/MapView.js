@@ -162,8 +162,8 @@ class MapView extends Component {
           <Control handleClick={this.locateUser} className="leaflet-control-locate" position="bottomright">
             <OSMIcon icon="locate" />
           </Control>
-          {Object.keys(SUPPORTED_LANGUAGES).length > 1 && <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />}
-          {menuOpen ? <InfoMenu t={t} openAboutModal={this.openAboutModal} openFeedbackModal={this.openFeedbackModal} /> : null}
+          {Object.keys(SUPPORTED_LANGUAGES).length > 1 && !isMobile && <LanguageChanger activeLanguage={activeLanguage} changeLanguage={changeLanguage} />}
+          {menuOpen ? <InfoMenu t={t} isMobile={isMobile} openAboutModal={this.openAboutModal} openFeedbackModal={this.openFeedbackModal} activeLanguage={activeLanguage} changeLanguage={changeLanguage} /> : null}
           <Control handleClick={this.toggleMenu} className="leaflet-control-info" position={isMobile ? 'bottomleft' : 'topright'}>
             <SMIcon icon="info" />
           </Control>
@@ -178,21 +178,21 @@ class MapView extends Component {
 
 export default translate(null, {withRef: true})(MapView);
 
-const LanguageChanger = ({changeLanguage, activeLanguage}) =>
-  <div className="language-changer">
+const LanguageChanger = ({changeLanguage, activeLanguage, isMobile}) =>
+  <div className={isMobile ? 'language-changer__mobile' : 'language-changer'}>
     {Object.keys(SUPPORTED_LANGUAGES).filter((language) => SUPPORTED_LANGUAGES[language] !== activeLanguage).map((languageKey, index) => (
       <div key={languageKey} style={{ display: 'flex' }}>
         <a onClick={() => changeLanguage(SUPPORTED_LANGUAGES[languageKey])}>
           {languageKey}
         </a>
-        {index < Object.keys(SUPPORTED_LANGUAGES).length - 2
+        {index < Object.keys(SUPPORTED_LANGUAGES).length - 2 && !isMobile
           ? <div style={{ marginLeft: 2, marginRight: 2 }}>|</div>
           : null}
       </div>)
     )}
   </div>;
 
-const InfoMenu = ({openAboutModal, openFeedbackModal, t}) =>
+const InfoMenu = ({openAboutModal, openFeedbackModal, t, isMobile, activeLanguage, changeLanguage}) =>
   <div className="info-menu">
     <InfoMenuItem icon='info' handleClick={openFeedbackModal} t={t}>
       {t('MAP.INFO_MENU.GIVE_FEEDBACK')}
@@ -203,6 +203,12 @@ const InfoMenu = ({openAboutModal, openFeedbackModal, t}) =>
     <InfoMenuItem handleClick={() => null}>
       <a target="_blank" href='http://osm.org/copyright' style={{padding: 1}}>&copy; {t('MAP.ATTRIBUTION')} </a>
     </InfoMenuItem>
+    { isMobile && Object.keys(SUPPORTED_LANGUAGES).length > 1 &&
+      <InfoMenuItem handleClick={() => null}>
+        <strong>{t('MAP.INFO_MENU.CHOOSE_LANGUAGE')}</strong>
+        <LanguageChanger style={{position: 'static'}} activeLanguage={activeLanguage} changeLanguage={changeLanguage} isMobile={isMobile}/>
+      </InfoMenuItem>
+    }
   </div>;
 
 const InfoMenuItem = ({children, handleClick, icon}) =>
