@@ -20,10 +20,12 @@ export class SingleUnitOnMap extends Component{
   }
 
   shouldComponentUpdate(nextProps) {
-    const {unit, isSelected} = this.props;
-    const isQuality = getUnitQuality(unit) !== getUnitQuality(nextProps.unit);
+    const {unit, isSelected, zoomLevel} = this.props;
+    const isQualityUpdated = getUnitQuality(unit) !== getUnitQuality(nextProps.unit);
     const isSelectedUpdated = isSelected !== nextProps.isSelected;
-    return isQuality || isSelectedUpdated;
+    const isZoomUpdated = zoomLevel !== nextProps.zoomLevel;
+
+    return isQualityUpdated || isSelectedUpdated || isZoomUpdated;
   }
 
   render () {
