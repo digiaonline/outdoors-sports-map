@@ -63,10 +63,8 @@ class UnitBrowser extends Component {
   }
 
   calculateMaxHeight() {
-    const isMobile = window.innerWidth < 768;
-    const bottomSpace = isMobile ? 80 : 0;
     const fixedPartHeight = document.getElementById('always-visible').offsetHeight;
-    return window.innerHeight - fixedPartHeight - bottomSpace;
+    return window.innerHeight - fixedPartHeight;
   }
 
   updateQueryParameter(key: string, value: string): void {
