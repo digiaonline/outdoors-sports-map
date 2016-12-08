@@ -9,12 +9,13 @@ import {Map, TileLayer, ZoomControl} from 'react-leaflet';
 import Control from '../../map/components/Control';
 import {mobileBreakpoint} from '../../common/constants';
 import {SUPPORTED_LANGUAGES} from '../../language/constants';
-import {MAP_URL, DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, BOUNDARIES} from '../../map/constants';
+import {MAP_URL, MAP_RETINA_URL, DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM, BOUNDARIES} from '../../map/constants';
 import {latLngToArray} from '../../map/helpers';
 import {getUnitPosition} from '../helpers';
 import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
 import {translate} from 'react-i18next';
+import {isRetina} from '../../common/helpers';
 require('proj4leaflet');
 
 const bounds = L.bounds(L.point(-548576, 6291456), L.point(1548576, 8388608));
@@ -164,7 +165,7 @@ class MapView extends Component {
           onLocationfound={this.setLocation}
           onZoomend={this.handleZoom}>
           <TileLayer
-            url={MAP_URL}
+            url={isRetina() ? MAP_RETINA_URL : MAP_URL}
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
           <UserLocationMarker />

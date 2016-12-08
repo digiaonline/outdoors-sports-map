@@ -1,6 +1,7 @@
 import {normalizeActionName} from '../common/helpers.js';
 
 export const MAP_URL = 'https://geoserver.hel.fi/mapproxy/wmts/osm-lite/etrs_tm35fin/{z}/{x}/{y}.png';
+export const MAP_RETINA_URL = 'https://geoserver.hel.fi/mapproxy/wmts/osm-lite-hq/etrs_tm35fin/{z}/{x}/{y}.png';
 
 export const DEFAULT_ZOOM = 9;
 export const MIN_ZOOM = 8;
