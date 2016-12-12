@@ -17,7 +17,8 @@
     "FEEDBACK": {
       "FEEDBACK": "Feedback",
       "WANT_ANSWER": "I want answer to my email",
-      "SEND": "Send"
+      "SEND": "Send",
+      "EMAIL": "Email"
     }
   },
   "UNIT": {

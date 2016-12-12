@@ -111,6 +111,10 @@
       cursor: pointer;
     }
   }
+
+  &-content {
+    max-height: 90%;
+  }
 }
 
 .leaflet-control-zoom {

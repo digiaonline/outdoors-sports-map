@@ -17,7 +17,8 @@
     "FEEDBACK": {
       "FEEDBACK": "Palaute",
       "WANT_ANSWER": "Haluan vastauksen sähköpostiini",
-      "SEND": "Lähetä"
+      "SEND": "Lähetä",
+      "EMAIL": "Sähköposti"
     }
   },
   "UNIT": {
