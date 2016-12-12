@@ -4,6 +4,7 @@ import {normalizeActionName} from '../common/helpers';
 export const UnitServices = {
   MECHANICALLY_FROZEN_ICE: 33417,
   ICE_SKATING_FIELD: 33418,
+  ICE_RINK: 33419,
   SPEED_SKATING_TRACK: 33420,
   SKI_TRACK: 33483,
   DOG_SKI_TRACK: 33492
@@ -12,6 +13,7 @@ export const UnitServices = {
 export const IceSkatingServices = [
   UnitServices.MECHANICALLY_FROZEN_ICE,
   UnitServices.ICE_SKATING_FIELD,
+  UnitServices.ICE_RINK,
   UnitServices.SPEED_SKATING_TRACK
 ];
 
