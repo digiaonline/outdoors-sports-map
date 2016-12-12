@@ -6,6 +6,7 @@ export const UnitServices = {
   ICE_SKATING_FIELD: 33418,
   ICE_RINK: 33419,
   SPEED_SKATING_TRACK: 33420,
+  ICE_SKATING_ROUTE: 33421,
   SKI_TRACK: 33483,
   DOG_SKI_TRACK: 33492
 };
@@ -14,7 +15,8 @@ export const IceSkatingServices = [
   UnitServices.MECHANICALLY_FROZEN_ICE,
   UnitServices.ICE_SKATING_FIELD,
   UnitServices.ICE_RINK,
-  UnitServices.SPEED_SKATING_TRACK
+  UnitServices.SPEED_SKATING_TRACK,
+  UnitServices.ICE_SKATING_ROUTE
 ];
 
 export const SkiingServices = [
