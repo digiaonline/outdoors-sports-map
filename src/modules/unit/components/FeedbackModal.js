@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button, FormGroup, FormControl, ControlLabel, Checkbox, FieldGroup} from 'react-bootstrap';
 import {translate} from 'react-i18next';
 import {sendFeedback} from '../actions';
 import {bindActionCreators} from 'redux';
@@ -47,15 +48,16 @@ export class FeedbackModal extends Component {
           <div className="about-modal-content">
             <h3>{t('MAP.INFO_MENU.GIVE_FEEDBACK')}</h3>
             <form onSubmit={(e) => this.handleFeedbackSubmit(e, this.state.feedback, this.state.email)}>
-              <div className="feedback-modal__feedback"><textarea type="text" placeholder={t('MAP.FEEDBACK.FEEDBACK')} rows="7" cols="40" onChange={(e) => this.setState({feedback: e.target.value})}/></div>
-              <div>
-                <label>
-                  <input className="feedback-modal__checkbox" type="checkbox" onChange={() => this.toggleEmailInput()} />
+              <FormGroup controlId="formControlsTextarea" className="feedback-modal__feedback">
+                <FormControl componentClass="textarea" placeholder={t('MAP.FEEDBACK.FEEDBACK')} onChange={(e) => this.setState({feedback: e.target.value})}/>
+              </FormGroup>
+              <FormGroup>
+                  <Checkbox inline className="feedback-modal__checkbox" onChange={() => this.toggleEmailInput()}>
                   {t('MAP.FEEDBACK.WANT_ANSWER')}
-                </label>
-              </div>
-              {emailInputOpen && <div className="feedback-modal__email"><input type="text" onChange={(e) => this.setState({email: e.target.value})}/></div>}
-              <button type="submit">{t('MAP.FEEDBACK.SEND')}</button>
+                  </Checkbox>
+              </FormGroup>
+              {emailInputOpen && <FormGroup><FormControl className="feedback-modal__email" type="email" placeholder={t('MAP.FEEDBACK.EMAIL')} onChange={(e) => this.setState({email: e.target.value})}/></FormGroup>}
+              <Button bsStyle="primary" type="submit">{t('MAP.FEEDBACK.SEND')}</Button>
             </form>
           </div>
         </div>

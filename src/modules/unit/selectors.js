@@ -28,7 +28,7 @@ const _getVisibleUnits = (state: AppState, query: Object) => {
 };
 
 export const getVisibleUnits = memoize(_getVisibleUnits, (state: AppState, query: Array<string>) => (
-  `${JSON.stringify(state.unit)}${JSON.stringify(query)}`
+  `${JSON.stringify(state.unit)}${getSearchActive(state)}${JSON.stringify(getUnitResultIDs(state))}${JSON.stringify(query)}`
 ));
 
 export const getSearchResults = (state: AppState/*, props: Object*/) =>
