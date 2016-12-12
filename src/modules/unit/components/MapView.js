@@ -236,8 +236,7 @@ const AboutModal = ({closeModal, t}) =>
       <div className="about-modal-controls">
         <SMIcon icon="close" onClick={() => closeModal()} />
       </div>
-      <div className="about-modal-content">
-        {t('MAP.ABOUT')}
+      <div className="about-modal-content" dangerouslySetInnerHTML={{__html: t('MAP.ABOUT')}}>
       </div>
     </div>
   </div>;
