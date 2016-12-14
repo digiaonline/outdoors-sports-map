@@ -11,6 +11,7 @@ import upperFirst from 'lodash/upperFirst';
 const ModalHeader = ({handleClick, unit, services, isLoading, activeLang, t}) => {
   const unitAddress = unit ? getAttr(unit.street_address, activeLang()) : null;
   const unitZIP = unit ? unit.address_zip : null;
+  const unitMunicipality = unit ? unit.municipality : null;
 
   return(
     <Modal.Header>
@@ -37,7 +38,8 @@ const ModalHeader = ({handleClick, unit, services, isLoading, activeLang, t}) =>
                 </p>
                 <p>
                 {unitAddress ? `${unitAddress}, ` : ''}
-                {unitZIP || ''}
+                {unitZIP ? `${unitZIP} ` : ''}
+                <span style={{textTransform: 'capitalize'}}>{unitMunicipality || ''}</span>
                 </p>
               </div>
             </div>
