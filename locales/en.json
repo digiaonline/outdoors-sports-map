@@ -38,7 +38,8 @@
       "ALPHABETICAL": "Alphabetical order",
       "CONDITION": "Best condition first",
       "DISTANCE": "Nearest first"
-    }
+    },
+    "PHONE": "Phone number"
   },
   "MODAL": {
     "LOADING": "Loading location...",

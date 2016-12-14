@@ -51,35 +51,41 @@ const ModalHeader = ({handleClick, unit, services, isLoading, activeLang, t}) =>
 };
 
 const LocationState = ({unit, t}) =>
-  <div className="modal-body-box">
-    <div className="modal-body-box-headline">{t('MODAL.QUALITY')}</div>
+  <ModalBodyBox title={t('MODAL.QUALITY')}>
     <ObservationStatus unit={unit}/>
-  </div>;
+  </ModalBodyBox>;
 
 const LocationInfo = ({unit, t, activeLang}) =>
-  <div className="modal-body-box">
-    <div className="modal-body-box-headline">{t('MODAL.INFO')}</div>
+  <ModalBodyBox title={t('MODAL.INFO')}>
     {unit.extensions.length && <p>{t('MODAL.LENGTH') + ': '}<strong>{unit.extensions.length}km</strong></p>}
     {unit.extensions.lighting && <p>{t('MODAL.LIGHTING') + ': '}<strong>{upperFirst(getAttr(unit.extensions.lighting, activeLang()))}</strong></p>}
     {unit.extensions.skiing_technique && <p>{t('MODAL.SKIING_TECHNIQUE') + ': '}<strong>{upperFirst(getAttr(unit.extensions.skiing_technique, activeLang()))}</strong></p>}
-    </div>;
+  </ModalBodyBox>;
 
 const LocationWeather = ({t}) =>
-  <div className="modal-body-box">
-    <div className="modal-body-box-headline">{t('MODAL.WEATHER')}</div>
+  <ModalBodyBox title={t('MODAL.WEATHER')}>
     Wow such weather.
-  </div>;
+  </ModalBodyBox>;
 
 const LocationHeightProfile = ({t}) =>
-  <div className="modal-body-box">
-    <div className="modal-body-box-headline">{t('MODAL.HEIGHT_PROFILE')}</div>
+  <ModalBodyBox title={t('MODAL.HEIGHT_PROFILE')}>
     Wow such profile.
-  </div>;
+  </ModalBodyBox>;
 
 const LocationOpeningHours = ({unit, t, activeLang}) =>
-  <div className="modal-body-box">
-    <div className="modal-body-box-headline">{t('MODAL.OPENING_HOURS')}</div>
+  <ModalBodyBox title={t('MODAL.OPENING_HOURS')}>
     {getOpeningHours(unit, activeLang())}
+  </ModalBodyBox>;
+
+const LocationPhoneNumber = ({phone, t}) =>
+  <ModalBodyBox title={t('UNIT.PHONE')}>
+    <a href={`tel:${phone}`}>{phone}</a>
+  </ModalBodyBox>;
+
+const ModalBodyBox = ({title, children, className, ...rest}) =>
+  <div className={`${className} modal-body-box`} {...rest}>
+    {title && <div className="modal-body-box-headline">{title}</div>}
+    {children}
   </div>;
 
 export class SingleUnitModalContainer extends Component {
@@ -103,6 +109,7 @@ export class SingleUnitModalContainer extends Component {
                 && (currentUnit.extensions.length || currentUnit.extensions.lighting || currentUnit.extensions.skiing_technique)
                 && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
+              {currentUnit.phone && <LocationPhoneNumber phone={currentUnit.phone} t={t}/>}
             </Modal.Body>
             : null
           }

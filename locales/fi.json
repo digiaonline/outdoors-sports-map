@@ -39,7 +39,8 @@
       "ALPHABETICAL": "Aakkosellinen",
       "CONDITION": "Paras kunto ensin",
       "DISTANCE": "Lähimmät ensin"
-    }
+    },
+    "PHONE": "Puhelinnumero"
   },
   "MODAL": {
     "LOADING": "Ladataan kohdetta...",
