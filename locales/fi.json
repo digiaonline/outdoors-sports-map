@@ -65,8 +65,10 @@
   "TIME": {
     "DAYS_AGO": "{{days}} päivää sitten",
     "NOT_AVAILABLE": "-",
+    "MONTH_AGO": "kuukausi sitten",
     "MONTHS_AGO": "{{months}} kuukautta sitten",
     "TODAY": "tänään",
+    "WEEK_AGO": "viikko sitten",
     "WEEKS_AGO": "{{weeks}} viikkoa sitten",
     "YESTERDAY": "eilen"
   }
