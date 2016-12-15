@@ -1,5 +1,6 @@
 import React from 'react';
 import {translate} from 'react-i18next';
+import moment from 'moment';
 import Time from '../../home/components/Time';
 import {getUnitQuality, getObservation, getAttr} from '../helpers';
 
@@ -19,7 +20,7 @@ export const MaintenanceUpdated = ({name, activeLang, time}) =>
   </div>;
 
 const getObservationTime = (observation: Object) => {
-  return(new Date(observation && observation.time || 0));
+  return(moment(observation && observation.time || 0).toDate());
 };
 
 export const ObservationStatus = ({unit, t}, context) => {

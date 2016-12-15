@@ -29,13 +29,13 @@ export const formatTime = (time: Date, t: Function) => {
   return t(lookup, options);
 };
 
-const Time = translate()(({time, t}) =>
-  <time dateTime={time.toISOString()}>
+const Time = translate()(({time, t}) => {
+  return <time dateTime={time.toISOString()}>
     {
       formatTime(time, t)
     }
     {moment().endOf('day').diff(time, 'days') < 2 && ' '+ time.getHours()+':'+('0'+time.getMinutes()).slice(-2)}
-  </time>
-);
+  </time>;
+});
 
 export default Time;
