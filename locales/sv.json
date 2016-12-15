@@ -49,7 +49,9 @@
     "OPENING_HOURS": "Opening hours",
     "LENGTH": "Track length",
     "LIGHTING": "Lighting",
-    "SKIING_TECHNIQUE": "Skiing technique"
+    "SKIING_TECHNIQUE": "Skiing technique",
+    "ROUTE_HERE": "Route here",
+    "GET_ROUTE": "Find route here"
   },
   "VIEW": {
     "POPUP": {

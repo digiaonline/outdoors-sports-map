@@ -64,6 +64,13 @@ const LocationInfo = ({unit, t, activeLang}) =>
     {unit.www_url && <p><a href={getAttr(unit.www_url, activeLang())} target="_blank">{t('UNIT.FURTHER_INFO')} <SMIcon icon="outbound-link"/></a></p>}
   </ModalBodyBox>;
 
+const LocationRoute = ({routeUrl, t}) =>
+    <ModalBodyBox title={t('MODAL.ROUTE_HERE')}>
+      <a target="_blank" href={routeUrl}>
+        {t('MODAL.GET_ROUTE')}
+      </a>
+    </ModalBodyBox>;
+
 const LocationWeather = ({t}) =>
   <ModalBodyBox title={t('MODAL.WEATHER')}>
     Wow such weather.
@@ -96,6 +103,15 @@ export class SingleUnitModalContainer extends Component {
     return hasExtensions || unit.phone || unit.www_url;
   }
 
+  shouldShowRoute(unit) {
+    return unit.connections && (unit.connections.filter((connection) => connection.section === 'traffic')[0]);
+  }
+
+  getRouteUrl(unit, activeLang) {
+    const trafficObject = unit.connections.filter((connection) => connection.section === 'traffic')[0];
+    return getAttr(trafficObject.www_url, activeLang());
+  }
+
   render(){
     const {handleClick, isLoading, unit: currentUnit, services, t} = this.props;
     const {getActiveLanguage} = this.context;
@@ -109,6 +125,7 @@ export class SingleUnitModalContainer extends Component {
               <LocationState unit={currentUnit} t={t}/>
               {this.shouldShowInfo(currentUnit) && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
+              {this.shouldShowRoute(currentUnit) && <LocationRoute t={t} routeUrl={this.getRouteUrl(currentUnit, getActiveLanguage)} />}
             </Modal.Body>
             : null
           }

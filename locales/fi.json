@@ -52,7 +52,9 @@
     "OPENING_HOURS": "Aukioloajat",
     "LENGTH": "Ladun pituus",
     "LIGHTING": "Valaistus",
-    "SKIING_TECHNIQUE": "Hiihtotekniikka"
+    "SKIING_TECHNIQUE": "Hiihtotekniikka",
+    "ROUTE_HERE": "Reitti tänne",
+    "GET_ROUTE": "Hae reitti tänne"
   },
   "VIEW": {
     "POPUP": {
