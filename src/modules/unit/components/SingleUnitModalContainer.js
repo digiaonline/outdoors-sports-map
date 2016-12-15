@@ -60,6 +60,8 @@ const LocationInfo = ({unit, t, activeLang}) =>
     {unit.extensions.length && <p>{t('MODAL.LENGTH') + ': '}<strong>{unit.extensions.length}km</strong></p>}
     {unit.extensions.lighting && <p>{t('MODAL.LIGHTING') + ': '}<strong>{upperFirst(getAttr(unit.extensions.lighting, activeLang()))}</strong></p>}
     {unit.extensions.skiing_technique && <p>{t('MODAL.SKIING_TECHNIQUE') + ': '}<strong>{upperFirst(getAttr(unit.extensions.skiing_technique, activeLang()))}</strong></p>}
+    {unit.phone && <p>{t('UNIT.PHONE')}: <a href={`tel:${unit.phone}`}>{unit.phone}</a></p>}
+    {unit.www_url && <p><a href={getAttr(unit.www_url, activeLang())} target="_blank">{t('UNIT.FURTHER_INFO')} <SMIcon icon="outbound-link"/></a></p>}
   </ModalBodyBox>;
 
 const LocationWeather = ({t}) =>
@@ -77,13 +79,8 @@ const LocationOpeningHours = ({unit, t, activeLang}) =>
     {getOpeningHours(unit, activeLang())}
   </ModalBodyBox>;
 
-const LocationPhoneNumber = ({phone, t}) =>
-  <ModalBodyBox title={t('UNIT.PHONE')}>
-    <a href={`tel:${phone}`}>{phone}</a>
-  </ModalBodyBox>;
-
 const ModalBodyBox = ({title, children, className, ...rest}) =>
-  <div className={`${className} modal-body-box`} {...rest}>
+  <div className={`${className || ''} modal-body-box`} {...rest}>
     {title && <div className="modal-body-box-headline">{title}</div>}
     {children}
   </div>;
@@ -92,6 +89,11 @@ export class SingleUnitModalContainer extends Component {
 
   constructor(props) {
     super(props);
+  }
+
+  shouldShowInfo(unit) {
+    const hasExtensions = unit.extensions && (unit.extensions.length || unit.extensions.lighting || unit.extensions.skiing_technique);
+    return hasExtensions || unit.phone || unit.www_url;
   }
 
   render(){
@@ -105,11 +107,8 @@ export class SingleUnitModalContainer extends Component {
           {currentUnit && !isLoading ?
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
-              {currentUnit.extensions
-                && (currentUnit.extensions.length || currentUnit.extensions.lighting || currentUnit.extensions.skiing_technique)
-                && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
+              {this.shouldShowInfo(currentUnit) && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
-              {currentUnit.phone && <LocationPhoneNumber phone={currentUnit.phone} t={t}/>}
             </Modal.Body>
             : null
           }
