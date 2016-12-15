@@ -63,6 +63,10 @@
       padding: 10px;
       align-items: center;
 
+      &:empty {
+        display: none;
+      }
+
       & + & {
         margin-top: $gap;
       }

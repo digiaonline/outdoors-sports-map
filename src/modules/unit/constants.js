@@ -14,8 +14,8 @@ export const UnitFilters = {
 };
 
 export const StatusFilters = [
-  UnitFilters.STATUS_OK,
-  UnitFilters.STATUS_ALL
+  UnitFilters.STATUS_ALL,
+  UnitFilters.STATUS_OK
 ];
 
 export const SportFilters = [
@@ -34,7 +34,7 @@ export const UNIT_BATCH_SIZE = 20;
 
 export const DefaultFilters = {
   sport: UnitFilters.SKIING,
-  status: UnitFilters.STATUS_OK
+  status: UnitFilters.STATUS_ALL
 };
 
 export const UnitQuality = {

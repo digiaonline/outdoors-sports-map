@@ -38,7 +38,8 @@
       "ALPHABETICAL": "Alphabetical order",
       "CONDITION": "Best condition first",
       "DISTANCE": "Nearest first"
-    }
+    },
+    "PHONE": "Phone number"
   },
   "MODAL": {
     "LOADING": "Loading location...",
@@ -50,7 +51,9 @@
     "OPENING_HOURS": "Opening hours",
     "LENGTH": "Track length",
     "LIGHTING": "Lighting",
-    "SKIING_TECHNIQUE": "Skiing technique"
+    "SKIING_TECHNIQUE": "Skiing technique",
+    "ROUTE_HERE": "Route here",
+    "GET_ROUTE": "Find route here"
   },
   "VIEW": {
     "POPUP": {
@@ -64,8 +67,10 @@
   "TIME": {
     "DAYS_AGO": "{{days}} days ago",
     "NOT_AVAILABLE": "-",
+    "MONTH_AGO": "a month ago",
     "MONTHS_AGO": "{{months}} months ago",
     "TODAY": "today",
+    "WEEK_AGO": "a week ago",
     "WEEKS_AGO": "{{weeks}} weeks ago",
     "YESTERDAY": "yesterday"
   }

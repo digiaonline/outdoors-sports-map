@@ -10,7 +10,7 @@ import values from 'lodash/values';
 export const getFetchUnitsRequest = (params: Object)  => {
   return createRequest(createUrl('unit/', {
     service: `${values(UnitServices).join(',')}`,
-    only: 'id,name,location,street_address,address_zip,extensions,services',
+    only: 'id,name,location,street_address,address_zip,extensions,services,municipality,phone,www_url',
     include: 'observations,connections',
     geometry: 'true',
     page_size: 1000,

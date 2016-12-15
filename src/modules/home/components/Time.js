@@ -2,26 +2,28 @@ import React from 'react';
 import moment from 'moment';
 import {translate} from 'react-i18next';
 
-const formatTime = (time: Date, t: Function) => {
-  const now = moment();
+moment.locale('fi');
+
+export const formatTime = (time: Date, t: Function) => {
+  const endOfToday = moment().endOf('day');
   let lookup = 'TIME.';
   let options = {};
 
-  if(now.diff(time, 'days') === 0) {
+  if(endOfToday.diff(time, 'days') === 0) {
     lookup += 'TODAY';
-  } else if (now.diff(time, 'days') === 1) {
+  } else if (endOfToday.diff(time, 'days') === 1) {
     lookup += 'YESTERDAY';
-  } else if (now.diff(time, 'weeks') === 0) {
+  } else if (endOfToday.diff(time, 'weeks') === 0) {
     lookup += 'DAYS_AGO';
-    options.days = now.diff(time, 'days');
-  } else if (now.diff(time, 'months') === 0) {
-    lookup += 'WEEKS_AGO';
-    options.weeks = now.diff(time, 'weeks');
-  } else if (now.diff(time, 'years' > 1)) {
+    options.days = endOfToday.diff(time, 'days');
+  } else if (endOfToday.diff(time, 'months') === 0) {
+    options.weeks = endOfToday.diff(time, 'weeks');
+    lookup += options.weeks === 1 ? 'WEEK_AGO' : 'WEEKS_AGO';
+  } else if (endOfToday.diff(time, 'years') > 1) {
     lookup += 'NOT_AVAILABLE';
   } else {
-    lookup += 'MONTHS_AGO';
-    options.months = now.diff(time, 'months');
+    options.months = endOfToday.diff(time, 'months');
+    lookup += options.months === 1 ? 'MONTH_AGO' : 'MONTHS_AGO';
   }
 
   return t(lookup, options);
@@ -32,7 +34,7 @@ const Time = translate()(({time, t}) =>
     {
       formatTime(time, t)
     }
-    {moment().diff(time, 'days') < 2 && ' '+time.getUTCHours()+':'+('0'+time.getMinutes()).slice(-2)}
+    {moment().endOf('day').diff(time, 'days') < 2 && ' '+ time.getHours()+':'+('0'+time.getMinutes()).slice(-2)}
   </time>
 );
 
