@@ -14,8 +14,8 @@ export const UnitFilters = {
 };
 
 export const StatusFilters = [
-  UnitFilters.STATUS_OK,
-  UnitFilters.STATUS_ALL
+  UnitFilters.STATUS_ALL,
+  UnitFilters.STATUS_OK
 ];
 
 export const SportFilters = [
