@@ -1,63 +1,64 @@
 {
   "APP": {
-    "NAME": "Ulkoliikuntakartta",
-    "ABOUT": "About the service"
+    "NAME": "Outdoor map",
+    "ABOUT": "Information on the Service"
   },
   "GENERAL": {
     "LOADING": "Loading..."
   },
   "MAP": {
-    "ATTRIBUTION": "OpenStreetMap contributors",
-    "ABOUT": "THIS IS AWESOME TEXT ABOUT THIS AWESOME SERVICE",
+    "ATTRIBUTION": "Creators of OpenStreetMap",
+    "ABOUT": "<h2>Outdoor map</h2> <h3>Information on the service</h3> <p>The Outdoor Map is an open communications channel for checking the condition of outdoor sports facilities in Helsinki, Espoo and Vantaa. The Outdoor Map helps the inhabitants of the municipality find up-to-date information on the City’s outdoor sports services. Currently, the services encompasses the skiing tracks and ice-skating fields maintained by the cities and in spring it will also contain beaches.</p> <p>The service has been created in cooperation between the <a target='_blank' href='http://www.hel.fi/www/kanslia/fi/osastot-ja-yksikot/tietotekniikka/'>ICT unit</a> of the Information and Communication Technology division at the Helsinki City Executive Office and  <a target='_blank' href='https://hel.fi/liikunta/'>the City of Helsinki Sports Department</a></p> <h3>Feedback</h3> <p>We grateful for all your feedback, it allows us to develop the Outdoor Map and make it even better.</p> <h3>© Information and copyright</h3> <p>The Outdoor Map has been constructed using as open data as possible and open source code.</p> <p>The source code of the map is on <a target='_blank' href='https://github.com/nordsoftware/outdoors-sports-map'>GitHub</a> and we encourage development of it.</p> <p>The sports facility information is open data and usable through the REST interface.</p> <p>The map data is taken from the <a target='_blank' href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> and the copyright of the maps belongs to<a target='_blank' href='https://www.openstreetmap.org/copyright'>the creators of OpenStreetMap</a>.</p> <p>The address information is taken using the Helsinki Region Traffic’s <a target='_blank' href='http://developer.reittiopas.fi/'>open interface</a>.</p>",
     "INFO_MENU" : {
       "GIVE_FEEDBACK": "Give feedback",
-      "ABOUT_SERVICE": "About service",
+      "ABOUT_SERVICE": "Information on the Service",
       "CHOOSE_LANGUAGE": "Choose language"
     },
     "FEEDBACK": {
       "FEEDBACK": "Feedback",
-      "WANT_ANSWER": "I want answer to my email",
+      "WANT_ANSWER": "I want a reply to my e-mail",
       "SEND": "Send",
-      "EMAIL": "Email"
+      "EMAIL": "E–mail"
     }
   },
   "UNIT": {
-    "STATUS": "Status",
+    "FURTHER_INFO": "Further information",
+    "SHOW_MORE": "Show more",
+    "STATUS": "Condition",
     "UNKNOWN": "Unknown",
     "UPDATED": "Updated",
-    "MAINTENANCE_DONE": "Maintenance done ",
-    "FURTHER_INFO": "Further info",
-    "SHOW_MORE": "Show more",
+    "MAINTENANCE_DONE" : "Maintained",
     "FILTER": {
-      "STATUS_ALL": "All conditions",
-      "ICE_SKATING": "Ice skating",
+      "STATUS_ALL": "In all conditions",
+      "ICE_SKATING": "Ice-skating",
       "SKIING": "Skiing",
-      "STATUS_OK": "Usable condition"
+      "STATUS_OK": "In usable condition"
     },
     "SORT": {
-      "ALPHABETICAL": "Alphabetical order",
-      "CONDITION": "Best condition first",
-      "DISTANCE": "Nearest first"
+      "DEFAULT": "Default",
+      "ALPHABETICAL": "Alphabetic",
+      "CONDITION": "In best condition first",
+      "DISTANCE": "Closest first"
     },
-    "PHONE": "Phone number"
+    "PHONE": "Phone"
   },
   "MODAL": {
-    "LOADING": "Loading location...",
-    "NOT_FOUND": "Sorry, couldn't find the location :(",
-    "QUALITY": "Quality",
-    "INFO": "Info",
+    "LOADING": "Loading the object",
+    "NOT_FOUND": "Sorry, the object was not found :(",
+    "QUALITY": "Condition",
+    "INFO": "Information",
     "WEATHER": "Weather",
     "HEIGHT_PROFILE": "Height profile",
     "OPENING_HOURS": "Opening hours",
     "LENGTH": "Track length",
     "LIGHTING": "Lighting",
-    "SKIING_TECHNIQUE": "Skiing technique",
-    "ROUTE_HERE": "Route here",
-    "GET_ROUTE": "Find route here"
+    "SKIING_TECHNIQUE": "Form of skiing",
+    "ROUTE_HERE": "Route to here",
+    "GET_ROUTE": "Get route to here"
   },
   "VIEW": {
     "POPUP": {
-      "OPENING_HOURS": "Opening hours and further information"
+      "OPENING_HOURS": "Opening hours"
     }
   },
   "SEARCH": {
@@ -67,7 +68,7 @@
   "TIME": {
     "DAYS_AGO": "{{days}} days ago",
     "NOT_AVAILABLE": "-",
-    "MONTH_AGO": "a month ago",
+    "MONTH_AGO": "a month ago ",
     "MONTHS_AGO": "{{months}} months ago",
     "TODAY": "today",
     "WEEK_AGO": "a week ago",
