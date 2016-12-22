@@ -64,7 +64,8 @@ export class HomeContainer extends Component {
 
     this.props.fetchServices();
 
-    this.pollUnitsInterval = setInterval(this.fetchUnits, POLL_INTERVAL);
+    // TODO: Poll /observation, not /unit. => Normalize observations to store.
+    // this.pollUnitsInterval = setInterval(this.fetchUnits, POLL_INTERVAL);
     this.initialPosition = this.props.position;
 
     if(!getStoredLang()) {
@@ -89,7 +90,8 @@ export class HomeContainer extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.pollUnitsInterval);
+    // TODO: Poll /observation, not /unit. => Normalize observations to store.
+    // clearInterval(this.pollUnitsInterval);
   }
 
   componentWillReceiveProps(nextProps) {
