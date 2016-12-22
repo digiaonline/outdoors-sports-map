@@ -16,6 +16,7 @@ import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
 import {translate} from 'react-i18next';
 import {isRetina} from '../../common/helpers';
+/* global L */
 require('proj4leaflet');
 
 const bounds = L.bounds(L.point(-548576, 6291456), L.point(1548576, 8388608));
@@ -240,32 +241,3 @@ const AboutModal = ({closeModal, t}) =>
       </div>
     </div>
   </div>;
-
-// const FeedbackModal = ({closeModal, handleSubmit, t}) => {
-//   let wantAnswer = null;
-//   let feedback = null;
-//   let email = null;
-//
-//   return (
-//     <div className="about-modal-backdrop">
-//       <div className="about-modal-box">
-//         <div className="about-modal-controls">
-//           <SMIcon icon="close" onClick={() => closeModal()} />
-//         </div>
-//         <div className="about-modal-content">
-//           <h3>{t('MAP.INFO_MENU.GIVE_FEEDBACK')}</h3>
-//           <form onSubmit={(e) => handleSubmit(e, feedback.value, wantAnswer.value)}>
-//             <div><textarea type="text" placeholder="Message" ref={(textarea) => feedback = textarea} /></div>
-//             <div>
-//               <label>
-//                 <input type="checkbox" value={true} ref={(checbox) => wantAnswer = checbox} />
-//                 Haluan palautetta sähköpostiin
-//               </label>
-//             </div>
-//             {wantAnswer && <div><input type="text" ref={(input) => email = input}/></div>}
-//             <button type="submit">Send</button>
-//           </form>
-//         </div>
-//       </div>
-//     </div>);
-// };
