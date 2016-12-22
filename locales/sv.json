@@ -1,73 +1,78 @@
 {
   "APP": {
-    "NAME": "Ulkoliikuntakartta",
-    "ABOUT": "About the service"
+    "NAME": "Friluftskarta",
+    "ABOUT": "Information om tjänsten"
   },
   "GENERAL": {
-    "LOADING": "Loading..."
+    "LOADING": "Laddar..."
   },
   "MAP": {
-    "ATTRIBUTION": "OpenStreetMap contributors",
-    "ABOUT": "THIS IS AWESOME TEXT ABOUT THIS AWESOME SERVICE",
+    "ATTRIBUTION": "OpenStreetMaps skapare",
+    "ABOUT": "<h2>Friluftskarta</h2> <h3>Tietoa palvelusta</h3> <p>Friluftskartan är en öppen kommunikationskanal om skicket på anläggningarna för utomhusidrott i Helsingfors, Esbo och Vanda. Friluftskartan hjälper kommuninvånarna att hitta uppdaterad information om de tjänster för utomhusidrott som staden upprätthåller. I nuläget omfattar tjänsten stadens skidspår och skridskoplaner och på våren kommer den också att omfatta badstränder.</p> <p>Tjänsten har förverkligats i samverkan mellan <a target='_blank' href='http://www.hel.fi/www/kanslia/fi/osastot-ja-yksikot/tietotekniikka/'>informationstekniksenheten</a> vid IT- och kommunikationsavdelningen på Helsingfors stads stadskansli och Helsingfors stads <a target='_blank' href='https://hel.fi/liikunta/'>idrottsverk</a>. <h3>Respons</h3> <p>Vi är tacksamma för all respons, så att vi kan utveckla Friluftskartan och göra den allt bättre.</p> <h3>© Information och upphovsrätt</h3> <p>Friluftskartan har byggs med hjälp av så öppna data som möjligt och öppen källkod.</p> <p>Kartans källkod finns på <a target='_blank' href='https://github.com/nordsoftware/outdoors-sports-map'>GitHub</a> och vi uppmuntrar till utveckling av den.</p> <p>Idrottsplatsernas uppgifter är öppna data och användbara via REST-gränssnittet.</p> <p>Kartuppgifterna hämtas från öppna <a target='_blank' href='https://www.openstreetmap.org/'>OpenStreetMap</a> och kartornas upphovsrätt hör till <a target='_blank' href='https://www.openstreetmap.org/copyright'>OpenStreetMaps skapare.</a></p> <p>Adressuppgifterna hämtas med hjälp av Helsingforsregionens trafiks <a target='_blank' href='http://developer.reittiopas.fi/'>öppna gränssnitt</a>.",
     "INFO_MENU" : {
-      "GIVE_FEEDBACK": "Give feedback",
-      "ABOUT_SERVICE": "About the service",
-      "CHOOSE_LANGUAGE": "Choose language"
+      "GIVE_FEEDBACK": "Ge respons",
+      "ABOUT_SERVICE": "Information om tjänsten",
+      "CHOOSE_LANGUAGE": "Välj språk"
     },
     "FEEDBACK": {
-      "FEEDBACK": "Feedback",
-      "WANT_ANSWER": "I want answer to my email",
-      "SEND": "Send",
-      "EMAIL": "Email"
+      "FEEDBACK": "Respons",
+      "WANT_ANSWER": "Jag vill ha ett svar till min e–post",
+      "SEND": "Skicka",
+      "EMAIL": "E–post"
     }
   },
   "UNIT": {
-    "STATUS": "Status",
-    "UNKNOWN": "Unknown",
-    "UPDATED": "Updated",
-    "FURTHER_INFO": "Further info",
-    "SHOW_MORE": "Show more units",
+    "FURTHER_INFO": "Ytterligare upplysningar",
+    "SHOW_MORE": "Visa mer",
+    "STATUS": "Skick",
+    "UNKNOWN": "Okänt",
+    "UPDATED": "Uppdaterad",
+    "MAINTENANCE_DONE" : "Iståndsatt",
     "FILTER": {
-      "STATUS_ALL": "All conditions",
-      "ICE_SKATING": "Skating",
-      "SKIING": "Skiing",
-      "STATUS_OK": "Usable"
+      "STATUS_ALL": "I alla skick",
+      "ICE_SKATING": "Skridskoåkning",
+      "SKIING": "Skidåkning",
+      "STATUS_OK": "I användbart skick"
     },
     "SORT": {
-      "ALPHABETICAL": "Alphabetical order",
-      "CONDITION": "Best condition first",
-      "DISTANCE": "Nearest first"
-    }
+      "DEFAULT": "Förinställt",
+      "ALPHABETICAL": "Alfabetisk",
+      "CONDITION": "I bästa skick först",
+      "DISTANCE": "Närmast först"
+    },
+    "PHONE": "Telefon"
   },
   "MODAL": {
-    "LOADING": "Loading location...",
-    "NOT_FOUND": "Sorry, couldn't find the location :(",
-    "QUALITY": "Quality",
-    "INFO": "Info",
-    "WEATHER": "Weather",
-    "HEIGHT_PROFILE": "Height profile",
-    "OPENING_HOURS": "Opening hours",
-    "LENGTH": "Track length",
-    "LIGHTING": "Lighting",
-    "SKIING_TECHNIQUE": "Skiing technique",
-    "ROUTE_HERE": "Route here",
-    "GET_ROUTE": "Find route here"
+    "LOADING": "Laddar objekt",
+    "NOT_FOUND": "Beklagar, objektet hittades inte :(",
+    "QUALITY": "Skick",
+    "INFO": "Information",
+    "WEATHER": "Väder",
+    "HEIGHT_PROFILE": "Höjdprofil",
+    "OPENING_HOURS": "Öppettider",
+    "LENGTH": "Spårets längd",
+    "LIGHTING": "Belysning",
+    "SKIING_TECHNIQUE": "Åkstil",
+    "ROUTE_HERE": "Väg hit",
+    "GET_ROUTE": "Väg hit"
   },
   "VIEW": {
     "POPUP": {
-      "OPENING_HOURS": "Opening hours and further information"
+      "OPENING_HOURS": "Öppettider och ytterligare upplysningar"
     }
   },
   "SEARCH": {
-    "SEARCH": "Search",
-    "SHOW_ALL_RESULTS": "Show all search results"
+    "SEARCH": "Sök",
+    "SHOW_ALL_RESULTS": "Visa alla sökresultat"
   },
   "TIME": {
-    "DAYS_AGO": "{{days}} days ago",
+    "DAYS_AGO": "{{days}} dagar sedan",
     "NOT_AVAILABLE": "-",
-    "MONTHS_AGO": "{{months}} months ago",
-    "TODAY": "today",
-    "WEEKS_AGO": "{{weeks}} weeks ago",
-    "YESTERDAY": "yesterday"
+    "MONTH_AGO": "en månad sedan",
+    "MONTHS_AGO": "{{months}} månader sedan",
+    "TODAY": "i dag",
+    "WEEK_AGO": "en vecka sedan",
+    "WEEKS_AGO": "{{weeks}} veckor sedan",
+    "YESTERDAY": "i går"
   }
 }
