@@ -19,6 +19,7 @@ import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
 import {locations, POLL_INTERVAL} from '../constants.js';
 import {arrayifyQueryValue} from '../../common/helpers';
+import {SUPPORTED_LANGUAGES} from '../../language/constants';
 
 export class HomeContainer extends Component {
   static propTypes = {
@@ -66,17 +67,18 @@ export class HomeContainer extends Component {
     this.pollUnitsInterval = setInterval(this.fetchUnits, POLL_INTERVAL);
     this.initialPosition = this.props.position;
 
-    // TODO: re-enable langauge guessing from browser
-    // if(!getStoredLang()) {
-    //   const userLang = navigator.language || navigator.userLanguage;
-    //
-    //   if(userLang.includes('sv')) {
-    //     this.handleChangeLanguage('sv');
-    //
-    //   } else if(userLang.includes('en')) {
-    //     this.handleChangeLanguage('en');
-    //   }
-    // }
+    if(!getStoredLang()) {
+      const userLang = navigator.language || navigator.userLanguage;
+
+      if(userLang.includes(SUPPORTED_LANGUAGES.Svenska)) {
+        this.handleChangeLanguage(SUPPORTED_LANGUAGES.Svenska);
+
+      } else if(userLang.includes(SUPPORTED_LANGUAGES.English)) {
+        this.handleChangeLanguage(SUPPORTED_LANGUAGES.English);
+      } else if(userLang.includes(SUPPORTED_LANGUAGES.Suomi)) {
+        this.handleChangeLanguage(SUPPORTED_LANGUAGES.Suomi);
+      }
+    }
   }
 
   fetchUnits() {
