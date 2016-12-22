@@ -1,6 +1,6 @@
 export const SUPPORTED_LANGUAGES = {
-  // English: 'en',
-  // Svenska: 'sv',
+  English: 'en',
+  Svenska: 'sv',
   Suomi: 'fi'
 };
 
