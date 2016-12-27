@@ -57,11 +57,7 @@ export class HomeContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchUnits({
-      lat: this.props.position[0],
-      lon: this.props.position[1]
-    });
-
+    this.props.fetchUnits({});
     this.props.fetchServices();
 
     // TODO: Poll /observation, not /unit. => Normalize observations to store.

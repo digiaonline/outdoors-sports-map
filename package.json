@@ -24,6 +24,7 @@
     "i18next": "^3.4.4",
     "imports-loader": "^0.6.5",
     "leaflet": "^1.0.2",
+    "leaflet-geometryutil": "^0.8.0",
     "lodash": "^4.16.4",
     "moment": "^2.15.2",
     "normalize.css": "^5.0.0",

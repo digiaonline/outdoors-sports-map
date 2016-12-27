@@ -20,8 +20,6 @@ function* onSetLocation({payload: position}: FetchAction) {
   yield put(receiveAddress(addressData));
 
   const unitParams = {
-    lat: position[0],
-    lon: position[1]
   };
 
   const unitRequest = getFetchUnitsRequest(unitParams);

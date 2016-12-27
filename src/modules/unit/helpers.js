@@ -6,6 +6,15 @@ import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, UnitFilters, QualityEn
 import {DEFAULT_LANG} from '../common/constants';
 import upperFirst from 'lodash/upperFirst';
 import values from 'lodash/values';
+import {LatLng, GeoJSON} from 'leaflet';
+import * as GeometryUtil from 'leaflet-geometryutil';
+
+let leafletMap = null;
+export const saveReferenceToLeafletMap = (map: Object) => {
+  if (leafletMap != map) {
+     leafletMap = map;
+  }
+}
 
 export const getFetchUnitsRequest = (params: Object)  => {
   return createRequest(createUrl('unit/', {
@@ -115,8 +124,24 @@ export const getFilterIconURL = (filter: String) =>
  * SORT UNIT LIST
  */
 
-export const sortByDistance = (units: Array<Object>) =>
-  sortBy(units, (unit) => +unit.distance);
+export const sortByDistance = (units: Array<Object>, position: Array<number>) => {
+  if (leafletMap === null) {
+    return units;
+  }
+  const positionLatLng = new LatLng(...position);
+  return sortBy(units, (unit) => {
+    if (unit.geometry === null || unit.geometry === undefined || unit.geometry.type === 'Point') {
+      if (unit.location === null || unit.location === undefined) {
+        return 0;
+      }
+      return positionLatLng.distanceTo(GeoJSON.coordsToLatLng(unit.location.coordinates));
+    }
+    const latLngs = GeoJSON.coordsToLatLngs(unit.geometry.coordinates, 1);
+    const closestLatLng = GeometryUtil.closest(
+      leafletMap, latLngs, positionLatLng);
+    return positionLatLng.distanceTo(closestLatLng);
+  });
+}
 
 export const sortByName = (units: Array, lang: ?string) =>
   sortBy(units, (unit) => getAttr(unit.name, lang));

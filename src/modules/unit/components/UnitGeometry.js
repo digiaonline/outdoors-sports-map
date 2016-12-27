@@ -1,9 +1,16 @@
 import React from 'react';
 import {GeoJSON} from 'react-leaflet';
-import {getUnitQuality} from '../helpers.js';
+import {getUnitQuality, saveReferenceToLeafletMap} from '../helpers.js';
 
-export const UnitGeometry = ({unit, isSelected, ...rest}) => (
-  <div className="unit-geometry">
+class UnitGeometry extends React.Component {
+  componentDidMount() {
+    // Simplest way to pass Leaflet Map to
+    // unit/helpers. Todo: save instance in store?
+    saveReferenceToLeafletMap(this.refs.feature.leafletElement._map);
+  }
+  render () {
+    const {unit, isSelected, ...rest} = this.props;
+    return (<div className="unit-geometry">
     { // hilight background for selected unit
       isSelected &&
       <GeoJSON
@@ -22,13 +29,15 @@ export const UnitGeometry = ({unit, isSelected, ...rest}) => (
       data={unit.geometry}
       {...rest} />
     <GeoJSON // actual track
+      ref='feature'
       className={
         `unit-geometry__track unit-geometry__track--${getUnitQuality(unit)}`
       }
       key={unit.id}
       data={unit.geometry}
       {...rest} />
-  </div>
-);
+  </div>);
+  }
+}
 
 export default UnitGeometry;
