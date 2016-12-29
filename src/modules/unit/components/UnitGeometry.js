@@ -1,13 +1,8 @@
 import React from 'react';
 import {GeoJSON} from 'react-leaflet';
-import {getUnitQuality, saveReferenceToLeafletMap} from '../helpers.js';
+import {getUnitQuality} from '../helpers.js';
 
 class UnitGeometry extends React.Component {
-  componentDidMount() {
-    // Simplest way to pass Leaflet Map to
-    // unit/helpers. Todo: save instance in store?
-    saveReferenceToLeafletMap(this.refs.feature.leafletElement._map);
-  }
   render () {
     const {unit, isSelected, ...rest} = this.props;
     return (
