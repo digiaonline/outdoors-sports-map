@@ -18,19 +18,6 @@ function* onSetLocation({payload: position}: FetchAction) {
   const {bodyAsJson: addressJson} = yield call(callApi, addressRequest);
   const addressData = addressJson.results ? addressJson.results[0] : null;
   yield put(receiveAddress(addressData));
-
-  const unitParams = {
-  };
-
-  const unitRequest = getFetchUnitsRequest(unitParams);
-  const {response, bodyAsJson: unitJson} = yield call(callApi, unitRequest);
-
-  if(response.status === 200) {
-    const data = normalizeEntityResults(unitJson.results, arrayOf(unitSchema));
-    yield put(receiveUnits(data));
-  } else {
-    yield put(setFetchError(unitJson.results));
-  }
 }
 
 function* watchSetLocation() {
