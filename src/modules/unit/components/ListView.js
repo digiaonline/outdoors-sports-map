@@ -82,7 +82,7 @@ class ListView extends Component {
         sortedUnits = unitHelpers.sortByCondition(props.units);
         break;
       case SortKeys.DISTANCE:
-        sortedUnits = unitHelpers.sortByDistance(props.units, props.position, props.leafletMap);
+        sortedUnits = unitHelpers.sortByDistance(props.units, props.position, props.leafletMap, props.filter);
         break;
 
       default:

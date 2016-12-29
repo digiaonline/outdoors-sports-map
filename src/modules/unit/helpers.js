@@ -118,7 +118,7 @@ export const getFilterIconURL = (filter: String) =>
  * SORT UNIT LIST
  */
 
-const _sortByDistance = (units: Array<Object>, position: Array<number>, leafletMap: Object) => {
+const _sortByDistance = (units: Array<Object>, position: Array<number>, leafletMap: Object, filterString: String) => {
   if (leafletMap === null) {
     return units;
   }
@@ -137,11 +137,11 @@ const _sortByDistance = (units: Array<Object>, position: Array<number>, leafletM
   });
 }
 
-export const sortByDistance = memoize(_sortByDistance, (units, pos, leafletMap) => {
+export const sortByDistance = memoize(_sortByDistance, (units, pos, leafletMap, filterString) => {
   if (leafletMap === null || units.length === 0 || pos === undefined) {
     return '0';
   }
-  return `${pos[0]};${pos[1]}`;
+  return `${filterString};${pos[0]};${pos[1]}`;
 });
 
 export const sortByName = (units: Array, lang: ?string) =>

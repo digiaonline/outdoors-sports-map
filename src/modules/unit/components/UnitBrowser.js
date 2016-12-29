@@ -117,7 +117,7 @@ class UnitBrowser extends Component {
         {!isLoading && Object.keys(address).length !== 0 && <AddressBar handleClick={setView} address={address} />}
       </div>
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
-          <ListView isVisible={isExpanded && !singleUnitSelected} isLoading={isLoading || isSearching} units={units} services={services} position={position} openUnit={openUnit} leafletMap={leafletMap}/>
+          <ListView filter={`${currentSportFilter};${currentStatusFilter}`} isVisible={isExpanded && !singleUnitSelected} isLoading={isLoading || isSearching} units={units} services={services} position={position} openUnit={openUnit} leafletMap={leafletMap}/>
         </div>
       </div>
     );
