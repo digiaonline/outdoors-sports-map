@@ -35,11 +35,7 @@ export class HomeContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      selectedView: props.selectedView
-    };
-
-    this.state = {modalOpen: false};
+    this.leafletMap = null;
 
     this.openUnit = this.openUnit.bind(this);
     this.closeUnit = this.closeUnit.bind(this);
@@ -96,6 +92,10 @@ export class HomeContainer extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    this.leafletMap = this.refs.map.getWrappedInstance().refs.map.leafletElement;
+  }
+
   handleChangeLanguage(language) {
     this.props.changeLanguage(language);
   }
@@ -146,6 +146,8 @@ export class HomeContainer extends Component {
           params={params}
           setLocation={this.setLocation}
           setView={this.setView}
+          leafletMap={this.leafletMap}
+          singleUnitSelected={!!params.unitId}
         />
         <MapView
           ref="map"

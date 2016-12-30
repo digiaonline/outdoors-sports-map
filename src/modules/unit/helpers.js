@@ -6,15 +6,9 @@ import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, UnitFilters, QualityEn
 import {DEFAULT_LANG} from '../common/constants';
 import upperFirst from 'lodash/upperFirst';
 import values from 'lodash/values';
+import memoize from 'lodash/memoize';
 import {LatLng, GeoJSON} from 'leaflet';
 import * as GeometryUtil from 'leaflet-geometryutil';
-
-let leafletMap = null;
-export const saveReferenceToLeafletMap = (map: Object) => {
-  if (leafletMap != map) {
-     leafletMap = map;
-  }
-}
 
 export const getFetchUnitsRequest = (params: Object)  => {
   return createRequest(createUrl('unit/', {
@@ -124,7 +118,7 @@ export const getFilterIconURL = (filter: String) =>
  * SORT UNIT LIST
  */
 
-export const sortByDistance = (units: Array<Object>, position: Array<number>) => {
+const _sortByDistance = (units: Array<Object>, position: Array<number>, leafletMap: Object, filterString: String) => {
   if (leafletMap === null) {
     return units;
   }
@@ -142,6 +136,13 @@ export const sortByDistance = (units: Array<Object>, position: Array<number>) =>
     return positionLatLng.distanceTo(closestLatLng);
   });
 }
+
+export const sortByDistance = memoize(_sortByDistance, (units, pos, leafletMap, filterString) => {
+  if (leafletMap === null || units.length === 0 || pos === undefined) {
+    return '0';
+  }
+  return `${filterString};${pos[0]};${pos[1]}`;
+});
 
 export const sortByName = (units: Array, lang: ?string) =>
   sortBy(units, (unit) => getAttr(unit.name, lang));
