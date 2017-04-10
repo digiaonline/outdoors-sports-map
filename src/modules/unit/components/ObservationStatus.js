@@ -19,7 +19,8 @@ export const MaintenanceUpdated = ({name, activeLang, time}) =>
     {getAttr(name, activeLang())} <Time time={time}/>
   </div>;
 
-const getObservationTime = (observation: Object) => {
+// TODO: Move this nice piece of yumminess to helpers
+export const getObservationTime = (observation: Object) => {
   return(moment(observation && observation.time || 0).toDate());
 };
 
