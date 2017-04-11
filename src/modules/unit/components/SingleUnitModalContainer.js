@@ -1,10 +1,17 @@
+//@flow
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
+import ReactMarkdown from 'react-markdown';
 import SMIcon from '../../home/components/SMIcon';
-import {getAttr, getOpeningHours} from '../helpers';
+import {
+  getAttr,
+  getObservation,
+  getOpeningHours,
+  getObservationTime
+} from '../helpers';
 import {getServiceName} from '../../service/helpers';
 import {translate} from 'react-i18next';
-import ObservationStatus from './ObservationStatus';
+import ObservationStatus, {StatusUpdated} from './ObservationStatus';
 import UnitIcon from './UnitIcon';
 import upperFirst from 'lodash/upperFirst';
 
@@ -63,6 +70,29 @@ const LocationInfo = ({unit, t, activeLang}) =>
     {unit.phone && <p>{t('UNIT.PHONE')}: <a href={`tel:${unit.phone}`}>{unit.phone}</a></p>}
     {unit.www_url && <p><a href={getAttr(unit.www_url, activeLang())} target="_blank">{t('UNIT.FURTHER_INFO')} <SMIcon icon="outbound-link"/></a></p>}
   </ModalBodyBox>;
+
+/**
+ * [NoticeInfo description]
+ * @param {Object} unit       [description]
+ * @param {Function} t          [description]
+ * @param {Function} activeLang [description]
+ */
+const NoticeInfo = ({unit, t, activeLang}) => {
+  const notice = getObservation(unit, 'notice');
+  return ( notice ?
+  <ModalBodyBox title={t('MODAL.NOTICE')}>
+    <StatusUpdated time={getObservationTime(notice)} t={t}/>
+    <ReactMarkdown
+      source={getAttr(notice.value, activeLang())}
+      softBreak="br"
+      escapeHtml
+      allowedTypes={['Text', 'Paragraph', 'Softbreak']}
+    />
+  </ModalBodyBox>
+  :
+  null
+  );
+};
 
 const LocationRoute = ({routeUrl, t}) =>
     <ModalBodyBox title={t('MODAL.ROUTE_HERE')}>
@@ -123,6 +153,7 @@ export class SingleUnitModalContainer extends Component {
           {currentUnit && !isLoading ?
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
+              <NoticeInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>
               {this.shouldShowInfo(currentUnit) && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {this.shouldShowRoute(currentUnit) && <LocationRoute t={t} routeUrl={this.getRouteUrl(currentUnit, getActiveLanguage)} />}

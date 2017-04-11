@@ -54,7 +54,8 @@
     "LIGHTING": "Valaistus",
     "SKIING_TECHNIQUE": "Hiihtotekniikka",
     "ROUTE_HERE": "Reitti tänne",
-    "GET_ROUTE": "Hae reitti tänne"
+    "GET_ROUTE": "Hae reitti tänne",
+    "NOTICE": "Tiedote"
   },
   "VIEW": {
     "POPUP": {

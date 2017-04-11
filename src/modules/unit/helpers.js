@@ -1,5 +1,6 @@
 //@flow
 import {has, keys, sortBy} from 'lodash';
+import moment from 'moment';
 import {createRequest, createUrl} from '../api/helpers.js';
 import {UnitServices, IceSkatingServices, SkiingServices/*, SwimmingServices*/} from '../service/constants';
 import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, UnitFilters, QualityEnum} from './constants';
@@ -78,7 +79,12 @@ export const getUnitQuality = (unit: Object): string => {
 export const getOpeningHours = (unit: Object, activeLang: string): string => {
   if(unit.services[0].id == UnitServices.MECHANICALLY_FROZEN_ICE && unit.connections && unit.connections[1]){
     return getAttr(unit.connections[1].name, activeLang);
-  }};
+  }
+};
+
+export const getObservationTime = (observation: Object) => {
+  return(moment(observation && observation.time || 0).toDate());
+};
 
 export const enumerableQuality = (quality: string): number => {
   return QualityEnum[quality] ? QualityEnum[quality] : Number.MAX_VALUE;

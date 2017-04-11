@@ -1,8 +1,7 @@
 import React from 'react';
 import {translate} from 'react-i18next';
-import moment from 'moment';
 import Time from '../../home/components/Time';
-import {getUnitQuality, getObservation, getAttr} from '../helpers';
+import {getUnitQuality, getObservation, getAttr, getObservationTime} from '../helpers';
 
 export const StatusBar = ({quality, label}) =>
   <div className={`observation-status__bar--${quality}`}>
@@ -19,9 +18,6 @@ export const MaintenanceUpdated = ({name, activeLang, time}) =>
     {getAttr(name, activeLang())} <Time time={time}/>
   </div>;
 
-const getObservationTime = (observation: Object) => {
-  return(moment(observation && observation.time || 0).toDate());
-};
 
 export const ObservationStatus = ({unit, t}, context) => {
   const quality = getUnitQuality(unit);

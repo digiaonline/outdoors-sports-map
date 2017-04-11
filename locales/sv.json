@@ -54,7 +54,8 @@
     "LIGHTING": "Belysning",
     "SKIING_TECHNIQUE": "Åkstil",
     "ROUTE_HERE": "Väg hit",
-    "GET_ROUTE": "Väg hit"
+    "GET_ROUTE": "Väg hit",
+    "NOTICE": "Meddelande"
   },
   "VIEW": {
     "POPUP": {

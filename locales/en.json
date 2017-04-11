@@ -54,7 +54,8 @@
     "LIGHTING": "Lighting",
     "SKIING_TECHNIQUE": "Form of skiing",
     "ROUTE_HERE": "Route to here",
-    "GET_ROUTE": "Get route to here"
+    "GET_ROUTE": "Get route to here",
+    "NOTICE": "Notice"
   },
   "VIEW": {
     "POPUP": {
