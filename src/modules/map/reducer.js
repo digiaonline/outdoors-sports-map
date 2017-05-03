@@ -6,17 +6,17 @@ import {locations} from '../home/constants';
 
 const centerReducer = handleActions({
   [mapActions.SET_LOCATION]: (state: Array, {payload: position}: Action) =>
-    position
+    position,
 }, locations.HELSINKI);
 
 const addressReducer = handleActions({
   [mapActions.RECEIVE_ADDRESS]: (state: Array, {payload: address}: Action) =>
-    address
+    address,
 }, {});
 
 const reducer = combineReducers({
   location: centerReducer,
-  address: addressReducer
+  address: addressReducer,
 });
 
 export default reducer;

@@ -1,6 +1,6 @@
 import {UnitState} from '../unit/constants';
 
-export const API_URL = 'https://api.hel.fi/servicemap/v1';
+export const API_URL = 'http://servicemat.hel.ninja/servicemap/v1'; //'https://api.hel.fi/servicemap/v1';
 export const DIGITRANSIT_API_URL = 'https://api.digitransit.fi/geocoding/v1';
 export const APP_NAME = 'outdoors-sports-map';
 
@@ -36,5 +36,5 @@ export type AppState = {
 export type QueryValue = | string | Array<string>;
 
 export const routerPaths = {
-  singleUnit: 'unit/:unitId'
+  singleUnit: 'unit/:unitId',
 };

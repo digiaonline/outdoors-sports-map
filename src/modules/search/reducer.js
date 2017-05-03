@@ -6,31 +6,31 @@ import {EntityAction} from '../common/constants';
 
 const isFetching = handleActions({
   [SearchActions.FETCH_UNITS]: () => true,
-  [SearchActions.RECEIVE_UNITS]: () => false
+  [SearchActions.RECEIVE_UNITS]: () => false,
 }, false);
 
 const isActive = handleActions({
   [SearchActions.RECEIVE_UNITS]: () => true,
-  [SearchActions.CLEAR]: () => false
+  [SearchActions.CLEAR]: () => false,
 }, false);
 
 const unitResults = handleActions({
   [SearchActions.RECEIVE_UNITS]: (state: Object, {payload: {entities}}: EntityAction) =>
     entities ? [...keys(entities.unit)] : [],
-  [SearchActions.CLEAR]: () => []
+  [SearchActions.CLEAR]: () => [],
 }, []);
 
 const unitSuggestions = handleActions({
   [SearchActions.RECEIVE_UNIT_SUGGESTIONS]: (state: Object, {payload: {entities}}: EntityAction) =>
     entities ? [...keys(entities.unit)] : [],
   [SearchActions.RECEIVE_UNITS]: () => [],
-  [SearchActions.CLEAR]: () => []
+  [SearchActions.CLEAR]: () => [],
 }, []);
 
 const addressSuggestions = handleActions({
   [SearchActions.RECEIVE_ADDRESS_SUGGESTIONS]: (state: Object, {payload: results}: EntityAction) =>
     results ? results : [],
-  [SearchActions.CLEAR]: () => []
+  [SearchActions.CLEAR]: () => [],
 }, []);
 
 const reducer = combineReducers({
@@ -38,7 +38,7 @@ const reducer = combineReducers({
   isActive,
   unitResults,
   unitSuggestions,
-  addressSuggestions
+  addressSuggestions,
 });
 
 export default reducer;

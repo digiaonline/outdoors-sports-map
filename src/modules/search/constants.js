@@ -6,7 +6,7 @@ export const SearchActions = {
   RECEIVE_UNITS: normalizeActionName('search/RECEIVE_UNITS'),
   FETCH_UNIT_SUGGESTIONS: normalizeActionName('search/FETCH_UNIT_SUGGESTIONS'),
   RECEIVE_UNIT_SUGGESTIONS: normalizeActionName('search/RECEIVE_UNIT_SUGGESTIONS'),
-  RECEIVE_ADDRESS_SUGGESTIONS: normalizeActionName('search/RECEIVE_ADDRESS_SUGGESTIONS')
+  RECEIVE_ADDRESS_SUGGESTIONS: normalizeActionName('search/RECEIVE_ADDRESS_SUGGESTIONS'),
 };
 
 export type SearchState = {

@@ -31,7 +31,7 @@ function* sendFeedback({payload: {feedback, email}}) {
     service_request_type: 'OTHER',
     can_be_published: false,
     internal_feedback: true,
-    service_code: 2815
+    service_code: 2815,
   };
 
   if (email) {
@@ -39,11 +39,11 @@ function* sendFeedback({payload: {feedback, email}}) {
   }
 
   const request = createRequest(`https://api.hel.fi/servicemap/open311/`,
-    { method: 'POST',
+    {method: 'POST',
       body: stringifyQuery(params),
       headers: {
-        'content-type': 'application/x-www-form-urlencoded'
-      }
+        'content-type': 'application/x-www-form-urlencoded',
+      },
     });
   const {bodyAsJson} = yield call(callApi, request);
   console.log(bodyAsJson);
@@ -66,6 +66,6 @@ export default function* saga() {
   return [
     yield fork(watchFetchUnits),
     yield fork(watchClearSearch),
-    yield fork(watchSendFeedback)
+    yield fork(watchSendFeedback),
   ];
 }

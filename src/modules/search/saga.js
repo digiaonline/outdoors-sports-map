@@ -30,7 +30,7 @@ function* fetchUnitSuggestions({payload: {params}}: FetchAction) {
     'focus.point.lat': 60.17,
     'focus.point.lon': 24.94,
     size: 5,
-    lang: 'fi'
+    lang: 'fi',
   };
   // Make search request only when there's input
   if (params.input && params.input.length) {
@@ -66,6 +66,6 @@ export default function* saga() {
   return [
     yield fork(watchSearchUnits),
     yield fork(watchFetchUnitSuggestions),
-    yield fork(watchClearSearch)
+    yield fork(watchClearSearch),
   ];
 }

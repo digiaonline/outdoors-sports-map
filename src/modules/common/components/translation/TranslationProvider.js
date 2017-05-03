@@ -15,7 +15,7 @@ const requireLocaleByPath = localesContext;
 const localesByPath =
   mapValues(
     keyBy(listOfLocalePaths, (s) => s),
-    (localePath) => ({ translation: requireLocaleByPath(localePath) })
+    (localePath) => ({translation: requireLocaleByPath(localePath)})
   );
 
 const localesByName =
@@ -27,7 +27,7 @@ const i18n =
   i18next
     .init({
       resources: localesByName,
-      lng: DEFAULT_LANG // @todo: How should the user pick their preferred language? #UX
+      lng: DEFAULT_LANG, // @todo: How should the user pick their preferred language? #UX
     }, (err, t) => {
       // @todo: do we have some error reporting mechanism in production?
       if (err) {
@@ -54,7 +54,7 @@ class TranslationProvider extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  language: getLanguage(state)
+  language: getLanguage(state),
 });
 
 export default connect(mapStateToProps)(TranslationProvider);

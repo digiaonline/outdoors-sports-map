@@ -19,7 +19,7 @@ export const clearSearch = () =>
 export const searchUnits = (input: string, params: Object): Action => {
   const init = {
     input,
-    service: `${values(UnitServices).join(',')}`
+    service: `${values(UnitServices).join(',')}`,
   };
 
   params = Object.assign({}, init, params);
@@ -30,7 +30,7 @@ export const fetchSearchSuggestions = (input: string): Action =>
   createAction(UnitActions.FETCH_SEARCH_SUGGESTIONS)({params: {
     input,
     service: `${values(UnitServices).join(',')}`,
-    page_size: 5
+    page_size: 5,
   }});
 
 export const receiveSearchResults = (results: Array<Object>) =>

@@ -70,7 +70,7 @@ export const getUnitIconURL = (unit: Object, selected = false, retina = true) =>
 
 export const getFilterIconURL = (filter: String, active: Boolean) => {
   if (filter)
-  return require(`@assets/markers/${filter}-${active ? 'good' : 'unknown'}-off@2x.png`);
+    return require(`@assets/markers/${filter}-${active ? 'good' : 'unknown'}-off@2x.png`);
 };
 
 export const sortByDistance = (units: Array, position: Array) =>
@@ -94,5 +94,5 @@ export const sortByCondition = (units: Array) =>
         observation && observation.time && (new Date(observation.time)).getTime() || 0;
 
       return (new Date()).getTime() - observationTime;
-    }
+    },
   ]);

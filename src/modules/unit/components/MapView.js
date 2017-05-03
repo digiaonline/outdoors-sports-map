@@ -25,13 +25,13 @@ const TM35CRS = new L.Proj.CRS(
   'EPSG:3067',
   '+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs', {
     resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125],
-    bounds, transformation: new L.Transformation(1, -originNw[0], -1, originNw[1])
+    bounds, transformation: new L.Transformation(1, -originNw[0], -1, originNw[1]),
   });
 
 class MapView extends Component {
   static propTypes = {
     position: PropTypes.array.isRequired,
-    units: PropTypes.array
+    units: PropTypes.array,
   };
 
   state: {
@@ -48,7 +48,7 @@ class MapView extends Component {
       menuOpen: false,
       aboutModalOpen: false,
       feedbackModalOpen: false,
-      zoomLevel: DEFAULT_ZOOM
+      zoomLevel: DEFAULT_ZOOM,
     };
 
     this.setLocation = this.setLocation.bind(this);

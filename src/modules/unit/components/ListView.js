@@ -36,14 +36,14 @@ class UnitListItem extends Component {
 }
 
 UnitListItem.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 class ListView extends Component {
   static propTypes = {
     units: PropTypes.array,
     services: PropTypes.object,
-    sortKey: PropTypes.string
+    sortKey: PropTypes.string,
   };
 
   state: {
@@ -55,7 +55,7 @@ class ListView extends Component {
     super(props);
     this.state = {
       sortKey: SortKeys.DISTANCE,
-      maxUnitCount: UNIT_BATCH_SIZE
+      maxUnitCount: UNIT_BATCH_SIZE,
     };
 
     this.selectSortKey = this.selectSortKey.bind(this);
@@ -139,7 +139,7 @@ class ListView extends Component {
 }
 
 ListView.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 export default translate()(ListView);

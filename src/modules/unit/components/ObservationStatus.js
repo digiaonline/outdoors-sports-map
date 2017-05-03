@@ -37,7 +37,7 @@ export const ObservationStatus = ({unit, t}, context) => {
 };
 
 ObservationStatus.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 export default translate()(ObservationStatus);

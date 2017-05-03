@@ -51,7 +51,7 @@ class UnitMarker extends Component {
       iconUrl: icon.url,
       iconRetinaUrl: icon.retinaUrl,
       iconSize: [iconWidth, iconHeight],
-      iconAnchor: [iconWidth / 2, anchorHeight]
+      iconAnchor: [iconWidth / 2, anchorHeight],
     });
   }
 

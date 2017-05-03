@@ -12,7 +12,7 @@ const createIcon = () =>
     iconUrl: require('@assets/markers/location.png'),
     iconRetinaUrl: require('@assets/markers/location@2x.png'),
     iconSize: [12, 23],
-    iconAnchor: [6, 23]
+    iconAnchor: [6, 23],
   });
 
 class UserLocationMarker extends Component {
@@ -41,7 +41,7 @@ class UserLocationMarker extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  position: getLocation(state)
+  position: getLocation(state),
 });
 
 const mapDispatchToProps = (dispatch) =>

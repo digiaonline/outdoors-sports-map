@@ -26,19 +26,19 @@ const AddressBar = ({address, handleClick}, context) =>
   </div>;
 
 AddressBar.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 class UnitBrowser extends Component {
   static propTypes = {
-    units: PropTypes.array
+    units: PropTypes.array,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       isExpanded: false,
-      contentMaxHeight: null
+      contentMaxHeight: null,
     };
 
     this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
@@ -71,7 +71,7 @@ class UnitBrowser extends Component {
     const {router, location: {query}} = this.props;
 
     router.push({
-      query: Object.assign({}, query, {[key]: value})
+      query: Object.assign({}, query, {[key]: value}),
     });
   }
 

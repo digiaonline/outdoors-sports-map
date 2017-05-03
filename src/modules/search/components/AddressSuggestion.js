@@ -15,7 +15,7 @@ const AddressSuggestion = ({address, handleClick, ...rest}, context) =>
   </Link>;
 
 AddressSuggestion.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 export default AddressSuggestion;

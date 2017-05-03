@@ -10,5 +10,5 @@ export const BOUNDARIES = [[59.4, 23.8], [61.5, 25.8]];
 
 export const mapActions = {
   SET_LOCATION: normalizeActionName('map/SET_LOCATION'),
-  RECEIVE_ADDRESS: normalizeActionName('map/RECEIVE_ADDRESS')
+  RECEIVE_ADDRESS: normalizeActionName('map/RECEIVE_ADDRESS'),
 };

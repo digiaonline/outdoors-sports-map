@@ -20,7 +20,7 @@ export const UnitPopup = ({unit, offset, t}, {getActiveLanguage: getLang}) => {
 };
 
 UnitPopup.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 export default translate()(UnitPopup);

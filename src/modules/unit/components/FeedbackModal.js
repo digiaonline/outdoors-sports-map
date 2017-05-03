@@ -13,7 +13,7 @@ export class FeedbackModal extends Component {
     this.state = {
       emailInputOpen: false,
       feedback: null,
-      email: null
+      email: null,
     };
 
     this.handleFeedbackSubmit = this.handleFeedbackSubmit.bind(this);

@@ -16,13 +16,13 @@ const UnitSuggestion = ({unit, handleClick, services, ...rest}, context) =>
   </Link>;
 
 UnitSuggestion.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 UnitSuggestion.propTypes = {
   unit: PropTypes.object.isRequired,
   handleClick: PropTypes.func,
-  services: PropTypes.object.isRequired
+  services: PropTypes.object.isRequired,
 };
 
 export default UnitSuggestion;
