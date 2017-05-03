@@ -8,47 +8,47 @@ export const UNIT_ICON_WIDTH = 32;
 export const UnitFilters = {
   SKIING: 'ski',
   ICE_SKATING: 'iceskate',
-  //SWIMMING: 'swim',
+  SWIMMING: 'swim',
   STATUS_OK: 'status_ok',
-  STATUS_ALL: 'status_all'
+  STATUS_ALL: 'status_all',
 };
 
 export const StatusFilters = [
   UnitFilters.STATUS_ALL,
-  UnitFilters.STATUS_OK
+  UnitFilters.STATUS_OK,
 ];
 
 export const SportFilters = [
   UnitFilters.SKIING,
-  UnitFilters.ICE_SKATING
-  //UnitFilters.SWIMMING
+  UnitFilters.ICE_SKATING,
+  UnitFilters.SWIMMING,
 ];
 
 export const SortKeys = {
   ALPHABETICAL: 'alphabetical',
   DISTANCE: 'distance',
-  CONDITION: 'condition'
+  CONDITION: 'condition',
 };
 
 export const UNIT_BATCH_SIZE = 20;
 
 export const DefaultFilters = {
   sport: UnitFilters.SKIING,
-  status: UnitFilters.STATUS_ALL
+  status: UnitFilters.STATUS_ALL,
 };
 
 export const UnitQuality = {
   GOOD: 'good',
   SATISFACTORY: 'satisfactory',
   UNUSABLE: 'unusable',
-  UNKNOWN: 'unknown'
+  UNKNOWN: 'unknown',
 };
 
 export const QualityEnum = {
   [UnitQuality.GOOD]: 1,
   [UnitQuality.SATISFACTORY]: 2,
   [UnitQuality.UNUSABLE]: 3,
-  [UnitQuality.UNKNOWN]: 4
+  [UnitQuality.UNKNOWN]: 4,
 };
 
 export const UnitActions = {
@@ -60,7 +60,7 @@ export const UnitActions = {
   SEARCH_RECEIVE: normalizeActionName('unit/SEARCH_RECEIVE'),
   FETCH_SEARCH_SUGGESTIONS: normalizeActionName('unit/FETCH_SEARCH_SUGGESTIONS'),
   RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName('unit/RECEIVE_SEARCH_SUGGESTIONS'),
-  SEND_FEEDBACK: normalizeActionName('unit/SEND_FEEDBACK')
+  SEND_FEEDBACK: normalizeActionName('unit/SEND_FEEDBACK'),
 };
 
 export type UnitState = {

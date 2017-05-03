@@ -32,7 +32,8 @@
       "STATUS_ALL": "In all conditions",
       "ICE_SKATING": "Ice-skating",
       "SKIING": "Skiing",
-      "STATUS_OK": "In usable condition"
+      "STATUS_OK": "In usable condition",
+      "SWIMMING": "Swimming"
     },
     "SORT": {
       "DEFAULT": "Default",
@@ -53,6 +54,7 @@
     "LENGTH": "Track length",
     "LIGHTING": "Lighting",
     "SKIING_TECHNIQUE": "Form of skiing",
+    "TEMPERATURE": "Temperature",
     "ROUTE_HERE": "Route to here",
     "GET_ROUTE": "Get route to here",
     "NOTICE": "Notice"

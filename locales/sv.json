@@ -32,7 +32,8 @@
       "STATUS_ALL": "I alla skick",
       "ICE_SKATING": "Skridskoåkning",
       "SKIING": "Skidåkning",
-      "STATUS_OK": "I användbart skick"
+      "STATUS_OK": "I användbart skick",
+      "SWIMMING": "TODO"
     },
     "SORT": {
       "DEFAULT": "Förinställt",
@@ -53,6 +54,7 @@
     "LENGTH": "Spårets längd",
     "LIGHTING": "Belysning",
     "SKIING_TECHNIQUE": "Åkstil",
+    "TEMPERATURE": "TODO",
     "ROUTE_HERE": "Väg hit",
     "GET_ROUTE": "Väg hit",
     "NOTICE": "Meddelande"

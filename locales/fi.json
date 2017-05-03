@@ -32,7 +32,8 @@
       "STATUS_ALL": "Kaikenkuntoiset",
       "ICE_SKATING": "Luistelu",
       "SKIING": "Hiihto",
-      "STATUS_OK": "Käyttökuntoiset"
+      "STATUS_OK": "Käyttökuntoiset",
+      "SWIMMING": "Uinti"
     },
     "SORT": {
       "DEFAULT": "Oletus",
@@ -53,6 +54,7 @@
     "LENGTH": "Ladun pituus",
     "LIGHTING": "Valaistus",
     "SKIING_TECHNIQUE": "Hiihtotekniikka",
+    "TEMPERATURE": "Lämpötila",
     "ROUTE_HERE": "Reitti tänne",
     "GET_ROUTE": "Hae reitti tänne",
     "NOTICE": "Tiedote"

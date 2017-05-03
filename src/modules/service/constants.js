@@ -8,7 +8,9 @@ export const UnitServices = {
   SPEED_SKATING_TRACK: 33420,
   ICE_SKATING_ROUTE: 33421,
   SKI_TRACK: 33483,
-  DOG_SKI_TRACK: 33492
+  DOG_SKI_TRACK: 33492,
+  SWIMMING_BEACH: 33467,
+  SWIMMING_PLACE: 33468,
 };
 
 export const IceSkatingServices = [
@@ -16,20 +18,23 @@ export const IceSkatingServices = [
   UnitServices.ICE_SKATING_FIELD,
   UnitServices.ICE_RINK,
   UnitServices.SPEED_SKATING_TRACK,
-  UnitServices.ICE_SKATING_ROUTE
+  UnitServices.ICE_SKATING_ROUTE,
 ];
 
 export const SkiingServices = [
   UnitServices.SKI_TRACK,
-  UnitServices.DOG_SKI_TRACK
+  UnitServices.DOG_SKI_TRACK,
 ];
 
-export const SwimmingServices = [];
+export const SwimmingServices = [
+  UnitServices.SWIMMING_BEACH,
+  UnitServices.SWIMMING_PLACE,
+];
 
 export const ServiceActions = {
   FETCH: normalizeActionName('service/FETCH'),
   RECEIVE: normalizeActionName('service/RECEIVE'),
-  FETCH_ERROR: normalizeActionName('service/FETCH_ERROR')
+  FETCH_ERROR: normalizeActionName('service/FETCH_ERROR'),
 };
 
 export type UnitState = {
