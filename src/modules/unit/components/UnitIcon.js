@@ -13,6 +13,9 @@ const UnitIcon = ({unit}) => {
     case UnitFilters.SKIING:
       icon = 'crosscountry';
       break;
+    case UnitFilters.SWIMMING:
+      icon = 'swim';
+      break;
     default:
       // Use default value
   }
