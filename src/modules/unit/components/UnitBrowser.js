@@ -3,8 +3,9 @@ import {withRouter} from 'react-router';
 import ListView from './ListView.js';
 import SMIcon from '../../home/components/SMIcon';
 import values from 'lodash/values';
-import {DefaultFilters, SportFilters, StatusFilters} from '../constants.js';
+import {DefaultFilters, UnitFilters, StatusFilters} from '../constants.js';
 import UnitFilter from './UnitFilter.js';
+import UnitFilter2 from './UnitFilter2.js';
 import SearchContainer from '../../search/components/SearchContainer';
 import {getAddressToDisplay} from '../helpers';
 
@@ -112,8 +113,20 @@ class UnitBrowser extends Component {
           setView={setView}
           openUnit={openUnit}
         />
-        {!isLoading && <UnitFilter active={currentSportFilter} all={values(SportFilters)} toggleFilter={this.toggleSportFilter} />}
-        {!isLoading && <UnitFilter active={currentStatusFilter} all={values(StatusFilters)} toggleFilter={this.toggleStatusFilter} />}
+        {!isLoading &&
+          <UnitFilter2
+            filters={[{
+              name: 'sport',
+              active: currentSportFilter,
+              options: [UnitFilters.SWIMMING],
+              secondaryOptions: [UnitFilters.SKIING, UnitFilters.ICE_SKATING],
+            },{
+              name: 'status',
+              active: currentStatusFilter,
+              options: values(StatusFilters),
+            }]}
+            updateFilter={this.updateQueryParameter}
+          />}
         {!isLoading && Object.keys(address).length !== 0 && <AddressBar handleClick={setView} address={address} />}
       </div>
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>

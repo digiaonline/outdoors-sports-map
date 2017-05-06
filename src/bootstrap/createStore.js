@@ -26,7 +26,7 @@ export const createStore = () =>
 
     // The promise returned by "createStore" will be resolved once we have re-hydrated the state.
     persistStore(store, {
-      whitelist: ['language', 'map'],
+      whitelist: ['language', 'map', 'unit', 'service'],
       blacklist: [],
       keyPrefix: `${APP_NAME}:`,
     }, () => resolve(store));

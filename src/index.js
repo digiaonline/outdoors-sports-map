@@ -10,7 +10,7 @@ import './index.scss';
 const renderApp = (rootComponent) =>
   render(
     <AppContainer>
-      {createElement(rootComponent, {history: createMemoryHistory()})}
+      {createElement(rootComponent, {history: browserHistory/*createMemoryHistory()*/})}
     </AppContainer>,
     document.getElementById('root')
   );
