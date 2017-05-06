@@ -65,21 +65,14 @@ export const getUnitSport = (unit: Object) => {
   return 'unknown';
 };
 
-export const getObservation = (unit: Object, matchProperty: ?string='condition') => {
+export const getObservation = (unit: Object) => {
   const {observations} = unit;
 
-  return observations ? observations.find((obs) => obs.property.includes(matchProperty)) : null;
+  return observations ? observations.find((obs) => obs.primary) : null;
 };
 
 export const getUnitQuality = (unit: Object): string => {
-  const ConditionObservationMapping = {
-    [UnitFilters.ICE_SKATING]: 'condition',
-    [UnitFilters.SKIING]: 'condition',
-    [UnitFilters.SWIMMING]: 'algae',
-  };
-
-  const matchCriteria = ConditionObservationMapping[getUnitSport(unit)] || 'condition';
-  const observation = getObservation(unit, matchCriteria);
+  const observation = getObservation(unit);
   return observation ? observation.quality : UnitQuality.UNKNOWN;
 };
 
