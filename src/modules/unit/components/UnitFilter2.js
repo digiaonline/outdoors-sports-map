@@ -60,8 +60,15 @@ export class UnitFilters2 extends React.Component {
 
   state: UnitFiltersState;
 
+  onMenuSelect(key: string, value: string): void {
+    this.setState(
+      ({expand}) => ({expand: null}))
+    this.props.updateFilter(key, value);
+  }
+
   constructor(props: UnitFiltersProps){
     super(props);
+    this.onMenuSelect = this.onMenuSelect.bind(this);
 
     this.state = {
       expand: null,
@@ -74,10 +81,11 @@ export class UnitFilters2 extends React.Component {
 
     const FilterOptions = ({filter}: {filter: UnitFilterProps}) => (
       <Grid className="unit-filters__options">
-        <FilterOptionsRow filterName={filter.name} className="unit-filters__options" options={filter.options} onSelect={updateFilter}/>
+        <FilterOptionsRow filterName={filter.name} className="unit-filters__options" options={filter.options} onSelect={this.onMenuSelect}/>
         {filter.secondaryOptions && <Row componentClass="hr" className="unit-filters__options-separator"/>}
         {filter.secondaryOptions &&
-          <FilterOptionsRow className="unit-filters__options secondary" filterName={filter.name} options={filter.secondaryOptions} onSelect={updateFilter}/>
+          <FilterOptionsRow className="unit-filters__options secondary" filterName={filter.name} options={filter.secondaryOptions}
+                              onSelect={this.onMenuSelect}/>
         }
       </Grid>
     );
