@@ -33,7 +33,7 @@ export const SortKeys = {
 export const UNIT_BATCH_SIZE = 20;
 
 export const DefaultFilters = {
-  sport: UnitFilters.SKIING,
+  sport: UnitFilters.SWIMMING,
   status: UnitFilters.STATUS_ALL,
 };
 
