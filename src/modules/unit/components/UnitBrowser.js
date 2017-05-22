@@ -3,11 +3,15 @@ import {withRouter} from 'react-router';
 import ListView from './ListView.js';
 import SMIcon from '../../home/components/SMIcon';
 import values from 'lodash/values';
-import {DefaultFilters, UnitFilters, StatusFilters} from '../constants.js';
-import UnitFilter from './UnitFilter.js';
-import UnitFilter2 from './UnitFilter2.js';
+import {DefaultFilters, StatusFilters} from '../constants.js';
+import UnitFilters from './UnitFilters.js';
 import SearchContainer from '../../search/components/SearchContainer';
-import {getAddressToDisplay} from '../helpers';
+import {
+  getAddressToDisplay,
+  getOnSeasonSportFilters,
+  getOffSeasonSportFilters,
+  getSeasonDelimiter,
+} from '../helpers';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
@@ -102,6 +106,7 @@ class UnitBrowser extends Component {
 
     const currentSportFilter = query && query.sport || DefaultFilters.sport;
     const currentStatusFilter = query && query.status || DefaultFilters.status;
+    const today = getSeasonDelimiter(new Date());
 
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`} style={params.unitId ? {display: 'none'} : null}>
@@ -114,12 +119,12 @@ class UnitBrowser extends Component {
           openUnit={openUnit}
         />
         {!isLoading &&
-          <UnitFilter2
+          <UnitFilters
             filters={[{
               name: 'sport',
               active: currentSportFilter,
-              options: [UnitFilters.SWIMMING],
-              secondaryOptions: [UnitFilters.SKIING, UnitFilters.ICE_SKATING],
+              options: getOnSeasonSportFilters(today),
+              secondaryOptions: getOffSeasonSportFilters(today),
             },{
               name: 'status',
               active: currentStatusFilter,

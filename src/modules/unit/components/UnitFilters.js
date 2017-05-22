@@ -1,17 +1,8 @@
 //@flow
 import React from 'react';
 import {translate} from 'react-i18next';
-import {Grid, Row, Col, Button} from 'react-bootstrap';
-import invert from 'lodash/invert';
-
-import {FilterIcon} from './UnitFilter.js';
-import {UnitFilters} from '../constants';
-
-/*
- * TODO:
- * - Move extra components to their own files
- * - Add logic & config to decide which sports are on/off-season
- */
+import {Grid, Row, Col} from 'react-bootstrap';
+import UnitFilterButton from './UnitFilterButton';
 
 
 type UnitFiltersProps = {
@@ -26,19 +17,6 @@ type UnitFilterProps = {
   options: Array<string>,
   secondaryOptions: ?Array<string>,
 };
-
-type UnitFiltersState = {
-  expand: ?number
-};
-
-const UnitFilterButton = ({t, filterName, className, ...rest}) => (
-  <Button className={`unit-filter-button ${className}`} {...rest}>
-    <FilterIcon className="unit-filter-button__icon" filter={filterName}/>
-    <span className="unit-filter-button__name">
-      {t(`UNIT.FILTER.${invert(UnitFilters)[filterName]}`)}
-    </span>
-  </Button>
-);
 
 const FilterOptionsRow = translate()(({t, className, filterName, options, active = null, onSelect}) => (
   <Row className={`${className} filter-options-row`}>
@@ -55,28 +33,25 @@ const FilterOptionsRow = translate()(({t, className, filterName, options, active
   </Row>
 ));
 
-export class UnitFilters2 extends React.Component {
+export class UnitFiltersComponent extends React.Component {
   props: UnitFiltersProps;
 
-  state: UnitFiltersState;
+  state: {
+    expand: number | null
+  };
 
-  onMenuSelect(key: string, value: string): void {
+  onMenuSelect = (key: string, value: string): void => {
     this.setState(
-      ({expand}) => ({expand: null}))
+      () => ({expand: null}));
     this.props.updateFilter(key, value);
   }
 
-  constructor(props: UnitFiltersProps){
-    super(props);
-    this.onMenuSelect = this.onMenuSelect.bind(this);
-
-    this.state = {
-      expand: null,
-    };
+  state = {
+    expand: null,
   }
 
   render() {
-    const {filters, updateFilter, t} = this.props;
+    const {filters, t} = this.props;
     const {expand} = this.state;
 
     const FilterOptions = ({filter}: {filter: UnitFilterProps}) => (
@@ -115,4 +90,4 @@ export class UnitFilters2 extends React.Component {
 
 }
 
-export default translate()(UnitFilters2);
+export default translate()(UnitFiltersComponent);

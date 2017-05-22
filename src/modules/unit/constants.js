@@ -24,6 +24,59 @@ export const SportFilters = [
   UnitFilters.SWIMMING,
 ];
 
+type SeasonDelimiter = {
+  day: number,
+  month: number, // 0-11, Jan = 0 & Dec = 11
+};
+
+type Season = {
+  start: SeasonDelimiter,
+  end: SeasonDelimiter,
+  filters: Array<string>
+}
+
+export const SummerSeason: Season = {
+  start: {
+    day: 1,
+    month: 4,
+  },
+  end: {
+    day: 14,
+    month: 10,
+  },
+  filters: [UnitFilters.SWIMMING],
+};
+
+export const WinterSeason: Season = {
+  start: {
+    day: 15,
+    month: 10,
+  },
+  end: {
+    day: 31,
+    month: 3,
+  },
+  filters: [UnitFilters.SKIING, UnitFilters.ICE_SKATING],
+};
+
+export const YearRoundSeason: Season = {
+  start: {
+    day: 1,
+    month: 0,
+  },
+  end: {
+    day: 31,
+    month: 11,
+  },
+  filters: [],
+};
+
+export const Seasons: Array<Season> = [
+  SummerSeason,
+  WinterSeason,
+  YearRoundSeason,
+];
+
 export const SortKeys = {
   ALPHABETICAL: 'alphabetical',
   DISTANCE: 'distance',

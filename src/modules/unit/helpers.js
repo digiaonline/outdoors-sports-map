@@ -3,13 +3,23 @@ import {has, keys, sortBy} from 'lodash';
 import moment from 'moment';
 import {createRequest, createUrl} from '../api/helpers.js';
 import {UnitServices, IceSkatingServices, SkiingServices, SwimmingServices} from '../service/constants';
-import {UNIT_PIN_HEIGHT, UNIT_HANDLE_HEIGHT, UnitQuality, UnitFilters, QualityEnum} from './constants';
+import {
+  UNIT_PIN_HEIGHT,
+  UNIT_HANDLE_HEIGHT,
+  UnitQuality,
+  UnitFilters,
+  QualityEnum,
+  Seasons,
+  SeasonDelimiter,
+} from './constants';
 import {DEFAULT_LANG} from '../common/constants';
 import upperFirst from 'lodash/upperFirst';
 import values from 'lodash/values';
 import memoize from 'lodash/memoize';
 import {LatLng, GeoJSON} from 'leaflet';
 import * as GeometryUtil from 'leaflet-geometryutil';
+import getDate from 'date-fns/get_date';
+import getMonth from 'date-fns/get_month';
 
 export const getFetchUnitsRequest = (params: Object)  => {
   return createRequest(createUrl('unit/', {
@@ -122,6 +132,49 @@ export const getFilterIconURL = (filter: String) =>
   filter ? require(`@assets/icons/icon-white-${filter}@2x.png`) : '';
 
 /**
+ * FILTERZ
+ */
+
+export const isOnSeason = (date: SeasonDelimiter, start: SeasonDelimiter, end: SeasonDelimiter): boolean =>
+  (
+    (date.month > start.month || date.month === start.month && date.day >= start.day)
+    &&
+    (date.month < end.month || date.month === end.month && date.day <= end.day)
+  );
+
+export const getSeasonDelimiter = (date: Date): SeasonDelimiter =>
+  ({
+    day: getDate(date),
+    month: getMonth(date),
+  });
+
+export const getOnSeasonSportFilters = (date: SeasonDelimiter): Array<string> =>
+  Seasons
+    .filter(({start, end}) => isOnSeason(date, start, end))
+    .map(({filters}) => filters)
+    .reduce((flattened, filters) => [...flattened, ...filters], []);
+
+export const getOffSeasonSportFilters = (date: SeasonDelimiter): Array<string> =>
+  Seasons
+    .filter(({start, end}) => !isOnSeason(date, start, end))
+    .map(({filters}) => filters)
+    .reduce((flattened, filters) => [...flattened, ...filters], []);
+
+export const getSportFilters = () => {
+  const now = new Date();
+  const today: SeasonDelimiter = {
+    day: getDate(now),
+    month: getMonth(now),
+  };
+
+  return {
+    onSeason: getOnSeasonSportFilters(today),
+    offSeason: getOffSeasonSportFilters(today),
+  };
+};
+
+
+/**
  * SORT UNIT LIST
  */
 
@@ -151,10 +204,10 @@ export const sortByDistance = memoize(_sortByDistance, (units, pos, leafletMap, 
   return `${filterString};${pos[0]};${pos[1]}`;
 });
 
-export const sortByName = (units: Array, lang: ?string) =>
+export const sortByName = (units: Array<Object>, lang: ?string) =>
   sortBy(units, (unit) => getAttr(unit.name, lang));
 
-export const sortByCondition = (units: Array) =>
+export const sortByCondition = (units: Array<Object>) =>
   sortBy(units, [
     (unit) => {
       return enumerableQuality(getUnitQuality(unit));
@@ -168,8 +221,8 @@ export const sortByCondition = (units: Array) =>
     },
   ]);
 
-export const getAddressToDisplay = (address, activeLang) => {
+export const getAddressToDisplay = (address: Object, activeLang: string) => {
   return Object.keys(address).length !== 0
-    ? getAttr(address.street.name, activeLang)+' '+address.number+', '+upperFirst(address.street.municipality)
+    ? `${String(getAttr(address.street.name, activeLang))} ${address.number}, ${upperFirst(address.street.municipality)}`
     : null;
 };
