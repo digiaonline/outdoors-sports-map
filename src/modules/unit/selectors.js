@@ -1,6 +1,5 @@
 import {AppState} from '../common/constants';
-import {UnitFilters, DefaultFilters, QualityEnum} from './constants';
-import {enumerableQuality, getUnitQuality} from './helpers';
+import {UnitFilters, DefaultFilters} from './constants';
 import {intersection, isEmpty, memoize} from 'lodash';
 import {getIsActive as getSearchActive, getUnitResultIDs} from '../search/selectors';
 

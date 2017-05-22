@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, FormGroup, FormControl, ControlLabel, Checkbox, FieldGroup} from 'react-bootstrap';
+import {Button, FormGroup, FormControl, Checkbox} from 'react-bootstrap';
 import {translate} from 'react-i18next';
 import {sendFeedback} from '../actions';
 import {bindActionCreators} from 'redux';
@@ -29,7 +29,7 @@ export class FeedbackModal extends Component {
     }
   }
 
-  handleFeedbackSubmit(e, feedback, email) {
+  handleFeedbackSubmit(e, feedback) {
     e.preventDefault();
     this.props.sendFeedback(feedback);
     this.props.closeModal();

@@ -4,8 +4,7 @@ import {Link} from 'react-router';
 import {isEqual, values} from 'lodash';
 import SMIcon from '../../home/components/SMIcon';
 import * as unitHelpers from '../helpers';
-import {getServiceName} from '../../service/helpers';
-import {SortKeys, UNIT_BATCH_SIZE, UnitFilters} from '../constants';
+import {SortKeys, UNIT_BATCH_SIZE} from '../constants';
 import {View} from './View.js';
 import Loading from '../../home/components/Loading';
 import ObservationStatus from './ObservationStatus';
@@ -18,7 +17,7 @@ class UnitListItem extends Component {
   }
 
   render() {
-    const {unit, services, handleClick} = this.props;
+    const {unit, handleClick} = this.props;
     const context = this.context;
 
     return (
@@ -109,7 +108,7 @@ class ListView extends Component {
     const {services, openUnit, isLoading, t} = this.props;
     const {sortKey, maxUnitCount} = this.state;
     const totalUnits = this.props.units.length;
-    const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
+    const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
 
     return (
       <View id="list-view" className="list-view">

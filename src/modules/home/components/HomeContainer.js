@@ -17,7 +17,7 @@ import {DefaultFilters} from '../../unit/constants';
 import MapView from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
-import {locations, POLL_INTERVAL} from '../constants.js';
+import {locations} from '../constants.js';
 import {arrayifyQueryValue} from '../../common/helpers';
 import {SUPPORTED_LANGUAGES} from '../../language/constants';
 

@@ -20,7 +20,7 @@ export default class Control extends MapControl {  // note we're extending MapCo
 
     control.handleClick = this.handleClick;
 
-    control.onAdd = function (map) {
+    control.onAdd = function () {
       let div = L.DomUtil.create('div', `custom-control ${className}`);
       let link = L.DomUtil.create('a', 'custom-control-button', div);
 

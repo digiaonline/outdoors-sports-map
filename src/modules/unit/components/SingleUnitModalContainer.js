@@ -102,15 +102,16 @@ const LocationRoute = ({routeUrl, t}) =>
       </a>
     </ModalBodyBox>;
 
-const LocationWeather = ({t}) =>
-  <ModalBodyBox title={t('MODAL.WEATHER')}>
-    Wow such weather.
-  </ModalBodyBox>;
-
-const LocationHeightProfile = ({t}) =>
-  <ModalBodyBox title={t('MODAL.HEIGHT_PROFILE')}>
-    Wow such profile.
-  </ModalBodyBox>;
+// TODO
+// const LocationWeather = ({t}) =>
+//   <ModalBodyBox title={t('MODAL.WEATHER')}>
+//     Wow such weather.
+//   </ModalBodyBox>;
+//
+// const LocationHeightProfile = ({t}) =>
+//   <ModalBodyBox title={t('MODAL.HEIGHT_PROFILE')}>
+//     Wow such profile.
+//   </ModalBodyBox>;
 
 const LocationOpeningHours = ({unit, t, activeLang}) =>
   <ModalBodyBox title={t('MODAL.OPENING_HOURS')}>

@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import React, {createElement} from 'react';
 import {render} from 'react-dom';
-import {browserHistory, createMemoryHistory} from 'react-router';
+import {createMemoryHistory} from 'react-router';
 import {AppContainer} from 'react-hot-loader';
 import Root from './modules/common/components/Root';
 
@@ -10,7 +10,7 @@ import './index.scss';
 const renderApp = (rootComponent) =>
   render(
     <AppContainer>
-      {createElement(rootComponent, {history: browserHistory/*createMemoryHistory()*/})}
+      {createElement(rootComponent, {history: createMemoryHistory()})}
     </AppContainer>,
     document.getElementById('root')
   );

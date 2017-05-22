@@ -10,7 +10,7 @@
     "lint": "eslint ./src",
     "start": "webpack-dashboard -c cyan -- node -r babel-register node_modules/.bin/webpack-dev-server --port=5000 --config=config/webpack/development.js",
     "test": "jest",
-    "prepush": "yarn test"
+    "prepush": "yarn lint && yarn test"
   },
   "repository": {
     "url": "git+https://github.com/nordsoftware/outdoors-sports-map.git",
