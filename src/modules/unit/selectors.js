@@ -1,7 +1,8 @@
 import {AppState} from '../common/constants';
-import {UnitFilters, DefaultFilters} from './constants';
+import {UnitFilters} from './constants';
 import {intersection, isEmpty, memoize} from 'lodash';
 import {getIsActive as getSearchActive, getUnitResultIDs} from '../search/selectors';
+import {getDefaultStatusFilter, getDefaultSportFilter} from './helpers';
 
 export const getUnitById = (state: AppState, props: Object) =>
   state.unit.byId[props.id];
@@ -10,9 +11,8 @@ export const getAllUnits = (state: AppState/*, props: Object*/) =>
   state.unit.all.map((id) => getUnitById(state, {id}));
 
 const _getVisibleUnits = (state: AppState, query: Object) => {
-  const sport = query && query.sport || DefaultFilters.sport;
-  const status = query && query.status || DefaultFilters.status;
-
+  const sport = query && query.sport || getDefaultSportFilter();
+  const status = query && query.status || getDefaultStatusFilter();
   let visibleUnits = state.unit[sport];
 
   if (status === UnitFilters.STATUS_OK) {

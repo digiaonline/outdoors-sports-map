@@ -3,14 +3,15 @@ import {withRouter} from 'react-router';
 import ListView from './ListView.js';
 import SMIcon from '../../home/components/SMIcon';
 import values from 'lodash/values';
-import {DefaultFilters, StatusFilters} from '../constants.js';
+import {StatusFilters} from '../constants.js';
 import UnitFilters from './UnitFilters.js';
 import SearchContainer from '../../search/components/SearchContainer';
 import {
   getAddressToDisplay,
   getOnSeasonSportFilters,
   getOffSeasonSportFilters,
-  getSeasonDelimiter,
+  getDefaultStatusFilter,
+  getDefaultSportFilter,
 } from '../helpers';
 
 const ToggleButton = ({toggle, icon}) =>
@@ -104,10 +105,8 @@ class UnitBrowser extends Component {
       contentMaxHeight = contentMaxHeight || this.calculateMaxHeight();
     }
 
-    const currentSportFilter = query && query.sport || DefaultFilters.sport;
-    const currentStatusFilter = query && query.status || DefaultFilters.status;
-    const today = getSeasonDelimiter(new Date());
-
+    const currentSportFilter = query && query.sport || getDefaultSportFilter();
+    const currentStatusFilter = query && query.status || getDefaultStatusFilter();
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`} style={params.unitId ? {display: 'none'} : null}>
         <div id="always-visible" className="unit-browser__fixed">
@@ -123,8 +122,8 @@ class UnitBrowser extends Component {
             filters={[{
               name: 'sport',
               active: currentSportFilter,
-              options: getOnSeasonSportFilters(today),
-              secondaryOptions: getOffSeasonSportFilters(today),
+              options: getOnSeasonSportFilters(),
+              secondaryOptions: getOffSeasonSportFilters(),
             },{
               name: 'status',
               active: currentStatusFilter,

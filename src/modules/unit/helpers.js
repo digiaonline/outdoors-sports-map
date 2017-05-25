@@ -1,21 +1,22 @@
 //@flow
-import {has, keys, sortBy} from 'lodash';
 import moment from 'moment';
+import {has, keys, sortBy, head, values, upperFirst, memoize} from 'lodash';
 import {createRequest, createUrl} from '../api/helpers.js';
 import {UnitServices, IceSkatingServices, SkiingServices, SwimmingServices} from '../service/constants';
 import {
   UNIT_PIN_HEIGHT,
   UNIT_HANDLE_HEIGHT,
+  DEFAULT_STATUS_FILTER,
   UnitQuality,
   UnitFilters,
   QualityEnum,
   Seasons,
-  SeasonDelimiter,
 } from './constants';
+import {
+  isOnSeason,
+  getToday,
+} from './seasons';
 import {DEFAULT_LANG} from '../common/constants';
-import upperFirst from 'lodash/upperFirst';
-import values from 'lodash/values';
-import memoize from 'lodash/memoize';
 import {LatLng, GeoJSON} from 'leaflet';
 import * as GeometryUtil from 'leaflet-geometryutil';
 import getDate from 'date-fns/get_date';
@@ -135,43 +136,35 @@ export const getFilterIconURL = (filter: String) =>
  * FILTERZ
  */
 
-export const isOnSeason = (date: SeasonDelimiter, start: SeasonDelimiter, end: SeasonDelimiter): boolean =>
-  (
-    (date.month > start.month || date.month === start.month && date.day >= start.day)
-    &&
-    (date.month < end.month || date.month === end.month && date.day <= end.day)
-  );
-
-export const getSeasonDelimiter = (date: Date): SeasonDelimiter =>
-  ({
-    day: getDate(date),
-    month: getMonth(date),
-  });
-
-export const getOnSeasonSportFilters = (date: SeasonDelimiter): Array<string> =>
+export const getOnSeasonSportFilters = (date = getToday()): Array<string> =>
   Seasons
-    .filter(({start, end}) => isOnSeason(date, start, end))
+    .filter((season) => isOnSeason(date, season))
     .map(({filters}) => filters)
     .reduce((flattened, filters) => [...flattened, ...filters], []);
 
-export const getOffSeasonSportFilters = (date: SeasonDelimiter): Array<string> =>
+export const getOffSeasonSportFilters = (date = getToday()): Array<string> =>
   Seasons
-    .filter(({start, end}) => !isOnSeason(date, start, end))
+    .filter((season) => !isOnSeason(date, season))
     .map(({filters}) => filters)
     .reduce((flattened, filters) => [...flattened, ...filters], []);
 
-export const getSportFilters = () => {
-  const now = new Date();
-  const today: SeasonDelimiter = {
-    day: getDate(now),
-    month: getMonth(now),
-  };
+export const getSportFilters = (date = getToday()) => ({
+  onSeason: getOnSeasonSportFilters(date),
+  offSeason: getOffSeasonSportFilters(date),
+});
 
-  return {
-    onSeason: getOnSeasonSportFilters(today),
-    offSeason: getOffSeasonSportFilters(today),
-  };
-};
+export const getDefaultSportFilter = (): string =>
+  String(head(getOnSeasonSportFilters(getToday())));
+
+export const getDefaultStatusFilter = (): string =>
+  DEFAULT_STATUS_FILTER;
+
+export const getDefaultFilters = () => (
+  {
+    status: getDefaultStatusFilter(),
+    sport: getDefaultSportFilter(),
+  }
+);
 
 
 /**

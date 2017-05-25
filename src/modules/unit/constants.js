@@ -85,10 +85,7 @@ export const SortKeys = {
 
 export const UNIT_BATCH_SIZE = 20;
 
-export const DefaultFilters = {
-  sport: UnitFilters.SWIMMING,
-  status: UnitFilters.STATUS_ALL,
-};
+export const DEFAULT_STATUS_FILTER = UnitFilters.STATUS_ALL;
 
 export const UnitQuality = {
   GOOD: 'good',

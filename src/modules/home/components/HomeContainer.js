@@ -13,7 +13,7 @@ import * as fromUnit from '../../unit/selectors';
 import * as fromService from '../../service/selectors';
 import * as fromLanguage from '../../language/selectors';
 import {getIsLoading} from '../selectors';
-import {DefaultFilters} from '../../unit/constants';
+import {getDefaultFilters} from '../../unit/helpers';
 import MapView from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
@@ -130,7 +130,7 @@ export class HomeContainer extends Component {
 
   render() {
     const {unitData, serviceData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
-    const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
+    const activeFilter = filter ? arrayifyQueryValue(filter) : getDefaultFilters();
 
     return (
       <div className="home">
