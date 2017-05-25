@@ -11,6 +11,7 @@ import {
   UnitFilters,
   QualityEnum,
   Seasons,
+  SeasonDelimiter,
 } from './constants';
 import {
   isOnSeason,
@@ -136,19 +137,19 @@ export const getFilterIconURL = (filter: String) =>
  * FILTERZ
  */
 
-export const getOnSeasonSportFilters = (date = getToday()): Array<string> =>
+export const getOnSeasonSportFilters = (date: SeasonDelimiter = getToday()): Array<string> =>
   Seasons
     .filter((season) => isOnSeason(date, season))
     .map(({filters}) => filters)
     .reduce((flattened, filters) => [...flattened, ...filters], []);
 
-export const getOffSeasonSportFilters = (date = getToday()): Array<string> =>
+export const getOffSeasonSportFilters = (date: SeasonDelimiter = getToday()): Array<string> =>
   Seasons
     .filter((season) => !isOnSeason(date, season))
     .map(({filters}) => filters)
     .reduce((flattened, filters) => [...flattened, ...filters], []);
 
-export const getSportFilters = (date = getToday()) => ({
+export const getSportFilters = (date: SeasonDelimiter = getToday()) => ({
   onSeason: getOnSeasonSportFilters(date),
   offSeason: getOffSeasonSportFilters(date),
 });
