@@ -1,10 +1,10 @@
 import React from 'react';
 import {Popup} from 'react-leaflet';
 import {translate} from 'react-i18next';
-import {getAttr, getUnitQuality, getObservation} from '../helpers';
+import {getAttr, getUnitQuality, getCondition} from '../helpers';
 
 export const UnitPopup = ({unit, offset, t}, {getActiveLanguage: getLang}) => {
-  const condition = getObservation(unit);
+  const condition = getCondition(unit);
   const conditionLabel = condition ? getAttr(condition.name, getLang()) : t('UNIT.UNKNOWN');
   return (
     <Popup className="unit-popup" minWidth={150} maxWidth={150} offset={[0,offset]} closeButton={false} autoPan={false}>

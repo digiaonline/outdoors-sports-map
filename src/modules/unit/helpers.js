@@ -77,14 +77,20 @@ export const getUnitSport = (unit: Object) => {
   return 'unknown';
 };
 
-export const getObservation = (unit: Object) => {
+export const getObservation = (unit: Object, matchProperty: string) => {
+  const {observations} = unit;
+
+  return observations ? observations.find((obs) => obs.property.includes(matchProperty)) : null;
+};
+
+export const getCondition = (unit: Object) => {
   const {observations} = unit;
 
   return observations ? observations.find((obs) => obs.primary) : null;
 };
 
 export const getUnitQuality = (unit: Object): string => {
-  const observation = getObservation(unit);
+  const observation = getCondition(unit);
   return observation ? observation.quality : UnitQuality.UNKNOWN;
 };
 
@@ -207,7 +213,7 @@ export const sortByCondition = (units: Array<Object>) =>
       return enumerableQuality(getUnitQuality(unit));
     },
     (unit) => {
-      const observation = getObservation(unit);
+      const observation = getCondition(unit);
       const observationTime =
         observation && observation.time && (new Date(observation.time)).getTime() || 0;
 
