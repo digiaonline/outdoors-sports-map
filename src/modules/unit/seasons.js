@@ -1,3 +1,5 @@
+// @flow
+import type {SeasonDelimiter, Season} from './constants';
 import getDate from 'date-fns/get_date';
 import getMonth from 'date-fns/get_month';
 

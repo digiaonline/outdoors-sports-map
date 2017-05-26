@@ -1,8 +1,10 @@
+// @flow
 import {createAction} from 'redux-actions';
 import values from 'lodash/values';
 import {UnitActions} from './constants';
-import {Action} from '../common/constants';
-import {ApiResponse, UnitServices} from './constants';
+import type {Action} from '../common/constants';
+import type {ApiResponse} from '../api/constants';
+import {UnitServices} from '../service/constants';
 
 export const fetchUnits = (params: Object): Action =>
   createAction(UnitActions.FETCH)({params});

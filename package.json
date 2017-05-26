@@ -10,7 +10,7 @@
     "lint": "eslint ./src",
     "start": "webpack-dashboard -c cyan -- node -r babel-register node_modules/.bin/webpack-dev-server --port=5000 --config=config/webpack/development.js",
     "test": "jest",
-    "prepush": "yarn lint && yarn test"
+    "prepush": "yarn lint && yarn flow && yarn test"
   },
   "repository": {
     "url": "git+https://github.com/nordsoftware/outdoors-sports-map.git",
@@ -69,7 +69,7 @@
     "eslint-plugin-react": "^6.4.1",
     "exports-loader": "^0.6.3",
     "extract-text-webpack-plugin": "^1.0.1",
-    "flow-bin": "^0.33.0",
+    "flow-bin": "^0.46.0",
     "flow-typed": "^2.0.0",
     "html-webpack-plugin": "^2.22.0",
     "husky": "^0.13.3",

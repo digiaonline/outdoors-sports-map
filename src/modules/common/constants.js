@@ -1,4 +1,7 @@
-import {UnitState} from '../unit/constants';
+// @flow
+import type {UnitState} from '../unit/constants';
+import type {ServiceState} from '../service/constants';
+import type {SearchState} from '../search/constants';
 
 export const API_URL = 'http://servicemat.hel.ninja/servicemap/v1'; //'https://api.hel.fi/servicemap/v1';
 export const DIGITRANSIT_API_URL = 'https://api.digitransit.fi/geocoding/v1';
@@ -29,7 +32,9 @@ export type EntityAction = {
 };
 
 export type AppState = {
-  unit: UnitState
+  unit: UnitState,
+  service: ServiceState,
+  search: SearchState,
 };
 
 

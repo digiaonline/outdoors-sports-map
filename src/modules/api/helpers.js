@@ -1,23 +1,24 @@
+// @flow
 import {call} from 'redux-saga/effects';
 import {normalize} from 'normalizr';
 import {API_URL, DIGITRANSIT_API_URL} from '../common/constants';
-import {ApiResponse} from './constants';
+import type {ApiResponse} from './constants';
 
-export const normalizeEntityResults = (results: Object, schema: Schema): Object =>
+export const normalizeEntityResults = (results: Object, schema: Object) =>
   normalize(results, schema);
 
-export function* callApi(request: Request): ApiResponse {
-  const response = yield call(fetch, request);
+export function* callApi(request: Request): Generator<any, ApiResponse, any> {
+  const response: Object = yield call(fetch, request);
   if(response.status === 404) {
     const bodyAsJson = {results: 'Error, 404 not found'};
-    return {response, bodyAsJson};
+    return ({response, bodyAsJson});
   } else {
     const bodyAsJson = yield call([response, response.json]);
-    return {response, bodyAsJson};
+    return ({response, bodyAsJson});
   }
 }
 
-export const createRequest = (url: string, init: Object): Request =>
+export const createRequest = (url: string, init: Object | void): Request =>
   new Request(url, init);
 
 export const createUrl = (url: string, params: Object): string =>

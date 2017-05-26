@@ -1,5 +1,5 @@
 //@flow
-import {AppState} from '../common/constants';
+import type {AppState} from '../common/constants';
 import {getUnitById} from '../unit/selectors';
 
 export const getIsActive = (state: AppState): boolean =>

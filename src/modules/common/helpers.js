@@ -1,5 +1,6 @@
 // @flow
-import {APP_NAME, QueryValue} from './constants';
+import {APP_NAME} from './constants';
+import type {QueryValue} from './constants';
 
 export const normalizeActionName = (name: string): string =>
   `${APP_NAME}/${name}`;

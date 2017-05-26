@@ -1,8 +1,9 @@
+// @flow
 import {keys} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
 import {ServiceActions} from './constants';
-import {EntityAction} from '../common/constants';
+import type {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
   [ServiceActions.FETCH]: () => true,

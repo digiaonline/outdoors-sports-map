@@ -1,13 +1,14 @@
+// @flow
 import {takeLatest} from 'redux-saga';
 import {call, fork, put} from 'redux-saga/effects';
 import {arrayOf} from 'normalizr';
 import {receiveUnits, receiveUnitSuggestions, receiveAddressSuggestions} from './actions';
 import {SearchActions} from './constants';
 import {unitSchema} from '../unit/constants';
-import {FetchAction} from '../common/constants';
+import type {FetchAction} from '../common/constants';
 import {createUrl, createDigitransitUrl, createRequest, callApi, normalizeEntityResults} from '../api/helpers';
 
-function* searchUnits({payload: {params}}: FetchAction) {
+function* searchUnits({payload: {params}}: FetchAction): Generator<*, *, *> {
   let data = [];
   // Make search request only when there's input
   if (params.input && params.input.length) {
@@ -15,6 +16,7 @@ function* searchUnits({payload: {params}}: FetchAction) {
     const {bodyAsJson} = yield call(callApi, request);
     data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
   }
+  // $FlowFixMe -> How to type annotate normalizeEntityResults to return array with arrayOf schema?
   yield put(receiveUnits(data));
 }
 
@@ -41,6 +43,7 @@ function* fetchUnitSuggestions({payload: {params}}: FetchAction) {
     addressData = addressBodyAsJson ? addressBodyAsJson.features.filter((feature) => feature.properties.layer !== 'stop') : [];
     data = bodyAsJson.results ? normalizeEntityResults(bodyAsJson.results, arrayOf(unitSchema)) : [];
   }
+  // $FlowFixMe
   yield put(receiveUnitSuggestions(data));
   yield put(receiveAddressSuggestions(addressData));
 }
@@ -62,7 +65,7 @@ function* watchClearSearch() {
   yield takeLatest(SearchActions.CLEAR, clearSearch);
 }
 
-export default function* saga() {
+export default function* saga(): Generator<*, *, *> {
   return [
     yield fork(watchSearchUnits),
     yield fork(watchFetchUnitSuggestions),

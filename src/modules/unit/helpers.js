@@ -11,8 +11,8 @@ import {
   UnitFilters,
   QualityEnum,
   Seasons,
-  SeasonDelimiter,
 } from './constants';
+import type {SeasonDelimiter} from './constants';
 import {
   isOnSeason,
   getToday,
@@ -20,8 +20,6 @@ import {
 import {DEFAULT_LANG} from '../common/constants';
 import {LatLng, GeoJSON} from 'leaflet';
 import * as GeometryUtil from 'leaflet-geometryutil';
-import getDate from 'date-fns/get_date';
-import getMonth from 'date-fns/get_month';
 
 export const getFetchUnitsRequest = (params: Object)  => {
   return createRequest(createUrl('unit/', {
@@ -178,7 +176,7 @@ export const getDefaultFilters = () => (
  * SORT UNIT LIST
  */
 
-const _sortByDistance = (units: Array<Object>, position: Array<number>, leafletMap: Object, filterString: String) => {
+const _sortByDistance = (units: Array<Object>, position: Array<number>, leafletMap: Object) => {
   if (leafletMap === null) {
     return units;
   }
@@ -195,7 +193,7 @@ const _sortByDistance = (units: Array<Object>, position: Array<number>, leafletM
       leafletMap, latLngs, positionLatLng);
     return positionLatLng.distanceTo(closestLatLng);
   });
-}
+};
 
 export const sortByDistance = memoize(_sortByDistance, (units, pos, leafletMap, filterString) => {
   if (leafletMap === null || units.length === 0 || pos === undefined) {

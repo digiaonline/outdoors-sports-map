@@ -1,3 +1,5 @@
+// @flow
+
 export const SUPPORTED_LANGUAGES = {
   English: 'en',
   Svenska: 'sv',

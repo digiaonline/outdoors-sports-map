@@ -1,3 +1,4 @@
+// @flow
 import {DEFAULT_LANG} from '../common/constants';
 import {getAttr} from '../unit/helpers';
 import isEmpty from 'lodash/isEmpty';

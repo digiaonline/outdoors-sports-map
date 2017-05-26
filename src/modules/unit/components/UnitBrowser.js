@@ -1,3 +1,4 @@
+// @flow
 import React, {Component, PropTypes} from 'react';
 import {withRouter} from 'react-router';
 import ListView from './ListView.js';
@@ -40,20 +41,14 @@ class UnitBrowser extends Component {
     units: PropTypes.array,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isExpanded: false,
-      contentMaxHeight: null,
-    };
+  state: {
+    isExpanded: boolean,
+    contentMaxHeight: ?number
+  };
 
-    this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
-    this.toggleStatusFilter = this.toggleStatusFilter.bind(this);
-    this.toggleSportFilter = this.toggleSportFilter.bind(this);
-    this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
-    this.toggle = this.toggle.bind(this);
-    this.expand = this.expand.bind(this);
-    this.updateQueryParameter = this.updateQueryParameter.bind(this);
+  state = {
+    isExpanded: false,
+    contentMaxHeight: null,
   }
 
   componentDidMount() {
@@ -64,16 +59,18 @@ class UnitBrowser extends Component {
     window.removeEventListener('resize', this.updateContentMaxHeight);
   }
 
-  updateContentMaxHeight() {
+  updateContentMaxHeight = () => {
+    // $FlowFixMe
     this.setState({contentMaxHeight: this.calculateMaxHeight()});
   }
 
-  calculateMaxHeight() {
+  calculateMaxHeight = () => {
+    // $FlowFixMe
     const fixedPartHeight = document.getElementById('always-visible').offsetHeight;
     return window.innerHeight - fixedPartHeight;
   }
 
-  updateQueryParameter(key: string, value: string): void {
+  updateQueryParameter = (key: string, value: string): void => {
     const {router, location: {query}} = this.props;
 
     router.push({
@@ -81,19 +78,19 @@ class UnitBrowser extends Component {
     });
   }
 
-  toggleStatusFilter(filter: string): void {
+  toggleStatusFilter = (filter: string): void => {
     this.updateQueryParameter('status', filter);
   }
 
-  toggleSportFilter(sport: string): void {
+  toggleSportFilter = (sport: string): void => {
     this.updateQueryParameter('sport', sport);
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({isExpanded: !this.state.isExpanded});
   }
 
-  expand() {
+  expand = () => {
     this.setState({isExpanded: true});
   }
 

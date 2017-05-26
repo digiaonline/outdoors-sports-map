@@ -1,7 +1,8 @@
+// @flow
 import {createAction} from 'redux-actions';
 import {ServiceActions} from './constants';
-import {Action} from '../common/constants';
-import {ApiResponse} from './constants';
+import type {Action} from '../common/constants';
+import type {ApiResponse} from '../api/constants';
 
 export const fetchServices = (params: Object): Action =>
   createAction(ServiceActions.FETCH)({params});

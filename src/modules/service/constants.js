@@ -1,3 +1,4 @@
+// @flow
 import {Schema} from 'normalizr';
 import {normalizeActionName} from '../common/helpers';
 
@@ -37,14 +38,11 @@ export const ServiceActions = {
   FETCH_ERROR: normalizeActionName('service/FETCH_ERROR'),
 };
 
-export type UnitState = {
+export type ServiceState = {
   isFetching: boolean,
   byId: Object,
-  // Filtered arrays of ids
-  all: Array<string>,
-  skating: Array<string>,
-  skiing: Array<string>,
-  searchResults: Array<string>
+  fetchError: any,
+  all: Array<string>
 };
 
 export const serviceSchema = new Schema('service'/*, {}*/);

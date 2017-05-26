@@ -37,7 +37,12 @@ class SearchContainer extends Component {
     this.handleAddressClick = this.handleAddressClick.bind(this);
   }
 
-  onInputChange(value: string) {
+  /**
+   *
+   * @param  {string} value [description]
+   * @return {void}       [description]
+   */
+  onInputChange(value) {
     this.setState({
       searchPhrase: value,
       showSuggestions: true,
@@ -53,7 +58,11 @@ class SearchContainer extends Component {
     });
   }
 
-  getSuggestions(searchPhrase: string) {
+  /**
+   * @param  {string} searchPhrase [description]
+   * @return {void}              [description]
+   */
+  getSuggestions(searchPhrase) {
     this.props.fetchUnitSuggestions(searchPhrase);
   }
 

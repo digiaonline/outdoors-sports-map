@@ -45,11 +45,6 @@ class ListView extends Component {
     sortKey: PropTypes.string,
   };
 
-  state: {
-    sortKey: string,
-    maxUnitCount: number
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -91,7 +86,11 @@ class ListView extends Component {
     return sortedUnits;
   }
 
-  selectSortKey(sortKey: string) {
+  /**
+   * @param  {string} sortKey
+   * @return {void}
+   */
+  selectSortKey(sortKey) {
     this.setState({sortKey: sortKey});
     this.resetUnitCount();
   }

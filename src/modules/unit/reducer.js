@@ -1,10 +1,11 @@
+// @flow
 import {keys} from 'lodash';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
 import {UnitActions, QualityEnum} from './constants';
 import {IceSkatingServices, SkiingServices, SwimmingServices} from '../service/constants';
 import {getUnitQuality, enumerableQuality} from './helpers';
-import {EntityAction} from '../common/constants';
+import type {EntityAction} from '../common/constants';
 
 const isFetchingReducer = handleActions({
   [UnitActions.FETCH]: () => true,

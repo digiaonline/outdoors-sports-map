@@ -1,10 +1,11 @@
+// @flow
 import {takeLatest} from 'redux-saga';
 import {call, fork, put} from 'redux-saga/effects';
 import {arrayOf} from 'normalizr';
 import {receiveUnits, receiveSearchSuggestions, setFetchError} from './actions';
 import {UnitActions, unitSchema} from './constants';
 import {getFetchUnitsRequest} from './helpers';
-import {FetchAction} from '../common/constants';
+import type {FetchAction} from '../common/constants';
 import {callApi, createRequest, normalizeEntityResults, stringifyQuery} from '../api/helpers';
 
 function* fetchUnits({payload: {params}}: FetchAction) {
@@ -32,6 +33,7 @@ function* sendFeedback({payload: {feedback, email}}) {
     can_be_published: false,
     internal_feedback: true,
     service_code: 2815,
+    email: undefined,
   };
 
   if (email) {
@@ -62,7 +64,7 @@ function* watchSendFeedback() {
   yield takeLatest(UnitActions.SEND_FEEDBACK, sendFeedback);
 }
 
-export default function* saga() {
+export default function* saga(): any {
   return [
     yield fork(watchFetchUnits),
     yield fork(watchClearSearch),

@@ -1,4 +1,3 @@
-//@flow
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
@@ -7,7 +6,7 @@ import {
   getAttr,
   getObservation,
   getOpeningHours,
-  getObservationTime
+  getObservationTime,
 } from '../helpers';
 import {getServiceName} from '../../service/helpers';
 import {translate} from 'react-i18next';

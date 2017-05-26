@@ -1,3 +1,4 @@
+// @flow
 import {Schema} from 'normalizr';
 import {normalizeActionName} from '../common/helpers';
 
@@ -24,12 +25,12 @@ export const SportFilters = [
   UnitFilters.SWIMMING,
 ];
 
-type SeasonDelimiter = {
+export type SeasonDelimiter = {
   day: number,
   month: number, // 0-11, Jan = 0 & Dec = 11
 };
 
-type Season = {
+export type Season = {
   start: SeasonDelimiter,
   end: SeasonDelimiter,
   filters: Array<string>
