@@ -1,7 +1,8 @@
+// @flow
 import {createAction} from 'redux-actions';
 import values from 'lodash/values';
 import {SearchActions, MAX_SUGGESTION_COUNT} from './constants';
-import {Action} from '../common/constants';
+import type {Action} from '../common/constants';
 import {UnitServices} from '../service/constants';
 
 export const clearSearch = () =>
@@ -10,7 +11,7 @@ export const clearSearch = () =>
 export const searchUnits = (input: string, params: Object): Action => {
   const init = {
     input,
-    service: `${values(UnitServices).join(',')}`
+    service: `${values(UnitServices).join(',')}`,
   };
 
   params = Object.assign({}, init, params);
@@ -24,7 +25,7 @@ export const fetchUnitSuggestions = (input: string): Action =>
   createAction(SearchActions.FETCH_UNIT_SUGGESTIONS)({params: {
     input,
     service: `${values(UnitServices).join(',')}`,
-    page_size: MAX_SUGGESTION_COUNT
+    page_size: MAX_SUGGESTION_COUNT,
   }});
 
 export const receiveUnitSuggestions = (results: Array<Object>) =>

@@ -4,8 +4,7 @@ import {Link} from 'react-router';
 import {isEqual, values} from 'lodash';
 import SMIcon from '../../home/components/SMIcon';
 import * as unitHelpers from '../helpers';
-import {getServiceName} from '../../service/helpers';
-import {SortKeys, UNIT_BATCH_SIZE, UnitFilters} from '../constants';
+import {SortKeys, UNIT_BATCH_SIZE} from '../constants';
 import {View} from './View.js';
 import Loading from '../../home/components/Loading';
 import ObservationStatus from './ObservationStatus';
@@ -18,7 +17,7 @@ class UnitListItem extends Component {
   }
 
   render() {
-    const {unit, services, handleClick} = this.props;
+    const {unit, handleClick} = this.props;
     const context = this.context;
 
     return (
@@ -36,26 +35,21 @@ class UnitListItem extends Component {
 }
 
 UnitListItem.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 class ListView extends Component {
   static propTypes = {
     units: PropTypes.array,
     services: PropTypes.object,
-    sortKey: PropTypes.string
-  };
-
-  state: {
-    sortKey: string,
-    maxUnitCount: number
+    sortKey: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       sortKey: SortKeys.DISTANCE,
-      maxUnitCount: UNIT_BATCH_SIZE
+      maxUnitCount: UNIT_BATCH_SIZE,
     };
 
     this.selectSortKey = this.selectSortKey.bind(this);
@@ -92,7 +86,11 @@ class ListView extends Component {
     return sortedUnits;
   }
 
-  selectSortKey(sortKey: string) {
+  /**
+   * @param  {string} sortKey
+   * @return {void}
+   */
+  selectSortKey(sortKey) {
     this.setState({sortKey: sortKey});
     this.resetUnitCount();
   }
@@ -109,7 +107,7 @@ class ListView extends Component {
     const {services, openUnit, isLoading, t} = this.props;
     const {sortKey, maxUnitCount} = this.state;
     const totalUnits = this.props.units.length;
-    const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
+    const units = isLoading ? [] : this.sortUnits(this.props, sortKey).slice(0, maxUnitCount);
 
     return (
       <View id="list-view" className="list-view">
@@ -139,7 +137,7 @@ class ListView extends Component {
 }
 
 ListView.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 export default translate()(ListView);

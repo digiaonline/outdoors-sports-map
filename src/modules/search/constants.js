@@ -1,3 +1,4 @@
+// @flow
 import {normalizeActionName} from '../common/helpers';
 
 export const SearchActions = {
@@ -6,7 +7,7 @@ export const SearchActions = {
   RECEIVE_UNITS: normalizeActionName('search/RECEIVE_UNITS'),
   FETCH_UNIT_SUGGESTIONS: normalizeActionName('search/FETCH_UNIT_SUGGESTIONS'),
   RECEIVE_UNIT_SUGGESTIONS: normalizeActionName('search/RECEIVE_UNIT_SUGGESTIONS'),
-  RECEIVE_ADDRESS_SUGGESTIONS: normalizeActionName('search/RECEIVE_ADDRESS_SUGGESTIONS')
+  RECEIVE_ADDRESS_SUGGESTIONS: normalizeActionName('search/RECEIVE_ADDRESS_SUGGESTIONS'),
 };
 
 export type SearchState = {
@@ -14,7 +15,8 @@ export type SearchState = {
   isActive: boolean,
   // Filtered arrays of unit ids
   unitSuggestions: Array<string>,
-  unitResults: Array<string>
+  unitResults: Array<string>,
+  addressSuggestions: Array<Object>,
   // TODO: Filtered arrays of streets / address search
 };
 

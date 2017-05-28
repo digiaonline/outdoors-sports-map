@@ -1,11 +1,13 @@
+// @flow
+
 export const SUPPORTED_LANGUAGES = {
   English: 'en',
   Svenska: 'sv',
-  Suomi: 'fi'
+  Suomi: 'fi',
 };
 
 export const languageActions = {
-  CHANGE_LANGUAGE: 'home/CHANGE_LANGUAGE'
+  CHANGE_LANGUAGE: 'home/CHANGE_LANGUAGE',
 };
 
 export const MODULE_NAME = 'language';

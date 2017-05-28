@@ -1,0 +1,72 @@
+.unit-filters {
+  max-width: 100%;
+  width: 100%;
+  background: $ui-content;
+  color: $ui-text;
+
+  &__filters.container, &__options.container {
+    max-width: 100%;
+  }
+
+  &__filters.row, &__options.row {
+    padding: $gap;
+  }
+
+  &__options {
+    background: $ui-disabled;
+    color: $ui-text;
+  }
+
+  &__options-separator {
+    margin: 0 -5px;
+    border-top: 1px solid $ui-enabled;
+  }
+
+
+  &__edit, &__option {
+    padding: 0;
+
+    &:nth-child(n+3) {
+      margin-top: $gap;
+    }
+
+    &:nth-child(even) {
+      padding-left: $gap/2;
+    }
+
+    &:nth-child(odd) {
+      padding-right: $gap/2;
+    }
+  }
+
+  .unit-filter-button {
+    width: 100%;
+    background: transparent;
+    border: 1px solid $ui-text-disabled;
+    color: inherit;
+    padding: 2px $gap;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 999999px;
+    font-size: 14px;
+    line-height: 2;
+
+    &__icon {
+      padding-right: $gap;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    &.active, &:active {
+      background-color: $ui-enabled;
+      color: $ui-text;
+      box-shadow: none;
+    }
+
+    &:hover {
+      border-color: $ui-text;
+    }
+  }
+
+}

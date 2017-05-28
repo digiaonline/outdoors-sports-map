@@ -16,7 +16,8 @@ import UnitsOnMap from './UnitsOnMap';
 import UserLocationMarker from '../../map/components/UserLocationMarker';
 import {translate} from 'react-i18next';
 import {isRetina} from '../../common/helpers';
-/* global L */
+
+declare var L: Object
 require('proj4leaflet');
 
 const bounds = L.bounds(L.point(-548576, 6291456), L.point(1548576, 8388608));
@@ -25,44 +26,22 @@ const TM35CRS = new L.Proj.CRS(
   'EPSG:3067',
   '+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs', {
     resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125],
-    bounds, transformation: new L.Transformation(1, -originNw[0], -1, originNw[1])
+    bounds, transformation: new L.Transformation(1, -originNw[0], -1, originNw[1]),
   });
 
 class MapView extends Component {
   static propTypes = {
     position: PropTypes.array.isRequired,
-    units: PropTypes.array
+    units: PropTypes.array,
   };
 
-  state: {
-    isMobile: boolean,
-    zoomLevel: number,
-    menuOpen: boolean
+  state = {
+    isMobile: window.innerWidth < mobileBreakpoint,
+    menuOpen: false,
+    aboutModalOpen: false,
+    feedbackModalOpen: false,
+    zoomLevel: DEFAULT_ZOOM,
   };
-
-  constructor(props: Object) {
-    super(props);
-
-    this.state = {
-      isMobile: window.innerWidth < mobileBreakpoint,
-      menuOpen: false,
-      aboutModalOpen: false,
-      feedbackModalOpen: false,
-      zoomLevel: DEFAULT_ZOOM
-    };
-
-    this.setLocation = this.setLocation.bind(this);
-    this.locateUser = this.locateUser.bind(this);
-    this.updateIsMobile = this.updateIsMobile.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.toggleMenu = this.toggleMenu.bind(this);
-    this.openAboutModal = this.openAboutModal.bind(this);
-    this.closeAboutModal = this.closeAboutModal.bind(this);
-    this.openFeedbackModal = this.openFeedbackModal.bind(this);
-    this.closeFeedbackModal = this.closeFeedbackModal.bind(this);
-    this.handleZoom = this.handleZoom.bind(this);
-    this.setView = this.setView.bind(this);
-  }
 
   componentDidMount() {
     window.addEventListener('resize', this.updateIsMobile);
@@ -80,7 +59,7 @@ class MapView extends Component {
     }
   }
 
-  centerMapToUnit(unit: Object) {
+  centerMapToUnit = (unit: Object) => {
     if (this.state.isMobile) {
       let location = getUnitPosition(unit);
       location[0] = location[0] + 0.035;
@@ -94,57 +73,57 @@ class MapView extends Component {
 
       this.refs.map.leafletElement.setView(location, DEFAULT_ZOOM);
     }
-  }
+  };
 
-  handleZoom() {
+  handleZoom = () => {
     this.setState({zoomLevel: this.refs.map.leafletElement.getZoom()});
-  }
+  };
 
-  updateIsMobile() {
+  updateIsMobile = () => {
     this.setState({isMobile: window.innerWidth < mobileBreakpoint});
   }
 
-  locateUser() {
+  locateUser = () => {
     this.refs.map.leafletElement.locate({setView: true});
-  }
+  };
 
-  handleClick(event: Object) {
+  handleClick = (event: Object) => {
     // Click events from info menu and language changer hit this. Don't
     // do anything for those events.
     if(event.originalEvent.target.className.includes('leaflet')) {
       this.setLocation(event);
     }
-  }
+  };
 
-  setLocation(event: Object) {
+  setLocation = (event: Object) => {
     this.props.setLocation(latLngToArray(event.latlng));
-  }
+  };
 
-  toggleMenu() {
+  toggleMenu = () => {
     if(this.state.menuOpen) {
       this.setState({menuOpen: false});
     } else {
       this.setState({menuOpen: true});
     }
-  }
+  };
 
-  setView(coordinates) {
+  setView = (coordinates) => {
     this.refs.map.leafletElement.setView(coordinates);
-  }
+  };
 
-  openAboutModal() {
+  openAboutModal = () => {
     this.setState({aboutModalOpen: true});
   }
 
-  closeAboutModal() {
+  closeAboutModal = () => {
     this.setState({aboutModalOpen: false});
   }
 
-  openFeedbackModal() {
+  openFeedbackModal = () => {
     this.setState({feedbackModalOpen: true});
   }
 
-  closeFeedbackModal() {
+  closeFeedbackModal = () => {
     this.setState({feedbackModalOpen: false});
   }
 

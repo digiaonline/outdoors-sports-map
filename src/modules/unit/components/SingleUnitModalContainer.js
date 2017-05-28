@@ -1,4 +1,3 @@
-//@flow
 import React, {Component} from 'react';
 import {Modal} from 'react-bootstrap';
 import ReactMarkdown from 'react-markdown';
@@ -7,13 +6,14 @@ import {
   getAttr,
   getObservation,
   getOpeningHours,
-  getObservationTime
+  getObservationTime,
 } from '../helpers';
 import {getServiceName} from '../../service/helpers';
 import {translate} from 'react-i18next';
 import ObservationStatus, {StatusUpdated} from './ObservationStatus';
 import UnitIcon from './UnitIcon';
 import upperFirst from 'lodash/upperFirst';
+import get from 'lodash/get';
 
 const ModalHeader = ({handleClick, unit, services, isLoading, activeLang, t}) => {
   const unitAddress = unit ? getAttr(unit.street_address, activeLang()) : null;
@@ -64,9 +64,9 @@ const LocationState = ({unit, t}) =>
 
 const LocationInfo = ({unit, t, activeLang}) =>
   <ModalBodyBox title={t('MODAL.INFO')}>
-    {unit.extensions.length && <p>{t('MODAL.LENGTH') + ': '}<strong>{unit.extensions.length}km</strong></p>}
-    {unit.extensions.lighting && <p>{t('MODAL.LIGHTING') + ': '}<strong>{upperFirst(getAttr(unit.extensions.lighting, activeLang()))}</strong></p>}
-    {unit.extensions.skiing_technique && <p>{t('MODAL.SKIING_TECHNIQUE') + ': '}<strong>{upperFirst(getAttr(unit.extensions.skiing_technique, activeLang()))}</strong></p>}
+    {get(unit, 'extensions.length') && <p>{t('MODAL.LENGTH') + ': '}<strong>{unit.extensions.length}km</strong></p>}
+    {get(unit, 'extensions.lighting') && <p>{t('MODAL.LIGHTING') + ': '}<strong>{upperFirst(getAttr(unit.extensions.lighting, activeLang()))}</strong></p>}
+    {get(unit, 'extensions.skiing_technique') && <p>{t('MODAL.SKIING_TECHNIQUE') + ': '}<strong>{upperFirst(getAttr(unit.extensions.skiing_technique, activeLang()))}</strong></p>}
     {unit.phone && <p>{t('UNIT.PHONE')}: <a href={`tel:${unit.phone}`}>{unit.phone}</a></p>}
     {unit.www_url && <p><a href={getAttr(unit.www_url, activeLang())} target="_blank">{t('UNIT.FURTHER_INFO')} <SMIcon icon="outbound-link"/></a></p>}
   </ModalBodyBox>;
@@ -101,19 +101,25 @@ const LocationRoute = ({routeUrl, t}) =>
       </a>
     </ModalBodyBox>;
 
-const LocationWeather = ({t}) =>
-  <ModalBodyBox title={t('MODAL.WEATHER')}>
-    Wow such weather.
-  </ModalBodyBox>;
-
-const LocationHeightProfile = ({t}) =>
-  <ModalBodyBox title={t('MODAL.HEIGHT_PROFILE')}>
-    Wow such profile.
-  </ModalBodyBox>;
+// TODO
+// const LocationWeather = ({t}) =>
+//   <ModalBodyBox title={t('MODAL.WEATHER')}>
+//     Wow such weather.
+//   </ModalBodyBox>;
+//
+// const LocationHeightProfile = ({t}) =>
+//   <ModalBodyBox title={t('MODAL.HEIGHT_PROFILE')}>
+//     Wow such profile.
+//   </ModalBodyBox>;
 
 const LocationOpeningHours = ({unit, t, activeLang}) =>
   <ModalBodyBox title={t('MODAL.OPENING_HOURS')}>
     {getOpeningHours(unit, activeLang())}
+  </ModalBodyBox>;
+
+const LocationTemperature = ({t, temperature}) =>
+  <ModalBodyBox title={t('MODAL.TEMPERATURE')}>
+    {temperature}
   </ModalBodyBox>;
 
 const ModalBodyBox = ({title, children, className, ...rest}) =>
@@ -145,6 +151,11 @@ export class SingleUnitModalContainer extends Component {
   render(){
     const {handleClick, isLoading, unit: currentUnit, services, t} = this.props;
     const {getActiveLanguage} = this.context;
+    let temperature = null;
+    if (currentUnit) {
+      temperature = currentUnit.observations.find((o) => { return o.property == 'swimming_water_temperature'; });
+    }
+    if (temperature) { temperature = temperature.name.fi; }
 
     return (
       <div>
@@ -154,6 +165,7 @@ export class SingleUnitModalContainer extends Component {
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
               <NoticeInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>
+              {temperature && <LocationTemperature t={t} temperature={temperature}/>}
               {this.shouldShowInfo(currentUnit) && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {this.shouldShowRoute(currentUnit) && <LocationRoute t={t} routeUrl={this.getRouteUrl(currentUnit, getActiveLanguage)} />}
@@ -167,7 +179,7 @@ export class SingleUnitModalContainer extends Component {
 }
 
 SingleUnitModalContainer.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 export default translate()(SingleUnitModalContainer);

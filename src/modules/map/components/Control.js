@@ -15,12 +15,12 @@ export default class Control extends MapControl {  // note we're extending MapCo
     const {className, children} = this.props;
 
     const control = L.control({
-      position: this.props.position || 'bottomright'
+      position: this.props.position || 'bottomright',
     });  // see http://leafletjs.com/reference.html#control-positions for other positions
 
     control.handleClick = this.handleClick;
 
-    control.onAdd = function (map) {
+    control.onAdd = function () {
       let div = L.DomUtil.create('div', `custom-control ${className}`);
       let link = L.DomUtil.create('a', 'custom-control-button', div);
 
@@ -45,6 +45,6 @@ export default class Control extends MapControl {  // note we're extending MapCo
   }
 
   static propTypes = {
-    handleClick: PropTypes.func
+    handleClick: PropTypes.func,
   }
 }

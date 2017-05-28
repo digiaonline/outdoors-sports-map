@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+// @flow
+import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
@@ -13,42 +14,53 @@ import * as fromUnit from '../../unit/selectors';
 import * as fromService from '../../service/selectors';
 import * as fromLanguage from '../../language/selectors';
 import {getIsLoading} from '../selectors';
-import {DefaultFilters} from '../../unit/constants';
+import {getDefaultFilters} from '../../unit/helpers';
 import MapView from '../../unit/components/MapView.js';
 import UnitBrowser from '../../unit/components/UnitBrowser.js';
 import SingleUnitModalContainer from '../../unit/components/SingleUnitModalContainer';
-import {locations, POLL_INTERVAL} from '../constants.js';
+import {locations} from '../constants.js';
 import {arrayifyQueryValue} from '../../common/helpers';
 import {SUPPORTED_LANGUAGES} from '../../language/constants';
 
-export class HomeContainer extends Component {
-  static propTypes = {
-    fetchUnits: PropTypes.func.isRequired,
-    position: PropTypes.array.isRequired,
-    unitData: PropTypes.array
-  };
+type Props = {
+  fetchUnits: () => void,
+  fetchServices: () => void,
+  changeLanguage: (string) => void,
+  setLocation: (number[]) => void,
+  position: number[],
+  unitData: Object[],
+  activeLanguage: string,
+  router: Object,
+  location: Object,
+  isLoading: boolean,
+  serviceData: Object[],
+  selectedUnit: Object,
+  isSearching: boolean,
+  mapCenter: number[],
+  address: string,
+  params: Object,
+};
+
+type DefaultProps = {
+  position: number[],
+  unitData: Object[],
+};
+
+export class HomeContainer extends Component<DefaultProps, Props, void> {
 
   static defaultProps = {
     unitData: [],
-    position: locations.HELSINKI
+    position: locations.HELSINKI,
   };
 
-  constructor(props) {
-    super(props);
-    this.leafletMap = null;
+  props: Props;
 
-    this.openUnit = this.openUnit.bind(this);
-    this.closeUnit = this.closeUnit.bind(this);
-    this.handleChangeLanguage = this.handleChangeLanguage.bind(this);
-    this.getActiveLanguage = this.getActiveLanguage.bind(this);
-    this.setLocation = this.setLocation.bind(this);
-    this.setView = this.setView.bind(this);
-    this.fetchUnits = this.fetchUnits.bind(this);
-  }
+  leafletMap = null;
+  initialPosition = undefined;
 
   getChildContext() {
     return {
-      getActiveLanguage: this.getActiveLanguage
+      getActiveLanguage: this.getActiveLanguage,
     };
   }
 
@@ -61,6 +73,7 @@ export class HomeContainer extends Component {
     this.initialPosition = this.props.position;
 
     if(!getStoredLang()) {
+      // $FlowFixMe
       const userLang = navigator.language || navigator.userLanguage;
 
       if(userLang.includes(SUPPORTED_LANGUAGES.Svenska)) {
@@ -74,10 +87,10 @@ export class HomeContainer extends Component {
     }
   }
 
-  fetchUnits() {
+  fetchUnits = () => {
     this.props.fetchUnits({
       lat: this.props.position[0],
-      lon: this.props.position[1]
+      lon: this.props.position[1],
     });
   }
 
@@ -86,51 +99,51 @@ export class HomeContainer extends Component {
     // clearInterval(this.pollUnitsInterval);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     if(nextProps.activeLanguage !== this.props.activeLanguage) {
       this.forceUpdate();
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     this.leafletMap = this.refs.map.getWrappedInstance().refs.map.leafletElement;
   }
 
-  handleChangeLanguage(language) {
+  handleChangeLanguage = (language: string) => {
     this.props.changeLanguage(language);
   }
 
-  setLocation(location: array) {
+  setLocation = (location: number[]) => {
     this.props.setLocation(location);
   }
 
-  setView(coordinates) {
+  setView = (coordinates: number[]) => {
     this.refs.map.getWrappedInstance().setView(coordinates);
   }
 
-  openUnit(unitId: string) {
-    const {router, location: {query}} = this.props;
+  openUnit = (unitId: string) => {
+    const {router, location: {query}}: Props = this.props;
     router.push({
       pathname: `/unit/${unitId}`,
-      query
+      query,
     });
   }
 
-  closeUnit() {
+  closeUnit = () => {
     const {router, location: {query}} = this.props;
     router.push({
       pathname: '/',
-      query
+      query,
     });
   }
 
-  getActiveLanguage() {
+  getActiveLanguage = () => {
     return this.props.activeLanguage;
   }
 
   render() {
     const {unitData, serviceData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
-    const activeFilter = filter ? arrayifyQueryValue(filter) : DefaultFilters;
+    const activeFilter = filter ? arrayifyQueryValue(filter) : getDefaultFilters();
 
     return (
       <div className="home">
@@ -169,10 +182,10 @@ export class HomeContainer extends Component {
 }
 
 HomeContainer.childContextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, props: Props) => ({
   unitData: fromUnit.getVisibleUnits(state, props.location.query),
   serviceData: fromService.getServicesObject(state),
   selectedUnit: fromUnit.getUnitById(state, {id: props.params.unitId}),
@@ -181,10 +194,10 @@ const mapStateToProps = (state, props) => ({
   mapCenter: fromMap.getLocation(state),
   position: fromMap.getLocation(state),
   address: fromMap.getAddress(state),
-  isSearching: fromSearch.getIsFetching(state)
+  isSearching: fromSearch.getIsFetching(state),
 });
 
-const mapDispatchToProps = (dispatch) =>
+const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators({fetchUnits, fetchServices, setLocation, changeLanguage}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(

@@ -41,7 +41,7 @@ class UnitMarker extends Component {
     return zoomLevel / MAX_ZOOM * icon.height;
   }
 
-  _createIcon(unit: Object, isSelected: boolean) {
+  _createIcon(unit, isSelected) {
     const icon = getUnitIcon(unit, isSelected);
     const iconWidth = this.getIconWidth(this.props.zoomLevel);
     const iconHeight = this.getIconHeight(icon, this.props.zoomLevel);
@@ -51,7 +51,7 @@ class UnitMarker extends Component {
       iconUrl: icon.url,
       iconRetinaUrl: icon.retinaUrl,
       iconSize: [iconWidth, iconHeight],
-      iconAnchor: [iconWidth / 2, anchorHeight]
+      iconAnchor: [iconWidth / 2, anchorHeight],
     });
   }
 

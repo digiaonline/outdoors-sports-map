@@ -1,5 +1,6 @@
-
+// @flow
 import isEmpty from 'lodash/isEmpty';
+import type {AppState} from '../common/constants';
 
 export const getIsLoading = (state: AppState) =>
   state.unit.isFetching && isEmpty(state.unit.all) ||

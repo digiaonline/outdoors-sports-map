@@ -11,7 +11,7 @@ import SearchSuggestions from './SearchSuggestions';
 
 const InitialState = {
   searchPhrase: '',
-  showSuggestions: false
+  showSuggestions: false,
 };
 
 
@@ -22,7 +22,7 @@ class SearchContainer extends Component {
     services: PropTypes.object.isRequired,
     fetchUnitSuggestions: PropTypes.func,
     searchDisabled: PropTypes.bool,
-    onSearch: PropTypes.func
+    onSearch: PropTypes.func,
   };
 
   constructor(props) {
@@ -37,10 +37,15 @@ class SearchContainer extends Component {
     this.handleAddressClick = this.handleAddressClick.bind(this);
   }
 
-  onInputChange(value: string) {
+  /**
+   *
+   * @param  {string} value [description]
+   * @return {void}       [description]
+   */
+  onInputChange(value) {
     this.setState({
       searchPhrase: value,
-      showSuggestions: true
+      showSuggestions: true,
     });
     this.getSuggestions(value);
   }
@@ -49,11 +54,15 @@ class SearchContainer extends Component {
     this.props.searchUnits(this.state.searchPhrase);
     this.props.onSearch(this.state.searchPhrase);
     this.setState({
-      showSuggestions: false
+      showSuggestions: false,
     });
   }
 
-  getSuggestions(searchPhrase: string) {
+  /**
+   * @param  {string} searchPhrase [description]
+   * @return {void}              [description]
+   */
+  getSuggestions(searchPhrase) {
     this.props.fetchUnitSuggestions(searchPhrase);
   }
 
@@ -93,7 +102,7 @@ const mapStateToProps = (state) => ({
   services: getServicesObject(state),
   isActive: selectors.getIsActive(state),
   searchDisabled: getIsUnitLoading(state),
-  addresses: selectors.getAddresses(state)
+  addresses: selectors.getAddresses(state),
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -1,12 +1,19 @@
+// @flow
 import React, {Component, PropTypes} from 'react';
 import {withRouter} from 'react-router';
 import ListView from './ListView.js';
 import SMIcon from '../../home/components/SMIcon';
 import values from 'lodash/values';
-import {DefaultFilters, SportFilters, StatusFilters} from '../constants.js';
-import UnitFilter from './UnitFilter.js';
+import {StatusFilters} from '../constants.js';
+import UnitFilters from './UnitFilters.js';
 import SearchContainer from '../../search/components/SearchContainer';
-import {getAddressToDisplay} from '../helpers';
+import {
+  getAddressToDisplay,
+  getOnSeasonSportFilters,
+  getOffSeasonSportFilters,
+  getDefaultStatusFilter,
+  getDefaultSportFilter,
+} from '../helpers';
 
 const ToggleButton = ({toggle, icon}) =>
   <button className="toggle-view-button" onClick={toggle}>
@@ -26,28 +33,22 @@ const AddressBar = ({address, handleClick}, context) =>
   </div>;
 
 AddressBar.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 class UnitBrowser extends Component {
   static propTypes = {
-    units: PropTypes.array
+    units: PropTypes.array,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isExpanded: false,
-      contentMaxHeight: null
-    };
+  state: {
+    isExpanded: boolean,
+    contentMaxHeight: ?number
+  };
 
-    this.calculateMaxHeight = this.calculateMaxHeight.bind(this);
-    this.toggleStatusFilter = this.toggleStatusFilter.bind(this);
-    this.toggleSportFilter = this.toggleSportFilter.bind(this);
-    this.updateContentMaxHeight = this.updateContentMaxHeight.bind(this);
-    this.toggle = this.toggle.bind(this);
-    this.expand = this.expand.bind(this);
-    this.updateQueryParameter = this.updateQueryParameter.bind(this);
+  state = {
+    isExpanded: false,
+    contentMaxHeight: null,
   }
 
   componentDidMount() {
@@ -58,36 +59,38 @@ class UnitBrowser extends Component {
     window.removeEventListener('resize', this.updateContentMaxHeight);
   }
 
-  updateContentMaxHeight() {
+  updateContentMaxHeight = () => {
+    // $FlowFixMe
     this.setState({contentMaxHeight: this.calculateMaxHeight()});
   }
 
-  calculateMaxHeight() {
+  calculateMaxHeight = () => {
+    // $FlowFixMe
     const fixedPartHeight = document.getElementById('always-visible').offsetHeight;
     return window.innerHeight - fixedPartHeight;
   }
 
-  updateQueryParameter(key: string, value: string): void {
+  updateQueryParameter = (key: string, value: string): void => {
     const {router, location: {query}} = this.props;
 
     router.push({
-      query: Object.assign({}, query, {[key]: value})
+      query: Object.assign({}, query, {[key]: value}),
     });
   }
 
-  toggleStatusFilter(filter: string): void {
+  toggleStatusFilter = (filter: string): void => {
     this.updateQueryParameter('status', filter);
   }
 
-  toggleSportFilter(sport: string): void {
+  toggleSportFilter = (sport: string): void => {
     this.updateQueryParameter('sport', sport);
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({isExpanded: !this.state.isExpanded});
   }
 
-  expand() {
+  expand = () => {
     this.setState({isExpanded: true});
   }
 
@@ -99,9 +102,8 @@ class UnitBrowser extends Component {
       contentMaxHeight = contentMaxHeight || this.calculateMaxHeight();
     }
 
-    const currentSportFilter = query && query.sport || DefaultFilters.sport;
-    const currentStatusFilter = query && query.status || DefaultFilters.status;
-
+    const currentSportFilter = query && query.sport || getDefaultSportFilter();
+    const currentStatusFilter = query && query.status || getDefaultStatusFilter();
     return (
       <div className={`unit-browser ${isExpanded ? 'expanded' : ''}`} style={params.unitId ? {display: 'none'} : null}>
         <div id="always-visible" className="unit-browser__fixed">
@@ -112,8 +114,20 @@ class UnitBrowser extends Component {
           setView={setView}
           openUnit={openUnit}
         />
-        {!isLoading && <UnitFilter active={currentSportFilter} all={values(SportFilters)} toggleFilter={this.toggleSportFilter} />}
-        {!isLoading && <UnitFilter active={currentStatusFilter} all={values(StatusFilters)} toggleFilter={this.toggleStatusFilter} />}
+        {!isLoading &&
+          <UnitFilters
+            filters={[{
+              name: 'sport',
+              active: currentSportFilter,
+              options: getOnSeasonSportFilters(),
+              secondaryOptions: getOffSeasonSportFilters(),
+            },{
+              name: 'status',
+              active: currentStatusFilter,
+              options: values(StatusFilters),
+            }]}
+            updateFilter={this.updateQueryParameter}
+          />}
         {!isLoading && Object.keys(address).length !== 0 && <AddressBar handleClick={setView} address={address} />}
       </div>
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>

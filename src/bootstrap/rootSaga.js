@@ -9,6 +9,6 @@ export default function* rootSaga() {
     fork(unitSaga),
     fork(searchSaga),
     fork(mapSaga),
-    fork(serviceSaga)
+    fork(serviceSaga),
   ];
 }

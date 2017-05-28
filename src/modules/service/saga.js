@@ -10,7 +10,7 @@ function* fetchServices() {
   const request = createRequest(createUrl('service/', {
     id: values(UnitServices),
     only: 'id,name',
-    page_size: 1000
+    page_size: 1000,
   }));
   const {response, bodyAsJson} = yield call(callApi, request);
 
@@ -28,6 +28,6 @@ function* watchFetchServices() {
 
 export default function* saga() {
   return [
-    yield fork(watchFetchServices)
+    yield fork(watchFetchServices),
   ];
 }

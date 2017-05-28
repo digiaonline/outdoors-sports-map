@@ -1,7 +1,7 @@
 import React from 'react';
 import {translate} from 'react-i18next';
 import Time from '../../home/components/Time';
-import {getUnitQuality, getObservation, getAttr, getObservationTime} from '../helpers';
+import {getUnitQuality, getObservation, getCondition, getObservationTime, getAttr} from '../helpers';
 
 export const StatusBar = ({quality, label}) =>
   <div className={`observation-status__bar--${quality}`}>
@@ -21,7 +21,7 @@ export const MaintenanceUpdated = ({name, activeLang, time}) =>
 
 export const ObservationStatus = ({unit, t}, context) => {
   const quality = getUnitQuality(unit);
-  const condition = getObservation(unit);
+  const condition = getCondition(unit);
   const maintenance = getObservation(unit, 'maintenance');
 
   return (
@@ -37,7 +37,7 @@ export const ObservationStatus = ({unit, t}, context) => {
 };
 
 ObservationStatus.contextTypes = {
-  getActiveLanguage: React.PropTypes.func
+  getActiveLanguage: React.PropTypes.func,
 };
 
 export default translate()(ObservationStatus);

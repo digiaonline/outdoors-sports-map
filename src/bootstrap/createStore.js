@@ -28,7 +28,7 @@ export const createStore = () =>
     persistStore(store, {
       whitelist: ['language', 'map'],
       blacklist: [],
-      keyPrefix: `${APP_NAME}:`
+      keyPrefix: `${APP_NAME}:`,
     }, () => resolve(store));
 
     sagaMiddleware.run(rootSaga);

@@ -11,7 +11,7 @@ const createRootReducer = () =>
     unit: unitReducer,
     map: mapReducer,
     search: searchReducer,
-    service: serviceReducer
+    service: serviceReducer,
   });
 
 export default createRootReducer;

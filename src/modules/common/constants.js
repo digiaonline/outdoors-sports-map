@@ -1,6 +1,9 @@
-import {UnitState} from '../unit/constants';
+// @flow
+import type {UnitState} from '../unit/constants';
+import type {ServiceState} from '../service/constants';
+import type {SearchState} from '../search/constants';
 
-export const API_URL = 'https://api.hel.fi/servicemap/v1';
+export const API_URL = 'https://api.hel.fi/servicemap/v1'; // 'http://servicemat.hel.ninja/servicemap/v1';
 export const DIGITRANSIT_API_URL = 'https://api.digitransit.fi/geocoding/v1';
 export const APP_NAME = 'outdoors-sports-map';
 
@@ -29,12 +32,14 @@ export type EntityAction = {
 };
 
 export type AppState = {
-  unit: UnitState
+  unit: UnitState,
+  service: ServiceState,
+  search: SearchState,
 };
 
 
 export type QueryValue = | string | Array<string>;
 
 export const routerPaths = {
-  singleUnit: 'unit/:unitId'
+  singleUnit: 'unit/:unitId',
 };
