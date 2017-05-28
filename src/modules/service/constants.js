@@ -12,6 +12,7 @@ export const UnitServices = {
   DOG_SKI_TRACK: 33492,
   SWIMMING_BEACH: 33467,
   SWIMMING_PLACE: 33468,
+  OUTDOOR_POOL: 33466,
 };
 
 export const IceSkatingServices = [
@@ -30,6 +31,7 @@ export const SkiingServices = [
 export const SwimmingServices = [
   UnitServices.SWIMMING_BEACH,
   UnitServices.SWIMMING_PLACE,
+  UnitServices.OUTDOOR_POOL,
 ];
 
 export const ServiceActions = {
