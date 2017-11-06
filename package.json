@@ -13,7 +13,7 @@
     "prepush": "yarn lint && yarn flow && yarn test"
   },
   "repository": {
-    "url": "git+https://github.com/nordsoftware/outdoors-sports-map.git",
+    "url": "git+https://github.com/digiaonline/outdoors-sports-map.git",
     "type": "git"
   },
   "author": "Christoffer Niska <christofferniska@gmail.com>",
