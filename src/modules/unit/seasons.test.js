@@ -6,8 +6,8 @@ const May1 = {
   month: 4,
 };
 
-const Nov15 = {
-  day: 15,
+const Nov1 = {
+  day: 1,
   month: 10,
 };
 
@@ -58,14 +58,14 @@ test('May 1st is in year round season', () => {
   expect(isOnSeason(May1, YearRoundSeason)).toBe(true);
 });
 
-test('November 15th is in winter season', () => {
-  expect(isOnSeason(Nov15, WinterSeason)).toBe(true);
+test('November 1st is in winter season', () => {
+  expect(isOnSeason(Nov1, WinterSeason)).toBe(true);
 });
 
-test('November 15th is not in summer season', () => {
-  expect(!isOnSeason(Nov15, SummerSeason)).toBe(true);
+test('November 1st is not in summer season', () => {
+  expect(!isOnSeason(Nov1, SummerSeason)).toBe(true);
 });
 
-test('November 15th is in year round season', () => {
-  expect(isOnSeason(Nov15, YearRoundSeason)).toBe(true);
+test('November 1st is in year round season', () => {
+  expect(isOnSeason(Nov1, YearRoundSeason)).toBe(true);
 });
