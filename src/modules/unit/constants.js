@@ -14,10 +14,7 @@ export const UnitFilters = {
   STATUS_ALL: 'status_all',
 };
 
-export const StatusFilters = [
-  UnitFilters.STATUS_ALL,
-  UnitFilters.STATUS_OK,
-];
+export const StatusFilters = [UnitFilters.STATUS_ALL, UnitFilters.STATUS_OK];
 
 export const SportFilters = [
   UnitFilters.SKIING,
@@ -27,14 +24,14 @@ export const SportFilters = [
 
 export type SeasonDelimiter = {
   day: number,
-  month: number, // 0-11, Jan = 0 & Dec = 11
+  month: number // 0-11, Jan = 0 & Dec = 11
 };
 
 export type Season = {
   start: SeasonDelimiter,
   end: SeasonDelimiter,
   filters: Array<string>
-}
+};
 
 export const SummerSeason: Season = {
   start: {
@@ -42,15 +39,15 @@ export const SummerSeason: Season = {
     month: 4,
   },
   end: {
-    day: 14,
-    month: 10,
+    day: 31,
+    month: 9,
   },
   filters: [UnitFilters.SWIMMING],
 };
 
 export const WinterSeason: Season = {
   start: {
-    day: 15,
+    day: 1,
     month: 10,
   },
   end: {
@@ -109,8 +106,12 @@ export const UnitActions = {
   SEARCH_CLEAR: normalizeActionName('unit/SEARCH_CLEAR'),
   SEARCH_REQUEST: normalizeActionName('unit/SEARCH_REQUEST'),
   SEARCH_RECEIVE: normalizeActionName('unit/SEARCH_RECEIVE'),
-  FETCH_SEARCH_SUGGESTIONS: normalizeActionName('unit/FETCH_SEARCH_SUGGESTIONS'),
-  RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName('unit/RECEIVE_SEARCH_SUGGESTIONS'),
+  FETCH_SEARCH_SUGGESTIONS: normalizeActionName(
+    'unit/FETCH_SEARCH_SUGGESTIONS'
+  ),
+  RECEIVE_SEARCH_SUGGESTIONS: normalizeActionName(
+    'unit/RECEIVE_SEARCH_SUGGESTIONS'
+  ),
   SEND_FEEDBACK: normalizeActionName('unit/SEND_FEEDBACK'),
 };
 
@@ -124,4 +125,4 @@ export type UnitState = {
   searchResults: Array<string>
 };
 
-export const unitSchema = new Schema('unit'/*, {}*/);
+export const unitSchema = new Schema('unit' /*, {}*/);
