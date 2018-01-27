@@ -57,18 +57,19 @@ export const getUnitPosition = (unit: Object): Array<number> => {
 
 export const getUnitSport = (unit: Object) => {
   if(unit.services && unit.services.length) {
-    const service = unit.services[0];
+    for (const service of unit.services ) {
 
-    if (IceSkatingServices.includes(service)) {
-      return UnitFilters.ICE_SKATING;
-    }
+      if (IceSkatingServices.includes(service)) {
+        return UnitFilters.ICE_SKATING;
+      }
 
-    if (SkiingServices.includes(service)) {
-      return UnitFilters.SKIING;
-    }
+      if (SkiingServices.includes(service)) {
+        return UnitFilters.SKIING;
+      }
 
-    if (SwimmingServices.includes(service)) {
-      return UnitFilters.SWIMMING;
+      if (SwimmingServices.includes(service)) {
+        return UnitFilters.SWIMMING;
+      }
     }
   }
 
@@ -93,8 +94,10 @@ export const getUnitQuality = (unit: Object): string => {
 };
 
 export const getOpeningHours = (unit: Object, activeLang: string): string => {
-  if(unit.services[0].id == UnitServices.MECHANICALLY_FROZEN_ICE && unit.connections && unit.connections[1]){
-    return (getAttr(unit.connections[1].name, activeLang) || '');
+  for (const service of unit.services) {
+    if(service === UnitServices.MECHANICALLY_FROZEN_ICE && unit.connections && unit.connections[1]){
+      return (getAttr(unit.connections[1].name, activeLang) || '');
+    }
   }
   return '';
 };

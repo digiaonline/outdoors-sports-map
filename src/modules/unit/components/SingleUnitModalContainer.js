@@ -36,11 +36,11 @@ const ModalHeader = ({handleClick, unit, services, isLoading, activeLang, t}) =>
         </div>
         {unit
           ? <div className="modal-header-description">
-              <UnitIcon unit={unit} alt={getServiceName(unit.services[0], services, activeLang())}/>
+              <UnitIcon unit={unit} alt={getServiceName(unit.services, services, activeLang())}/>
               <div>
                 <p>
                 {
-                  getServiceName(unit.services[0], services, activeLang())
+                  getServiceName(unit.services, services, activeLang())
                 }
                 </p>
                 <p>
