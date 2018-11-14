@@ -40,7 +40,7 @@ function* sendFeedback({payload: {feedback, email}}) {
     params.email = email;
   }
 
-  const request = createRequest(`https://api.hel.fi/servicemap/open311/`,
+  const request = createRequest(`http://localhost:8000/v2/`, //`https://api.hel.fi/servicemap/open311/`,
     {method: 'POST',
       body: stringifyQuery(params),
       headers: {

@@ -17,8 +17,8 @@ import UserLocationMarker from '../../map/components/UserLocationMarker';
 import {translate} from 'react-i18next';
 import {isRetina} from '../../common/helpers';
 
-declare var L: Object
-require('proj4leaflet');
+let L = require('leaflet');
+L.proj = require('proj4leaflet');
 
 const bounds = L.bounds(L.point(-548576, 6291456), L.point(1548576, 8388608));
 const originNw = [bounds.min.x, bounds.max.y];
