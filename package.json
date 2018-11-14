@@ -26,6 +26,7 @@
     "bootstrap": "^3.3.7",
     "date-fns": "^1.28.5",
     "file-loader": "^0.9.0",
+    "fsevents": "^1.2.4",
     "i18next": "^3.4.4",
     "imports-loader": "^0.6.5",
     "leaflet": "^1.0.2",
