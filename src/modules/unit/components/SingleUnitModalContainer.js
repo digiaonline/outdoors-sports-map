@@ -152,7 +152,7 @@ export class SingleUnitModalContainer extends Component {
     const {handleClick, isLoading, unit: currentUnit, services, t} = this.props;
     const {getActiveLanguage} = this.context;
     let temperature = null;
-    if (currentUnit) {
+    if (currentUnit && currentUnit.observations) {
       temperature = currentUnit.observations.find((o) => { return o.property == 'swimming_water_temperature'; });
     }
     if (temperature) { temperature = temperature.name.fi; }
