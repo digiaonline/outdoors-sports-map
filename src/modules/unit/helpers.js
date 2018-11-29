@@ -84,8 +84,8 @@ export const getObservation = (unit: Object, matchProperty: string) => {
 
 export const getCondition = (unit: Object) => {
   const {observations} = unit;
-
-  return observations ? observations.find((obs) => obs.primary) : null;
+  const categoricalConditions = observations.filter(o => o.property.includes('condition'))
+  return (categoricalConditions.length > 0) ? categoricalConditions[0] : null;
 };
 
 export const getUnitQuality = (unit: Object): string => {
