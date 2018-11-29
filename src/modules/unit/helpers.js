@@ -84,7 +84,7 @@ export const getObservation = (unit: Object, matchProperty: string) => {
 
 export const getCondition = (unit: Object) => {
   const {observations} = unit;
-  const categoricalConditions = observations.filter(o => o.property.includes('condition'))
+  const categoricalConditions = observations.filter(o => {return o.property.includes('condition')});
   return (categoricalConditions.length > 0) ? categoricalConditions[0] : null;
 };
 
