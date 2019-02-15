@@ -8,7 +8,8 @@ Helsingin kaupungin Ulkoliikuntakartta.
 - Clone this project
 - Run `yarn` to install dependencies
 - Run `yarn start` to start up the development server
-- Application is now available at `localhost:5000`
+
+The application is now available at http://localhost:5000/
 
 ## Deploying
 
