@@ -6,12 +6,10 @@ Helsingin kaupungin Ulkoliikuntakartta.
 
 - Install [NPM](https://www.npmjs.com/) and [Yarn](https://yarnpkg.com)
 - Clone this project
-- Checkout the submodule (`git submodule update --init`)
 - Run `yarn` to install dependencies
-- Run `npm start` to start up the development server
-- Application is now available at `localhost:5000`
+- Run `yarn start` to start up the development server
 
-On Linux `npm rebuild node-sass` might be necessary.
+The application is now available at http://localhost:5000/
 
 ## Deploying
 
