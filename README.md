@@ -10,8 +10,6 @@ Helsingin kaupungin Ulkoliikuntakartta.
 - Run `yarn start` to start up the development server
 - Application is now available at `localhost:5000`
 
-On Linux `npm rebuild node-sass` might be necessary.
-
 ## Deploying
 
 * Install Capistrano by running the following commands:
