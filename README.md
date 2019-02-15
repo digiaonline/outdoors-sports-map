@@ -18,11 +18,10 @@ On Linux `npm rebuild node-sass` might be necessary.
 * Install Capistrano by running the following commands:
 
 ```
-gem install capistrano -v '~> 3.6.0'
-gem install capistrano-git-submodule-strategy
+gem install capistrano
 ```
 
-* Place the `outdoors-sports-map` private SSH key in the `ops/packer/ansible/keys` directory. Ask your coworkers if you 
+* Place the `outdoors-sports-map` private SSH key in the `cap/keys` directory. Ask your coworkers if you 
 don't have the file.
 * Run `cap production deploy` from the project's root directory
 
