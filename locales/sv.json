@@ -41,7 +41,8 @@
       "CONDITION": "I bästa skick först",
       "DISTANCE": "Närmast först"
     },
-    "PHONE": "Telefon"
+    "PHONE": "Telefon",
+    "TMP_MESSAGE": "<a href='https://response.questback.com/isa/qbv.dll/ShowQuest?QuestID=5314084&sid=ZE1kmuMYQa'>Svara & vinn!</a>"
   },
   "MODAL": {
     "LOADING": "Laddar objekt",
