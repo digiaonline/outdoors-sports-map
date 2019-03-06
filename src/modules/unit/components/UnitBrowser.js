@@ -136,9 +136,11 @@ class UnitBrowser extends Component {
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
           <ListView filter={`${currentSportFilter};${currentStatusFilter}`} isVisible={isExpanded && !singleUnitSelected} isLoading={isLoading || isSearching} units={units} services={services} position={position} openUnit={openUnit} leafletMap={leafletMap}/>
         </div>
+        {t('UNIT.TMP_MESSAGE').length > 0 &&
         <div className="unit-browser__tmp_msg"
         dangerouslySetInnerHTML={{__html: t('UNIT.TMP_MESSAGE')}}>
         </div>
+        }
       </div>
     );
   }
