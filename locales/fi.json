@@ -41,7 +41,8 @@
       "CONDITION": "Paras kunto ensin",
       "DISTANCE": "Lähimmät ensin"
     },
-    "PHONE": "Puhelinnumero"
+    "PHONE": "Puhelinnumero",
+    "TMP_MESSAGE": ""
   },
   "MODAL": {
     "LOADING": "Ladataan kohdetta...",

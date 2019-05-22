@@ -41,7 +41,8 @@
       "CONDITION": "In best condition first",
       "DISTANCE": "Closest first"
     },
-    "PHONE": "Phone"
+    "PHONE": "Phone",
+    "TMP_MESSAGE": ""
   },
   "MODAL": {
     "LOADING": "Loading the object",

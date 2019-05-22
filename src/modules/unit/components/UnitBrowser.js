@@ -7,6 +7,8 @@ import values from 'lodash/values';
 import {StatusFilters} from '../constants.js';
 import UnitFilters from './UnitFilters.js';
 import SearchContainer from '../../search/components/SearchContainer';
+import {translate} from 'react-i18next';
+
 import {
   getAddressToDisplay,
   getOnSeasonSportFilters,
@@ -95,6 +97,7 @@ class UnitBrowser extends Component {
   }
 
   render() {
+    const{t} = this.props;
     const {units, services, isLoading, isSearching, position, openUnit, setView, address, params, leafletMap, singleUnitSelected, location: {query}} = this.props;
     const {isExpanded} = this.state;
     let contentMaxHeight = this.state.contentMaxHeight;
@@ -133,9 +136,15 @@ class UnitBrowser extends Component {
         <div className="unit-browser__content" style={{maxHeight: contentMaxHeight}}>
           <ListView filter={`${currentSportFilter};${currentStatusFilter}`} isVisible={isExpanded && !singleUnitSelected} isLoading={isLoading || isSearching} units={units} services={services} position={position} openUnit={openUnit} leafletMap={leafletMap}/>
         </div>
+        {t('UNIT.TMP_MESSAGE').length > 0 &&
+        <div className="unit-browser__tmp_msg"
+        dangerouslySetInnerHTML={{__html: t('UNIT.TMP_MESSAGE')}}>
+        </div>
+        }
       </div>
     );
   }
 }
 
-export default withRouter(UnitBrowser);
+
+export default withRouter(translate()(UnitBrowser));
