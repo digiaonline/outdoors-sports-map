@@ -76,6 +76,7 @@ export class UnitFiltersComponent extends React.Component {
                   filterName={filter.active}
                   className={expand === index ? 'active' : ''}
                   onClick={() => this.setState(({expand}) => ({expand: expand === index ? null : index}))}
+                  showDropdownIndicator
                 />
               </Col>
             ))}
