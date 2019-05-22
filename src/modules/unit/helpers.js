@@ -1,6 +1,13 @@
 //@flow
 import moment from 'moment';
-import {has, keys, sortBy, head, values, upperFirst, memoize} from 'lodash';
+import has from 'lodash/has';
+import keys from 'lodash/keys';
+import sortBy from 'lodash/sortBy';
+import head from 'lodash/head';
+import values from 'lodash/values';
+import upperFirst from 'lodash/upperFirst';
+import memoize from 'lodash/memoize';
+
 import {createRequest, createUrl} from '../api/helpers.js';
 import {UnitServices, IceSkatingServices, SkiingServices, SwimmingServices} from '../service/constants';
 import {
