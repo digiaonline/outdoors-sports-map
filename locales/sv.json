@@ -35,6 +35,8 @@
       "STATUS_OK": "I användbart skick",
       "SWIMMING": "Simning"
     },
+    "FILTER_SPORT": "Gren",
+    "FILTER_STATUS": "Skick",
     "SORT": {
       "DEFAULT": "Förinställt",
       "ALPHABETICAL": "Alfabetisk",

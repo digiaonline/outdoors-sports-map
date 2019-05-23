@@ -4,6 +4,7 @@ import {translate} from 'react-i18next';
 import {Grid, Row, Col} from 'react-bootstrap';
 import get from 'lodash/get';
 import UnitFilterButton from './UnitFilterButton';
+import UnitFilterLabelButton from './UnitFilterLabelButton';
 
 
 type UnitFiltersProps = {
@@ -88,12 +89,10 @@ export class UnitFiltersComponent extends React.Component {
           <Row className="unit-filters__filters">
             {filters.map((filter) => (
               <Col className="unit-filters__edit" xs={6} key={filter.name}>
-                <UnitFilterButton
-                  t={t}
-                  filterName={filter.active}
-                  className={filterEquals(filter, expandedFilter) ? 'active' : ''}
-                  onClick={() => this.toggleExpandedFilter(filter)}
-                  showDropdownIndicator
+                <UnitFilterLabelButton
+                  filter={filter}
+                  onAction={this.toggleExpandedFilter}
+                  isActive={filterEquals(filter, expandedFilter)}
                 />
               </Col>
             ))}
