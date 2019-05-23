@@ -2,6 +2,7 @@
 import React from 'react';
 import {translate} from 'react-i18next';
 import {Grid, Row, Col} from 'react-bootstrap';
+import get from 'lodash/get';
 import UnitFilterButton from './UnitFilterButton';
 
 
@@ -18,49 +19,65 @@ type UnitFilterProps = {
   secondaryOptions: ?Array<string>,
 };
 
-const FilterOptionsRow = translate()(({t, className, filterName, options, active = null, onSelect}) => (
+const FilterOptionsRow = ({t, className, filterName, options, onSelect}) => (
   <Row className={`${className} filter-options-row`}>
     {options.map((option) => (
       <Col className="unit-filters__option" xs={6} key={option}>
         <UnitFilterButton
           t={t}
-          className={active === option ? 'active' : ''}
           filterName={option}
           onClick={() => onSelect(filterName, option)}
         />
       </Col>
     ))}
   </Row>
-));
+);
+
+const filterEquals = (a, b) => {
+  // Checks if a and b are the same by comparing their names.
+  if (a && b) {
+    return get(a, 'name') === get(b, 'name');
+  }
+  return false;
+};
 
 export class UnitFiltersComponent extends React.Component {
   props: UnitFiltersProps;
 
   state: {
-    expand: number | null
+    expandedFilter: {} | null
   };
 
+  state = {
+    expandedFilter: null,
+  }
+
   onMenuSelect = (key: string, value: string): void => {
-    this.setState(
-      () => ({expand: null}));
+    this.setState({expandedFilter: null});
     this.props.updateFilter(key, value);
   }
 
-  state = {
-    expand: null,
+  toggleExpandedFilter = (filter) => {
+    const isFilterActive = filterEquals(filter, this.state.expandedFilter);
+    this.setState({expandedFilter: isFilterActive ? null : filter});
   }
 
   render() {
     const {filters, t} = this.props;
-    const {expand} = this.state;
+    const {expandedFilter} = this.state;
 
     const FilterOptions = ({filter}: {filter: UnitFilterProps}) => (
       <Grid className="unit-filters__options">
-        <FilterOptionsRow filterName={filter.name} className="unit-filters__options" options={filter.options} onSelect={this.onMenuSelect}/>
+        <FilterOptionsRow filterName={filter.name} className="unit-filters__options" options={filter.options} onSelect={this.onMenuSelect} t={t} />
         {filter.secondaryOptions && <Row componentClass="hr" className="unit-filters__options-separator"/>}
         {filter.secondaryOptions &&
-          <FilterOptionsRow className="unit-filters__options secondary" filterName={filter.name} options={filter.secondaryOptions}
-                              onSelect={this.onMenuSelect}/>
+          <FilterOptionsRow
+            className="unit-filters__options secondary"
+            filterName={filter.name}
+            options={filter.secondaryOptions}
+            onSelect={this.onMenuSelect}
+            t={t}
+          />
         }
       </Grid>
     );
@@ -69,22 +86,20 @@ export class UnitFiltersComponent extends React.Component {
       <div className="unit-filters">
         <Grid className="unit-filters__filters">
           <Row className="unit-filters__filters">
-            {filters.map((filter, index) => (
+            {filters.map((filter) => (
               <Col className="unit-filters__edit" xs={6} key={filter.name}>
                 <UnitFilterButton
                   t={t}
                   filterName={filter.active}
-                  className={expand === index ? 'active' : ''}
-                  onClick={() => this.setState(({expand}) => ({expand: expand === index ? null : index}))}
+                  className={filterEquals(filter, expandedFilter) ? 'active' : ''}
+                  onClick={() => this.toggleExpandedFilter(filter)}
                   showDropdownIndicator
                 />
               </Col>
             ))}
           </Row>
         </Grid>
-        {
-          expand !== null ? <FilterOptions filter={filters[expand]}/> : null
-        }
+        {expandedFilter && <FilterOptions filter={expandedFilter} />}
       </div>
     );
   }
