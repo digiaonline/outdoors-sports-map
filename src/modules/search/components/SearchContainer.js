@@ -9,11 +9,10 @@ import {setLocation} from '../../map/actions';
 import SearchBar from './SearchBar';
 import SearchSuggestions from './SearchSuggestions';
 
-const InitialState = {
+const initialState = () => ({
   searchPhrase: '',
   showSuggestions: false,
-};
-
+});
 
 class SearchContainer extends Component {
   static propTypes = {
@@ -25,24 +24,14 @@ class SearchContainer extends Component {
     onSearch: PropTypes.func,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = InitialState;
-
-    this.search = this.search.bind(this);
-    this.getSuggestions = this.getSuggestions.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.clear = this.clear.bind(this);
-    this.handleAddressClick = this.handleAddressClick.bind(this);
-  }
+  state = initialState();
 
   /**
    *
    * @param  {string} value [description]
    * @return {void}       [description]
    */
-  onInputChange(value) {
+  onInputChange = (value) => {
     this.setState({
       searchPhrase: value,
       showSuggestions: true,
@@ -50,7 +39,7 @@ class SearchContainer extends Component {
     this.getSuggestions(value);
   }
 
-  search() {
+  search = () => {
     this.props.searchUnits(this.state.searchPhrase);
     this.props.onSearch(this.state.searchPhrase);
     this.setState({
@@ -62,16 +51,16 @@ class SearchContainer extends Component {
    * @param  {string} searchPhrase [description]
    * @return {void}              [description]
    */
-  getSuggestions(searchPhrase) {
+  getSuggestions = (searchPhrase) => {
     this.props.fetchUnitSuggestions(searchPhrase);
   }
 
-  clear() {
-    this.setState(InitialState);
+  clear = () => {
+    this.setState(initialState());
     this.props.clearSearch();
   }
 
-  handleAddressClick(coordinates) {
+  handleAddressClick = (coordinates) => {
     const {setView, setLocation} = this.props;
     this.clear();
     setLocation(coordinates);
