@@ -79,8 +79,18 @@ class SearchContainer extends Component {
           onSubmit={this.search}
           onClear={this.clear}
           searchActive={isActive}
-          disabled={searchDisabled} />
-        {showSuggestions && <SearchSuggestions openAllResults={this.search} units={unitSuggestions} services={services} openUnit={openUnit} handleAddressClick={this.handleAddressClick} addresses={addresses}/>}
+          disabled={searchDisabled}
+        />
+        {showSuggestions &&
+          <SearchSuggestions
+            openAllResults={this.search}
+            units={unitSuggestions}
+            services={services}
+            openUnit={openUnit}
+            handleAddressClick={this.handleAddressClick}
+            addresses={addresses}
+          />
+        }
       </div>
     );
   }
