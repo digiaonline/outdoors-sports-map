@@ -31,7 +31,7 @@ import * as GeometryUtil from 'leaflet-geometryutil';
 export const getFetchUnitsRequest = (params: Object)  => {
   return createRequest(createUrl('unit/', {
     service: `${values(UnitServices).join(',')}`,
-    only: 'id,name,location,street_address,address_zip,extensions,services,municipality,phone,www_url',
+    only: 'id,name,location,street_address,address_zip,extensions,services,municipality,phone,www',
     include: 'observations,connections',
     geometry: 'true',
     page_size: 1000,
@@ -91,7 +91,6 @@ export const getObservation = (unit: Object, matchProperty: string) => {
 
 export const getCondition = (unit: Object) => {
   const {observations} = unit;
-
   return observations ? observations.find((obs) => obs.primary) : null;
 };
 
