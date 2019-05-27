@@ -68,7 +68,7 @@ const LocationInfo = ({unit, t, activeLang}) =>
     {get(unit, 'extensions.lighting') && <p>{t('MODAL.LIGHTING') + ': '}<strong>{upperFirst(getAttr(unit.extensions.lighting, activeLang()))}</strong></p>}
     {get(unit, 'extensions.skiing_technique') && <p>{t('MODAL.SKIING_TECHNIQUE') + ': '}<strong>{upperFirst(getAttr(unit.extensions.skiing_technique, activeLang()))}</strong></p>}
     {unit.phone && <p>{t('UNIT.PHONE')}: <a href={`tel:${unit.phone}`}>{unit.phone}</a></p>}
-    {unit.www_url && <p><a href={getAttr(unit.www_url, activeLang())} target="_blank">{t('UNIT.FURTHER_INFO')} <SMIcon icon="outbound-link"/></a></p>}
+    {unit.url && <p><a href={getAttr(unit.url, activeLang())} target="_blank">{t('UNIT.FURTHER_INFO')} <SMIcon icon="outbound-link"/></a></p>}
   </ModalBodyBox>;
 
 /**
@@ -136,7 +136,7 @@ export class SingleUnitModalContainer extends Component {
 
   shouldShowInfo(unit) {
     const hasExtensions = unit.extensions && (unit.extensions.length || unit.extensions.lighting || unit.extensions.skiing_technique);
-    return hasExtensions || unit.phone || unit.www_url;
+    return hasExtensions || unit.phone || unit.url;
   }
 
   shouldShowRoute(unit) {
@@ -145,14 +145,14 @@ export class SingleUnitModalContainer extends Component {
 
   getRouteUrl(unit, activeLang) {
     const trafficObject = unit.connections.filter((connection) => connection.section === 'traffic')[0];
-    return getAttr(trafficObject.www_url, activeLang());
+    return getAttr(trafficObject.url, activeLang());
   }
 
   render(){
     const {handleClick, isLoading, unit: currentUnit, services, t} = this.props;
     const {getActiveLanguage} = this.context;
     let temperature = null;
-    if (currentUnit) {
+    if (currentUnit && currentUnit.observations) {
       temperature = currentUnit.observations.find((o) => { return o.property == 'swimming_water_temperature'; });
     }
     if (temperature) { temperature = temperature.name.fi; }
