@@ -6,23 +6,20 @@ Helsingin kaupungin Ulkoliikuntakartta.
 
 - Install [NPM](https://www.npmjs.com/) and [Yarn](https://yarnpkg.com)
 - Clone this project
-- Checkout the submodule (`git submodule update --init`)
 - Run `yarn` to install dependencies
-- Run `npm start` to start up the development server
-- Application is now available at `localhost:5000`
+- Run `yarn start` to start up the development server
 
-On Linux `npm rebuild node-sass` might be necessary.
+The application is now available at http://localhost:5000/
 
 ## Deploying
 
 * Install Capistrano by running the following commands:
 
 ```
-gem install capistrano -v '~> 3.6.0'
-gem install capistrano-git-submodule-strategy
+gem install capistrano
 ```
 
-* Place the `outdoors-sports-map` private SSH key in the `ops/packer/ansible/keys` directory. Ask your coworkers if you 
+* Place the `outdoors-sports-map` private SSH key in the `cap/keys` directory. Ask your coworkers if you 
 don't have the file.
 * Run `cap production deploy` from the project's root directory
 
