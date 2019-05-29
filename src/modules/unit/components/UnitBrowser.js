@@ -17,16 +17,19 @@ import {
   getDefaultSportFilter,
 } from '../helpers';
 
-const ToggleButton = ({toggle, icon}) =>
-  <button className="toggle-view-button" onClick={toggle}>
-    <SMIcon className="unit-browser__toggle" icon={icon} />
+const ActionButton = ({action, icon, isActive}) =>
+  <button className={`action-button ${isActive ? 'is-active' : ''}`} onClick={action}>
+    <SMIcon className="unit-browser__action" icon={icon} />
   </button>;
 
-const Header = ({expand, toggle, toggleIcon, openUnit, setView}) =>
-<div className="header">
-  <SearchContainer onSearch={expand} openUnit={openUnit} setView={setView}/>
-  <ToggleButton toggle={toggle} icon={toggleIcon}/>
-</div>;
+const Header = ({expand, collapse, openUnit, setView, isExpanded}) =>
+  <div className="header">
+    <SearchContainer onSearch={expand} openUnit={openUnit} setView={setView} />
+    <div className="action-buttons">
+      <ActionButton action={collapse} icon="map-options" isActive={!isExpanded} />
+      <ActionButton action={expand} icon="browse" isActive={isExpanded} />
+    </div>
+  </div>;
 
 const AddressBar = ({address, handleClick}, context) =>
   <div className="address-bar__container" onClick={() => handleClick(address.location.coordinates.slice().reverse())}>
@@ -88,8 +91,8 @@ class UnitBrowser extends Component {
     this.updateQueryParameter('sport', sport);
   }
 
-  toggle = () => {
-    this.setState({isExpanded: !this.state.isExpanded});
+  collapse = () => {
+    this.setState({isExpanded: false});
   }
 
   expand = () => {
@@ -112,10 +115,10 @@ class UnitBrowser extends Component {
         <div id="always-visible" className="unit-browser__fixed">
         <Header
           expand={this.expand}
-          toggle={this.toggle}
-          toggleIcon={isExpanded ? 'map-options' : 'browse'}
+          collapse={this.collapse}
           setView={setView}
           openUnit={openUnit}
+          isExpanded={isExpanded}
         />
         {!isLoading &&
           <UnitFilters

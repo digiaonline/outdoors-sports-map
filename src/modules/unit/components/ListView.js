@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {translate} from 'react-i18next';
 import {Link} from 'react-router';
-import {isEqual, values} from 'lodash';
+import isEqual from 'lodash/isEqual';
+import values from 'lodash/values';
+
 import SMIcon from '../../home/components/SMIcon';
 import * as unitHelpers from '../helpers';
 import {SortKeys, UNIT_BATCH_SIZE} from '../constants';

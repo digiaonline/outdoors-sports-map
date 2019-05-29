@@ -3,10 +3,11 @@ import React from 'react';
 import {Button} from 'react-bootstrap';
 import invert from 'lodash/invert';
 import UnitFilterIcon from './UnitFilterIcon';
+import DropdownIndicator from './DropdownIndicator';
 import {UnitFilters} from '../constants';
 
 
-const UnitFilterButton = ({t, filterName, className, ...rest}: {
+const UnitFilterButton = ({t, filterName, className, showDropdownIndicator = false, ...rest}: {
   t: () => string,
   filterName: string,
   className: string
@@ -16,6 +17,7 @@ const UnitFilterButton = ({t, filterName, className, ...rest}: {
     <span className="unit-filter-button__name">
       {t(`UNIT.FILTER.${invert(UnitFilters)[filterName]}`)}
     </span>
+    {showDropdownIndicator && <DropdownIndicator />}
   </Button>
 );
 

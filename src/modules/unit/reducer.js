@@ -1,5 +1,5 @@
 // @flow
-import {keys} from 'lodash';
+import keys from 'lodash/keys';
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
 import {UnitActions, QualityEnum} from './constants';

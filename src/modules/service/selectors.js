@@ -1,6 +1,6 @@
 // @flow
 import type {AppState} from '../common/constants';
-import {isEmpty} from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 
 export const getServiceById = (state: AppState, serviceId: string) =>
   state.service.byId[serviceId];

@@ -142,7 +142,20 @@ export class HomeContainer extends Component<DefaultProps, Props, void> {
   }
 
   render() {
-    const {unitData, serviceData, isLoading, selectedUnit, isSearching, mapCenter, address, activeLanguage, params, location: {query: {filter}}} = this.props;
+    const {
+      unitData,
+      serviceData,
+      isLoading,
+      selectedUnit,
+      isSearching,
+      mapCenter,
+      address,
+      activeLanguage,
+      params,
+      location: {
+        query: {filter},
+      },
+    } = this.props;
     const activeFilter = filter ? arrayifyQueryValue(filter) : getDefaultFilters();
 
     return (
@@ -175,7 +188,14 @@ export class HomeContainer extends Component<DefaultProps, Props, void> {
           openUnit={this.openUnit}
           mapCenter={mapCenter}
         />
-        <SingleUnitModalContainer isLoading={isLoading} isOpen={!!params.unitId} unit={selectedUnit} services={serviceData} params={params} handleClick={this.closeUnit} />
+        <SingleUnitModalContainer
+          isLoading={isLoading}
+          isOpen={!!params.unitId}
+          unit={selectedUnit}
+          services={serviceData}
+          params={params}
+          handleClick={this.closeUnit}
+        />
       </div>
     );
   }
