@@ -1,7 +1,10 @@
 // @flow
+import intersection from 'lodash/intersection';
+import isEmpty from 'lodash/isEmpty';
+import memoize from 'lodash/memoize';
+
 import type {AppState} from '../common/constants';
 import {UnitFilters} from './constants';
-import {intersection, isEmpty, memoize} from 'lodash';
 import {getIsActive as getSearchActive, getUnitResultIDs} from '../search/selectors';
 import {getDefaultStatusFilter, getDefaultSportFilter} from './helpers';
 
