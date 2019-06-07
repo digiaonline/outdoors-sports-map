@@ -1,6 +1,6 @@
 import {normalizeActionName} from '../common/helpers.js';
 
-export const MAP_URL = 'http://tiles.hel.ninja/styles/hel-osm-light/{z}/{x}/{y}.png';
+export const MAP_URL = 'https://tiles.hel.ninja/styles/hel-osm-light/{z}/{x}/{y}.png';
 export const MAP_RETINA_URL = MAP_URL.replace('.png','@2x.png');
 
 export const DEFAULT_ZOOM = 12;
