@@ -4,8 +4,8 @@ export const MAP_URL = 'https://tiles.hel.ninja/styles/hel-osm-light/{z}/{x}/{y}
 export const MAP_RETINA_URL = MAP_URL.replace('.png','@2x.png');
 
 export const DEFAULT_ZOOM = 12;
-export const MIN_ZOOM = 8;
-export const MAX_ZOOM = 15;
+export const MIN_ZOOM = 11;
+export const MAX_ZOOM = 18;
 export const BOUNDARIES = [[59.4, 23.8], [61.5, 25.8]];
 
 export const mapActions = {
