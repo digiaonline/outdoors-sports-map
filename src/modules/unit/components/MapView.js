@@ -22,7 +22,12 @@ L.proj = require('proj4leaflet');
 
 const bounds = L.bounds(L.point(-548576, 6291456), L.point(1548576, 8388608));
 const originNw = [bounds.min.x, bounds.max.y];
-const TM35CRS = new L.Proj.CRS(
+
+// current tilesource does not need a CRS, however this is kept as
+// reference for now. Web mercator tilesource might represent some
+// very northern areas with considerable distortions. Visual comparison
+// at Rovaniemi did not show any discernable differences though...
+const TM35CRS = new L.Proj.CRS( //eslint-disable-line
   'EPSG:3067',
   '+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs', {
     resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125],
@@ -134,7 +139,8 @@ class MapView extends Component {
     return (
       <View id="map-view" className="map-view" isSelected={selected}>
         <Map ref="map"
-          crs={TM35CRS}
+          // Non web mercator tilesources will need as crs
+          // crs={TM35CRS}
           zoomControl={false}
           attributionControl={false}
           center={position}
