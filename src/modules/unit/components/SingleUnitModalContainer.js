@@ -14,6 +14,7 @@ import ObservationStatus, {StatusUpdated} from './ObservationStatus';
 import UnitIcon from './UnitIcon';
 import upperFirst from 'lodash/upperFirst';
 import get from 'lodash/get';
+import has from 'lodash/has';
 
 const ModalHeader = ({handleClick, unit, services, isLoading, activeLang, t}) => {
   const unitAddress = unit ? getAttr(unit.street_address, activeLang()) : null;
@@ -117,10 +118,16 @@ const LocationOpeningHours = ({unit, t, activeLang}) =>
     {getOpeningHours(unit, activeLang())}
   </ModalBodyBox>;
 
-const LocationTemperature = ({t, temperature}) =>
-  <ModalBodyBox title={t('MODAL.TEMPERATURE')}>
-    {temperature}
-  </ModalBodyBox>;
+const LocationTemperature = ({t, observation}) => {
+  const temperature = get(observation, 'name.fi');
+  const observationTime = getObservationTime(observation);
+  return (
+    <ModalBodyBox title={t('MODAL.TEMPERATURE')}>
+      <StatusUpdated time={observationTime} t={t}/>
+      {temperature}
+    </ModalBodyBox>
+  );
+};
 
 const ModalBodyBox = ({title, children, className, ...rest}) =>
   <div className={`${className || ''} modal-body-box`} {...rest}>
@@ -151,11 +158,7 @@ export class SingleUnitModalContainer extends Component {
   render(){
     const {handleClick, isLoading, unit: currentUnit, services, t} = this.props;
     const {getActiveLanguage} = this.context;
-    let temperature = null;
-    if (currentUnit && currentUnit.observations) {
-      temperature = currentUnit.observations.find((o) => { return o.property == 'swimming_water_temperature'; });
-    }
-    if (temperature) { temperature = temperature.name.fi; }
+    const temperatureObservation = has(currentUnit, 'observations') && getObservation(currentUnit, 'swimming_water_temperature');
 
     return (
       <div>
@@ -165,7 +168,7 @@ export class SingleUnitModalContainer extends Component {
             <Modal.Body>
               <LocationState unit={currentUnit} t={t}/>
               <NoticeInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>
-              {temperature && <LocationTemperature t={t} temperature={temperature}/>}
+              {temperatureObservation && <LocationTemperature t={t} observation={temperatureObservation}/>}
               {this.shouldShowInfo(currentUnit) && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {this.shouldShowRoute(currentUnit) && <LocationRoute t={t} routeUrl={this.getRouteUrl(currentUnit, getActiveLanguage)} />}
