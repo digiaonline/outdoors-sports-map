@@ -7,6 +7,7 @@ import {
   getObservation,
   getOpeningHours,
   getObservationTime,
+  createReittiopasUrl,
 } from '../helpers';
 import {getServiceName} from '../../service/helpers';
 import {translate} from 'react-i18next';
@@ -146,19 +147,11 @@ export class SingleUnitModalContainer extends Component {
     return hasExtensions || unit.phone || unit.url;
   }
 
-  shouldShowRoute(unit) {
-    return unit.connections && (unit.connections.filter((connection) => connection.section === 'traffic')[0]);
-  }
-
-  getRouteUrl(unit, activeLang) {
-    const trafficObject = unit.connections.filter((connection) => connection.section === 'traffic')[0];
-    return getAttr(trafficObject.url, activeLang());
-  }
-
-  render(){
+  render() {
     const {handleClick, isLoading, unit: currentUnit, services, t} = this.props;
     const {getActiveLanguage} = this.context;
     const temperatureObservation = has(currentUnit, 'observations') && getObservation(currentUnit, 'swimming_water_temperature');
+    const routeUrl = currentUnit && createReittiopasUrl(currentUnit, getActiveLanguage());
 
     return (
       <div>
@@ -171,7 +164,7 @@ export class SingleUnitModalContainer extends Component {
               {temperatureObservation && <LocationTemperature t={t} observation={temperatureObservation}/>}
               {this.shouldShowInfo(currentUnit) && <LocationInfo unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
               {getOpeningHours(currentUnit) && <LocationOpeningHours unit={currentUnit} t={t} activeLang={getActiveLanguage}/>}
-              {this.shouldShowRoute(currentUnit) && <LocationRoute t={t} routeUrl={this.getRouteUrl(currentUnit, getActiveLanguage)} />}
+              {routeUrl && <LocationRoute t={t} routeUrl={routeUrl} />}
             </Modal.Body>
             : null
           }
