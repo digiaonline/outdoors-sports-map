@@ -130,17 +130,13 @@ const LocationTemperature = ({t, observation}) => {
   );
 };
 
-const ModalBodyBox = ({title, children, className, ...rest}) =>
-  <div className={`${className || ''} modal-body-box`} {...rest}>
+const ModalBodyBox = ({title, children, className = '', ...rest}) =>
+  <div className={`${className} modal-body-box`} {...rest}>
     {title && <div className="modal-body-box-headline">{title}</div>}
     {children}
   </div>;
 
 export class SingleUnitModalContainer extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   shouldShowInfo(unit) {
     const hasExtensions = unit.extensions && (unit.extensions.length || unit.extensions.lighting || unit.extensions.skiing_technique);
