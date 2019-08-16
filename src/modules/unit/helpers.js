@@ -7,6 +7,7 @@ import head from 'lodash/head';
 import values from 'lodash/values';
 import upperFirst from 'lodash/upperFirst';
 import memoize from 'lodash/memoize';
+import get from 'lodash/get';
 
 import {createRequest, createUrl} from '../api/helpers.js';
 import {UnitServices, IceSkatingServices, SkiingServices, SwimmingServices} from '../service/constants';
@@ -60,6 +61,21 @@ export const getUnitPosition = (unit: Object): Array<number> => {
   }
 
   return unit.location.coordinates.slice().reverse();
+};
+
+export const createReittiopasUrl = (unit, lang) => {
+  const lat = get(unit, 'location.coordinates[1]');
+  const lon = get(unit, 'location.coordinates[0]');
+  const origin = ' '; // sic
+  const street = getAttr(unit.street_address, lang);
+  const municipality = unit.municipality || '';
+  const coordinates = lat && lon
+    ? encodeURIComponent(`::${lat},${lon}`)
+    : '';
+  const to = encodeURIComponent(`${upperFirst(street)}, ${upperFirst(municipality)}${coordinates}`);
+  const from = encodeURIComponent(origin);
+  const url = `https://reittiopas.hsl.fi/reitti/${from}/${to}`;
+  return url;
 };
 
 export const getUnitSport = (unit: Object) => {
