@@ -1,3 +1,7 @@
+# ARCHIVED
+
+Please use https://github.com/City-of-Helsinki/outdoors-sports-map instead
+
 # outdoors-sports-map
 
 Helsingin kaupungin Ulkoliikuntakartta.
